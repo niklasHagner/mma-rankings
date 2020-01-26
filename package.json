@@ -1,0 +1,26 @@
+{
+  "name": "nik-sherdog",
+  "version": "0.0.1",
+  "description": "Sherdog stats",
+  "author": "niklasHagner",
+  "license": "MIT",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "css-select": "^2.1.0",
+    "express": "^4.17.1",
+    "google-search-scraper": "0.1.0",
+    "moment": "^2.24.0",
+    "puppeteer": "^2.0.0",
+    "request": "^2.88.0",
+    "winston": "^3.2.1"
+  },
+  "keywords": [
+    "ufc",
+    "mma",
+    "sherdog"
+  ]
+}
