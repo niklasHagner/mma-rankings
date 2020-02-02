@@ -1,10 +1,10 @@
 var express = require("express");
 var app = express();
 const fs = require('fs');
-const moment = require("moment");
 var winston = require('winston');
 var sherdog = require('./backend/getFighter.js');
 var mmastats = require('./backend/scrapeMmaStatsDotCom');
+var { findRankAtTime } = require('./backend/findRank');
 
 console.log("Launching");
 
@@ -27,75 +27,24 @@ app.use(function (req, res, next) {
     next();
 });
 
-
-function _findRankAtTime(data, name, date) {
-    let matches = [];
-    data.dates.forEach((date) => {
-        date.divisions.forEach((division) => {
-            division.fighters.filter((fighter) => {
-                if (fighter.name === name && division.name.indexOf("Pound") < 0) {
-                    matches.push({
-                        fighter,
-                        division: division.name,
-                        date: date.date
-                    });
-                }
-            });
-        });
-    });
-    if (matches.length === 0) {
-        console.error("0 matches");
-    }
-    let mostRecentMatch = matches.find((match) => {
-        const matchDate = new Date(match.date), searchDate = new Date(date);
-        return moment(matchDate).isBefore(searchDate);
-    });
-    if (!mostRecentMatch) {
-        mostRecentMatch = matches[0];
-    }
-    return mostRecentMatch;
-}
-
-function findRankAtTime(name, date) {
-    let rawdata = fs.readFileSync("dataDump.json");
-    let data = JSON.parse(rawdata);
-    const rankInfo = _findRankAtTime(data, name, date);
-    return rankInfo;
-}
-
 app.get('/searchfileforfighter', function (req, res) {
     const name = req.query.name || "Jon Jones";
     const date = req.query.date || "2016-01-02";
-    const result = findRankAtTime(name, date);
-    res.send(result);
+    const rank = findRankAtTime(name, date);
+    const jsonResult = { "mostRecentMatch": rank };
+    return res.json(jsonResult);
 });
 
-function saveToFile(newArrayOfDates) {
-    let rawdata = fs.readFileSync("dataDump.json");
-    let data = JSON.parse(rawdata);
-    const conc = data.dates.concat(newArrayOfDates);
-    sorted = conc.sort((a,b) => new Date(b.date) - new Date(a.date));
-    data.dates = sorted;
-    fs.writeFileSync('file.json', JSON.stringify(data));
-}
-
-async function scraperLoop() {
-    const today = moment();
-    const dateStrings = [];
-    const date = moment(new Date("2013-03-01"));
-    for(let i=0; date.isBefore(today); i++) {
-        dateStrings.push(date.format("YYYY-MM-DD"));
-        date.add(12, "M");
-    }
-    console.log("dates to scrape", dateStrings);
-    const promises = dateStrings.map(date => mmastats.scrapeMmaStats(date))
-    Promise.all(promises).then((data) => {
-        console.log("resolved all promises", data);
-        saveToFile(data);
-    });
-}
+//Just trigger the scraping script that stores data to files
 app.get('/scrape', async function (req, res) {
-    scraperLoop();
+    const scrapeStatus = mmastats.scrapeRankingsForMultipleDates();
+    res.send(scrapeStatus);
+});
+
+app.get('/serve-rankings-file', async function (req, res) {
+    let rawdata = fs.readFileSync("data/data2.json");
+    let jsonData = JSON.parse(rawdata);
+    res.json(jsonData);
 });
 
 app.get('/mma-stats-by-date', async function (req, res) {
@@ -115,14 +64,14 @@ app.get('/mma-stats-by-date', async function (req, res) {
     res.send(json);
 });
 
-app.get('/Search', function (req, response) {
+app.get('/fighter-profile', function (req, response) {
     response.contentType('application/json');
     var defaultResponse = {
         error: true
     };
 
     if (typeof req.query.name === 'undefined') {
-        console.error(" Error. Try something like this instead: /Search?name=Fedor");
+        console.error(" Error. Try something like this instead: /fighter-profile?name=Fedor");
         response.send(defaultResponse);
         return;
     }
@@ -173,5 +122,5 @@ function getStoredResponse(key) {
 var port = 8081;
 console.log('Server listening on:' + port);
 app.listen(port);
-console.info("Endpoint example: /Search?name=Fedor");
+console.info("Endpoint example: /fighter-profile?name=Fedor");
 console.info("to launch the frontend goto /frontend and run 'npm start' ");
