@@ -30,13 +30,46 @@
     color: orange;
     font-weight: bold;
   }
+
+  .fights {
+    font-size: 13px;
+  }
+
+  .top-menu {
+    padding: 10px;
+    text-align: center;
+  }
+
+  button {
+    background-color: lightblue;
+    border-radius: 50px;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+  }
+  button:hover {
+    background-color: orange;
+    cursor: pointer;
+  }
+  button:active {
+    color: orange;
+  }
   </style>
   
 </head>
 
 <body class="dark">
+
+
   <div id="wrapper">
     <div id="container">
+
+    <nav class="top-menu">
+      <button onclick="getHistoricalRankingsFromJsonFile()">Historical rankings</button>
+      <button onclick="getFighterProfiles()">Fighter profiles</button>
+      <button onclick="getMmaStatsByDate()">Rankings for specific date</button>
+    </nav>
+
       <div class="container single-post-container ">
         <article class="post-container" itemscope="" itemtype="http://schema.org/BlogPosting">
           <header class="post-header">
@@ -64,7 +97,7 @@
             <img src="https://sherdog.com/${fighter.image}" alt="photo">
             <h1 class="name">${fighter.name}</h1>
             <p class="nick">${fighter.nickname}</p>
-            <p class="age">${fighter.age}</p>
+            <p class="age">age ${fighter.age}</p>
             <p class="age">${fighter.height_cm}cm ${fighter.weight_kg}kg</p>
             <div class="fights">${recentFights}</div>
         </article>
@@ -94,19 +127,26 @@
       `;
     };
 
-    const buildRankingsHtml = function(page) {
-      const templateArray = page.divisions.map(division => buildOneRankingHtml(division));
+    const buildRankingsHtml = function(pages) {
+      const templateArray = pages.map((page) => {
+        const divisionTemplates = page.divisions.map(division => buildOneRankingHtml(division));
+        const divisionsHtmlString = ` 
+          <h2>Rankings ${page.date}</h2>
+          ${divisionTemplates.join("")}
+        `;
+        return divisionsHtmlString;
+      });
+      const totalHtmlString = templateArray.join("");
+
       const allHtml = `
-        <h2>Rankings ${page.date}</h2>
-        ${templateArray.join("")}
+        ${totalHtmlString}
         `;
       return allHtml;
     };
         
-    const getFeeds = function (name) {
-        const articles = [];
+    const getFighterProfiles = function (name) {
         console.log("fetching fighters");
-        fetch(`http://localhost:8081/Search?name=${name}`)
+        fetch(`http://localhost:8081/fighter-profile?name=${name}`)
         .then((response) => {
           return response.json();
         })
@@ -133,7 +173,6 @@
 
     const getMmaStatsByDate = function (date = new Date()) {
         date = formatDate(date);
-        const articles = [];
         console.log("fetching mma-stats for", date);
         fetch(`http://localhost:8081/mma-stats-by-date?date=${date}`)
         .then((response) => {
@@ -142,14 +181,31 @@
         .then((json) => {
           console.log("got mma-stats");
           console.log(json);
-          document.querySelector("#rankings").innerHTML = buildRankingsHtml(json);
+          const array = [json];
+          document.querySelector("#rankings").innerHTML = buildRankingsHtml(array);
+        });
+    };
+
+    const getHistoricalRankingsFromJsonFile = function (date = new Date()) {
+        date = formatDate(date);
+        fetch(`http://localhost:8081/serve-rankings-file`)
+        .then((response) => {
+          return response.json();
+        })
+        .then((json) => {
+          console.log("got mma-stats");
+          console.log(json);
+          const array = json.dates;
+          document.querySelector("#rankings").innerHTML = buildRankingsHtml(array);
         });
     };
 
     
+    //getHistoricalRankingsFromJsonFile(); // list rankings for all dates
 
-    getMmaStatsByDate();
-    //getFeeds(""); // by not usin  g a query we'll get the top 4 fighters from the latest event
+    //getMmaStatsByDate(); // list rankings for one date
+    
+    //getFighterProfiles(""); // by not using any query we'll get the default response: top 4 fighters from the most recent ufc-event
 
 
 

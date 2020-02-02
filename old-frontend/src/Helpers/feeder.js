@@ -5,7 +5,7 @@ var sources = [];
 
 function setUrl(name) {
     name = encodeURIComponent(name);
-    return `http://localhost:8081/Search?name=` + name;
+    return `http://localhost:8081/fighter-profile?name=` + name;
 }
 function getListOfUrls() {
     var urls = [

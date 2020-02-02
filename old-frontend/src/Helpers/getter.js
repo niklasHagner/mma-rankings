@@ -5,7 +5,7 @@ var getFeeds = function (reactRoot, name) {
     var reactResult = {
         articles: []
     };
-    $.get(`http://localhost:8081/Search?name=${name}`, (result) => {
+    $.get(`http://localhost:8081/fighter-profile?name=${name}`, (result) => {
         if (result.error) {
             console.error("Feed error");
             return;
@@ -19,7 +19,7 @@ var getOneGuyAndThenHisOpponents = function (reactRoot, name) {
     var reactResult = {
         articles: []
     };
-    $.get(`http://localhost:8081/Search?name=${name}`, (result) => {
+    $.get(`http://localhost:8081/fighter-profiles?name=${name}`, (result) => {
         if (result.error) {
             console.error("Feed error");
             return;
@@ -44,7 +44,7 @@ var getOneGuyAndThenHisOpponents = function (reactRoot, name) {
 function getOne(name) {
     var name = encodeURIComponent(name);
     return new Promise(function (fulfill, reject) {
-        $.get(`http://localhost:8081/Search?name=${name}`, (result) => {
+        $.get(`http://localhost:8081/fighter-profile?name=${name}`, (result) => {
             if (result.error) {
                 console.error("Feed error");
                 reject(result.error);
