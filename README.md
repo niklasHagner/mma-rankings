@@ -1,6 +1,15 @@
 # UFC-rankings
 =============
 
+
+The goal is to show a fighter's history plus their opponent's rank at the time of the fight.
+
+This repo has multiple features
+* a puppeteer scraper for fetching historical rankings from mma-stats.com 
+* a backend for fetching fighter profiles from a sherdog-api (note: should replace this api as it doesn't seem to contain stats past 2019-06)
+* a frontend for displaying the rankings. Built it in 2018 with react, but replaceced it with a plain html page in 2020.
+
+
 ## Repo structure:
 * backend (node)
 * frontend (plain html)
@@ -29,12 +38,9 @@ to get some data, ensure the backend is running
 
 ## Endpoint examples:
 
+* `/scrape` - scrapes mmastats.com according to startDate/endDate specified in `scrapeMmaStatsDotCom.js`
 * `/searchfileforfighter?date=%222016-03-02%22`
 * `/serve-rankings-file` - serves the latest data dump of all historical rankings
 * `/mma-stats-by-date?date="2015-01-20"` - get rankings for 20th january 2015
 * `/fighter-profiles?name="Jon Jones"` - get fighter profile (and ufc record) for specific athlete
 * `/fighter-profile?name=` - default response; get the top 4 ufc fighter profiles from the latest ufc events
-
-## Todo 
-
-The goal is to list display the top fighters from the latest UFC event, list each of their records and show the rank of their opponents at the time they fought.
