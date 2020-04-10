@@ -32,6 +32,10 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + "/frontend/index.html"));
 });
 
+const defaultResponse = {
+    error: true
+};
+
 app.get('/searchfileforfighter', function (req, res) {
     const name = req.query.name || "Jon Jones";
     const date = req.query.date || "2016-01-02";
@@ -43,11 +47,10 @@ app.get('/searchfileforfighter', function (req, res) {
     return res.json(jsonResult);
 });
 
-// trigger the scraping script that stores data to file
 app.get('/scrape', async function (req, res) {
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
-    const scrapeStatus = mmastats.scrapeRankingsForMultipleDates(startDate, endDate);
+    const scrapeStatus = await mmastats.scrapeRankingsForMultipleDates(startDate, endDate);
     res.send(scrapeStatus);
 });
 
@@ -59,10 +62,6 @@ app.get('/serve-rankings-file', async function (req, res) {
 
 app.get('/mma-stats-by-date', async function (req, res) {
     res.contentType('application/json');
-    var defaultResponse = {
-        error: true
-    };
-
     if (typeof req.query.date === 'undefined') {
         const errorMessage =" Error. Try something like this instead: /mma-stats-by-date?date=2019-02-30";
         console.error(errorMessage);
@@ -102,31 +101,34 @@ app.get('/fighter-profile', function (req, response) {
         console.log("calling mma.fighter without argument (fetching top 4 from latest event)");
     }
 
-    sherdog.getFromEvent().then(function (data) {
-        if (settings.logOutputOnce && settings.loggedResponses <= 0) {
-            winston.log('info', data);
-            storeResponse(req.query, data);
-            settings.loggedResponses++;
-        }
+    sherdog.getFromEvent().then(function (fightersFromEvent) {
+        // if (settings.logOutputOnce && settings.loggedResponses <= 0) {
+        //     winston.log('info', fightersFromEvent);
+        //     storeResponse(req.query, fightersFromEvent);
+        //     settings.loggedResponses++;
+        // }
+
         //append extra info to the fighter
         let allRankingsFromFile = fs.readFileSync("data/data2.json");
         let allRankingsData = JSON.parse(allRankingsFromFile);
-        if (Array.isArray(data)) { //when used without a query, sherdog-api will return 4 fighters in an array
-            data = data.map((fighter) => {
+        if (Array.isArray(fightersFromEvent)) { //when sherdog-api is called without a fightername-query it will return 4 fighters in an array
+            fightersFromEvent = fightersFromEvent.map((fighter) => {
                 const fightHistory = fighter.fightHistory;
                 const extendedFightHistory = fightHistory.map((fight) => {
-                    const opponentInfoAtTheTime = findRankAtTime(allRankingsData, fight.opponentName, fight.date);
+                    const lookupName = fight.opponentName;
+                    const lookupDate = fight.date;
+                    const opponentInfoAtTheTime = findRankAtTime(allRankingsData, lookupName, lookupDate);
                     return { ...fight, opponentInfoAtTheTime };
                 });
                 console.log("extendedFightHistory", extendedFightHistory);
                 fighter.fightHistory = extendedFightHistory;
                 return fighter;
-            })
+            });
         } else {
-
+            console.error("error. Expected array, got", fightersFromEvent);
         }
 
-        response.send(data);
+        response.send(fightersFromEvent);
         return;
     }).catch(function (reason) {
         console.error("fail", reason);
@@ -152,5 +154,5 @@ var port = 8081;
 console.log('Server listening on:' + port);
 app.listen(port);
 console.info("Endpoint example: /fighter-profile?name=Fedor");
-console.info("to launch the frontend browse to /frontend/index.html");
-// console.info("to launch the frontend goto /frontend and run 'npm start' ");
+console.info("to launch the frontend browse to /");
+console.info("to scrape go to /scrape?startDate=2017-01-01&endDate=2017-12-31");
