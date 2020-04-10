@@ -3,16 +3,16 @@ const moment = require("moment");
 function findAllRanksForFighter(data, name) {
   let matches = [];
   data.dates.forEach((date) => {
-      date.divisions.forEach((division) => {
-          division.fighters.filter((fighter) => {
-              if (fighter.name === name && division.name.indexOf("Pound") < 0) { //skip the pound-for-pound division
-                  matches.push({
-                      fighter,
-                      division: division.name,
-                      date: date.date
-                  });
-              }
-          });
+      const divisions = date.divisions.filter(x => x.name.toLowerCase().indexOf("pound") === -1);
+      divisions.forEach((division) => {
+          const matchingFighter = division.fighters.find(x => x.name.toLowerCase() === name.toLowerCase());
+          if (matchingFighter) {
+            matches.push({
+                fighter: matchingFighter,
+                division: division.name,
+                date: date.date
+            });
+          }
       });
   });
   return matches;
