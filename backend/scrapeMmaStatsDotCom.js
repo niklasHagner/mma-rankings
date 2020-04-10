@@ -3,24 +3,34 @@ const fs = require('fs');
 const moment = require("moment");
 const getMmaStatsUrl = (date) => `http://www.mma-stats.com/rankings/${date}`;
 
+function uniqueBy(arr, prop){
+  return arr.reduce((a, d) => {
+    if (!a.includes(d[prop])) { a.push(d); }
+    return a;
+  }, []);
+}
+
 function saveToFile(newArrayOfDates) {
-  let rawdata = fs.readFileSync("data/dataDump.json");
+  let rawdata = fs.readFileSync("data/data2.json");
   let data = JSON.parse(rawdata);
-  const conc = data.dates.concat(newArrayOfDates);
-  sorted = conc.sort((a,b) => new Date(b.date) - new Date(a.date));
-  data.dates = sorted;
+  const concatted = data.dates.concat(newArrayOfDates);
+  const sorted = concatted.sort((a,b) => new Date(b.date) - new Date(a.date));
+  const unique = uniqueBy(sorted, "date");
+  data.dates = unique;
   const writeStatus = fs.writeFileSync("data/data2.json", JSON.stringify(data));
   console.log ("write to file status:", writeStatus);
   return { scrapedUrlCount: newArrayOfDates.length, saveToFileStatus: writeStatus };
 }
 
-async function scrapeRankingsForMultipleDates() {
-  const today = moment();
+async function scrapeRankingsForMultipleDates(_startDate, _endDate) {
+  const startDate = _startDate || new Date("2019-01-01");
+  const endDate = _endDate || new Date("2020-03-08");
+  
+  let date = moment(startDate);
   const dateStrings = [];
-  const date = moment(new Date("2013-03-01"));
-  for(let i=0; date.isBefore(today); i++) {
+  for(let i=0; date.isBefore(endDate); i++) {
       dateStrings.push(date.format("YYYY-MM-DD"));
-      date.add(12, "M");
+      date.add(1, "M");
   }
   console.log("dates to scrape", dateStrings);
   const promises = dateStrings.map(date => scrapeMmaStats(date))

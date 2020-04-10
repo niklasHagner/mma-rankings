@@ -34,6 +34,25 @@
   .fights {
     font-size: 13px;
   }
+  .fights p {
+    margin: 2px 0;
+  }
+
+  .fight__year {
+      color: gold;
+  }
+
+  .fight__opponent-rank {
+      color: gold;
+  }
+
+  .fight__opponent {
+      font-weight: bold;
+  }
+
+  .fight__method {
+      font-style: italic;
+  }
 
   .top-menu {
     padding: 10px;
@@ -66,7 +85,7 @@
 
     <nav class="top-menu">
       <button onclick="getHistoricalRankingsFromJsonFile()">Historical rankings</button>
-      <button onclick="getFighterProfiles()">Fighter profiles</button>
+      <button onclick="getTop4FightersFromRecentEvent()">Fighters from upcoming event</button>
       <button onclick="getMmaStatsByDate()">Rankings for specific date</button>
     </nav>
 
@@ -90,16 +109,48 @@
 
   <script>
 
+    function buildFightHistory(fights) {
+      const templateStrings = fights.map((fight) => {
+
+        let opponentRankHtml = "";
+        if (fight.opponentInfoAtTheTime)  {
+          const date = new Date(fight.opponentInfoAtTheTime.date);
+          let monthString = date.getMonth();
+          if (monthString.length === 1) monthString = "0" + monthString;
+
+          const formattedDate = date.getFullYear() + "-" + monthString;
+          opponentRankHtml = `<span class="fight__opponent-rank">(# ${fight.opponentInfoAtTheTime.fighter.rank} in ${formattedDate})</span>`;
+        }
+
+        return `
+          <p>
+            <span class="fight__year">${fight.year}:</span>
+            <span class="fight__result">${fight.result}</span>
+            <span class="fight__opponent">${fight.opponentName}</span>
+            ${opponentRankHtml}
+
+            <span class="fight__method">${fight.method}</span>
+
+          </p>
+
+        `;
+      });
+      return templateStrings.join("");
+    }
+
     const buildFighterHtml = function(fighter) {
       const recentFights = fighter.recentYears.join("<br>");
       return `
         <article class="fighter">
             <img src="https://sherdog.com/${fighter.image}" alt="photo">
             <h1 class="name">${fighter.name}</h1>
-            <p class="nick">${fighter.nickname}</p>
+            ${ fighter.nickname.length > 0 ? `<p class="nick">"${fighter.nickname.replace('"', '')}"</p>` : "" }
             <p class="age">age ${fighter.age}</p>
             <p class="age">${fighter.height_cm}cm ${fighter.weight_kg}kg</p>
-            <div class="fights">${recentFights}</div>
+            <div class="fights">
+              <h4>Record:</h4>
+              ${buildFightHistory(fighter.fightHistory)}  
+            </div>
         </article>
       `;
     };
@@ -143,7 +194,14 @@
         `;
       return allHtml;
     };
-        
+
+    const getTop4FightersFromRecentEvent = function() {
+      getFighterProfiles();
+    }
+    
+    /*
+    if called without any arguments, this will fetch the top 4 fighters from the most recent event
+    */
     const getFighterProfiles = function (name) {
         console.log("fetching fighters");
         fetch(`http://localhost:8081/fighter-profile?name=${name}`)

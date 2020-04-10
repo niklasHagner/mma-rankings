@@ -1,10 +1,11 @@
-var express = require("express");
-var app = express();
+const express = require("express");
+const app = express();
 const fs = require('fs');
-var winston = require('winston');
-var sherdog = require('./backend/getFighter.js');
-var mmastats = require('./backend/scrapeMmaStatsDotCom');
-var { findRankAtTime } = require('./backend/findRank');
+const winston = require('winston');
+const sherdog = require('./backend/getFighter.js');
+const mmastats = require('./backend/scrapeMmaStatsDotCom');
+const { findRankAtTime } = require('./backend/findRank');
+const path = require('path');
 
 console.log("Launching");
 
@@ -27,6 +28,10 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + "/frontend/index.html"));
+});
+
 app.get('/searchfileforfighter', function (req, res) {
     const name = req.query.name || "Jon Jones";
     const date = req.query.date || "2016-01-02";
@@ -38,9 +43,11 @@ app.get('/searchfileforfighter', function (req, res) {
     return res.json(jsonResult);
 });
 
-//Just trigger the scraping script that stores data to files
+// trigger the scraping script that stores data to file
 app.get('/scrape', async function (req, res) {
-    const scrapeStatus = mmastats.scrapeRankingsForMultipleDates();
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
+    const scrapeStatus = mmastats.scrapeRankingsForMultipleDates(startDate, endDate);
     res.send(scrapeStatus);
 });
 

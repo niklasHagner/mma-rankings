@@ -32,12 +32,11 @@ npm start
 
 ### Start the frontend:
 
-simply open `frontend/index.html` in your browser
-
-to get some data, ensure the backend is running
+Navigate to `/` or simply open `frontend/index.html` in your browser
 
 ## Endpoint examples:
 
+* `/` - serve webpage ( `frontend/index.html` )
 * `/scrape` - scrapes mmastats.com according to startDate/endDate specified in `scrapeMmaStatsDotCom.js`
 * `/searchfileforfighter?date=%222016-03-02%22`
 * `/serve-rankings-file` - serves the latest data dump of all historical rankings
