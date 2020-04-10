@@ -43,3 +43,9 @@ Navigate to `/` or simply open `frontend/index.html` in your browser
 * `/mma-stats-by-date?date="2015-01-20"` - get rankings for 20th january 2015
 * `/fighter-profiles?name="Jon Jones"` - get fighter profile (and ufc record) for specific athlete
 * `/fighter-profile?name=` - default response; get the top 4 ufc fighter profiles from the latest ufc events
+
+## Status
+
+The scraper started with code from 2018 when the scraper used `cheerio` to scrape ufc.com
+
+Switched the main scraper  to using`puppeteer` and mma-stats.com in 2020
