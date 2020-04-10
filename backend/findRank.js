@@ -1,7 +1,6 @@
 const moment = require("moment");
-const fs = require('fs');
 
-function _findRankAtTime(data, name, date) {
+function findAllRanksForFighter(data, name) {
   let matches = [];
   data.dates.forEach((date) => {
       date.divisions.forEach((division) => {
@@ -16,28 +15,26 @@ function _findRankAtTime(data, name, date) {
           });
       });
   });
-  if (matches.length === 0) {
-      console.error("0 matches");
-  } else {
-      console.log(matches.length, "matches found");
-  }
-
-  let mostRecentMatch = matches.find((match) => {
-      const matchDate = new Date(match.date), searchDate = new Date(date);
-      return moment(matchDate).isBefore(searchDate);
-  });
-  if (!mostRecentMatch) {
-      mostRecentMatch = matches[0];
-  }
-  console.log("mostRecentMatch", mostRecentMatch);
-  return mostRecentMatch;
+  return matches;
 }
 
-function findRankAtTime(name, date) {
-  let rawdata = fs.readFileSync("data/data2.json");
-  let data = JSON.parse(rawdata);
-  const rankInfo = _findRankAtTime(data, name, date);
-  return rankInfo;
+function findRankAtTime(data, name, date) {
+    const matches = findAllRanksForFighter(data, name);
+    if (matches.length === 0) {
+        console.error("0 matches");
+        return 0;
+    } else {
+        console.log(matches.length, "matches found");
+    }
+  
+    let mostRecentHit = matches.find((match) => {
+        const matchDate = new Date(match.date), searchDate = new Date(date);
+        return moment(matchDate).isBefore(searchDate);
+    });
+    if (!mostRecentHit) {
+        mostRecentHit = matches[0];
+    }
+    return mostRecentHit;
 }
 
-module.exports = { findRankAtTime };
+module.exports = { findRankAtTime, findAllRanksForFighter };
