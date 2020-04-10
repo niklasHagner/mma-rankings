@@ -66,50 +66,56 @@ function getAllFightersForRecentEvent(params) {
                     results.push(p); 
                 });
 
-                var secondaryPromises = [];
-                var comparisonNames = [];
-                primaryValues.forEach((primary, i) => { //primary
-                    comparisonNames.push(primary.name);
-                    var brawls = primary.fightHistory.splice(0, 3);
-                    brawls.forEach((battle) => {
-                        secondaryPromises.push(generateFighterData("http://sherdog.com" + battle.oppnentUrl, "secondary", primary.name));
-                    })
-                })
+                fulfill(results);
 
-                Promise.all(secondaryPromises).then((allSecondaries) => { //3 fetched secondary for each primary
-                    //the secondary profiles have already been fethed
-                    //just need to trim their data and push them
-                    allSecondaries.forEach((opp, ix) => {
-                        var targetIndex = 0;
-                        opp.fightHistory.forEach((x, index) => {
-                            //find when this dude fougth the primary guy
-                            if (x.opponentName === comparisonNames[ix])
-                                targetIndex = index;
-                        });
-                        let OFFSET = 2,
-                            startIndex = Math.max(0, targetIndex - OFFSET),
-                            count = Math.min(opp.fightHistory.length - 1, targetIndex + OFFSET);
-
-                        opp.fightHistory = opp.fightHistory.splice(startIndex, count);
-                        //results.push(opp);
-                        results[0].opponents.push(opp);
-                    });
-                    console.log("Secondary fighters: ", results.length);
-                    fulfill(results);
-
-                }).catch(function (e) {
-                    console.error("Dang! Promise level 3 error", e);
-                })
+                //This is not necessary since the 2020 overhaul
+                //fetchAllOpponentStats(fulfill, reject, results);
             }).catch(function (e) {
                 console.error("dang. promiseAll error level 1.", e);
             })
-
-
         })
         .catch((err) => {
             reject("Damn. GetFighter error", err);
         });
     });
+}
+
+//Note - this is not necessary since the 2020 overhaul
+async function fetchAllOpponentStats(fulfill, reject, results) {
+    var secondaryPromises = [];
+    var comparisonNames = [];
+    primaryValues.forEach((primary, i) => { //primary
+        comparisonNames.push(primary.name);
+        var brawls = primary.fightHistory.splice(0, 3);
+        brawls.forEach((battle) => {
+            secondaryPromises.push(generateFighterData("http://sherdog.com" + battle.oppnentUrl, "secondary", primary.name));
+        })
+    })
+
+    Promise.all(secondaryPromises).then((allSecondaries) => { //3 fetched secondary for each primary
+        //the secondary profiles have already been fethed
+        //just need to trim their data and push them
+        allSecondaries.forEach((opp, ix) => {
+            var targetIndex = 0;
+            opp.fightHistory.forEach((x, index) => {
+                //find when this dude fougth the primary guy
+                if (x.opponentName === comparisonNames[ix])
+                    targetIndex = index;
+            });
+            let OFFSET = 2,
+                startIndex = Math.max(0, targetIndex - OFFSET),
+                count = Math.min(opp.fightHistory.length - 1, targetIndex + OFFSET);
+
+            opp.fightHistory = opp.fightHistory.splice(startIndex, count);
+            results[0].opponents.push(opp);
+        });
+        console.log("Secondary fighters: ", results.length);
+        fulfill(results);
+    }).catch(function (e) {
+        const errorMessage = "error fetching opponents";
+        console.error(errorMessage, e);
+        reject(errorMessage);
+    })
 }
 
 function getFighterViaGoogle(name) {
