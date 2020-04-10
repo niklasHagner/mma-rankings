@@ -11,14 +11,21 @@ function uniqueBy(arr, prop){
 }
 
 function saveToFile(newArrayOfDates) {
-  let rawdata = fs.readFileSync("data/data2.json");
+  const fileName = "data/data2.json";
+  let rawdata = fs.readFileSync(fileName);
   let data = JSON.parse(rawdata);
+  if (data && data.dates) {
+    console.log("Reading", filename, "\nIt contains", data.dates.length);
+  }
+
   const concatted = data.dates.concat(newArrayOfDates);
   const sorted = concatted.sort((a,b) => new Date(b.date) - new Date(a.date));
   const unique = uniqueBy(sorted, "date");
   data.dates = unique;
-  const writeStatus = fs.writeFileSync("data/data2.json", JSON.stringify(data));
-  console.log ("write to file status:", writeStatus);
+  const dateLogText = data.dates.map(x => x.date).join(", ");
+  console.log("File now contains", data.dates.length, "dates:", dateLogText);
+  fs.writeFileSync(fileName, JSON.stringify(data));
+  console.log (`File ${fileName} updated successfully`);
   return { scrapedUrlCount: newArrayOfDates.length, saveToFileStatus: writeStatus };
 }
 
