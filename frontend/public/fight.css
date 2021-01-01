@@ -1,0 +1,69 @@
+.timestamped-ranking {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: solid 2px white;
+    display: flex;
+}
+
+.division {
+    margin-bottom: 10px;
+    flex: 1 1 auto;
+}
+
+.fighter {
+    margin-bottom: 10px;
+}
+
+.fighter header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-column-gap: 10px;
+}
+
+.fighter .rank {
+    color: orange;
+    font-weight: bold;
+}
+
+.fights {
+    font-size: 13px;
+}
+.fights p {
+    margin: 2px 0;
+}
+
+.fight__year {
+    color: gold;
+}
+
+.fight__opponent-rank {
+    color: gold;
+}
+
+.fight__opponent {
+    font-weight: bold;
+}
+
+.fight__method {
+    font-style: italic;
+}
+
+.top-menu {
+    padding: 10px;
+    text-align: center;
+}
+
+button {
+    background-color: lightblue;
+    border-radius: 50px;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+}
+button:hover {
+    background-color: orange;
+    cursor: pointer;
+}
+button:active {
+    color: orange;
+}
