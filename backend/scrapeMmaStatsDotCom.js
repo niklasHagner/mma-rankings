@@ -15,7 +15,7 @@ function saveToFile(newArrayOfDates) {
   let rawdata = fs.readFileSync(fileName);
   let data = JSON.parse(rawdata);
   if (data && data.dates) {
-    console.log("Reading", filename, "\nIt contains", data.dates.length);
+    console.log("Reading", fileName, "\nIt contains", data.dates.length);
   }
 
   const concatted = data.dates.concat(newArrayOfDates);
@@ -26,7 +26,7 @@ function saveToFile(newArrayOfDates) {
   console.log("File now contains", data.dates.length, "dates:", dateLogText);
   fs.writeFileSync(fileName, JSON.stringify(data));
   console.log (`File ${fileName} updated successfully`);
-  return { scrapedUrlCount: newArrayOfDates.length, saveToFileStatus: writeStatus };
+  return { scrapedUrlCount: newArrayOfDates.length };
 }
 
 async function scrapeRankingsForMultipleDates(_startDate, _endDate) {
