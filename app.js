@@ -27,10 +27,10 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-app.use(express.static('frontend/public'));
+app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + "/frontend/index.html"));
+    res.sendFile(path.join(__dirname + "/public/index.html"));
 });
 
 const defaultResponse = {
@@ -155,5 +155,5 @@ var port = 8081;
 console.log('Server listening on:' + port);
 app.listen(port);
 console.info("Endpoint example: /fighter-profile?name=Fedor");
-console.info("to launch the frontend browse to /");
+console.info("to trigger a request browse to /");
 console.info("to scrape go to /scrape?startDate=2017-01-01&endDate=2017-12-31");

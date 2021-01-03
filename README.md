@@ -1,42 +1,28 @@
 # UFC-rankings
 =============
 
-
-The goal is to show a fighter's history plus their opponent's rank at the time of the fight.
-
-This repo has multiple features
-* a puppeteer scraper for fetching historical rankings from mma-stats.com 
-* a backend for fetching fighter profiles from a sherdog-api (note: should replace this api as it doesn't seem to contain stats past 2019-06)
-* a frontend for displaying the rankings. Built it in 2018 with react, but replaceced it with a plain html page in 2020.
-
+The goal of this project is to list a fighter's record along with each of their opponent's rank at the time of the fight.
 
 ## Repo structure:
-* backend (node)
-* frontend (plain html)
-* old-frontend (react)
+* backend = node code
+    - puppeteer scraper for fetching historical rankings from mma-stats.com 
+    - node-backend for fetching fighter profiles from a sherdog-api
+* public = simple vanilla html & js frontend
+* old-frontend = obsolete react frontend
+    - start using `cd /old-frontend && npm start`
 
 ## Running the project:
-
-### Start the backend:
 
 1. start the node-server
 `node app.js`
 
-2. start the react-frontend
-```bash
-cd /frontend
-npm start
-```
+2. browse to `localhost:8081`
 
-3. browse to `localhost:8081`
+3. picka a route, se below:
 
-### Start the frontend:
+## Routes:
 
-Navigate to `/` or simply open `frontend/index.html` in your browser
-
-## Endpoint examples:
-
-* `/` - serve webpage ( `frontend/index.html` )
+* `/` - serve webpage ( `public/index.html` )
 * `/scrape` - scrapes mmastats.com according to startDate/endDate specified in `scrapeMmaStatsDotCom.js`
 * `/searchfileforfighter?date=%222016-03-02%22`
 * `/serve-rankings-file` - serves the latest data dump of all historical rankings
@@ -44,8 +30,10 @@ Navigate to `/` or simply open `frontend/index.html` in your browser
 * `/fighter-profiles?name="Jon Jones"` - get fighter profile (and ufc record) for specific athlete
 * `/fighter-profile?name=` - default response; get the top 4 ufc fighter profiles from the latest ufc events
 
-## Status
+## Project history
 
-The scraper started with code from 2018 when the scraper used `cheerio` to scrape ufc.com
+Started in 2018 with a react-frontend and a cheerio-scraper that scraped ufc.com from internetarchive
+Later ufc.com was completely rebuilt and their rankings became unusable.
 
-Switched the main scraper  to using`puppeteer` and mma-stats.com in 2020
+In 2020 I rewrote the scraper in puppeteer, and scraped mma-stats.com. 
+Since the website was not interactive I also replaced react in favor of plain html & js, which made simplified hosting.
