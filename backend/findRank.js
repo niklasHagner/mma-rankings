@@ -18,6 +18,9 @@ function findAllRanksForFighter(data, name) {
   return matches;
 }
 
+/*
+Return the rank at the time, or if unranked - return the earliest possible rank
+*/
 function findRankAtTime(data, name, date) {
     const matches = findAllRanksForFighter(data, name);
     if (matches.length === 0) {
@@ -27,14 +30,17 @@ function findRankAtTime(data, name, date) {
         console.log(matches.length, "matches found");
     }
   
-    let mostRecentHit = matches.find((match) => {
-        const matchDate = new Date(match.date), searchDate = new Date(date);
+    let closestEarlierDate = matches.find((match) => {
+        const matchDate = new Date(match.date);
+        const searchDate = new Date(date);
         return moment(matchDate).isBefore(searchDate);
     });
-    if (!mostRecentHit) {
-        mostRecentHit = matches[0];
+    if (!closestEarlierDate) {
+        console.log("no rank found for", name, "before", date);
+        console.log(matches);
+        closestEarlierDate = matches.reverse()[0];
     }
-    return mostRecentHit;
+    return closestEarlierDate;
 }
 
 module.exports = { findRankAtTime, findAllRanksForFighter };
