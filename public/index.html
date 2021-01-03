@@ -621,30 +621,26 @@
 </head>
 
 <body class="dark">
-  <div class="triple-loader hidden"><div></div><div></div><div></div></div>
-
   <div id="wrapper">
     <div id="container">
+        <div style="background: #ffb3b3; text-align: center; padding: 10px;">MMA STATS</div>
+        <nav class="top-menu">
+            <button onclick="getHistoricalRankingsFromJsonFile()">Historical rankings</button>
+            <button onclick="getTop4FightersFromRecentEvent()">Fighters from upcoming event</button>
+        </nav>
 
-    <nav class="top-menu">
-      <button onclick="getHistoricalRankingsFromJsonFile()">Historical rankings</button>
-      <button onclick="getTop4FightersFromRecentEvent()">Fighters from upcoming event</button>
-    </nav>
+        <div class="triple-loader hidden"><div></div><div></div><div></div></div>
 
-      <div class="container single-post-container">
-        <article class="post-container"
-          <header class="post-header">
-          <h1 class="post-title">UFC Rankings</h1>
-          </header>
-          <section id="fighters">
-            <!-- We'll inject templates here with clientside JS -->
-          </section>
-          <section id="rankings">
-            <!-- We'll inject templates here with clientside JS -->
-          </section>
-        </article>
-
-      </div>
+        <div class="container single-post-container">
+            <article class="post-container">
+                <section id="fighters">
+                    <!-- We'll inject templates here with clientside JS -->
+                </section>
+                <section id="rankings">
+                    <!-- We'll inject templates here with clientside JS -->
+                </section>
+            </article>
+        </div>
     </div>
   </div>
 
@@ -692,10 +688,12 @@
                 <img src="https://sherdog.com/${fighter.image}" alt="photo">
               </div>
               <div class="right-col">
-                <h1 class="name">${fighter.name}</h1>
-                ${ fighter.nickname.length > 0 ? `<p class="nick">"${fighter.nickname.replace('"', '')}"</p>` : "" }
-                <p class="age">age ${fighter.age}</p>
-                <p class="age">${fighter.height_cm}cm ${fighter.weight_kg}kg</p>
+                <h1 class="fighter-name">${fighter.name}</h1>
+                ${ fighter.nickname.length > 0 ? `<p class="fighter-nickname">"${fighter.nickname.replace('"', '')}"</p>` : "" }
+                <p class="fighter-age">age: ${fighter.age}</p>
+                <p class="fighter-size">${fighter.height_cm}cm ${fighter.weight_kg}kg</p>
+                <p class="fighter-hometown">hometown: ${fighter.hometown}</p>
+                <p class="fighter-association">association: ${fighter.association}</p>
               </div>
             </header>
             
@@ -769,7 +767,12 @@
           document.querySelector(".triple-loader").classList.add("hidden");
           console.log("got response");
           console.log(json);
-          document.querySelector("#fighters").innerHTML = buildAllFightersHtml(json);
+          document.querySelector("#fighters").innerHTML = `
+            <h1 class="post-title">Fighter records</h1>
+            <section class="records-fighter-list">
+                ${buildAllFightersHtml(json)}
+            </section>
+          `;
         });
     };
 
@@ -800,7 +803,10 @@
           console.log("got mma-stats");
           console.log(json);
           const array = [json];
-          document.querySelector("#rankings").innerHTML = buildRankingsHtml(array);
+          document.querySelector("#rankings").innerHTML = `
+            <h1 class="post-title">UFC rankings history</h1>
+            ${buildRankingsHtml(array)}
+          `;
         });
     };
 
@@ -816,7 +822,10 @@
           console.log("got mma-stats");
           console.log(json);
           const array = json.dates;
-          document.querySelector("#rankings").innerHTML = buildRankingsHtml(array);
+           document.querySelector("#rankings").innerHTML = `
+            <h1 class="post-title">UFC rankings history</h1>
+            ${buildRankingsHtml(array)}
+          `;
         });
     };
 
