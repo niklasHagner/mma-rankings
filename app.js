@@ -3,7 +3,7 @@ const app = express();
 const fs = require('fs');
 const winston = require('winston');
 const sherdog = require('./backend/getFighter.js');
-const mmastats = require('./backend/scrapeMmaStatsDotCom');
+const mmaStatsScraper = require('./backend/scrapeMmaStatsDotCom');
 const { findRankAtTime } = require('./backend/findRank');
 const path = require('path');
 
@@ -48,10 +48,21 @@ app.get('/searchfileforfighter', function (req, res) {
     return res.json(jsonResult);
 });
 
+app.get('/scrapeNewDatesSinceLastScrape', async function (req, res) {
+    let existingData = fs.readFileSync("data/data2.json");
+    let jsonData = JSON.parse(existingData);
+    let lastScrapedDate = jsonData.dates[0];
+    const startDate = lastScrapedDate;
+    const today = new Date().toISOString().split('T')[0];
+    const endDate = today;
+    const scrapeStatus = await mmaStatsScraper.scrapeRankingsForMultipleDates(startDate, endDate);
+    res.send(scrapeStatus);
+});
+
 app.get('/scrape', async function (req, res) {
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
-    const scrapeStatus = await mmastats.scrapeRankingsForMultipleDates(startDate, endDate);
+    const scrapeStatus = await mmaStatsScraper.scrapeRankingsForMultipleDates(startDate, endDate);
     res.send(scrapeStatus);
 });
 
@@ -71,7 +82,7 @@ app.get('/mma-stats-by-date', async function (req, res) {
     }
     console.log('called with query:', req.query);
 
-    const json = await mmastats.scrapeMmaStats(req.query.date);
+    const json = await mmaStatsScraper.scrapeMmaStats(req.query.date);
     res.send(json);
 });
 

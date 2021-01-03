@@ -49,6 +49,8 @@ async function scrapeRankingsForMultipleDates(_startDate, _endDate) {
 
 
 /*
+  Use puppeteer to scrape a single page on mma-stats.com for a selected dateString like "2016-12-19"
+
   mma-stats.com is perfect for navigation via urls
   If you navigate to a date that doesn't exist like http://www.mma-stats.com/rankings/2019-11-01
   they'll redirect to the closest available date (http://www.mma-stats.com/rankings/2019-10-28)
@@ -68,8 +70,10 @@ async function scrapeMmaStats(date = "2016-12-19") {
       return { 
         name: division.querySelector("h3").innerText, 
         fighters:  [...division.querySelectorAll(".fighter")].map((fighter) => {
+          let rankText = fighter.querySelector(".rank").innerText;
+          if (rankText.toLowerCase() === "champion") rankText = "C";
           return {
-            rank: fighter.querySelector(".rank").innerText,
+            rank: rankText,
             link: "https://mma-stats.com" + fighter.querySelector("a").getAttribute("href"),
             name: fighter.querySelector("a").innerText
           };
