@@ -1,7 +1,15 @@
 # UFC-rankings
 =============
 
-The goal of this project is to list a fighter's record along with each of their opponent's rank at the time of the fight.
+The goal of this project is to 
+
+a) list a fighter's record along with each of their opponent's rank at the time of the fight.
+
+![screenshot](https://i.imgur.com/97S3TLh.png)
+
+b) list historical records on a single page, similar to what mma-stats.com does
+
+![screenshot](https://i.imgur.com/daVexhr.png)
 
 ## Repo structure:
 * backend = node code
