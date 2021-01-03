@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const fs = require('fs');
 const winston = require('winston');
-const sherdog = require('./backend/getFighter.js');
+const sherdog = require('./backend/getSherdogFighterInfo.js');
 const mmaStatsScraper = require('./backend/scrapeMmaStatsDotCom');
 const { findRankAtTime } = require('./backend/findRank');
 const path = require('path');
@@ -48,18 +48,18 @@ app.get('/searchfileforfighter', function (req, res) {
     return res.json(jsonResult);
 });
 
-app.get('/scrapeNewDatesSinceLastScrape', async function (req, res) {
+app.get('/scrapeMissing', async function (req, res) {
     let existingData = fs.readFileSync("data/mmaStats.json");
     let jsonData = JSON.parse(existingData);
     let lastScrapedDate = jsonData.dates[0];
-    const startDate = lastScrapedDate;
+    const startDate = lastScrapedDate.date;
     const today = new Date().toISOString().split('T')[0];
     const endDate = today;
     const scrapeStatus = await mmaStatsScraper.scrapeRankingsForMultipleDates(startDate, endDate);
     res.send(scrapeStatus);
 });
 
-app.get('/scrape', async function (req, res) {
+app.get('/scrapeByQueryParams', async function (req, res) {
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
     const scrapeStatus = await mmaStatsScraper.scrapeRankingsForMultipleDates(startDate, endDate);
@@ -107,10 +107,10 @@ app.get('/fighter-profile', function (req, response) {
     }
 
     var fighterName = decodeURIComponent(req.query.name);
-    if (fighterName) {
+    if (fighterName && fighterName !== 'undefined') {
         console.log("calling mma.fighter for name:", fighterName);
     } else {
-        console.log("calling mma.fighter without argument (fetching top 4 from latest event)");
+        console.log("calling mma.fighter without argument (fetching a set of fighters from latest event)");
     }
 
     sherdog.getFromEvent().then(function (fightersFromEvent) {
@@ -120,7 +120,7 @@ app.get('/fighter-profile', function (req, response) {
         //     settings.loggedResponses++;
         // }
 
-        //append extra info to the fighter
+        //append historical record of fights to fighter-object
         let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
         let allRankingsData = JSON.parse(allRankingsFromFile);
         if (Array.isArray(fightersFromEvent)) { //when sherdog-api is called without a fightername-query it will return 4 fighters in an array

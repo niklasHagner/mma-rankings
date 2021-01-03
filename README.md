@@ -23,7 +23,8 @@ The goal of this project is to list a fighter's record along with each of their 
 ## Routes:
 
 * `/` - serve webpage ( `public/index.html` )
-* `/scrape` - scrapes mmastats.com according to startDate/endDate specified in `scrapeMmaStatsDotCom.js`
+* `/scrapeMissing` - scrapes mmastats.com for all the dates we don't already have in `/data/mmaStats.json`
+* `/scrapeByQueryParams?startDate=2011-01-01&endDate=2015-12-31` - scrapes mmastats.com for specified date range
 * `/searchfileforfighter?date=%222016-03-02%22`
 * `/serve-rankings-file` - serves the latest data dump of all historical rankings
 * `/mma-stats-by-date?date="2015-01-20"` - get rankings for 20th january 2015
