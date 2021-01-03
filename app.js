@@ -41,7 +41,7 @@ app.get('/searchfileforfighter', function (req, res) {
     const name = req.query.name || "Jon Jones";
     const date = req.query.date || "2016-01-02";
     
-    let rawdata = fs.readFileSync("data/data2.json");
+    let rawdata = fs.readFileSync("data/mmaStats.json");
     let data = JSON.parse(rawdata);
     const rank = findRankAtTime(data, name, date);
     const jsonResult = { "mostRecentMatch": rank };
@@ -49,7 +49,7 @@ app.get('/searchfileforfighter', function (req, res) {
 });
 
 app.get('/scrapeNewDatesSinceLastScrape', async function (req, res) {
-    let existingData = fs.readFileSync("data/data2.json");
+    let existingData = fs.readFileSync("data/mmaStats.json");
     let jsonData = JSON.parse(existingData);
     let lastScrapedDate = jsonData.dates[0];
     const startDate = lastScrapedDate;
@@ -67,7 +67,7 @@ app.get('/scrape', async function (req, res) {
 });
 
 app.get('/serve-rankings-file', async function (req, res) {
-    let rawdata = fs.readFileSync("data/data2.json");
+    let rawdata = fs.readFileSync("data/mmaStats.json");
     let jsonData = JSON.parse(rawdata);
     res.json(jsonData);
 });
@@ -121,7 +121,7 @@ app.get('/fighter-profile', function (req, response) {
         // }
 
         //append extra info to the fighter
-        let allRankingsFromFile = fs.readFileSync("data/data2.json");
+        let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
         let allRankingsData = JSON.parse(allRankingsFromFile);
         if (Array.isArray(fightersFromEvent)) { //when sherdog-api is called without a fightername-query it will return 4 fighters in an array
             fightersFromEvent = fightersFromEvent.map((fighter) => {

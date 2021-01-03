@@ -11,7 +11,7 @@ function uniqueBy(arr, prop){
 }
 
 function saveToFile(newArrayOfDates) {
-  const fileName = "data/data2.json";
+  const fileName = "data/mmaStats.json";
   let rawdata = fs.readFileSync(fileName);
   let data = JSON.parse(rawdata);
   if (data && data.dates) {
