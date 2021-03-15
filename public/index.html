@@ -766,7 +766,6 @@
           console.log("got response");
           console.log(json);
           document.querySelector("#fighters").innerHTML = `
-            <h1 class="post-title">${name} Record</h1>
             <section class="records-fighter-list">
                 ${buildFighterHtml(json)}
             </section>

@@ -12,12 +12,10 @@ b) list historical records on a single page, similar to what mma-stats.com does
 ![screenshot](https://i.imgur.com/daVexhr.png)
 
 ## Repo structure:
-* backend = node code
+* backend = node
     - puppeteer scraper for fetching historical rankings from mma-stats.com 
     - node-backend for fetching fighter profiles from a sherdog-api
-* public = simple vanilla html & js frontend
-* old-frontend = obsolete react frontend
-    - start using `cd /old-frontend && npm start`
+* public = vanilla js and html
 
 ## Running the project:
 
