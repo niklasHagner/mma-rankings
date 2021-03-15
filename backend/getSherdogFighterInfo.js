@@ -1,4 +1,4 @@
-var googleSearch = require('./google.js');
+const googleIt = require('google-it')
 var sherdog = require('./sherdog-scraper.js');
 var request = require('request');
 var cheerio = require('cheerio');
@@ -128,29 +128,22 @@ function getFighterViaGoogle(name) {
     return new Promise(function (fulfill, reject) {
         var urls = [];
         var promises = [];
-        googleSearch.search(options, function (err, url) {
-            // This is called for each result
-            if (err || !url) {
-                console.error("GETFIGHTER-ERROR:", err);
-                reject("Damn. GetFighter error", err);
-            }
-
-            if (url.indexOf("www.sherdog.com/fighter/") > -1) {
-                urls.push(url);
-                console.log(url);
-                var fighterData = generateFighterData(url, "primary");
-                promises.push(fighterData);
-
-                fighterData.then(() => {
-                    fulfill(fighterData);
-                }).catch((err) => {
-                    reject("getfighter promise error : " + err);
-                });
-            }
-            else {
-                reject("damn, no sherdog google hits");
-            }
-        });
+        googleIt(options).then(results => {
+            results.forEach((result) => {
+                const isSherdog = result.link.indexOf("www.sherdog.com/fighter/") > -1;
+                if (isSherdog) {
+                    var fighterData = generateFighterData(result.link, "primary");
+                    promises.push(fighterData);
+                    fighterData.then(() => {
+                        fulfill(fighterData);
+                    }).catch((err) => {
+                        reject("getfighter promise error : " + err);
+                    });
+                }
+            });
+          }).catch(e => {
+              console.error("no google results");
+          }) 
     });
 }
 

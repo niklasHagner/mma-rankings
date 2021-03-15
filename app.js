@@ -86,15 +86,12 @@ app.get('/mma-stats-by-date', async function (req, res) {
     res.send(json);
 });
 
-app.get('/fighter-profile', function (req, response) {
+app.get('/fighter-profile', function(req, response) {
     response.contentType('application/json');
-    var defaultResponse = {
-        error: true
-    };
 
-    if (typeof req.query.name === 'undefined') {
+    if (!req.query.name) {
         console.error(" Error. Try something like this instead: /fighter-profile?name=Fedor");
-        response.send(defaultResponse);
+        response.send({error:true});
         return;
     }
     if (settings.caching) {
@@ -113,6 +110,24 @@ app.get('/fighter-profile', function (req, response) {
         console.log("calling mma.fighter without argument (fetching a set of fighters from latest event)");
     }
 
+    
+    sherdog.getFighterViaGoogle(fighterName).then(function (fighter) {
+        //append historical record of fights to fighter-object
+        let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
+        let allRankingsData = JSON.parse(allRankingsFromFile);
+        fighter = mapFighterFromApiToExtraData(fighter, allRankingsData);
+        response.send(fighter);
+        return;
+    }).catch(function (reason) {
+        console.error("fail", reason);
+        response.send("fail: " + reason);
+        return;
+    });
+});
+
+app.get('/fighters-from-recent-event', function (req, response) {
+    response.contentType('application/json');
+
     sherdog.getFromEvent().then(function (fightersFromEvent) {
         // if (settings.logOutputOnce && settings.loggedResponses <= 0) {
         //     winston.log('info', fightersFromEvent);
@@ -124,18 +139,7 @@ app.get('/fighter-profile', function (req, response) {
         let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
         let allRankingsData = JSON.parse(allRankingsFromFile);
         if (Array.isArray(fightersFromEvent)) { //when sherdog-api is called without a fightername-query it will return 4 fighters in an array
-            fightersFromEvent = fightersFromEvent.map((fighter) => {
-                const fightHistory = fighter.fightHistory;
-                const extendedFightHistory = fightHistory.map((fight) => {
-                    const lookupName = fight.opponentName;
-                    const lookupDate = fight.date;
-                    const opponentInfoAtTheTime = findRankAtTime(allRankingsData, lookupName, lookupDate);
-                    return { ...fight, opponentInfoAtTheTime };
-                });
-                console.log("extendedFightHistory", extendedFightHistory);
-                fighter.fightHistory = extendedFightHistory;
-                return fighter;
-            });
+            fightersFromEvent = fightersFromEvent.map((fighter) => { return mapFighterFromApiToExtraData(fighter, allRankingsData); });
         } else {
             console.error("error. Expected array, got", fightersFromEvent);
         }
@@ -148,6 +152,20 @@ app.get('/fighter-profile', function (req, response) {
         return;
     });
 });
+
+function mapFighterFromApiToExtraData(fighter, allRankingsData) {
+    const fightHistory = fighter.fightHistory;
+    const extendedFightHistory = fightHistory.map((fight) => {
+        const lookupName = fight.opponentName;
+        const lookupDate = fight.date;
+        const opponentInfoAtTheTime = findRankAtTime(allRankingsData, lookupName, lookupDate);
+        return { ...fight, opponentInfoAtTheTime };
+    });
+    console.log("extendedFightHistory", extendedFightHistory);
+    fighter.fightHistory = extendedFightHistory;
+    return fighter;
+}
+
 
 function storeResponse(key, value) {
     return;
