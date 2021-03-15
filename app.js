@@ -7,7 +7,10 @@ const mmaStatsScraper = require('./backend/scrapeMmaStatsDotCom');
 const { findRankAtTime } = require('./backend/findRank');
 const path = require('path');
 
-console.log("Launching");
+let existingData = fs.readFileSync("data/mmaStats.json");
+let jsonData = JSON.parse(existingData);
+let lastScapedDate = jsonData.dates[0].date;
+console.log(`The last time you scraped was ${lastScapedDate}. Maybe it's time to run /scrapeMissing `);
 
 winston.configure({
     transports: [
@@ -51,8 +54,8 @@ app.get('/searchfileforfighter', function (req, res) {
 app.get('/scrapeMissing', async function (req, res) {
     let existingData = fs.readFileSync("data/mmaStats.json");
     let jsonData = JSON.parse(existingData);
-    let lastScrapedDate = jsonData.dates[0];
-    const startDate = lastScrapedDate.date;
+    let lastScapedJsonBlob = jsonData.dates[0];
+    const startDate = lastScapedJsonBlob.date;
     const today = new Date().toISOString().split('T')[0];
     const endDate = today;
     const scrapeStatus = await mmaStatsScraper.scrapeRankingsForMultipleDates(startDate, endDate);
