@@ -4,6 +4,8 @@
   <title>ufc</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
     button, hr, input {
         overflow: visible
     }
@@ -336,19 +338,12 @@
     }
     
     .site-header {
-        padding: 40px 0 0
-    }
-    
-    .site-title-wrapper {
-        display: table;
-        margin: 0 auto
-    }
-    
-    .site-title {
-        float: left;
-        font-size: 14px;
-        font-weight: 600;
-        margin: 0
+        padding: 0;
+        color: gold;
+        background: black; 
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 30px;
+        padding: 10px;
     }
     
     .site-title a {
@@ -623,7 +618,7 @@
 <body class="dark">
   <div id="wrapper">
     <div id="container">
-        <div style="background: #ffb3b3; text-align: center; padding: 10px;">MMA STATS</div>
+        <header class="site-header">MMA STATS</header>
         <nav class="top-menu">
             <button onclick="getHistoricalRankingsFromJsonFile()">Historical rankings</button>
             <button onclick="getTop4FightersFromRecentEvent()">Fighters from upcoming event</button>
@@ -732,7 +727,7 @@
 
     const buildRankingsHtml = function(pages) {
       const templateArray = pages.map((page) => {
-        const divisionTemplates = page.divisions.map(division => divisionToHtml(division));
+        const divisionTemplates = page.divisions.filter(vision => vision.name.toLowerCase() !== "women's featherweight").map(division => divisionToHtml(division));
         const divisionsHtmlString = ` 
           <section class="snapshot">
             <h2>Rankings ${page.date}</h2>
