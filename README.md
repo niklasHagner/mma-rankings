@@ -13,7 +13,7 @@ b) list historical records on a single page, similar to what mma-stats.com does
 
 ## Repo structure:
 * backend = node
-    - puppeteer scraper for fetching historical rankings from mma-stats.com 
+    - JSDOM scraper for fetching historical rankings from mma-stats.com 
     - node-backend for fetching fighter profiles from a sherdog-api
 * public = vanilla js and html
 
@@ -39,8 +39,6 @@ b) list historical records on a single page, similar to what mma-stats.com does
 
 ## Project history
 
-Started in 2018 with a react-frontend and a cheerio-scraper that scraped ufc.com from internetarchive
-Later ufc.com was completely rebuilt and their rankings became unusable.
-
-In 2020 I rewrote the scraper in puppeteer, and scraped mma-stats.com. 
-Since the website was not interactive I also replaced react in favor of plain html & js, which made simplified hosting.
+* Started by scraping ufc.com on internetArchive, but as ufc.com was rebuilt in 2020 their rankings became unreliable.
+* Switched to scraping mma-stats.com. 
+* Started with cheerio as a scraper, replaced it with puppeteer to be able to use vanilla js instead of jQuery, but after puppeteer required a +300MB chromium install I replaced it with jsDom.

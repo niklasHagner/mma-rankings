@@ -1,4 +1,3 @@
-const puppeteer = require('puppeteer-core');
 const fs = require('fs');
 const moment = require("moment");
 const getMmaStatsUrl = (date) => `http://www.mma-stats.com/rankings/${date}`;
@@ -50,7 +49,7 @@ async function scrapeRankingsForMultipleDates(_startDate, _endDate) {
 
 
 /*
-  Use puppeteer to scrape a single page on mma-stats.com for a selected dateString like "2016-12-19"
+  Scrape a single page on mma-stats.com for a selected dateString like "2016-12-19"
 
   mma-stats.com is perfect for navigation via urls
   If you navigate to a date that doesn't exist like http://www.mma-stats.com/rankings/2019-11-01
