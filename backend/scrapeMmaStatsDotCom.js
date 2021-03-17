@@ -1,12 +1,13 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 const fs = require('fs');
 const moment = require("moment");
 const getMmaStatsUrl = (date) => `http://www.mma-stats.com/rankings/${date}`;
+const jsdom = require('jsdom');
 
 function uniqueBy(arr, prop){
-  return arr.reduce((a, d) => {
-    if (!a.includes(d[prop])) { a.push(d); }
-    return a;
+  return arr.reduce((acc, item) => {
+    if (!acc.includes(item[prop])) { acc.push(item); }
+    return acc;
   }, []);
 }
 
@@ -56,45 +57,45 @@ async function scrapeRankingsForMultipleDates(_startDate, _endDate) {
   they'll redirect to the closest available date (http://www.mma-stats.com/rankings/2019-10-28)
 */
 async function scrapeMmaStats(date = "2016-12-19") {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-
   const url = getMmaStatsUrl(date);
   console.log("scraping url:", url);
-  await page.goto(url, { waitUntil: 'networkidle0' });
+  // await page.goto(url, { waitUntil: 'networkidle0' });
 
-  let data = { hello : "world" };
-  data = await page.evaluate(() => {
-    const divisionElements = [...document.querySelectorAll(".weight-rankings")];
-    const divisions = divisionElements.map((division) => { 
-      return { 
-        name: division.querySelector("h3").innerText, 
-        fighters:  [...division.querySelectorAll(".fighter")].map((fighter) => {
-          let rankText = fighter.querySelector(".rank").innerText;
-          if (rankText.toLowerCase() === "champion") rankText = "C";
-          return {
-            rank: rankText,
-            link: "https://mma-stats.com" + fighter.querySelector("a").getAttribute("href"),
-            name: fighter.querySelector("a").innerText
-          };
-        })
-      }
-    });
-
-    const selectedDate = document.querySelector("#date_select").selectedOptions[0].innerText;
-
-    const json = {
-      date: selectedDate,
-      divisions
-    }
-    return json;
-  });
-
-  await browser.close();
+  return new Promise((resolve) => {
+    jsdom.JSDOM.fromURL(url).then(dom => {
+      // console.log(dom.serialize());
+      let document = dom.window.document;
+      const divisionElements = [...document.querySelectorAll(".weight-rankings")];
+      const divisions = divisionElements.map((division) => { 
+        return { 
+          name: division.querySelector("h3").textContent, 
+          fighters:  [...division.querySelectorAll(".fighter")].map((fighter) => {
+            let rankText = fighter.querySelector(".rank").textContent;
+            if (rankText.toLowerCase() === "champion") {
+              rankText = "C";
+            }
+              return {
+              rank: rankText,
+              link: "https://mma-stats.com" + fighter.querySelector("a").getAttribute("href"),
+              name: fighter.querySelector("a").textContent
+            };
+          })
+        }
+      });
   
-  console.log("finished scraping mma-stats");
-  console.log(data);
-  return data;
+      const selectedDate = document.querySelector("#date_select").selectedOptions[0].textContent;
+  
+      const json = {
+        date: selectedDate,
+        divisions
+      }
+  
+      console.log("finished scraping mma-stats");
+      console.log(json);
+      resolve(json);
+    });
+  })
+ 
 }
 
 module.exports = {
