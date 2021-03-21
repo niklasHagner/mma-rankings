@@ -2,7 +2,8 @@
 function buildFightHistory(fights) {
   const templateStrings = fights.map((fight) => {
 
-    let opponentRankHtml = "";
+    fight.opponentRankStr = "";
+    fight.opponentRankHtml = "";
     if (fight.opponentInfoAtTheTime)  {
       const date = new Date(fight.opponentInfoAtTheTime.date);
       let monthString = date.getMonth();
@@ -13,6 +14,7 @@ function buildFightHistory(fights) {
       const showDifferentDivisionInfo = false; // fight.opponentInfoAtTheTime.division !== "xx";
       const differentDivisionInfo = showDifferentDivisionInfo ? ` at ${fight.opponentInfoAtTheTime.division}` : "";
       fight.opponentRankStr = fight.opponentInfoAtTheTime.fighter.rank + differentDivisionInfo + ` in ${formattedDate}`;
+      fight.opponentRankHtml = `<span class="fight__opponent-rank">(# ${fight.opponentRankStr})</span>`;
       fight.opponentUrl = "/get-fighter-by-sherdog-url?url=" + encodeURIComponent(fight.opponentUrl);
     }
 
@@ -21,7 +23,7 @@ function buildFightHistory(fights) {
         <span class="fight__year">${fight.year}:</span>
         <span class="fight__result">${fight.result}</span>
         <a href="${fight.opponentUrl}" class="fight__opponent">${fight.opponentName}</a>
-        <span class="fight__opponent-rank">(# ${fight.opponentRankStr})</span>
+        ${fight.opponentRankHtml}
         <span class="fight__method">${fight.method}</span>
       </p>
     `;
