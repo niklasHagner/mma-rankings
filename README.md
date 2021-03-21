@@ -34,7 +34,8 @@ b) list historical records on a single page, similar to what mma-stats.com does
 * `/searchfileforfighter?date=%222016-03-02%22&name=Fedor` - used to look up one opponent's rank at the time of the fight
 * `/serve-rankings-file` - serves the latest data dump of all historical rankings
 * `/mma-stats-by-date?date="2015-01-20"` - get rankings for 20th january 2015
-* `/fighter-profile?name=Fedor` - search for a single fighter Sherdog-profile and look it up in Sherdog API 
+* `/get-fighter-by-sherdog-url?url=https://www.sherdog.com/fighter/Fedor-Emelianenko-1500` - return json from a sherdog page
+* `/search-fighter-by-name?name=Fedor` - search for a single fighter Sherdog-profile and look it up in Sherdog API 
 * `/fighters-from-recent-event` - find multiple fighter's Sherdog-profiles, from the most recent event listed on sherdog.com
 
 ## Project history

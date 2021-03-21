@@ -89,21 +89,13 @@ app.get('/mma-stats-by-date', async function (req, res) {
     res.send(json);
 });
 
-app.get('/fighter-profile', function(req, response) {
+app.get('/search-fighter-by-name', function(req, response) {
     response.contentType('application/json');
 
     if (!req.query.name) {
-        console.error(" Error. Try something like this instead: /fighter-profile?name=Fedor");
+        console.error(" Error. Try something like this instead: /search-fighter-by-name?name=Fedor");
         response.send({error:true});
         return;
-    }
-    if (settings.caching) {
-        var cachedResponse = getStoredResponse(req.query);
-        if (cachedResponse) {
-            console.log("sending cached response");
-            response.send(cachedResponse);
-            return;
-        }
     }
 
     var fighterName = decodeURIComponent(req.query.name);
@@ -128,16 +120,36 @@ app.get('/fighter-profile', function(req, response) {
     });
 });
 
+
+app.get('/get-fighter-by-sherdog-url', function(req, response) {
+    response.contentType('application/json');
+
+    if (!req.query.url) {
+        console.error(" Error. Try something like this instead: /get-fighter-by-sherdog-url?url=someSherdogUrl");
+        response.send({error:true});
+        return;
+    }
+
+    var sherdogFighterProfileUrl = decodeURIComponent(req.query.url);
+    
+    sherdog.getFighterFromSherdogFighterLink(sherdogFighterProfileUrl).then(function (fighter) {
+        //append historical record of fights to fighter-object
+        let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
+        let allRankingsData = JSON.parse(allRankingsFromFile);
+        fighter = mapFighterFromApiToExtraData(fighter, allRankingsData);
+        response.send(fighter);
+        return;
+    }).catch(function (reason) {
+        console.error("fail", reason);
+        response.send("fail: " + reason);
+        return;
+    });
+});
+
 app.get('/fighters-from-recent-event', function (req, response) {
     response.contentType('application/json');
 
     sherdog.getFromEvent().then(function (fightersFromEvent) {
-        // if (settings.logOutputOnce && settings.loggedResponses <= 0) {
-        //     winston.log('info', fightersFromEvent);
-        //     storeResponse(req.query, fightersFromEvent);
-        //     settings.loggedResponses++;
-        // }
-
         //append historical record of fights to fighter-object
         let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
         let allRankingsData = JSON.parse(allRankingsFromFile);
@@ -169,23 +181,9 @@ function mapFighterFromApiToExtraData(fighter, allRankingsData) {
     return fighter;
 }
 
-
-function storeResponse(key, value) {
-    return;
-    var contains = getStoredResponse(key);
-    if (contains)
-        return;
-    console.log("storing", key);
-    settings.storedResponses[key] = value;
-}
-
-function getStoredResponse(key) {
-    return settings.storedResponses[key];
-}
-
 var port = 8081;
 console.log('Server listening on:' + port);
 app.listen(port);
-console.info("Endpoint example: /fighter-profile?name=Fedor");
+console.info("Endpoint example: /search-fighter-by-name?name=Fedor");
 console.info("to trigger a request browse to /");
 console.info("to scrape go to /scrape?startDate=2017-01-01&endDate=2017-12-31");
