@@ -15,14 +15,14 @@ function buildFightHistory(fights) {
       const differentDivisionInfo = showDifferentDivisionInfo ? ` at ${fight.opponentInfoAtTheTime.division}` : "";
       fight.opponentRankStr = fight.opponentInfoAtTheTime.fighter.rank + differentDivisionInfo + ` in ${formattedDate}`;
       fight.opponentRankHtml = `<span class="fight__opponent-rank">(# ${fight.opponentRankStr})</span>`;
-      fight.opponentUrl = "/get-fighter-by-sherdog-url?url=" + encodeURIComponent(fight.opponentUrl);
+      fight.opponentUrl = encodeURIComponent(fight.opponentUrl);
     }
 
     return `
       <p>
         <span class="fight__year">${fight.year}:</span>
         <span class="fight__result">${fight.result}</span>
-        <a href="${fight.opponentUrl}" class="fight__opponent">${fight.opponentName}</a>
+        <span onclick="clickFighterLink('${fight.opponentUrl}')" data-url="${fight.opponentUrl}" class="fight__opponent">${fight.opponentName}</span>
         ${fight.opponentRankHtml}
         <span class="fight__method">${fight.method}</span>
       </p>
@@ -101,7 +101,13 @@ const buildRankingsHtml = function(pages) {
   return allHtml;
 };
 
-const getFighterProfileByName = function(name) {
+
+const searchByName = function() {
+  var name = document.querySelector("#search").value;
+  renderFighterProfileByName(name);
+};
+
+const renderFighterProfileByName = function(name) {
     console.log("fetching fighters");
     document.querySelector(".triple-loader").classList.remove("hidden");
     if (name) {
@@ -113,8 +119,6 @@ const getFighterProfileByName = function(name) {
     })
     .then((json) => {
       document.querySelector(".triple-loader").classList.add("hidden");
-      console.log("got response");
-      console.log(json);
       document.querySelector("#fighters").innerHTML = `
         <section class="records-fighter-list">
             ${buildFighterHtml(json)}
@@ -123,8 +127,31 @@ const getFighterProfileByName = function(name) {
     });
 }
 
+function clickFighterLink(url) {
+  renderFighterProfileByUrl(url);
+}
+
+const renderFighterProfileByUrl = function(url) {
+  console.log("fetching fighters");
+  document.querySelector(".triple-loader").classList.remove("hidden");
+  fetch(`/get-fighter-by-sherdog-url?url=${url}`)
+  .then((response) => {
+    return response.json();
+  })
+  .then((json) => {
+    document.querySelector(".triple-loader").classList.add("hidden");
+    const newEl = document.createElement("section");
+    newEl.innerHTML = `
+      <section class="records-fighter-list">
+          ${buildFighterHtml(json)}
+      </section>
+    `;
+    const container = document.querySelector(".single-post-container");
+    container.prepend(newEl);
+  });
+}
+
 const getTopFightersFromRecentEvent = function () {
-    console.log("fetching fighters from upcoming event");
     document.querySelector(".triple-loader").classList.remove("hidden");
 
     fetch(`http://localhost:8081/fighters-from-recent-event`)
@@ -156,11 +183,6 @@ function formatDate(date) {
 
   return [year, month, day].join('-');
 }
-
-const searchByName = function() {
-    var name = document.querySelector("#search").value;
-    getFighterProfileByName(name);
-};
 
 const getMmaStatsByDate = function (date = new Date()) {
     date = formatDate(date);

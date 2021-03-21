@@ -382,10 +382,6 @@
         color: #424242
     }
     
-    .post-container {
-        margin: 0 40px
-    }
-    
     .post-header {
         border-bottom: 1px solid #333;
         margin: 0 0 50px;
@@ -397,6 +393,7 @@
         font-weight: 900;
         margin: 15px 0;
         text-align: left;
+        border-bottom: solid 2px gold;
     }
     
     .page-title {
@@ -571,10 +568,10 @@
     }
     
     .single-post-container {
-        margin-top: 50px;
+        margin: 50 40 10;
         padding-left: 15px;
         padding-right: 15px;
-        box-sizing: border-box
+        box-sizing: border-box;
     }
     
     
@@ -629,14 +626,12 @@
         <div class="triple-loader hidden"><div></div><div></div><div></div></div>
 
         <div class="container single-post-container">
-            <article class="post-container">
-                <section id="fighters">
-                    <!-- We'll inject templates here with clientside JS -->
-                </section>
-                <section id="rankings">
-                    <!-- We'll inject templates here with clientside JS -->
-                </section>
-            </article>
+            <section id="fighters">
+                <!-- We'll inject templates here with clientside JS -->
+            </section>
+            <section id="rankings">
+                <!-- We'll inject templates here with clientside JS -->
+            </section>
         </div>
     </div>
   </div>

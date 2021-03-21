@@ -32,6 +32,11 @@
     grid-column-gap: 10px;
 }
 
+.fighter img {
+    width: 200px;
+    min-height: 100px;
+}
+
 .fighter h1 {
     margin-top: 0;
 }
@@ -67,6 +72,11 @@
 
 .fight__opponent {
     font-weight: bold;
+    cursor: pointer;
+}
+
+.fight__opponent:hover {
+    text-decoration: underline;
 }
 
 .fight__method {
