@@ -90,7 +90,6 @@ async function scrapeMmaStats(date = "2016-12-19") {
       }
   
       console.log("finished scraping mma-stats");
-      console.log(json);
       resolve(json);
     });
   })

@@ -10,7 +10,6 @@ function getMostRecentEventNameAndFighterUrls(params) {
             var eventLinkElements = html('[href^="/events/UFC"]').toArray();
             var selectedEventLinkEl = eventLinkElements[0];
             var eventUrl = 'http://www.sherdog.com' +  selectedEventLinkEl.attribs["href"];
-            console.log(selectedEventLinkEl);
             var eventName = cheerio(selectedEventLinkEl).text();
             getFighterLinksFromEventLink(eventUrl).then(function (fighterLinks) {
                 fulfill({

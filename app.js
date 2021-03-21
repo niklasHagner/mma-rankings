@@ -99,12 +99,6 @@ app.get('/search-fighter-by-name', function(req, response) {
     }
 
     var fighterName = decodeURIComponent(req.query.name);
-    if (fighterName && fighterName !== 'undefined') {
-        console.log("calling mma.fighter for name:", fighterName);
-    } else {
-        console.log("calling mma.fighter without argument (fetching a set of fighters from latest event)");
-    }
-
     
     sherdog.getFighterViaGoogle(fighterName).then(function (fighter) {
         //append historical record of fights to fighter-object
@@ -175,7 +169,7 @@ function mapFighterFromApiToExtraData(fighter, allRankingsData) {
         const opponentInfoAtTheTime = findRankAtTime(allRankingsData, lookupName, lookupDate);
         return { ...fight, opponentInfoAtTheTime };
     });
-    console.log("extendedFightHistory", extendedFightHistory);
+    // console.log("extendedFightHistory", extendedFightHistory);
     fighter.fightHistory = extendedFightHistory;
     return fighter;
 }
