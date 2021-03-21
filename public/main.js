@@ -123,27 +123,21 @@ const getFighterProfileByName = function(name) {
     });
 }
 
-/*
-if called without any arguments, this will fetch the top 4 fighters from the most recent event
-*/
-const getTop4FightersFromRecentEvent = function (name) {
-    console.log("fetching fighters");
+const getTopFightersFromRecentEvent = function () {
+    console.log("fetching fighters from upcoming event");
     document.querySelector(".triple-loader").classList.remove("hidden");
-    if (name) {
-        name = encodeURIComponent(name);
-    }
+
     fetch(`http://localhost:8081/fighters-from-recent-event`)
     .then((response) => {
       return response.json();
     })
     .then((json) => {
+      debugger;
       document.querySelector(".triple-loader").classList.add("hidden");
-      console.log("got response");
-      console.log(json);
       document.querySelector("#fighters").innerHTML = `
-        <h1 class="post-title">Fighter records</h1>
+        <h1 class="post-title">${json.eventName}</h1>
         <section class="records-fighter-list">
-            ${buildAllFightersHtml(json)}
+            ${buildAllFightersHtml(json.fighters)}
         </section>
       `;
     });

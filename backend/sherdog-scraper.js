@@ -163,17 +163,18 @@ module.exports.getFighter = function (url, callback) {
                 var time = $(el.find('td')[5]).text();
 
                 var fightObject = {
-                    year: year,
-                    date: date,
-                    dateJson: dateJson,
-                    dateString: dateString,
-                    result: result,
-                    method: method,
-                    opponentName: opponentName,
-                    oppnentUrl: opponentUrl,
-                    eventName: eventName,
-                    round: round,
-                    time: time
+                    year,
+                    date,
+                    dateJson,
+                    dateString,
+                    result,
+                    method,
+                    opponentName,
+                    opponentUrl,
+                    opponentUrl,
+                    eventName,
+                    round,
+                    time
                 };
 
                 fighter.fightHistory.push(fightObject);

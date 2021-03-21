@@ -149,17 +149,16 @@ app.get('/get-fighter-by-sherdog-url', function(req, response) {
 app.get('/fighters-from-recent-event', function (req, response) {
     response.contentType('application/json');
 
-    sherdog.getFromEvent().then(function (fightersFromEvent) {
+    sherdog.getAllFightersForRecentEvent().then(function (data) {
         //append historical record of fights to fighter-object
         let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
         let allRankingsData = JSON.parse(allRankingsFromFile);
-        if (Array.isArray(fightersFromEvent)) { //when sherdog-api is called without a fightername-query it will return 4 fighters in an array
-            fightersFromEvent = fightersFromEvent.map((fighter) => { return mapFighterFromApiToExtraData(fighter, allRankingsData); });
-        } else {
-            console.error("error. Expected array, got", fightersFromEvent);
-        }
-
-        response.send(fightersFromEvent);
+        const eventName = data.eventName;
+        let fighters = data.fighters;
+        fighters = fighters.map((fighter) => { 
+            return mapFighterFromApiToExtraData(fighter, allRankingsData); 
+        });
+        response.send({eventName, fighters});
         return;
     }).catch(function (reason) {
         console.error("fail", reason);

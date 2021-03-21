@@ -3,25 +3,28 @@ var sherdog = require('./sherdog-scraper.js');
 var request = require('request');
 var cheerio = require('cheerio');
 
-function getFightersFromMostRecentSherdogEvent(params) {
+function getMostRecentEventNameAndFighterUrls(params) {
     return new Promise(function (fulfill, reject) {
         request('http://www.sherdog.com/events', function (evError, evResponse, htmlForEvent) {
             var html = cheerio.load(htmlForEvent);
-            var eventLinks = html('[href^="/events/UFC"]').toArray();
-            eventLinks = eventLinks.map(function (link) { return link.attribs["href"] });
-            console.log("event links: ", eventLinks);
-            var eventLink = 'http://www.sherdog.com' + eventLinks[0];
-            console.log("UFC event:", eventLink);
-            getFightersFromSingleEvent(eventLink).then(function (json) {
-                fulfill(json);
+            var eventLinkElements = html('[href^="/events/UFC"]').toArray();
+            var selectedEventLinkEl = eventLinkElements[0];
+            var eventUrl = 'http://www.sherdog.com' +  selectedEventLinkEl.attribs["href"];
+            console.log(selectedEventLinkEl);
+            var eventName = cheerio(selectedEventLinkEl).text();
+            getFighterLinksFromEventLink(eventUrl).then(function (fighterLinks) {
+                fulfill({
+                    eventName,
+                    fighterLinks
+                });
             })
         })
 
     })
 }
 
-function getFightersFromSingleEvent(eventLink) {
-    const FIGHTERS_TO_GET = 8;
+function getFighterLinksFromEventLink(eventLink) {
+    const TAKE_COUNT = 8;
     return new Promise(function (fulfill, reject) {
         request(eventLink, function (error, response, html) {
             if (error) {
@@ -30,53 +33,50 @@ function getFightersFromSingleEvent(eventLink) {
             var $ = cheerio.load(html);
             var linkElems = $('.col_left [href^="/fighter/"]').toArray();
             var links = linkElems.map(function(x) { return x.attribs.href });
-            //var uniqueLinks = links.filter((link) => { return hasDuplicateHrefs(link, links) == false; });
-            var uniqueLinks = links.filter( onlyUnique ); // returns ['a', 1, 2, '1']
-            uniqueLinks = uniqueLinks.splice(0, Math.min(uniqueLinks.length, FIGHTERS_TO_GET));
+            var uniqueLinks = links.filter(filterUniqueLinks);
+            uniqueLinks = uniqueLinks.splice(0, Math.min(uniqueLinks.length, TAKE_COUNT));
             uniqueLinks = uniqueLinks.map((x) => {
                 return x.indexOf("http://sherdog.com") > -1 ? x : "http://sherdog.com" + x;
             });
-            var json = { links: uniqueLinks };
-            fulfill(json);
+            fulfill(uniqueLinks);
         })
     })
 }
 
-function onlyUnique(value, index, self) { 
-      return self.indexOf(value) === index;
-  }
+function filterUniqueLinks(value, index, self) { 
+    return self.indexOf(value) === index;
+}
 
-function getAllFightersForRecentEvent(params) {
+function getAllFightersForRecentEvent() {
     return new Promise(function (fulfill, reject) {
-        var urls = [];
-        getFightersFromMostRecentSherdogEvent().then(function (data) {
+        getMostRecentEventNameAndFighterUrls().then(function (data) {
             var promises = [];
-            var sherdogUrls = data.links;
-            console.log("sherdogurls: ", sherdogUrls);
+            var sherdogUrls = data.fighterLinks;
+            console.log("fighters in recent event: ", sherdogUrls);
             sherdogUrls.forEach((url, index) => {
-                var promise = generateFighterData(url);
+                var promise = getFighterFromSherdogFighterLink(url);
                 promises.push(promise);
             });
 
-            var results = []; //push every fighter to this
-
-            Promise.all(promises).then((primaryValues) => {
-                //fulfill(primaryValues); // if it's enough with 1 level
-                primaryValues.forEach((p) => { 
-                    p.opponents = [];
-                    results.push(p); 
+            var allFighters = [];
+            Promise.all(promises).then((promiseValues) => {
+                promiseValues.forEach((fighter) => { 
+                    fighter.opponents = [];
+                    allFighters.push(fighter); 
                 });
 
-                fulfill(results);
+                const returnObject = {
+                    eventName: data.eventName,
+                    fighters: allFighters
+                }
 
-                //This is not necessary since the 2020 overhaul
-                //fetchAllOpponentStats(fulfill, reject, results);
+                fulfill(returnObject);
             }).catch(function (e) {
-                console.error("dang. promiseAll error level 1.", e);
+                console.error("dang. promiseAll error in getAllFightersForRecentEvent", e);
             })
         })
         .catch((err) => {
-            reject("Damn. GetFighter error", err);
+            reject("Damn. getAllFightersForRecentEvent error", err);
         });
     });
 }
@@ -89,7 +89,7 @@ async function fetchAllOpponentStats(fulfill, reject, results) {
         comparisonNames.push(primary.name);
         var brawls = primary.fightHistory.splice(0, 3);
         brawls.forEach((battle) => {
-            secondaryPromises.push(generateFighterData("http://sherdog.com" + battle.oppnentUrl, "secondary", primary.name));
+            secondaryPromises.push(getFighterFromSherdogFighterLink("http://sherdog.com" + battle.opponentUrl, "secondary", primary.name));
         })
     })
 
@@ -132,7 +132,7 @@ function getFighterViaGoogle(name) {
             results.forEach((result) => {
                 const isSherdog = result.link.indexOf("www.sherdog.com/fighter/") > -1;
                 if (isSherdog) {
-                    var fighterData = generateFighterData(result.link, "primary");
+                    var fighterData = getFighterFromSherdogFighterLink(result.link, "primary");
                     promises.push(fighterData);
                     fighterData.then(() => {
                         fulfill(fighterData);
@@ -172,9 +172,10 @@ function getHref(x) {
     return x["href"] || x.attribs.href;
 }
 
-function generateFighterData(sherdog_url, type, relatedTo) {
+function getFighterFromSherdogFighterLink(sherdog_url, type, relatedTo) {
     type = type || "primary";
-    relatedTo = relatedTo || ""
+    relatedTo = relatedTo || "";
+    sherdog_url = sherdog_url.indexOf("sherdog.com") > -1 ? sherdog_url : "https://www.sherdog.com" + sherdog_url;
 
     var fighter = {
         name: "",
@@ -236,4 +237,4 @@ function generateFighterData(sherdog_url, type, relatedTo) {
     });
 }
 
-module.exports = { getFighterViaGoogle: getFighterViaGoogle, getFromEvent: getAllFightersForRecentEvent };
+module.exports = { getFighterViaGoogle, getFighterFromSherdogFighterLink, getAllFightersForRecentEvent };
