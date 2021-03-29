@@ -338,12 +338,18 @@
     }
     
     .site-header {
-        padding: 0;
-        color: gold;
+        padding: 10px;
         background: black; 
         font-family: 'Bebas Neue', sans-serif;
         font-size: 30px;
-        padding: 10px;
+    }
+    
+    .site-header h1 {
+        display: inline-block;
+        padding: 0 6px;
+        margin: 0;
+        background-color: gold;
+        color: black;
     }
     
     .site-title a {
@@ -616,7 +622,7 @@
 <body class="dark">
   <div id="wrapper">
     <div id="container">
-        <header class="site-header">MMA STATS</header>
+        <header class="site-header"><h1>MMA STATS</h1></header>
         <nav class="top-menu">
             <button onclick="getHistoricalRankingsFromJsonFile()">Historical rankings</button>
             <button onclick="getTopFightersFromRecentEvent()">Fighters from upcoming event</button>
