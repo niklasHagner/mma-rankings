@@ -85,6 +85,9 @@ const buildAllFightersHtml = function(fighters) {
 const divisionToHtml = function(division) {
 
   const fighters = division.fighters.map((fighter) => {
+    if (fighter.rank.toLowerCase().indexOf("champion") > -1) 
+      fighter.rank = "C";
+
     return `
       <article>
         <span class="rank">${fighter.rank}</span> <span class="name">${fighter.name}</span>
@@ -101,7 +104,10 @@ const divisionToHtml = function(division) {
 
 const buildRankingsHtml = function(pages) {
   const templateArray = pages.map((page) => {
-    const divisionTemplates = page.divisions.filter(vision => vision.name.toLowerCase() !== "women's featherweight").map(division => divisionToHtml(division));
+    const divisionTemplates = page.divisions
+      .filter(currDivision => currDivision.fighters.length >= 10)
+      .map(division => divisionToHtml(division));
+      
     const divisionsHtmlString = ` 
       <section class="snapshot">
         <h2>Rankings ${page.date}</h2>
