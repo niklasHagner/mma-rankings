@@ -58,8 +58,16 @@
     font-size: 13px;
 }
 
-.fights p {
+.fights .fight {
     margin: 2px 0;
+}
+
+.fight--win .fight__result {
+    color: gold;
+}
+
+.fight--loss .fight__result {
+    color: #ec9095;
 }
 
 .fight__year {
@@ -68,6 +76,14 @@
 
 .fight__opponent-rank {
     color: gold;
+}
+
+.fight__opponent-rank--past {
+    opacity: 0.5;
+}
+
+.fight__opponent-rank--future {
+    opacity: 0.5;
 }
 
 .fight__opponent {

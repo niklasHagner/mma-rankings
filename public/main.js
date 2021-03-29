@@ -5,21 +5,40 @@ function buildFightHistory(fights) {
     fight.opponentRankStr = "";
     fight.opponentRankHtml = "";
     if (fight.opponentInfoAtTheTime)  {
-      const date = new Date(fight.opponentInfoAtTheTime.date);
-      let monthString = date.getMonth();
-      if (monthString.length === 1) monthString = "0" + monthString;
-
-      const formattedDate = date.getFullYear() + "-" + monthString;
+      const dateOfOpponentRank = new Date(fight.opponentInfoAtTheTime.date);
+      let monthString = dateOfOpponentRank.getMonth();
+      if (monthString.length === 1) { 
+        monthString = "0" + monthString;
+      }
+      const yearOfOpponentRank = dateOfOpponentRank.getFullYear();
+      const formattedDate = yearOfOpponentRank + "-" + monthString;
 
       const showDifferentDivisionInfo = false; // fight.opponentInfoAtTheTime.division !== "xx";
       const differentDivisionInfo = showDifferentDivisionInfo ? ` at ${fight.opponentInfoAtTheTime.division}` : "";
       fight.opponentRankStr = fight.opponentInfoAtTheTime.fighter.rank + differentDivisionInfo + ` in ${formattedDate}`;
-      fight.opponentRankHtml = `<span class="fight__opponent-rank">(# ${fight.opponentRankStr})</span>`;
+      
+      let rankModifierClass = ""
+      if (Number(fight.year) > yearOfOpponentRank) {
+        rankModifierClass  = "fight__opponent-rank--past"
+      } else if (yearOfOpponentRank > Number(fight.year)) {
+        rankModifierClass  = "fight__opponent-rank--future"
+      }
+      fight.opponentRankHtml = `
+      <span class="fight__opponent-rank ${rankModifierClass}">
+        (# ${fight.opponentRankStr})
+      </span>`;
       fight.opponentUrl = encodeURIComponent(fight.opponentUrl);
     }
 
+    let fightModifierClass = "";
+    if (fight.result === "win") {
+      fightModifierClass = "fight--win";
+    } else if(fight.result === "loss") {
+      fightModifierClass = "fight--loss";
+    }
+
     return `
-      <p>
+      <p class="fight ${fightModifierClass}">
         <span class="fight__year">${fight.year}:</span>
         <span class="fight__result">${fight.result}</span>
         <span onclick="clickFighterLink('${fight.opponentUrl}')" data-url="${fight.opponentUrl}" class="fight__opponent">${fight.opponentName}</span>
@@ -102,8 +121,9 @@ const buildRankingsHtml = function(pages) {
 };
 
 
-const searchByName = function() {
-  var name = document.querySelector("#search").value;
+const searchByName = function(ev) {
+  ev.preventDefault();
+  var name = document.querySelector("#search-input").value;
   renderFighterProfileByName(name);
 };
 
@@ -159,7 +179,6 @@ const getTopFightersFromRecentEvent = function () {
       return response.json();
     })
     .then((json) => {
-      debugger;
       document.querySelector(".triple-loader").classList.add("hidden");
       document.querySelector("#fighters").innerHTML = `
         <h1 class="post-title">${json.eventName}</h1>
@@ -224,8 +243,4 @@ const getHistoricalRankingsFromJsonFile = function (date = new Date()) {
 };
 
 
-//getHistoricalRankingsFromJsonFile(); // list rankings for all dates
-
-//getMmaStatsByDate(); // list rankings for one date
-
-//getFighterProfiles(""); // by not using any query we'll get the default response: top 4 fighters from the most recent ufc-event
+document.querySelector("#search-form").addEventListener("submit", searchByName);
