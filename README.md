@@ -1,13 +1,16 @@
 # UFC-rankings
-=============
 
-The goal of this project is to 
 
-a) list a fighter's record along with each of their opponent's rank at the time of the fight.
+I'm interested in the UFC rankings.
+This project was created to show a fighter record. Not just their opponents - but the rank of the opponent during the date of the fight.
+
+This project generates a json-file of the top15 rankings for every UFC division across multiple points in history. based off that data we can look up what the ranking for every opponent was at any particular date.
+
+**Screenshot of fighter records:**
 
 ![screenshot](https://i.imgur.com/jZV8gA6.png)
 
-b) list historical records on a single page, similar to what mma-stats.com does
+**Bonus feature: Historical UFC rankings**
 
 ![screenshot](https://i.imgur.com/daVexhr.png)
 
@@ -17,7 +20,7 @@ b) list historical records on a single page, similar to what mma-stats.com does
     - node-backend for fetching fighter profiles from a sherdog-api
 * public = vanilla js and html
 
-## Running the project:
+## Run this project:
 
 1. start the node-server
 `node app.js`
@@ -40,6 +43,5 @@ b) list historical records on a single page, similar to what mma-stats.com does
 
 ## Project history
 
-* Started by scraping ufc.com on internetArchive, but as ufc.com was rebuilt in 2020 their rankings became unreliable.
-* Switched to scraping mma-stats.com. 
+* Started by scraping ufc.com on internetArchive, but after the rebuild of ufc.com their rankings became unreliable. Switched to scraping mma-stats.com. 
 * Started with cheerio as a scraper, replaced it with puppeteer to be able to use vanilla js instead of jQuery, but after puppeteer required a +300MB chromium install I replaced it with jsDom.
