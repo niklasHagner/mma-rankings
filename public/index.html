@@ -607,6 +607,7 @@
       color: orange;
     }
   </style>
+  <link rel="stylesheet" type="text/css" href="ui.css" />
   <link rel="stylesheet" type="text/css" href="loader.css" />
   <link rel="stylesheet" type="text/css" href="fight.css" />
   
@@ -619,8 +620,10 @@
         <nav class="top-menu">
             <button onclick="getHistoricalRankingsFromJsonFile()">Historical rankings</button>
             <button onclick="getTopFightersFromRecentEvent()">Fighters from upcoming event</button>
-            <input type="search" id="search" />
-            <button onclick="searchByName()">Search</button>
+            <form id="search-form">
+                <input type="search" id="search" />
+                <button type="submit">Search</button>
+            </form>
         </nav>
 
         <div class="triple-loader hidden"><div></div><div></div><div></div></div>
