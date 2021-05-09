@@ -103,12 +103,12 @@ const divisionToHtml = function(division) {
 };
 
 const buildRankingsHtml = function(pages) {
-  const templateArray = pages.map((page) => {
+  const snapshots = pages.map((page) => {
     const divisionTemplates = page.divisions
       .filter(currDivision => currDivision.fighters.length >= 10)
       .map(division => divisionToHtml(division));
-      
-    const divisionsHtmlString = ` 
+
+    const snapshotHtml = ` 
       <section class="snapshot">
         <h2>Rankings ${page.date}</h2>
         <div class="snapshot-divisions">
@@ -116,14 +116,36 @@ const buildRankingsHtml = function(pages) {
         </div>
       </section>
     `;
-    return divisionsHtmlString;
+    return { 
+      date: page.date, 
+      year: new Date(page.date).getFullYear(), 
+      html: snapshotHtml
+    };
   });
-  const totalHtmlString = templateArray.join("");
 
-  const allHtml = `
-    ${totalHtmlString}
+  const snapshotsGroupedByYear = [];
+  snapshots.forEach((snapshot) => {
+    const matchingItem = snapshotsGroupedByYear.find(x => x.year === snapshot.year);
+    if (matchingItem) {
+      const matchingIndex = snapshotsGroupedByYear.indexOf(matchingItem);
+      snapshotsGroupedByYear[matchingIndex].html += snapshot.html;
+    } else {
+      snapshotsGroupedByYear.push(snapshot);
+    }
+  }) 
+
+  const totalHtmlString = snapshotsGroupedByYear.map((annualSnapshot, index) => {
+    // const modifierClass = index === 0 ? " : "annual-rank-snapshots--collapsed";
+    const modifierClass = "annual-rank-snapshots--collapsed";
+    return `
+      <div class="annual-rank-snapshots ${modifierClass}">
+        <p>${annualSnapshot.year}</p>
+        ${annualSnapshot.html}
+      </div>
     `;
-  return allHtml;
+  }).join("");
+
+  return totalHtmlString;
 };
 
 
@@ -151,10 +173,6 @@ const renderFighterProfileByName = function(name) {
         </section>
       `;
     });
-}
-
-function clickFighterLink(url) {
-  renderFighterProfileByUrl(url);
 }
 
 const renderFighterProfileByUrl = function(url) {
@@ -209,25 +227,23 @@ function formatDate(date) {
   return [year, month, day].join('-');
 }
 
-const getMmaStatsByDate = function (date = new Date()) {
-    date = formatDate(date);
-    console.log("fetching mma-stats for", date);
-    document.querySelector(".triple-loader").classList.remove("hidden");
-    fetch(`http://localhost:8081/mma-stats-by-date?date=${date}`)
-    .then((response) => {
-      return response.json();
-    })
-    .then((json) => {
-      document.querySelector(".triple-loader").classList.add("hidden");
-      console.log("got mma-stats");
-      console.log(json);
-      const array = [json];
-      document.querySelector("#rankings").innerHTML = `
-        <h1 class="post-title">UFC rankings history</h1>
-        ${buildRankingsHtml(array)}
-      `;
-    });
-};
+// const getMmaStatsByDate = function (date = new Date()) {
+//     date = formatDate(date);
+//     console.log("fetching mma-stats for", date);
+//     document.querySelector(".triple-loader").classList.remove("hidden");
+//     fetch(`http://localhost:8081/mma-stats-by-date?date=${date}`)
+//     .then((response) => {
+//       return response.json();
+//     })
+//     .then((json) => {
+//       document.querySelector(".triple-loader").classList.add("hidden");
+//       const array = [json];
+//       document.querySelector("#rankings").innerHTML = `
+//         <h1 class="post-title">UFC rankings history</h1>
+//         ${buildRankingsHtml(array)}
+//       `;
+//     });
+// };
 
 const getHistoricalRankingsFromJsonFile = function (date = new Date()) {
     date = formatDate(date);
@@ -241,12 +257,25 @@ const getHistoricalRankingsFromJsonFile = function (date = new Date()) {
       console.log("got mma-stats");
       console.log(json);
       const array = json.dates;
-        document.querySelector("#rankings").innerHTML = `
+      document.querySelector("#rankings").innerHTML = `
         <h1 class="post-title">UFC rankings history</h1>
         ${buildRankingsHtml(array)}
       `;
+      Array.from(document.querySelectorAll(".annual-rank-snapshots p")).forEach(x => x.addEventListener("click", clickAnnualRankingsSnapshot));
     });
 };
 
+function clickFighterLink(url) {
+  renderFighterProfileByUrl(url);
+}
+
+function clickAnnualRankingsSnapshot(ev) {
+  const target = ev.target.closest(".annual-rank-snapshots");
+  if (target.classList.contains("annual-rank-snapshots--collapsed")) {
+    target.classList.remove("annual-rank-snapshots--collapsed");
+  } else {
+    target.classList.add("annual-rank-snapshots--collapsed");
+  }
+}
 
 document.querySelector("#search-form").addEventListener("submit", searchByName);
