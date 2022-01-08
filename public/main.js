@@ -31,9 +31,9 @@ function buildFightHistory(fights) {
     }
 
     let fightModifierClass = "";
-    if (fight.result === "win") {
+    if (fight.result === "Win") {
       fightModifierClass = "fight--win";
-    } else if(fight.result === "loss") {
+    } else if(fight.result === "Loss") {
       fightModifierClass = "fight--loss";
     }
 
@@ -51,26 +51,27 @@ function buildFightHistory(fights) {
 }
 
 const buildFighterHtml = function(fighter) {
-  const recentFights = fighter.recentYears.join("<br>");
+  const recentFights = fighter.recordString; //fighter.record.join("<br>");
+  const info = fighter.fighterInfo;
+  // ${ fighter.nickname.length > 0 ? `<p class="fighter-nickname">"${fighter.nickname.replace('"', '')}"</p>` : "" }
   return `
     <article class="fighter">
         <header>
           <div class="left-col">
-            <img src="https://sherdog.com/${fighter.image}" alt="photo">
+            <img src="${info.relevantImages[0]}" alt="photo">
           </div>
           <div class="right-col">
-            <h1 class="fighter-name">${fighter.name}</h1>
-            ${ fighter.nickname.length > 0 ? `<p class="fighter-nickname">"${fighter.nickname.replace('"', '')}"</p>` : "" }
-            <p class="fighter-age">age: ${fighter.age}</p>
-            <p class="fighter-size">${fighter.height_cm}cm ${fighter.weight_kg}kg</p>
-            <p class="fighter-hometown">hometown: ${fighter.hometown}</p>
-            <p class="fighter-association">association: ${fighter.association}</p>
+            <h1 class="fighter-name">${info.name}</h1>
+            <p class="fighter-age">age: ${info.birthDate && info.birthDate.age ? info.birthDate.age : "unknown<"}</p>
+            <p class="fighter-size">${info.height}cm ${info.weight}kg</p>
+            <p class="fighter-hometown">hometown: ${info.residence}</p>
+            <p class="fighter-association">association: ${info.team}</p>
           </div>
         </header>
         
         <div class="fights">
           <h4>Record:</h4>
-          ${buildFightHistory(fighter.fightHistory)}  
+          ${buildFightHistory(fighter.record)}  
         </div>
     </article>
   `;
@@ -195,10 +196,10 @@ const renderFighterProfileByUrl = function(url) {
   });
 }
 
-const getTopFightersFromRecentEvent = function () {
+window.getTopFightersFromRecentEvent = function () {
     document.querySelector(".triple-loader").classList.remove("hidden");
 
-    fetch(`http://localhost:8081/fighters-from-recent-event`)
+    fetch(`http://localhost:8081/fighters-from-next-event`)
     .then((response) => {
       return response.json();
     })
@@ -245,7 +246,7 @@ function formatDate(date) {
 //     });
 // };
 
-const getHistoricalRankingsFromJsonFile = function (date = new Date()) {
+window.getHistoricalRankingsFromJsonFile = function (date = new Date()) {
     date = formatDate(date);
     document.querySelector(".triple-loader").classList.remove("hidden");
     fetch(`http://localhost:8081/serve-rankings-file`)

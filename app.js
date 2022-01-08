@@ -1,16 +1,20 @@
 const express = require("express");
 const app = express();
 const fs = require('fs');
+const path = require('path');
 const winston = require('winston');
 const sherdog = require('./backend/getSherdogFighterInfo.js');
 const mmaStatsScraper = require('./backend/scrapeMmaStatsDotCom');
 const { findRankAtTime } = require('./backend/findRank');
-const path = require('path');
+const wikipediaApi = require('./backend/wikipediaApi.js');
 
 let existingData = fs.readFileSync("data/mmaStats.json");
 let jsonData = JSON.parse(existingData);
 let lastScapedDate = jsonData.dates[0].date;
 console.log(`The last time you scraped was ${lastScapedDate}. Maybe it's time to run /scrapeMissing `);
+
+
+// parseFighter('Nick Diaz')
 
 winston.configure({
     transports: [
@@ -99,8 +103,8 @@ app.get('/search-fighter-by-name', function(req, response) {
     }
 
     var fighterName = decodeURIComponent(req.query.name);
-    
-    sherdog.getFighterViaGoogle(fighterName).then(function (fighter) {
+
+    wikipediaApi.parseFighter(fighterName).then(function (fighter) {
         //append historical record of fights to fighter-object
         let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
         let allRankingsData = JSON.parse(allRankingsFromFile);
@@ -140,10 +144,10 @@ app.get('/get-fighter-by-sherdog-url', function(req, response) {
     });
 });
 
-app.get('/fighters-from-recent-event', function (req, response) {
+app.get('/fighters-from-next-event', function (req, response) {
     response.contentType('application/json');
 
-    sherdog.getAllFightersForRecentEvent().then(function (data) {
+    wikipediaApi.getFightersFromNextEvent().then(function (data) {
         //append historical record of fights to fighter-object
         let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
         let allRankingsData = JSON.parse(allRankingsFromFile);
@@ -162,15 +166,15 @@ app.get('/fighters-from-recent-event', function (req, response) {
 });
 
 function mapFighterFromApiToExtraData(fighter, allRankingsData) {
-    const fightHistory = fighter.fightHistory;
-    const extendedFightHistory = fightHistory.map((fight) => {
+    const record = fighter.record;
+    const extendedRecord = record.map((fight) => {
         const lookupName = fight.opponentName;
         const lookupDate = fight.date;
         const opponentInfoAtTheTime = findRankAtTime(allRankingsData, lookupName, lookupDate);
         return { ...fight, opponentInfoAtTheTime };
     });
-    // console.log("extendedFightHistory", extendedFightHistory);
-    fighter.fightHistory = extendedFightHistory;
+    // console.log("extendedrecord", extendedrecord);
+    fighter.record = extendedRecord;
     return fighter;
 }
 

@@ -624,15 +624,15 @@
     <div id="container">
         <header class="site-header"><h1>MMA STATS</h1></header>
         <nav class="top-menu">
-            <button onclick="getHistoricalRankingsFromJsonFile()">Historical rankings</button>
-            <button onclick="getTopFightersFromRecentEvent()">Fighters from upcoming event</button>
+            <button onclick="window.getHistoricalRankingsFromJsonFile()">Historical rankings</button>
+            <button onclick="window.getTopFightersFromRecentEvent()">Fighters from upcoming event</button>
             <form id="search-form">
                 <input type="search" id="search-input" />
                 <button type="submit">Search</button>
+                <div class="triple-loader hidden"><div></div><div></div><div></div></div>
             </form>
         </nav>
 
-        <div class="triple-loader hidden"><div></div><div></div><div></div></div>
 
         <div class="container single-post-container">
             <section id="fighters">
