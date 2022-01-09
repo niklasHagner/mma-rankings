@@ -1,3 +1,4 @@
+const loader = document.querySelector(".triple-loader");
 
 function buildFightHistory(fights) {
   const templateStrings = fights.map((fight) => {
@@ -103,8 +104,42 @@ const divisionToHtml = function(division) {
   `;
 };
 
+const getSortedDivisions = function(divisions) {
+  const sortValues = [
+    {name: "heavyweight", order: 1},
+    {name: "light heavyweight", order: 2},
+    {name: "middleweight", order: 3},
+    {name: "welterweight", order: 4},
+    {name: "lightweight", order: 5},
+    {name: "featherweight", order: 6},
+    {name: "bantamweight", order: 7},
+    {name: "flyweight", order: 8},
+    {name: "women's bantamweight", order: 9},
+    {name: "women's flyweight", order: 10},
+    {name: "women's strawweight", order: 11},
+    {name: "women's featherweight", order: 12},
+    {name: "pound-for-pound", order: 13},
+  ];
+  const arr = divisions.filter(x => x.name.indexOf("women") < 0);
+  return arr.sort((a,b) => {
+    const aMatch = sortValues.find(sortItem => sortItem.name === a.name.toLowerCase().trim());
+    const aSortVal = aMatch ? aMatch.order : 0;
+
+    const bMatch = sortValues.find(sortItem => sortItem.name === b.name.toLowerCase().trim());
+    const bSortVal = bMatch ? bMatch.order : 0;
+    
+    return aSortVal - bSortVal; 
+  });
+}
+
 const buildRankingsHtml = function(pages) {
+  pages.forEach((x) => {
+    x.divisions = getSortedDivisions(x.divisions);
+  });
+  let latestRanks = pages[0];
+  pages = pages.slice(0,pages.length-1);
   const snapshots = pages.map((page) => {
+    
     const divisionTemplates = page.divisions
       .filter(currDivision => currDivision.fighters.length >= 10)
       .map(division => divisionToHtml(division));
@@ -135,7 +170,7 @@ const buildRankingsHtml = function(pages) {
     }
   }) 
 
-  const totalHtmlString = snapshotsGroupedByYear.map((annualSnapshot, index) => {
+  let totalHtmlString = snapshotsGroupedByYear.map((annualSnapshot, index) => {
     // const modifierClass = index === 0 ? " : "annual-rank-snapshots--collapsed";
     const modifierClass = "annual-rank-snapshots--collapsed";
     return `
@@ -146,6 +181,15 @@ const buildRankingsHtml = function(pages) {
     `;
   }).join("");
 
+  totalHtmlString = `
+      <h2>Rankings ${latestRanks.date}</h2>
+      <section class="snapshot-divisions">
+        ${latestRanks.divisions.map(x => divisionToHtml(x)).join("")}
+      </section>
+      <h1 class="post-title">UFC rankings history</h1>
+      ${totalHtmlString}
+    </section>
+  `;
   return totalHtmlString;
 };
 
@@ -158,7 +202,7 @@ const searchByName = function(ev) {
 
 const renderFighterProfileByName = function(name) {
     console.log("fetching fighters");
-    document.querySelector(".triple-loader").classList.remove("hidden");
+    loader.classList.remove("hidden");
     if (name) {
         name = encodeURIComponent(name);
     }
@@ -167,7 +211,7 @@ const renderFighterProfileByName = function(name) {
       return response.json();
     })
     .then((json) => {
-      document.querySelector(".triple-loader").classList.add("hidden");
+      loader.classList.add("hidden");
       document.querySelector("#fighters").innerHTML = `
         <section class="records-fighter-list">
             ${buildFighterHtml(json)}
@@ -178,13 +222,13 @@ const renderFighterProfileByName = function(name) {
 
 const renderFighterProfileByUrl = function(url) {
   console.log("fetching fighters");
-  document.querySelector(".triple-loader").classList.remove("hidden");
+  loader.classList.remove("hidden");
   fetch(`/get-fighter-by-sherdog-url?url=${url}`)
   .then((response) => {
     return response.json();
   })
   .then((json) => {
-    document.querySelector(".triple-loader").classList.add("hidden");
+    loader.classList.add("hidden");
     const newEl = document.createElement("section");
     newEl.innerHTML = `
       <section class="records-fighter-list">
@@ -197,14 +241,14 @@ const renderFighterProfileByUrl = function(url) {
 }
 
 window.getTopFightersFromRecentEvent = function () {
-    document.querySelector(".triple-loader").classList.remove("hidden");
+    loader.classList.remove("hidden");
 
     fetch(`http://localhost:8081/fighters-from-next-event`)
     .then((response) => {
       return response.json();
     })
     .then((json) => {
-      document.querySelector(".triple-loader").classList.add("hidden");
+      loader.classList.add("hidden");
       document.querySelector("#fighters").innerHTML = `
         <h1 class="post-title">${json.eventName}</h1>
         <section class="records-fighter-list">
@@ -231,13 +275,13 @@ function formatDate(date) {
 // const getMmaStatsByDate = function (date = new Date()) {
 //     date = formatDate(date);
 //     console.log("fetching mma-stats for", date);
-//     document.querySelector(".triple-loader").classList.remove("hidden");
+//     loader.classList.remove("hidden");
 //     fetch(`http://localhost:8081/mma-stats-by-date?date=${date}`)
 //     .then((response) => {
 //       return response.json();
 //     })
 //     .then((json) => {
-//       document.querySelector(".triple-loader").classList.add("hidden");
+//       loader.classList.add("hidden");
 //       const array = [json];
 //       document.querySelector("#rankings").innerHTML = `
 //         <h1 class="post-title">UFC rankings history</h1>
@@ -248,19 +292,15 @@ function formatDate(date) {
 
 window.getHistoricalRankingsFromJsonFile = function (date = new Date()) {
     date = formatDate(date);
-    document.querySelector(".triple-loader").classList.remove("hidden");
+    loader.classList.remove("hidden");
     fetch(`http://localhost:8081/serve-rankings-file`)
     .then((response) => {
       return response.json();
     })
     .then((json) => {
-      document.querySelector(".triple-loader").classList.add("hidden");
-      console.log("got mma-stats");
-      console.log(json);
-      const array = json.dates;
+      loader.classList.add("hidden");
       document.querySelector("#rankings").innerHTML = `
-        <h1 class="post-title">UFC rankings history</h1>
-        ${buildRankingsHtml(array)}
+        ${buildRankingsHtml(json.dates)}
       `;
       Array.from(document.querySelectorAll(".annual-rank-snapshots p")).forEach(x => x.addEventListener("click", clickAnnualRankingsSnapshot));
     });
@@ -279,4 +319,7 @@ function clickAnnualRankingsSnapshot(ev) {
   }
 }
 
-document.querySelector("#search-form").addEventListener("submit", searchByName);
+document.addEventListener('DOMContentLoaded', (e) => {  
+  document.querySelector("#search-form").addEventListener("submit", searchByName);
+  window.getHistoricalRankingsFromJsonFile();
+});

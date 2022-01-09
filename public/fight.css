@@ -8,12 +8,23 @@
     border-bottom: solid 2px white;
     display: flex;
     flex-wrap: wrap;
+    gap: 10px;
+}
+
+.division-fighters {
+    font-size: 12px;
 }
 
 .annual-rank-snapshots p {
     background-color: gold;
+    max-width: 400px;
     color: black;
     cursor: pointer;
+    font-weight: bold;
+}
+
+.annual-rank-snapshots p:hover {
+    background-color: orange;
 }
 
 .annual-rank-snapshots .snapshot {
@@ -35,7 +46,6 @@
 
 .division {
     margin-bottom: 10px;
-    flex: 1 0 275px;
 }
 
 .records-fighter-list {
@@ -126,5 +136,5 @@
 #rankings {
     margin-bottom: 10px;
     padding-bottom: 10px;
-    border-bottom: solid 1px #eee;
+    /* border-bottom: solid 1px #eee; */
 }

@@ -1,5 +1,35 @@
-#search-form {
-  margin: 10px;
+button {
+  background: orange;
+  color: #333;
+  border-radius: 30px;
+  padding: 5px 10px;
+  font-size: 14px;
+  border: solid 1px orange;
+  border-radius: 20px;
+  font-weight: bold;
+  padding: 10px 12px
+}
+
+button:hover {
+  background-color: gold;
+  cursor: pointer;
+}
+
+button:active {
+  color: orange;
+  background-color: #333;
+}
+
+.top-menu {
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.top-menu button {
+    min-height: 35px;
 }
 
 #search-input {
