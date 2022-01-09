@@ -1,5 +1,4 @@
 var HTMLParser = require('node-html-parser');
-const { getAllFightersForRecentEvent } = require('./getSherdogFighterInfo');
 
 module.exports.parseWikipediaFightRecordTableToJson = function (html) {
   const root = HTMLParser.parse(html);

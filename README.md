@@ -42,4 +42,5 @@ This project generates a json-file of the top15 rankings for every UFC division 
 1. Scrape historical rankings from ufc.com via internetArchive, and scrape fighter profiles from sherdog.com
 2. ufc.com became unreliable after a rebuild in 2020. Switched to scraping mma-stats.com
 3. Change Scraper from cheerio to JsDOM
-4. Sherdog.com started hiding content, switch to Wikipedia for fighter profiles
+4. Sherdog.com started hiding content, switch to Wikipedia via `wikijs` for fighter profiles
+5. Replace `wikijs` with scraper due to API limits

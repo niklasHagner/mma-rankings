@@ -78,6 +78,10 @@
     margin-bottom: 5px;
 }
 
+.fighter .right-col span {
+    font-weight: bold;
+}
+
 .fighter-hometown, .fighter-association, .fighter-age, .fighter-size {
     font-size: 13px;
 }

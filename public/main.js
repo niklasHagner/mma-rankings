@@ -63,10 +63,12 @@ const buildFighterHtml = function(fighter) {
           </div>
           <div class="right-col">
             <h1 class="fighter-name">${info.name}</h1>
-            <p class="fighter-age">age: ${info.birthDate && info.birthDate.age ? info.birthDate.age : "unknown<"}</p>
-            <p class="fighter-size">${info.height}cm ${info.weight}kg</p>
-            <p class="fighter-hometown">hometown: ${info.residence}</p>
-            <p class="fighter-association">association: ${info.team}</p>
+            <p class="fighter-age"><span>age:</span> ${info.age }</p>
+            <p class="fighter-size"><span>size:</span>${info.height}cm ${info.weight}kg</p>
+            <p class="fighter-hometown"><span>residence:</span> ${info.residence}</p>
+            <p class="fighter-hometown"><span>born:</span> ${info.birthplace}</p>
+            <p class="fighter-association"><span>fighting out of:</span> ${info.fightingOutOf}</p>
+            <p class="fighter-association"><span>team:</span> ${info.teeam}</p>
           </div>
         </header>
         
