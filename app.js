@@ -3,7 +3,6 @@ const app = express();
 const fs = require('fs');
 const path = require('path');
 const winston = require('winston');
-const sherdog = require('./backend/getSherdogFighterInfo.js');
 const mmaStatsScraper = require('./backend/scrapeMmaStatsDotCom');
 const { findRankAtTime } = require('./backend/findRank');
 const wikipediaApi = require('./backend/wikipediaApi.js');
@@ -11,7 +10,7 @@ const wikipediaApi = require('./backend/wikipediaApi.js');
 let existingData = fs.readFileSync("data/mmaStats.json");
 let jsonData = JSON.parse(existingData);
 let lastScapedDate = jsonData.dates[0].date;
-console.log(`The last time you scraped was ${lastScapedDate}. Maybe it's time to run /scrapeMissing `);
+console.log(`The last rank is dated ${lastScapedDate}. Maybe it's time to run /scrapeMissing `);
 
 
 // parseFighter('Nick Diaz')
@@ -118,32 +117,6 @@ app.get('/search-fighter-by-name', function(req, response) {
     });
 });
 
-
-app.get('/get-fighter-by-sherdog-url', function(req, response) {
-    response.contentType('application/json');
-
-    if (!req.query.url) {
-        console.error(" Error. Try something like this instead: /get-fighter-by-sherdog-url?url=someSherdogUrl");
-        response.send({error:true});
-        return;
-    }
-
-    var sherdogFighterProfileUrl = decodeURIComponent(req.query.url);
-    
-    sherdog.getFighterFromSherdogFighterLink(sherdogFighterProfileUrl).then(function (fighter) {
-        //append historical record of fights to fighter-object
-        let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
-        let allRankingsData = JSON.parse(allRankingsFromFile);
-        fighter = mapFighterFromApiToExtraData(fighter, allRankingsData);
-        response.send(fighter);
-        return;
-    }).catch(function (reason) {
-        console.error("fail", reason);
-        response.send("fail: " + reason);
-        return;
-    });
-});
-
 app.get('/fighters-from-next-event', function (req, response) {
     response.contentType('application/json');
 
@@ -181,6 +154,6 @@ function mapFighterFromApiToExtraData(fighter, allRankingsData) {
 var port = 8081;
 console.log('Server listening on:' + port);
 app.listen(port);
-console.info("Endpoint example: /search-fighter-by-name?name=Fedor");
-console.info("to trigger a request browse to /");
-console.info("to scrape go to /scrape?startDate=2017-01-01&endDate=2017-12-31");
+console.info("* Endpoint example: /search-fighter-by-name?name=Fedor");
+console.info("* to trigger a request browse to /");
+console.info("* to scrape go to /scrape?startDate=2017-01-01&endDate=2017-12-31");
