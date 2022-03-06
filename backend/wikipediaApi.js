@@ -60,7 +60,7 @@ async function fetchArrayOfFighters(fighters) {
 
     const returnObject = allFighters;
 
-    console.log(JSON.stringify(returnObject));
+    // console.log(JSON.stringify(returnObject));
 
     return returnObject;
     // .catch(function (e) {
@@ -179,7 +179,7 @@ function scrapeFighterData(wikiPageUrl) {
         }
         else { //Most props like wins/losses don't need modification
             fighterInfo[propName] = value;
-            console.log("After ->", propName, ":", value);
+            // console.log("Modified prop ->", propName, ":", value);
         }
       });
       var recordTables = parseWikipediaFightRecordTableToJson(html);

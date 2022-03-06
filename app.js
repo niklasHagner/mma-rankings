@@ -123,11 +123,10 @@ app.get('/fighters-from-next-events', async function (req, response) {
     const data = await wikipediaApi.getFightersFromNextEvent(); // { events: [ ]}
     //Extend fighter-objects with historical ranking data
     const events = data.events.map(event => {
-        const eventName = event.eventName;
         let fighters = event.fighters.map((fighter) => { 
             return mapFighterFromApiToExtraData(fighter, allRankingsData); 
         });
-        return {eventName, fighters};
+        return {...event, fighters};
     })
     response.contentType('application/json');
     response.send({allEvents: events});

@@ -258,6 +258,7 @@ window.getFightersFromUpcomingEvents = function () {
                 return `
                 <article>
                     <h1 class="post-title">${x.eventName}</h1>
+                    <p>${x.date}</p>
                     <section class="records-fighter-list">
                         ${buildAllFightersHtml(x.fighters)}
                     </section>
