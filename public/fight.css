@@ -82,7 +82,7 @@
     font-weight: bold;
 }
 
-.fighter-hometown, .fighter-association, .fighter-age, .fighter-size {
+p.small {
     font-size: 13px;
 }
 

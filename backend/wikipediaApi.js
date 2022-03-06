@@ -156,6 +156,7 @@ function scrapeFighterData(wikiPageUrl) {
           if (!fighterInfo["birthplace"] && splitVals.length > 2) {
             fighterInfo["birthplace"] = striptags(splitVals[2]);
           }
+          fighterInfo["birthplace"] = fighterInfo["birthplace"].trim();
 
         }
         else if (propName === "nicknames" || propName === "othernames") {

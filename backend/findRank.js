@@ -24,10 +24,10 @@ Return the rank at the time, or if unranked - return the earliest possible rank
 function findRankAtTime(data, name, date) {
     const matches = findAllRanksForFighter(data, name);
     if (matches.length === 0) {
-        console.error("0 matches");
+        // console.error("0 matches");
         return 0;
     } else {
-        console.log(matches.length, "matches found");
+        // console.log(matches.length, "matches found");
     }
   
     let closestEarlierDate = matches.find((match) => {
