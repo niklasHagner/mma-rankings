@@ -245,27 +245,27 @@ const renderFighterProfileByUrl = function(url) {
   });
 }
 
-window.getTopFightersFromRecentEvent = function () {
+window.getFightersFromUpcomingEvents = function () {
     loader.classList.remove("hidden");
 
-    fetch(`http://localhost:8081/fighters-from-next-event`)
-    .then((response) => {
-      return response.json();
-    })
-    .then((json) => {
-      loader.classList.add("hidden");
-      const htmlBlob = json.allEvents.map(x => {
-          return `
-          <article>
-              <h1 class="post-title">${x.eventName}</h1>
-              <section class="records-fighter-list">
-                  ${buildAllFightersHtml(x.fighters)}
-              </section>
-          </article>
-        `;
-      }).join("");
-      document.querySelector("#events").innerHTML = htmlBlob;
-    });
+    fetch(`http://localhost:8081/fighters-from-next-events`)
+        .then((response) => {
+            return response.json();
+        })
+        .then((json) => {
+            loader.classList.add("hidden");
+            const htmlBlob = json.allEvents.map(x => {
+                return `
+                <article>
+                    <h1 class="post-title">${x.eventName}</h1>
+                    <section class="records-fighter-list">
+                        ${buildAllFightersHtml(x.fighters)}
+                    </section>
+                </article>
+                `;
+        }).join("");
+            document.querySelector("#events").innerHTML = htmlBlob;
+        });
 };
 
 function formatDate(date) {

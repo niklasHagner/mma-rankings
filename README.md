@@ -35,7 +35,7 @@ This project generates a json-file of the top15 rankings for every UFC division 
 * `/serve-rankings-file` - serves the latest data dump of all historical rankings
 * `/mma-stats-by-date?date="2015-01-20"` - get rankings for 20th january 2015
 * `/search-fighter-by-name?name=Fedor` - search for a single fighter profile
-* `/fighters-from-next-event` - get the next major UFC event and show mulitple participating fighter profiles
+* `/fighters-from-next-events` - get the next UFC events and show mulitple participating fighter profiles
 
 ## Project history
 

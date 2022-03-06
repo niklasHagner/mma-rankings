@@ -117,26 +117,21 @@ app.get('/mma-stats-by-date', async function (req, res) {
 //     });
 // });
 
-app.get('/fighters-from-next-event', function (req, response) {
-    response.contentType('application/json');
-
-    wikipediaApi.getFightersFromNextEvent().then(function (data) {
-        //append historical record of fights to fighter-object
-        let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
-        let allRankingsData = JSON.parse(allRankingsFromFile);
-        const eventName = data.eventName;
-        let fighters = data.fighters;
-        fighters = fighters.map((fighter) => { 
+app.get('/fighters-from-next-events', async function (req, response) {
+    let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
+    let allRankingsData = JSON.parse(allRankingsFromFile);
+    const data = await wikipediaApi.getFightersFromNextEvent(); // { events: [ ]}
+    //Extend fighter-objects with historical ranking data
+    const events = data.events.map(event => {
+        const eventName = event.eventName;
+        let fighters = event.fighters.map((fighter) => { 
             return mapFighterFromApiToExtraData(fighter, allRankingsData); 
         });
-        const eventData = {eventName, fighters};
-        response.send({allEvents: [eventData]});
-        return;
-    }).catch(function (reason) {
-        console.error("fail", reason);
-        response.send("fail: " + reason);
-        return;
-    });
+        return {eventName, fighters};
+    })
+    response.contentType('application/json');
+    response.send({allEvents: events});
+    return;
 });
 
 function mapFighterFromApiToExtraData(fighter, allRankingsData) {
@@ -147,7 +142,6 @@ function mapFighterFromApiToExtraData(fighter, allRankingsData) {
         const opponentInfoAtTheTime = findRankAtTime(allRankingsData, lookupName, lookupDate);
         return { ...fight, opponentInfoAtTheTime };
     });
-    // console.log("extendedrecord", extendedrecord);
     fighter.record = extendedRecord;
     return fighter;
 }

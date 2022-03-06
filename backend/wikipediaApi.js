@@ -1,67 +1,71 @@
 const { parseWikipediaFightRecordTableToJson, parseWikipediaFutureEventsToJson, parseWikipediaFightersOnNextEventToJson } = require('./wikipediaTableParser.js');
 const HTMLParser = require('node-html-parser');
 const request = require('request');
+const fetch = require('node-fetch');
 const striptags = require('striptags');
-const { prop } = require('cheerio/lib/api/attributes');
 
-function getNamesAndUrlsOfNextEventFighters() {
-  return new Promise(function (fulfill, reject) {
-    request('https://en.wikipedia.org/wiki/List_of_UFC_events', function (error, response, html) {
-      const rows = parseWikipediaFutureEventsToJson(html);
-      const nextEvent = rows.reverse().find((row) => {
+async function getNamesAndUrlsOfNextEventFighters() {
+
+    const response = await fetch('https://en.wikipedia.org/wiki/List_of_UFC_events');
+    const htmlForAllUfcEvents = await response.text();
+    const rows = await parseWikipediaFutureEventsToJson(htmlForAllUfcEvents);
+
+     //each row contains: {eventName,url,date,venue,location}
+    const nextBigEvent = rows.reverse().find((row) => {
         const name = row.eventName.split(":")[0].replace("UFC ", "");
-        //Exepect names like 'UFC 123: X vs Y' or names like 'UFC 123' 
+        //A big event is named 'UFC 200' or 'UFC 260: X vs Y'. But not 'UFC Fight Night 50'
         return name.length < 5;
-      });
-      const urlToLookup = nextEvent.url;
-      const nextEventName = nextEvent.eventName;
-      request(urlToLookup, function (error, response, html) {
-        const fightRows = parseWikipediaFightersOnNextEventToJson(html);
-        fulfill({
-          fighters: fightRows,
-          eventName: nextEventName,
-          otherEvents: {  }
-        });
-      });
     });
-  });
+    const urlToLookup = nextBigEvent.url;
+    const responseForSingleEvent = await fetch(urlToLookup);
+    const htmlForSingleEvent = await responseForSingleEvent.text();
+    const fightRows = parseWikipediaFightersOnNextEventToJson(htmlForSingleEvent);
+    const nextBigEventObj = nextBigEvent;
+    nextBigEventObj.fighters = fightRows;
+    return {
+        nextBigEvent: nextBigEventObj,
+        otherEvents: []
+    };
 }
 
-function getFightersFromNextEvent() {
-  return new Promise(function (fulfill, reject) {
-    getNamesAndUrlsOfNextEventFighters().then(function (data) {
-      var promises = [];
-      console.log("\nfighters in next event: ", data.fighters.map(x => x.name).join(","), "\n");
-      var fighterPagesToLookUp = data.fighters.filter(x => x.url).map(x => x.url);
+async function getFightersFromNextEvent() {
+    const data = await getNamesAndUrlsOfNextEventFighters();
+    const nextBigEvent = data.nextBigEvent;
+    const fighters = await fetchArrayOfFighters(nextBigEvent.fighters);
+    const singleEvent = { ...nextBigEvent, fighters };
+    return {
+        events: [singleEvent]
+    }
+    //   .catch((err) => {
+    //     reject("Damn. getAllFightersForRecentEvent error", err);
+    //   });
+}
 
-      fighterPagesToLookUp.forEach((url) => {
+async function fetchArrayOfFighters(fighters) {
+    var promises = [];
+    console.log("\nfighters in next event: ", fighters.map(x => x.name).join(","), "\n");
+    var fighterPagesToLookUp = fighters.filter(x => x.url).map(x => x.url);
+
+    fighterPagesToLookUp.slice(0, 4).forEach((url) => {
         var promise = scrapeFighterData("https://en.wikipedia.org/" + url);
         promises.push(promise);
-      });
+    });
 
-      var allFighters = [];
-      Promise.all(promises).then((promiseValues) => {
-        promiseValues.slice(0, 4).forEach((fighter) => {
-          fighter.opponents = [];
-          allFighters.push(fighter);
-        });
+    var allFighters = [];
+    const promiseValues = await Promise.all(promises);
+    promiseValues.forEach((fighter) => {
+        fighter.opponents = [];
+        allFighters.push(fighter);
+    });
 
-        const returnObject = {
-          eventName: data.eventName,
-          fighters: allFighters
-        }
+    const returnObject = allFighters;
 
-        console.log(JSON.stringify(returnObject));
+    console.log(JSON.stringify(returnObject));
 
-        fulfill(returnObject);
-      }).catch(function (e) {
-        console.error("dang. promiseAll error in getAllFightersForRecentEvent", e);
-      })
-    })
-      .catch((err) => {
-        reject("Damn. getAllFightersForRecentEvent error", err);
-      });
-  });
+    return returnObject;
+    // .catch(function (e) {
+    //     console.error("dang. promiseAll error in getAllFightersForRecentEvent", e);
+    // })
 }
 
 function scrapeFighterData(wikiPageUrl) {
