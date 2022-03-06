@@ -120,7 +120,7 @@ app.get('/mma-stats-by-date', async function (req, res) {
 app.get('/fighters-from-next-events', async function (req, response) {
     let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
     let allRankingsData = JSON.parse(allRankingsFromFile);
-    const data = await wikipediaApi.getFightersFromNextEvent(); // { events: [ ]}
+    const data = await wikipediaApi.getInfoAndFightersFromNextEvents(); // { events: [] }
     //Extend fighter-objects with historical ranking data
     const events = data.events.map(event => {
         let fighters = event.fighters.map((fighter) => { 

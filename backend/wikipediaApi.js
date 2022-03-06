@@ -16,29 +16,36 @@ async function getNamesAndUrlsOfNextEventFighters() {
         //A big event is named 'UFC 200' or 'UFC 260: X vs Y'. But not 'UFC Fight Night 50'
         return name.length < 5;
     });
-    const urlToLookup = nextBigEvent.url;
-    const responseForSingleEvent = await fetch(urlToLookup);
-    const htmlForSingleEvent = await responseForSingleEvent.text();
-    const fightRows = parseWikipediaFightersOnNextEventToJson(htmlForSingleEvent);
-    const nextBigEventObj = nextBigEvent;
-    nextBigEventObj.fighters = fightRows;
+    nextBigEvent.isBigEvent = true;
+    const otherEvents = rows.filter(x => x.url !== nextBigEvent.url).slice(0,2);
+    const allEventObjs = [...otherEvents, nextBigEvent];
+    const promises = allEventObjs.map(event => fetch(event.url).then(response => response.text()));
+    const promiseResponses = await Promise.all(promises);
+    const all = promiseResponses.map((htmlForSingleEvent, ix) => {
+        const fightRows = parseWikipediaFightersOnNextEventToJson(htmlForSingleEvent);
+        const eventInfo = allEventObjs[ix];
+        return { fighters: fightRows, ...eventInfo };
+    })
     return {
-        nextBigEvent: nextBigEventObj,
-        otherEvents: []
+        allEvents: all
     };
 }
 
-async function getFightersFromNextEvent() {
+async function getInfoAndFightersFromNextEvents() {
     const data = await getNamesAndUrlsOfNextEventFighters();
-    const nextBigEvent = data.nextBigEvent;
-    const fighters = await fetchArrayOfFighters(nextBigEvent.fighters);
-    const singleEvent = { ...nextBigEvent, fighters };
+    const allEvents = data.allEvents;
+    const promises = allEvents.map(x => getInfoAndFightersFromSingleEvent(x));
+    const promiseValues = await Promise.all(promises);
+    
     return {
-        events: [singleEvent]
+        events: promiseValues
     }
-    //   .catch((err) => {
-    //     reject("Damn. getAllFightersForRecentEvent error", err);
-    //   });
+} 
+
+async function getInfoAndFightersFromSingleEvent(event) {
+    const fighters = await fetchArrayOfFighters(event.fighters);
+    const singleEvent = { ...event, fighters };
+    return singleEvent;
 }
 
 async function fetchArrayOfFighters(fighters) {
@@ -206,4 +213,4 @@ function scrapeFighterData(wikiPageUrl) {
   });//promise
 }
 
-module.exports = { scrapeFighterData, getFightersFromNextEvent }
+module.exports = { scrapeFighterData, getInfoAndFightersFromNextEvents }

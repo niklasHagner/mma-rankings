@@ -59,7 +59,7 @@ const buildFighterHtml = function(fighter) {
     <article class="fighter">
         <header>
           <div class="left-col">
-            <img src="${info.relevantImages[0]}" alt="photo">
+            ${ info.relevantImages[0] ? `<img src="${info.relevantImages[0]}" alt="fighter photo">`: `<img src="https://i.pinimg.com/474x/ca/76/de/ca76deb230c3b4fcbd11763841519da8.jpg" alt="placeholder-photo">`}
           </div>
           <div class="right-col">
             <h1 class="fighter-name">${info.name}</h1>
@@ -255,9 +255,11 @@ window.getFightersFromUpcomingEvents = function () {
         .then((json) => {
             loader.classList.add("hidden");
             const htmlBlob = json.allEvents.map(x => {
+                const className = x.isBigEvent ? "post-title big-event" : "post-title";
                 return `
                 <article>
-                    <h1 class="post-title">${x.eventName}</h1>
+                    ${x.isBigEvent ? '<p style="color: crimson;">Next big event</p>' : ''}
+                    <h1 class="${className}">${x.eventName}</h1>
                     <p>${x.date}</p>
                     <section class="records-fighter-list">
                         ${buildAllFightersHtml(x.fighters)}
