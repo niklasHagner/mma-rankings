@@ -136,8 +136,7 @@
     font-style: italic;
 }
 
-#fighters,
-#rankings {
+#main-container > section {
     margin-bottom: 10px;
     padding-bottom: 10px;
     /* border-bottom: solid 1px #eee; */

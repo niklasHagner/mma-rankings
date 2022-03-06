@@ -129,7 +129,8 @@ app.get('/fighters-from-next-event', function (req, response) {
         fighters = fighters.map((fighter) => { 
             return mapFighterFromApiToExtraData(fighter, allRankingsData); 
         });
-        response.send({eventName, fighters});
+        const eventData = {eventName, fighters};
+        response.send({allEvents: [eventData]});
         return;
     }).catch(function (reason) {
         console.error("fail", reason);

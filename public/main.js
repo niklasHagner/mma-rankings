@@ -215,10 +215,12 @@ const renderFighterProfileByName = function(name) {
     })
     .then((json) => {
       loader.classList.add("hidden");
-      document.querySelector("#fighters").innerHTML = `
+      document.querySelector("#fighter-search-profile").innerHTML = `
+      <article>
         <section class="records-fighter-list">
             ${buildFighterHtml(json)}
         </section>
+      </article>
       `;
     });
 }
@@ -252,12 +254,17 @@ window.getTopFightersFromRecentEvent = function () {
     })
     .then((json) => {
       loader.classList.add("hidden");
-      document.querySelector("#fighters").innerHTML = `
-        <h1 class="post-title">${json.eventName}</h1>
-        <section class="records-fighter-list">
-            ${buildAllFightersHtml(json.fighters)}
-        </section>
-      `;
+      const htmlBlob = json.allEvents.map(x => {
+          return `
+          <article>
+              <h1 class="post-title">${x.eventName}</h1>
+              <section class="records-fighter-list">
+                  ${buildAllFightersHtml(x.fighters)}
+              </section>
+          </article>
+        `;
+      }).join("");
+      document.querySelector("#events").innerHTML = htmlBlob;
     });
 };
 
