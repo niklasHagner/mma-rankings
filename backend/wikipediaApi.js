@@ -2,6 +2,7 @@ const { parseWikipediaFightRecordTableToJson, parseWikipediaFutureEventsToJson, 
 const HTMLParser = require('node-html-parser');
 const request = require('request');
 const striptags = require('striptags');
+const { prop } = require('cheerio/lib/api/attributes');
 
 function getNamesAndUrlsOfNextEventFighters() {
   return new Promise(function (fulfill, reject) {
@@ -16,7 +17,11 @@ function getNamesAndUrlsOfNextEventFighters() {
       const nextEventName = nextEvent.eventName;
       request(urlToLookup, function (error, response, html) {
         const fightRows = parseWikipediaFightersOnNextEventToJson(html);
-        fulfill({fighters: fightRows, eventName: nextEventName});
+        fulfill({
+          fighters: fightRows,
+          eventName: nextEventName,
+          otherEvents: {  }
+        });
       });
     });
   });
@@ -29,8 +34,7 @@ function getFightersFromNextEvent() {
       console.log("\nfighters in next event: ", data.fighters.map(x => x.name).join(","), "\n");
       var fighterPagesToLookUp = data.fighters.filter(x => x.url).map(x => x.url);
 
-      //TODO: ta bort slice
-      fighterPagesToLookUp.slice(0, 1).forEach((url) => {
+      fighterPagesToLookUp.forEach((url) => {
         var promise = scrapeFighterData("https://en.wikipedia.org/" + url);
         promises.push(promise);
       });
@@ -82,12 +86,10 @@ function scrapeFighterData(wikiPageUrl) {
       var fighterInfo = {};
       infoBoxProps.forEach((x) => {
         let propName = x.propName;
-        let valueNode = x.valueNode;
-        let textValue = valueNode.innerText;
-        let htmlValue = valueNode.innerHTML;
-        let value = textValue;
-        console.log("Before -> ", propName, ":", textValue);
-        propName = propName.trim().replace(/ /g, "").replace(/\)/g, "").replace(/\(/g, "");
+        let value = x.valueNode.innerText; //most of the time we need text
+        let htmlValue = x.valueNode.innerHTML; //on occassion we'll parse the HTML further
+        console.log("Original wikipedia key-value:", propName, "=", value);
+        propName = propName.trim().replace(/ /g, "").replace(/\)/g, "").replace(/\(/g, "");//remove spaces and parenthesis to turn 'nickname(s)' into 'nicknames' and 'other names' into 'othernames'
         propName = propName[0].toLowerCase() + propName.slice(1, propName.length); //lowercase first char
 
         const shortName = infoBox.querySelector("tr .fn");
@@ -117,37 +119,63 @@ function scrapeFighterData(wikiPageUrl) {
           wins: "16"
           years active: "2013–present"
         */
-        if (propName === "born") { //1. full name, 2. birthday an dage, 3. birthplace
-          propName = "fullName";
-          value = htmlValue;
-          const splitVals = value.split("<br>");
-          console.log("splitVals", splitVals);
-          value = striptags(splitVals[0]);
-          if (splitVals.length > 1) {
-            fighterInfo["age"] = striptags(splitVals[1]);
+
+        //Rewrite the propnames from Wikipedia Table to our dataModel
+        //Parse values differently based on each prop
+
+        if (propName === "born") { /*
+            This field can contain 1-3 different things: age, name, birthplace.
+
+            It's impossible to know which piece is the birthplace based on nodes. Sometimes it's an anchor tag but not always. We just have to assume that if there are 3 <br> elements the birthplace is the last one.
+
+            ---Example1---
+            <span style="display:none"> (<span class="bday">1988-09-29</span>) </span>29 September 1988<span class="noprint ForceAgeToShow"> (age&nbsp;33)</span><sup id="cite_ref-1" class="reference"><a href="#cite_note-1" data-ol-has-click-handler="">[1]</a></sup>
+            <br>
+            <a href="/wiki/Warilla,_New_South_Wales" title="Warilla, New South Wales">Warilla, New South Wales</a>, Australia
+
+            ---Example2---
+            Landon Anthony Vannata<sup id="cite_ref-1" class="reference"><a href="#cite_note-1" data-ol-has-click-handler="">[1]</a></sup><br><span style="display:none"> (<span class="bday">1992-03-14</span>) </span>March 14, 1992<span class="noprint ForceAgeToShow"> (age&nbsp;29)</span>
+            <br>
+            <a href="/wiki/Neptune_City,_New_Jersey" title="Neptune City, New Jersey">Neptune City, New Jersey</a>, <a href="/wiki/United_States" title="United States">United States</a>
+             */
+          const splitVals = htmlValue.split("<br>");
+
+
+          const ageString = splitVals.find(x => x.indexOf("(age&nbsp;"));
+          if (ageString) {
+            fighterInfo["age"] = striptags(ageString);
           }
-          if (splitVals.length > 2) {
+
+          const ageIndex = splitVals.indexOf(ageString);
+          if (ageIndex == 1) {//for some reason if age is the second part then the birtname is always the first part.
+            fighterInfo["birthName"] = striptags(splitVals[0]);
+          } else if (ageIndex < 1) {
+            fighterInfo["birthplace"] = striptags(splitVals[1]);
+          } 
+
+          if (!fighterInfo["birthplace"] && splitVals.length > 2) {
             fighterInfo["birthplace"] = striptags(splitVals[2]);
           }
+
         }
-        else if (propName === "nicknames") {
-          propName = "nickname";
-          value = htmlValue;
-          value = value.split("<br>")[0];
-          value = striptags(value);
+        else if (propName === "nicknames" || propName === "othernames") {
+            fighterInfo["nickname"] = striptags(htmlValue.split("<br>")[0]);
         }
-        else if (propName === "total") propName = "totalFights";
-        else if (propName === "bydecision") propName = "decisionWins";
-        else if (propName === "byknockout") propName = "knockoutWins";
-        else if (propName === "bysubmission") propName = "submissionWins";
-        else if (propName === "yearsactive") propName = "yearsActive";
-        else if (propName === "fightingoutof") propName = "fightingOutOf";
+        else if (propName === "total") fighterInfo["totalFights"] = value;
+        else if (propName === "bydecision") fighterInfo["decisionWins"] = value;
+        else if (propName === "byknockout") fighterInfo["knockoutWins"] = value;
+        else if (propName === "bysubmission") fighterInfo["submissionWins"] = value;
+        else if (propName === "yearsactive") fighterInfo["yearsActive"] = value;
+        else if (propName === "fightingoutof") fighterInfo["fightingOutOf"] = value;
         else if (propName === "team") {
-          const teams = value.split("\n");
-          value = teams[teams.length - 1];
+          const teams = htmlValue.split("<br>");
+          value = striptags(teams[teams.length - 1]);
+          fighterInfo["team"] = value;
         }
-        fighterInfo[propName] = value;
-        console.log("After ->", propName, ":", value);
+        else { //Most props like wins/losses don't need modification
+            fighterInfo[propName] = value;
+            console.log("After ->", propName, ":", value);
+        }
       });
       var recordTables = parseWikipediaFightRecordTableToJson(html);
       var record = recordTables[0];
