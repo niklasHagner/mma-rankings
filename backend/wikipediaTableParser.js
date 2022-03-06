@@ -52,20 +52,28 @@ module.exports.parseWikipediaFutureEventsToJson = function(html) {
   const root = HTMLParser.parse(html);
   let table = root.querySelector("table#Scheduled_events");
     // Event | Original date | Venue | Location | Reference
-  const cells = table.querySelectorAll("tr")
+
+    //NOTE: the quirk with these event tables is that when venues and locations repeat a single location-cell and a single venue-cell like 'UFC apex' can be used for multiple rows.
+    //If this happens only one of the rows will have a venue/location and the rest will have to reuse the previously existing venue/location
+  let prevVenue, prevLocation;
+  const cells = Array.from(table.querySelectorAll("tr"))
     .filter((row, ix) => ix > 0)
     .map(row => { 
       const td = row.querySelectorAll("td");
+
+      if (td[2]) prevVenue = td[2].innerText;
+      if (td[3]) prevLocation = td[3].innerText;
+      
       const item = {
         eventName: td[0].innerText,
         url: 'https://en.wikipedia.org' + td[0].querySelector("a").getAttribute("href"),
         date: td[1].innerText,
-        venue: td[2].innerText,
-        location: td[3].innerText
+        venue: td[2] ? td[2].innerText : prevVenue,
+        location: td[3] ? td[3].innerText : prevLocation
       };
       
       Object.keys(item).forEach(function(key, ix){
-        if (item[key]) item[key] = item[key].replace("\n", "");
+        if (item[key]) item[key] = item[key].replace("\n", "");//trim crap
       });
       return item;
     });
