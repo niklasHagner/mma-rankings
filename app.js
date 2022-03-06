@@ -92,30 +92,30 @@ app.get('/mma-stats-by-date', async function (req, res) {
     res.send(json);
 });
 
-app.get('/search-fighter-by-name', function(req, response) {
-    response.contentType('application/json');
+// app.get('/search-fighter-by-name', function(req, response) {
+//     response.contentType('application/json');
 
-    if (!req.query.name) {
-        console.error(" Error. Try something like this instead: /search-fighter-by-name?name=Fedor");
-        response.send({error:true});
-        return;
-    }
+//     if (!req.query.name) {
+//         console.error(" Error. Try something like this instead: /search-fighter-by-name?name=Fedor");
+//         response.send({error:true});
+//         return;
+//     }
 
-    var fighterName = decodeURIComponent(req.query.name);
+//     var fighterName = decodeURIComponent(req.query.name);
 
-    wikipediaApi.parseFighter(fighterName).then(function (fighter) {
-        //append historical record of fights to fighter-object
-        let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
-        let allRankingsData = JSON.parse(allRankingsFromFile);
-        fighter = mapFighterFromApiToExtraData(fighter, allRankingsData);
-        response.send(fighter);
-        return;
-    }).catch(function (reason) {
-        console.error("fail", reason);
-        response.send("fail: " + reason);
-        return;
-    });
-});
+//     wikipediaApi.findFighterByName(fighterName).then(function (fighter) {
+//         //append historical record of fights to fighter-object
+//         let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
+//         let allRankingsData = JSON.parse(allRankingsFromFile);
+//         fighter = mapFighterFromApiToExtraData(fighter, allRankingsData);
+//         response.send(fighter);
+//         return;
+//     }).catch(function (reason) {
+//         console.error("fail", reason);
+//         response.send("fail: " + reason);
+//         return;
+//     });
+// });
 
 app.get('/fighters-from-next-event', function (req, response) {
     response.contentType('application/json');
