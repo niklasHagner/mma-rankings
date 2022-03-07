@@ -63,7 +63,7 @@ const buildFighterHtml = function(fighter) {
           </div>
           <div class="right-col">
             <h1 class="fighter-name">${info.name}</h1>
-            <p class="fighter-nickname"><span>Nickname:</span> ${info.nickname}</p>
+            ${!info.nickname ? '' : `<p class="fighter-nickname"><span>Nickname:</span> ${info.nickname}</p>`}
             <p class="fighter-age small"><span>Age:</span> ${info.age}</p>
             <p class="fighter-size small"><span>Size:</span> ${ info.height}cm ${ info.weight}kg</p>
             <p class="fighter-reach"><span>Reach:</span> ${info.reach}</p>
