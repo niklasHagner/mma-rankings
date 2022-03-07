@@ -151,24 +151,29 @@ function scrapeFighterData(wikiPageUrl) {
              */
           const splitVals = htmlValue.split("<br>");
 
+            //WikiTable ages can be identified via strings
+        let matchingAgeItem = splitVals.filter(x => x.indexOf("(age&nbsp;") > -1 || x.indexOf("ForceAgeToShow") > -1);
+        fighterInfo["age"] =  matchingAgeItem.length > 0 ? striptags(matchingAgeItem[0]) : "-";
+       
+          
+        //Wikitable Birthplaces often contain links to cities/countries. If not - they have to be guessed based on placement within the string array
 
-          const ageString = splitVals.find(x => x.indexOf("(age&nbsp;"));
-          if (ageString) {
-            fighterInfo["age"] = striptags(ageString);
-          }
-
-          const ageIndex = splitVals.indexOf(ageString);
-          if (ageIndex == 1) {//for some reason if age is the second part then the birtname is always the first part.
-            fighterInfo["birthName"] = striptags(splitVals[0]);
-          } else if (ageIndex < 1) {
-            fighterInfo["birthplace"] = striptags(splitVals[1]);
-          } 
-
-          if (!fighterInfo["birthplace"] && splitVals.length > 2) {
+        const linkCountPerSplitVal = splitVals.map((splitVal) => {
+            return splitVal.replace(`href="#`, "").split(`<a href`).length - 1; //hacky string-counter. Disregard hashlinks which are often used for fullName
+        });
+        const max = Math.max(...linkCountPerSplitVal);
+        if(max > 0){
+            const indexOfItemWithMostLinks = linkCountPerSplitVal.indexOf(max);
+            fighterInfo["birthplace"] = striptags(splitVals[indexOfItemWithMostLinks]);
+        }
+        else {
+          if (splitVals.length > 2) {
             fighterInfo["birthplace"] = striptags(splitVals[2]);
+          } else {
+            fighterInfo["birthplace"] = striptags(splitVals[0]);
           }
+        }
           fighterInfo["birthplace"] = fighterInfo["birthplace"].trim();
-
         }
         else if (propName === "nicknames" || propName === "othernames") {
             fighterInfo["nickname"] = striptags(htmlValue.split("<br>")[0]);
