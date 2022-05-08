@@ -48,7 +48,7 @@ async function getInfoAndFightersFromSingleEvent(event) {
     return singleEvent;
 }
 
-async function fetchArrayOfFighters(fighters) {
+async function fetchArrayOfFighters(fighters) {
     var promises = [];
     console.log("\nfighters in next event: ", fighters.map(x => x.name).join(","), "\n");
     var fighterPagesToLookUp = fighters.filter(x => x.url).map(x => x.url);
@@ -82,6 +82,13 @@ function scrapeFighterData(wikiPageUrl) {
     request(wikiPageUrl, function (error, response, html) {
       console.log("scraped:", wikiPageUrl);
       const root = HTMLParser.parse(html);
+
+      const nodesToRemove = Array.from(root.querySelectorAll("script")).concat(Array.from(root.querySelectorAll("style")));
+      if (nodesToRemove.length > 0) {
+        console.log({nodesToRemove});
+        nodesToRemove.forEach((x) => x.parentNode.removeChild(x));
+      }
+
       const infoBox = root.querySelector(".infobox.vcard tbody");
       console.log(infoBox.innerText);
       infoBox.querySelectorAll("sup").forEach(x => x.remove()); //delete footnote references
@@ -97,9 +104,10 @@ function scrapeFighterData(wikiPageUrl) {
       var fighterInfo = {};
       infoBoxProps.forEach((x) => {
         let propName = x.propName;
-        let value = x.valueNode.innerText; //most of the time we need text
-        let htmlValue = x.valueNode.innerHTML; //on occassion we'll parse the HTML further
-        console.log("Original wikipedia key-value:", propName, "=", value);
+        const valueNode = x.valueNode;
+        let value = valueNode.innerText; //most of the time we need text
+        let htmlValue = valueNode.innerHTML; //on occassion we'll parse the HTML further
+        // console.log("Original wikipedia key-value:", propName, "=", value);
         propName = propName.trim().replace(/ /g, "").replace(/\)/g, "").replace(/\(/g, "");//remove spaces and parenthesis to turn 'nickname(s)' into 'nicknames' and 'other names' into 'othernames'
         propName = propName[0].toLowerCase() + propName.slice(1, propName.length); //lowercase first char
 
@@ -184,6 +192,10 @@ function scrapeFighterData(wikiPageUrl) {
         else if (propName === "bysubmission") fighterInfo["submissionWins"] = value;
         else if (propName === "yearsactive") fighterInfo["yearsActive"] = value;
         else if (propName === "fightingoutof") fighterInfo["fightingOutOf"] = value;
+        else if (propName === "reach") {
+          const partBeforeReference = value.split("[")[0];
+          fighterInfo["reach"] = partBeforeReference;
+        }
         else if (propName === "team") {
           const teams = htmlValue.split("<br>");
           value = striptags(teams[teams.length - 1]);
