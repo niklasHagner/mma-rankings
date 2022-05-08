@@ -6,8 +6,8 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "nodemon",
-      "runtimeExecutable": "nodemon",
+      "name": "Debug node",
+      "runtimeExecutable": "node",
       "program": "${workspaceFolder}/app.js",
       "restart": true,
       "console": "integratedTerminal",
