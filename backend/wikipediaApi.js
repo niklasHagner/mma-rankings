@@ -102,7 +102,7 @@ function scrapeFighterData(wikiPageUrl) {
       infoBoxProps.forEach((x) => {
         let propName = x.propName;
         const valueNode = x.valueNode;
-        let value = valueNode.innerText; //most of the time we need text
+        let value = valueNode.textContent; //most of the time we need text
         let htmlValue = valueNode.innerHTML; //on occassion we'll parse the HTML further
         // console.log("Original wikipedia key-value:", propName, "=", value);
         propName = propName.trim().replace(/ /g, "").replace(/\)/g, "").replace(/\(/g, "");//remove spaces and parenthesis to turn 'nickname(s)' into 'nicknames' and 'other names' into 'othernames'
@@ -110,7 +110,7 @@ function scrapeFighterData(wikiPageUrl) {
 
         const shortName = infoBox.querySelector("tr .fn");
         if (shortName) {
-          fighterInfo["name"] = shortName.innerText;
+          fighterInfo["name"] = shortName.textContent;
         }
 
         /*
@@ -159,16 +159,11 @@ function scrapeFighterData(wikiPageUrl) {
             //WikiTable ages can be identified via strings
         let matchingAgeItem = splitVals.filter(x => x.indexOf("(age&nbsp;") > -1 || x.indexOf("ForceAgeToShow") > -1);
         fighterInfo["ageFullString"] = matchingAgeItem.length > 0 ? striptags(matchingAgeItem[0]) : "-";
-        
-        const indexStartOfAge = fighterInfo["ageFullString"].indexOf("(age");
-        const slice1 = fighterInfo["ageFullString"].slice(indexStartOfAge, fighterInfo["ageFullString"].length);
-        const slice2 = slice1.slice(4, slice1.indexOf(")")); //get number between parenthesis
         const ageStr = fighterInfo["ageFullString"].match(/\((age.*?)\)/)[1]; //returns like "age 32"
         fighterInfo["age"] = ageStr.slice(ageStr.length-2, ageStr.length);
 
           
         //Wikitable Birthplaces often contain links to cities/countries. If not - they have to be guessed based on placement within the string array
-
         const linkCountPerSplitVal = splitVals.map((splitVal) => {
             return splitVal.replace(`href="#`, "").split(`<a href`).length - 1; //hacky string-counter. Disregard hashlinks which are often used for fullName
         });
@@ -239,7 +234,8 @@ function scrapeFighterData(wikiPageUrl) {
           "tiktok.com", // broken
           "mmanytt.se", // often wrong fighter
           "kimura.se", // often wrong fighter
-          "lookaside.fbsbx.com" // broken
+          "lookaside.fbsbx.com", // broken
+          "images.google.com" // uncallable
         ]
       };
       gisImageSearch(gisOptions, (error, imageResults) => {
