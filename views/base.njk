@@ -580,7 +580,8 @@
             <h1>MMA STATS</h1>
             <nav class="top-menu">
                 <nav class="button-group">
-                    <button onclick="window.getHistoricalRankingsFromJsonFile()">Historical rankings</button>
+                    <a href="#historical-rankings">Historical rankings</a>
+                    <a href="#latest-rankings">Latest rankings</a>
                     <button onclick="window.getFightersFromUpcomingEvents()">Next major UFC event</button>
                 </nav>
                 <!-- <form id="search-form">
@@ -600,7 +601,7 @@
                 <!-- We'll inject templates here with clientside JS -->
             </section>
             <section id="rankings">
-                <!-- We'll inject templates here with clientside JS -->
+                {{ rankings.htmlString | safe }}
             </section>
         </div>
     </div>
