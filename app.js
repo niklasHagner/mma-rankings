@@ -53,14 +53,15 @@ var settings = {
 }
 
 app.get('/', async function (req, res, next) {
+  const viewModel = {};
   const rankData = await getRankingsFromFile(req, res);
   const rankingsHtmlString = viewBuilder.buildRankingsHtml(rankData.dates);
-  const viewModel = {
-    rankings: {
+  viewModel.rankings = {
       dates: rankData.dates,
       htmlString: rankingsHtmlString 
-    }
   };
+  const events = await getEvents(rankData);
+  viewModel.events = events;
   res.render("base.njk", viewModel, (err, html) => {
     if (err) return next(err);
     res.send(html);
@@ -146,20 +147,25 @@ app.get('/mma-stats-by-date', async function (req, res) {
 // });
 
 app.get('/fighters-from-next-events', async function (req, response) {
-  let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
-  let allRankingsData = JSON.parse(allRankingsFromFile);
-  const data = await wikipediaApi.getInfoAndFightersFromNextEvents(); // { events: [] }
-  //Extend fighter-objects with historical ranking data
-  const events = data.events.map(event => {
-    let fighters = event.fighters.map((fighter) => {
-      return mapFighterFromApiToExtraData(fighter, allRankingsData);
-    });
-    return { ...event, fighters };
-  })
+  const events = await getEvents();
   response.contentType('application/json');
   response.send({ allEvents: events });
   return;
 });
+
+async function getEvents(rankingsData) {
+  if (!rankingsData) rankingsData = getRankingsFromFile();
+  
+  const data = await wikipediaApi.getInfoAndFightersFromNextEvents(); // { events: [] }
+  //Extend fighter-objects with historical ranking data
+  const events = data.events.map(event => {
+    let fighters = event.fighters.map((fighter) => {
+      return mapFighterFromApiToExtraData(fighter, rankingsData);
+    });
+    return { ...event, fighters };
+  })
+  return events;
+}
 
 function mapFighterFromApiToExtraData(fighter, allRankingsData) {
   const record = fighter.record;

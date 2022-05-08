@@ -35,7 +35,49 @@
                 <!-- We'll inject templates here with clientside JS -->
             </section>
             <section id="events">
-                <!-- We'll inject templates here with clientside JS -->
+                {% for event in events %}
+                  <article>
+                    {% if event.isBigEvent %}
+                      <p style="color: crimson">Next big event</p>
+                    {% endif %}
+                    <h1 class="{{ "post-title big-event" if event.isBigEvent else "post-title" }}">{{ event.eventName }}</h1>
+                    <p>{{ event.date }}</p>
+                    <section class="records-fighter-list">
+                        {% for fighter in event.fighters %}
+                          {% set info = fighter.fighterInfo %}
+                          
+                          <article class="fighter">
+                            <header>
+                              <div class="left-col">
+                                {% for src in info.relevantImages | slice(3) %}
+                                  <img src="{{src}}" alt="fighter photo">
+                                {% endfor %}
+                              </div>
+                              <div class="right-col">
+                                <h1 class="fighter-name">{{ info.name }}</h1>
+                                {% if info.nickname %}
+                                  <p class="fighter-nickname"><span>Nickname:</span> {{ info.nickname }}</p>
+                                {% endif %}  
+                                <p class="fighter-age"><span>Age:</span> {{ info.age }}</p>
+                                <p class="fighter-size"><span>Height:</span> {{ info.height }}</p>
+                                <p class="fighter-reach"><span>Reach:</span> {{ info.reach }}</p>
+                                <p class="fighter-birthplace"><span>Born:</span> {{ info.birthplace }}</p>
+                                {% if info.fightingOutOf %}
+                                  <p class="fighter-association"><span>Fighting out of:</span> {{ info.fightingOutOf }}</p>
+                                {% endif %}  
+                                <p class="fighter-team"><span>Team:</span> {{ info.team }}</p>
+                              </div>
+                            </header>
+                            
+                            <div class="fights">
+                              <h4>Record:</h4>
+                              {# buildFightHistory(fighter.record) #}
+                            </div>
+                        </article>
+                      {% endfor %}
+                    </section>
+                  </article>
+                {% endfor %}
             </section>
             <section id="rankings">
                 {{ rankings.htmlString | safe }}
