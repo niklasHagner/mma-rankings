@@ -18,7 +18,7 @@ async function getNamesAndUrlsOfNextEventFighters() {
         return name.length < 5;
     });
     nextBigEvent.isBigEvent = true;
-    const otherEvents = rows.filter(x => x.url !== nextBigEvent.url).slice(0,2);
+  const otherEvents = rows.filter(x => x.url !== nextBigEvent.url).slice(0, 2);
     const allEventObjs = [...otherEvents, nextBigEvent];
     const promises = allEventObjs.map(event => fetch(event.url).then(response => response.text()));
     const promiseResponses = await Promise.all(promises);
@@ -65,15 +65,7 @@ async function fetchArrayOfFighters(fighters) {
         fighter.opponents = [];
         allFighters.push(fighter);
     });
-
-    const returnObject = allFighters;
-
-    // console.log(JSON.stringify(returnObject));
-
-    return returnObject;
-    // .catch(function (e) {
-    //     console.error("dang. promiseAll error in getAllFightersForRecentEvent", e);
-    // })
+  return allFighters;
 }
 
 function scrapeFighterData(wikiPageUrl) {
@@ -160,7 +152,7 @@ function scrapeFighterData(wikiPageUrl) {
         let matchingAgeItem = splitVals.filter(x => x.indexOf("(age&nbsp;") > -1 || x.indexOf("ForceAgeToShow") > -1);
         fighterInfo["ageFullString"] = matchingAgeItem.length > 0 ? striptags(matchingAgeItem[0]) : "-";
         const ageStr = fighterInfo["ageFullString"].match(/\((age.*?)\)/)[1]; //returns like "age 32"
-        fighterInfo["age"] = ageStr.slice(ageStr.length-2, ageStr.length);
+          fighterInfo["age"] = ageStr.slice(ageStr.length - 2, ageStr.length);
 
           
         //Wikitable Birthplaces often contain links to cities/countries. If not - they have to be guessed based on placement within the string array
@@ -168,7 +160,7 @@ function scrapeFighterData(wikiPageUrl) {
             return splitVal.replace(`href="#`, "").split(`<a href`).length - 1; //hacky string-counter. Disregard hashlinks which are often used for fullName
         });
         const max = Math.max(...linkCountPerSplitVal);
-        if(max > 0){
+          if (max > 0) {
             const indexOfItemWithMostLinks = linkCountPerSplitVal.indexOf(max);
             fighterInfo["birthplace"] = striptags(splitVals[indexOfItemWithMostLinks]);
         }
@@ -246,7 +238,7 @@ function scrapeFighterData(wikiPageUrl) {
         if (imageResults && imageResults.length > 0) {
           const imgUrls = imageResults.map(x => x.url);
           //Wikipedia's images suck so place them last in the array
-          returnObj.fighterInfo.relevantImages = imgUrls.concat(returnObj.fighterInfo.relevantImages).slice(0,3);
+          returnObj.fighterInfo.relevantImages = imgUrls.concat(returnObj.fighterInfo.relevantImages).slice(0, 3);
         }
         fulfill(returnObj);
       });
