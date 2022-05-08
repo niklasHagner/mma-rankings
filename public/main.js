@@ -70,8 +70,8 @@ const buildFighterHtml = function(fighter) {
           <div class="right-col">
             <h1 class="fighter-name">${info.name}</h1>
             ${!info.nickname ? '' : `<p class="fighter-nickname"><span>Nickname:</span> ${info.nickname}</p>`}
-            <p class="fighter-age small"><span>Age:</span> ${info.age}</p>
-            <p class="fighter-size small"><span>Size:</span> ${ info.height}cm ${ info.weight}kg</p>
+            <p class="fighter-age"><span>Age:</span> ${info.age}</p>
+            <p class="fighter-size"><span>Height:</span> ${ info.height}</p>
             <p class="fighter-reach"><span>Reach:</span> ${info.reach}</p>
             <p class="fighter-birthplace"><span>Born:</span> ${info.birthplace}</p>
             ${!info.fightingOutOf ? '' : `<p class="fighter-association"><span>Fighting out of:</span> ${info.fightingOutOf}</p>`}
@@ -113,7 +113,7 @@ const divisionToHtml = function(division) {
   `;
 };
 
-const getSortedDivisions = function(divisions) {
+const getSortedDivisions = function(divisions) {
   const sortValues = [
     {name: "heavyweight", order: 1},
     {name: "light heavyweight", order: 2},
@@ -201,7 +201,6 @@ const buildRankingsHtml = function(pages) {
   `;
   return totalHtmlString;
 };
-
 
 const searchByName = function(ev) {
   ev.preventDefault();
@@ -313,16 +312,16 @@ window.getHistoricalRankingsFromJsonFile = function (date = new Date()) {
     date = formatDate(date);
     loader.classList.remove("hidden");
     fetch(`http://localhost:8081/serve-rankings-file`)
-    .then((response) => {
-      return response.json();
-    })
-    .then((json) => {
-      loader.classList.add("hidden");
-      document.querySelector("#rankings").innerHTML = `
-        ${buildRankingsHtml(json.dates)}
-      `;
-      Array.from(document.querySelectorAll(".annual-rank-snapshots p")).forEach(x => x.addEventListener("click", clickAnnualRankingsSnapshot));
-    });
+      .then((response) => {
+        return response.json();
+      })
+      .then((json) => {
+        loader.classList.add("hidden");
+        document.querySelector("#rankings").innerHTML = `
+          ${buildRankingsHtml(json.dates)}
+        `;
+        Array.from(document.querySelectorAll(".annual-rank-snapshots p")).forEach(x => x.addEventListener("click", clickAnnualRankingsSnapshot));
+      });
 };
 
 function clickFighterLink(url) {
@@ -340,7 +339,7 @@ function clickAnnualRankingsSnapshot(ev) {
 
 document.addEventListener('DOMContentLoaded', (e) => {  
   const searchForm = document.querySelector("#search-form");
-  if (searchForm) { 
+  if (searchForm) {
     searchForm.addEventListener("submit", searchByName);
   }
 

@@ -55,9 +55,9 @@
 }
 
 .fighter {
+    display: inline-block;
+    min-width: 400px;
     margin-bottom: 10px;
-    flex: 0 0 400px;
-    max-width: 500px;
 }
 
 .fighter header {
