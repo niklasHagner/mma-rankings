@@ -177,9 +177,10 @@ function mapFighterFromApiToExtraData(fighter, allRankingsData) {
   return fighter;
 }
 
-var port = 8081;
+var port = process.env.PORT || 8001;
 console.log('Server listening on:' + port);
 app.listen(port);
 console.info(`Navigate to http://localhost:${port}/`);
-console.info("...To scrape data navigate to http://localhost:${port}/scrapeMissing or http://localhost:${port}/scrape?startDate=2017-01-01&endDate=2017-12-31");
+// console.info("...To scrape data navigate to http://localhost:${port}/scrapeMissing");
+// or http://localhost:${port}/scrape?startDate=2017-01-01&endDate=2017-12-31
 // console.info("* Endpoint example: /search-fighter-by-name?name=Fedor");
