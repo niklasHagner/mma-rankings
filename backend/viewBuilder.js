@@ -53,6 +53,7 @@ const buildRankingsHtml = function(pages) {
       <section class="snapshot-divisions">
         ${latestRanks.divisions.map(x => divisionToHtml(x)).join("")}
       </section>
+      <p class="next-big-event-text>Next event:</p>
       <h1 class="post-title" id="historical-rankings">UFC rankings history</h1>
       ${totalHtmlString}
     </section>

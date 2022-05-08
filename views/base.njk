@@ -16,17 +16,17 @@
     <div id="container">
         <header class="site-header">
             <h1>MMA STATS</h1>
-            <nav class="top-menu">
-                <nav class="button-group">
+            {# <nav class="top-menu">
+                <div class="button-group">
                     <a href="#historical-rankings">Historical rankings</a>
                     <a href="#latest-rankings">Latest rankings</a>
                     <button onclick="window.getFightersFromUpcomingEvents()">Next major UFC event</button>
-                </nav>
+                </div> #}
                 <!-- <form id="search-form">
                     <input type="search" id="search-input" />
                     <button type="submit">Search</button>
                 </form> -->
-            </nav>
+            {# </nav> #}
         </header>
         
         <div class="triple-loader hidden"><div></div><div></div><div></div></div>
@@ -39,13 +39,19 @@
                 {% for event in events %}
                   <article>
                     {% if event.isBigEvent %}
-                      <p style="color: crimson">Next big event</p>
+                      <p class"next-big-event-text">Next big event:</p>
                     {% endif %}
                     <h1 class="{{ "post-title big-event" if event.isBigEvent else "post-title" }}">{{ event.eventName }}</h1>
                     <p>{{ event.date }}</p>
                     <section class="records-fighter-list">
                         {% for fighter in event.fighters %}
                           {% set info = fighter.fighterInfo %}
+
+                          {# {% if loop.index0 % 2 == 1 %}
+                            <p>VS</p>
+                          {% else %}
+                            <hr>
+                          {% endif %} #}
                           
                           <article class="fighter">
                             <header>
@@ -55,7 +61,7 @@
                                 {% endfor %}
                               </div>
                               <div class="right-col">
-                                <h1 class="fighter-name">{{ info.name }}</h1>
+                                <h2 class="fighter-name">{{ info.name }}</h2>
                                 {% if info.nickname %}
                                   <p class="fighter-nickname"><span>Nickname:</span> {{ info.nickname }}</p>
                                 {% endif %}  
