@@ -55,11 +55,17 @@ const buildFighterHtml = function(fighter) {
   const recentFights = fighter.recordString; //fighter.record.join("<br>");
   const info = fighter.fighterInfo;
   // ${ fighter.nickname.length > 0 ? `<p class="fighter-nickname">"${fighter.nickname.replace('"', '')}"</p>` : "" }
+  const allImageHtml = info.relevantImages.length < 0 ? 
+  "<img src='https://i.pinimg.com/474x/ca/76/de/ca76deb230c3b4fcbd11763841519da8.jpg' alt='placeholder photo'>"
+  :
+   info.relevantImages.slice(0,3).map((src) => `
+      <img src="${src}" alt="fighter photo">
+  `).join("");
   return `
     <article class="fighter">
         <header>
           <div class="left-col">
-            ${ info.relevantImages[0] ? `<img src="${info.relevantImages[0]}" alt="fighter photo">`: `<img src="https://i.pinimg.com/474x/ca/76/de/ca76deb230c3b4fcbd11763841519da8.jpg" alt="placeholder-photo">`}
+            ${ allImageHtml }
           </div>
           <div class="right-col">
             <h1 class="fighter-name">${info.name}</h1>

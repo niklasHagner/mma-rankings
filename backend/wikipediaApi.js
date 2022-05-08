@@ -3,6 +3,7 @@ const HTMLParser = require('node-html-parser');
 const request = require('request');
 const fetch = require('node-fetch');
 const striptags = require('striptags');
+const gisImageSearch = require("g-i-s");
 
 async function getNamesAndUrlsOfNextEventFighters() {
 
@@ -84,13 +85,9 @@ function scrapeFighterData(wikiPageUrl) {
       const root = HTMLParser.parse(html);
 
       const nodesToRemove = Array.from(root.querySelectorAll("script")).concat(Array.from(root.querySelectorAll("style")));
-      if (nodesToRemove.length > 0) {
-        console.log({nodesToRemove});
-        nodesToRemove.forEach((x) => x.parentNode.removeChild(x));
-      }
+      nodesToRemove.forEach((x) => x.parentNode.removeChild(x));
 
       const infoBox = root.querySelector(".infobox.vcard tbody");
-      console.log(infoBox.innerText);
       infoBox.querySelectorAll("sup").forEach(x => x.remove()); //delete footnote references
       const rows = infoBox.querySelectorAll("tr");
       let infoBoxProps = [];
@@ -224,8 +221,33 @@ function scrapeFighterData(wikiPageUrl) {
       // returnObj.fighterInfo.relevantImages = relevantImages,
       returnObj.fighterInfo.relevantImages = [];
       const img = infoBox.querySelector("img");
-      if (img) returnObj.fighterInfo.relevantImages.push(img.getAttribute("src"));
-      fulfill(returnObj);
+    
+      let query = `${fighterInfo["name"]} + MMA`;
+      var gisOptions = {
+        searchTerm: query,
+        queryStringAddition: '&tbs=iar:t', //portrait format only (via https://www.google.com/advanced_image_search)
+        filterOutDomains: [ // AVOID THESE
+          "gettyimages.com", // water marked
+          "ebayimg.com", // ugly sports cards
+          "sportscardinvestor.s3.amazonaws.com", // ugly sports cards
+          "tiktok.com", // broken
+          "mmanytt.se", // often wrong fighter
+          "kimura.se", // often wrong fighter
+          "lookaside.fbsbx.com" // broken
+        ]
+      };
+      gisImageSearch(gisOptions, (error, imageResults) => {
+        //imageResults will be an array of objects with 3 props: url, width, height
+        if (error) {
+          console.error("gis image search error:", error);
+        }
+        if (imageResults && imageResults.length > 0) {
+          const imgUrls = imageResults.map(x => x.url);
+          //Wikipedia's images suck so place them last in the array
+          returnObj.fighterInfo.relevantImages = imgUrls.concat(returnObj.fighterInfo.relevantImages);
+        }
+        fulfill(returnObj);
+      });
     });//end wikifind 
   });//promise
 }

@@ -66,9 +66,23 @@
     grid-column-gap: 10px;
 }
 
-.fighter img {
+.fighter .left-col {
+    max-width: 200px;
+}
+.fighter .left-col img:nth-of-type(1) {
     width: 200px;
     min-height: 100px;
+}
+.fighter .left-col img:nth-of-type(2) {
+    max-width: 90px;
+    max-height: 150px;
+    min-height: 50px;
+    margin: 10px 0;
+}
+.fighter .left-col img:nth-of-type(3) {
+    max-width: 90px;
+    max-height: 150px;
+    margin: 10px 0 10px 10px;
 }
 
 .fighter h1 {

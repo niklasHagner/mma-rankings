@@ -36,7 +36,7 @@ function findRankAtTime(data, name, date) {
         return moment(matchDate).isBefore(searchDate);
     });
     if (!closestEarlierDate) {
-        console.log("no rank found for", name, "before", date);
+        // console.log("no rank found for", name, "before", date);
         closestEarlierDate = matches.reverse()[0];
     }
     return closestEarlierDate;
