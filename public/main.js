@@ -333,6 +333,10 @@ function clickAnnualRankingsSnapshot(ev) {
 }
 
 document.addEventListener('DOMContentLoaded', (e) => {  
-  document.querySelector("#search-form").addEventListener("submit", searchByName);
+  const searchForm = document.querySelector("#search-form");
+  if (searchForm) { 
+    searchForm.addEventListener("submit", searchByName);
+  }
+
   window.getHistoricalRankingsFromJsonFile();
 });
