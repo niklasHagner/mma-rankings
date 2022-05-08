@@ -21,24 +21,35 @@ function findAllRanksForFighter(data, name) {
 /*
 Return the rank at the time, or if unranked - return the earliest possible rank
 */
-function findRankAtTime(data, name, date) {
+function findRankAtTime(data, name, lookupDate) {
     const matches = findAllRanksForFighter(data, name);
     if (matches.length === 0) {
-        // console.error("0 matches");
         return 0;
-    } else {
-        // console.log(matches.length, "matches found");
     }
-  
+
     let closestEarlierDate = matches.find((match) => {
-        const matchDate = new Date(match.date);
-        const searchDate = new Date(date);
-        return moment(matchDate).isBefore(searchDate);
+        return moment(new Date(match.date)).isBefore(new Date(lookupDate));
     });
     if (!closestEarlierDate) {
         // console.log("no rank found for", name, "before", date);
         closestEarlierDate = matches.reverse()[0];
     }
+
+    const closestDate = new Date(closestEarlierDate.date);
+    let monthString = closestDate.getMonth();
+    if (monthString.length === 1) { 
+        monthString = "0" + monthString;
+    }
+    const fullYearNumber = closestDate.getFullYear();
+    closestEarlierDate.formattedDate = fullYearNumber + "-" + monthString;
+    
+    if (new Date(lookupDate).getFullYear() > fullYearNumber) {
+        closestEarlierDate.wasInThePast = true;
+    } else {
+        rankModifierClass  = "fight__opponent-rank--future"
+        closestEarlierDate.wasInTheFuture = true;
+    }
+
     return closestEarlierDate;
 }
 

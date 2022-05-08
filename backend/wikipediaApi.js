@@ -250,7 +250,7 @@ function scrapeFighterData(wikiPageUrl) {
         if (imageResults && imageResults.length > 0) {
           const imgUrls = imageResults.map(x => x.url);
           //Wikipedia's images suck so place them last in the array
-          returnObj.fighterInfo.relevantImages = imgUrls.concat(returnObj.fighterInfo.relevantImages);
+          returnObj.fighterInfo.relevantImages = imgUrls.concat(returnObj.fighterInfo.relevantImages).slice(0,3);
         }
         fulfill(returnObj);
       });

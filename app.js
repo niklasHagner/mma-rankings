@@ -170,9 +170,7 @@ async function getEvents(rankingsData) {
 function mapFighterFromApiToExtraData(fighter, allRankingsData) {
   const record = fighter.record;
   const extendedRecord = record.map((fight) => {
-    const lookupName = fight.opponentName;
-    const lookupDate = fight.date;
-    const opponentInfoAtTheTime = findRankAtTime(allRankingsData, lookupName, lookupDate);
+    const opponentInfoAtTheTime = findRankAtTime(allRankingsData, fight.opponentName, fight.date);
     return { ...fight, opponentInfoAtTheTime };
   });
   fighter.record = extendedRecord;
