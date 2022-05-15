@@ -49,9 +49,9 @@
 }
 
 .records-fighter-list {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
     gap: 20px;
+    grid-template-rows: 1fr;
 }
 
 .fighter {
@@ -77,23 +77,25 @@
 }
 
 @media screen and (min-width: 900px) {
+    .records-fighter-list {
+        display: grid;
+        gap: 20px;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .fighter {
         min-width: 400px;
     }
     .fighter header {
-        grid-template-areas: 
-            "left right"
-            "left right";
-        gap: 10px;
+        display: flex;
     }
     .fighter .left-col {
         max-width: 200px;
-        grid-area: left;
         display: inline-block;
     }
     .fighter .right-col {
-        max-width: 200px;
-        grid-area: right;
+        display: inline-block;
     }
     .fighter .left-col img:nth-of-type(1) {
         width: 200px;
