@@ -44,17 +44,31 @@ async function getInfoAndFightersFromNextEvents() {
 } 
 
 async function getInfoAndFightersFromSingleEvent(event) {
-    const fighters = await fetchArrayOfFighters(event.fighters);
-    const singleEvent = { ...event, fighters };
+  console.log("\nfighters in next event: ", event.fighters.map(x => x.name).join(","), "\n");
+
+  const fightersToLookUp = event.fighters.slice(0, 4);
+  const fightersWithDetails = await fetchArrayOfFighters(fightersToLookUp);
+  const otherFightersOnCard = event.fighters.slice(4, event.fighters.length);
+  const otherMatchesOnCard = [];
+  let i = 0;
+  while (i < otherFightersOnCard.length) {
+    otherMatchesOnCard.push({ fighters: [ otherFightersOnCard[i], otherFightersOnCard[i+1] ]} );
+    i+=2;
+  }
+  const singleEvent = { 
+    ...event,
+    fighters: fightersWithDetails,
+    otherFightersOnCard,
+    otherMatchesOnCard
+  };
     return singleEvent;
 }
 
 async function fetchArrayOfFighters(fighters) {
     var promises = [];
-    console.log("\nfighters in next event: ", fighters.map(x => x.name).join(","), "\n");
     var fighterPagesToLookUp = fighters.filter(x => x.url).map(x => x.url);
 
-    fighterPagesToLookUp.slice(0, 4).forEach((url) => {
+  fighterPagesToLookUp.forEach((url) => {
         var promise = scrapeFighterData("https://en.wikipedia.org/" + url);
         promises.push(promise);
     });
