@@ -1,0 +1,49 @@
+
+{% macro render(fighter) %}
+  {% set info = fighter.fighterInfo %}
+  <article class="fighter">
+    <header>
+      <div class="left-col">
+        {% for src in info.relevantImages %}
+          <img src="{{src}}" alt="fighter photo">
+        {% endfor %}
+      </div>
+      <div class="right-col">
+        <h2 class="fighter-name">{{ info.name }}</h2>
+        {% if info.nickname %}
+          <p class="fighter-nickname"><span>Nickname:</span> {{ info.nickname }}</p>
+        {% endif %}  
+        <p class="fighter-age"><span>Age:</span> {{ info.age }}</p>
+        <p class="fighter-size"><span>Height:</span> {{ info.height }}</p>
+        <p class="fighter-reach"><span>Reach:</span> {{ info.reach }}</p>
+        <p class="fighter-birthplace"><span>Born:</span> {{ info.birthplace }}</p>
+        {% if info.fightingOutOf %}
+          <p class="fighter-association"><span>Fighting out of:</span> {{ info.fightingOutOf }}</p>
+        {% endif %}  
+        <p class="fighter-team"><span>Team:</span> {{ info.team }}</p>
+      </div>
+    </header>
+    
+    <div class="fights">
+      <h4>Record:</h4>
+      {# buildFightHistory(fighter.record) #}
+      {% for fight in fighter.record %}
+        {# {"result":"Win","record":"28–8","opponentName":"Israel Adesanya","method":"Decision (unanimous)","event":"UFC 259","date":"March 6, 2021","round":"5","time":"5:00","location":"Las Vegas, Nevada, United States","notes":"Defended the UFC Light Heavyweight Championship.","year":"2021","opponentInfoAtTheTime":{"fighter":{"rank":"C","link":"https://mma-stats.com/fighters/Israel-Adesanya","name":"Israel Adesanya"},"division":" Middleweight ","date":"February 15, 2021","formattedDate":"2021-1","wasInTheFuture":true}} #}
+        <p class="fight {{ 'fight--win' if fight.result === 'Win' }} {{ 'fight--loss' if fight.result === 'Loss'}}">
+          <span class="fight__year">{{fight.year}}:</span>
+          <span class="fight__result">{{fight.result}}</span>
+          <span class="fight__opponent">{{fight.opponentName}}</span>
+          {% if fight.opponentInfoAtTheTime %}
+            <span class="fight__opponent-rank {{ 'fight__opponent-rank--past' if fight.opponentInfoAtTheTime.fighter.wasInThePast }} {{ 'fight__opponent-rank--future' if fight.opponentInfoAtTheTime.fighter.wasInTheFuture }}">
+              {{ fight.opponentInfoAtTheTime.fighter.rank }} in {{ fight.opponentInfoAtTheTime.formattedDate }}
+              {# {% if fight.opponentInfoAtTheTime.division %}
+                at division {{ fight.opponentInfoAtTheTime.division }}
+              {% endif %} #}
+            </span>
+          {% endif %}
+          <span class="fight__method">{{fight.method}}</span>
+        </p>
+      {% endfor %}
+    </div>
+  </article>
+{% endmacro %}

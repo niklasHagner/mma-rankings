@@ -7,41 +7,41 @@ const gisImageSearch = require("g-i-s");
 
 async function getNamesAndUrlsOfNextEventFighters() {
 
-    const response = await fetch('https://en.wikipedia.org/wiki/List_of_UFC_events');
-    const htmlForAllUfcEvents = await response.text();
-    const rows = await parseWikipediaFutureEventsToJson(htmlForAllUfcEvents);
+  const response = await fetch('https://en.wikipedia.org/wiki/List_of_UFC_events');
+  const htmlForAllUfcEvents = await response.text();
+  const rows = await parseWikipediaFutureEventsToJson(htmlForAllUfcEvents);
 
-     //each row contains: {eventName,url,date,venue,location}
-    const nextBigEvent = rows.reverse().find((row) => {
-        const name = row.eventName.split(":")[0].replace("UFC ", "");
-        //A big event is named 'UFC 200' or 'UFC 260: X vs Y'. But not 'UFC Fight Night 50'
-        return name.length < 5;
-    });
-    nextBigEvent.isBigEvent = true;
+  //each row contains: {eventName,url,date,venue,location}
+  const nextBigEvent = rows.reverse().find((row) => {
+    const name = row.eventName.split(":")[0].replace("UFC ", "");
+    //A big event is named 'UFC 200' or 'UFC 260: X vs Y'. But not 'UFC Fight Night 50'
+    return name.length < 5;
+  });
+  nextBigEvent.isBigEvent = true;
   const otherEvents = rows.filter(x => x.url !== nextBigEvent.url).slice(0, 2);
-    const allEventObjs = [...otherEvents, nextBigEvent];
-    const promises = allEventObjs.map(event => fetch(event.url).then(response => response.text()));
-    const promiseResponses = await Promise.all(promises);
-    const all = promiseResponses.map((htmlForSingleEvent, ix) => {
-        const fightRows = parseWikipediaFightersOnNextEventToJson(htmlForSingleEvent);
-        const eventInfo = allEventObjs[ix];
-        return { fighters: fightRows, ...eventInfo };
-    })
-    return {
-        allEvents: all
-    };
+  const allEventObjs = [...otherEvents, nextBigEvent];
+  const promises = allEventObjs.map(event => fetch(event.url).then(response => response.text()));
+  const promiseResponses = await Promise.all(promises);
+  const all = promiseResponses.map((htmlForSingleEvent, ix) => {
+    const fightRows = parseWikipediaFightersOnNextEventToJson(htmlForSingleEvent);
+    const eventInfo = allEventObjs[ix];
+    return { fighters: fightRows, ...eventInfo };
+  })
+  return {
+    allEvents: all
+  };
 }
 
 async function getInfoAndFightersFromNextEvents() {
-    const data = await getNamesAndUrlsOfNextEventFighters();
-    const allEvents = data.allEvents;
-    const promises = allEvents.map(x => getInfoAndFightersFromSingleEvent(x));
-    const promiseValues = await Promise.all(promises);
-    
-    return {
-        events: promiseValues
-    }
-} 
+  const data = await getNamesAndUrlsOfNextEventFighters();
+  const allEvents = data.allEvents;
+  const promises = allEvents.map(x => getInfoAndFightersFromSingleEvent(x));
+  const promiseValues = await Promise.all(promises);
+
+  return {
+    events: promiseValues
+  }
+}
 
 async function getInfoAndFightersFromSingleEvent(event) {
   console.log("\nfighters in next event: ", event.fighters.map(x => x.name).join(","), "\n");
@@ -49,36 +49,39 @@ async function getInfoAndFightersFromSingleEvent(event) {
   const fightersToLookUp = event.fighters.slice(0, 4);
   const fightersWithDetails = await fetchArrayOfFighters(fightersToLookUp);
   const otherFightersOnCard = event.fighters.slice(4, event.fighters.length);
-  const otherMatchesOnCard = [];
-  let i = 0;
-  while (i < otherFightersOnCard.length) {
-    otherMatchesOnCard.push({ fighters: [ otherFightersOnCard[i], otherFightersOnCard[i+1] ]} );
-    i+=2;
+  const moreMatches = [];
+  for (let i = 0; i < otherFightersOnCard.length; i+=2) {
+    moreMatches.push({ fighters: [ otherFightersOnCard[i], otherFightersOnCard[i+1] ]} );
+  }
+  const mainMatches = [];
+  for (let i = 0; i < fightersWithDetails.length; i+=2) {
+    mainMatches.push({ fighters: [ fightersWithDetails[i], fightersWithDetails[i+1] ]} );
   }
   const singleEvent = { 
     ...event,
     fighters: fightersWithDetails,
+    mainMatches,
     otherFightersOnCard,
-    otherMatchesOnCard
+    moreMatches
   };
-    return singleEvent;
+  return singleEvent;
 }
 
 async function fetchArrayOfFighters(fighters) {
-    var promises = [];
-    var fighterPagesToLookUp = fighters.filter(x => x.url).map(x => x.url);
+  var promises = [];
+  var fighterPagesToLookUp = fighters.filter(x => x.url).map(x => x.url);
 
   fighterPagesToLookUp.forEach((url) => {
-        var promise = scrapeFighterData("https://en.wikipedia.org/" + url);
-        promises.push(promise);
-    });
+    var promise = scrapeFighterData("https://en.wikipedia.org/" + url);
+    promises.push(promise);
+  });
 
-    var allFighters = [];
-    const promiseValues = await Promise.all(promises);
-    promiseValues.forEach((fighter) => {
-        fighter.opponents = [];
-        allFighters.push(fighter);
-    });
+  var allFighters = [];
+  const promiseValues = await Promise.all(promises);
+  promiseValues.forEach((fighter) => {
+    fighter.opponents = [];
+    allFighters.push(fighter);
+  });
   return allFighters;
 }
 
@@ -162,33 +165,33 @@ function scrapeFighterData(wikiPageUrl) {
              */
           const splitVals = htmlValue.split("<br>");
 
-            //WikiTable ages can be identified via strings
-        let matchingAgeItem = splitVals.filter(x => x.indexOf("(age&nbsp;") > -1 || x.indexOf("ForceAgeToShow") > -1);
-        fighterInfo["ageFullString"] = matchingAgeItem.length > 0 ? striptags(matchingAgeItem[0]) : "-";
-        const ageStr = fighterInfo["ageFullString"].match(/\((age.*?)\)/)[1]; //returns like "age 32"
+          //WikiTable ages can be identified via strings
+          let matchingAgeItem = splitVals.filter(x => x.indexOf("(age&nbsp;") > -1 || x.indexOf("ForceAgeToShow") > -1);
+          fighterInfo["ageFullString"] = matchingAgeItem.length > 0 ? striptags(matchingAgeItem[0]) : "-";
+          const ageStr = fighterInfo["ageFullString"].match(/\((age.*?)\)/)[1]; //returns like "age 32"
           fighterInfo["age"] = ageStr.slice(ageStr.length - 2, ageStr.length);
 
-          
-        //Wikitable Birthplaces often contain links to cities/countries. If not - they have to be guessed based on placement within the string array
-        const linkCountPerSplitVal = splitVals.map((splitVal) => {
+
+          //Wikitable Birthplaces often contain links to cities/countries. If not - they have to be guessed based on placement within the string array
+          const linkCountPerSplitVal = splitVals.map((splitVal) => {
             return splitVal.replace(`href="#`, "").split(`<a href`).length - 1; //hacky string-counter. Disregard hashlinks which are often used for fullName
-        });
-        const max = Math.max(...linkCountPerSplitVal);
+          });
+          const max = Math.max(...linkCountPerSplitVal);
           if (max > 0) {
             const indexOfItemWithMostLinks = linkCountPerSplitVal.indexOf(max);
             fighterInfo["birthplace"] = striptags(splitVals[indexOfItemWithMostLinks]);
-        }
-        else {
-          if (splitVals.length > 2) {
-            fighterInfo["birthplace"] = striptags(splitVals[2]);
-          } else {
-            fighterInfo["birthplace"] = striptags(splitVals[0]);
           }
-        }
+          else {
+            if (splitVals.length > 2) {
+              fighterInfo["birthplace"] = striptags(splitVals[2]);
+            } else {
+              fighterInfo["birthplace"] = striptags(splitVals[0]);
+            }
+          }
           fighterInfo["birthplace"] = fighterInfo["birthplace"].trim();
         }
         else if (propName === "nicknames" || propName === "othernames") {
-            fighterInfo["nickname"] = striptags(htmlValue.split("<br>")[0]);
+          fighterInfo["nickname"] = striptags(htmlValue.split("<br>")[0]);
         }
         else if (propName === "total") fighterInfo["totalFights"] = value;
         else if (propName === "bydecision") fighterInfo["decisionWins"] = value;
@@ -207,8 +210,8 @@ function scrapeFighterData(wikiPageUrl) {
           fighterInfo.teams = teams;
         }
         else { //Most props like wins/losses don't need modification
-            fighterInfo[propName] = value;
-            // console.log("Modified prop ->", propName, ":", value);
+          fighterInfo[propName] = value;
+          // console.log("Modified prop ->", propName, ":", value);
         }
       });
       var recordTables = parseWikipediaFightRecordTableToJson(html);
@@ -229,7 +232,7 @@ function scrapeFighterData(wikiPageUrl) {
       // returnObj.fighterInfo.relevantImages = relevantImages,
       returnObj.fighterInfo.relevantImages = [];
       const img = infoBox.querySelector("img");
-    
+
       let query = `${fighterInfo["name"]} + MMA`;
       var gisOptions = {
         searchTerm: query,

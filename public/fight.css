@@ -48,10 +48,12 @@
     margin-bottom: 10px;
 }
 
-.records-fighter-list {
+.fight-on-card {
     display: grid;
     gap: 20px;
-    grid-template-rows: 1fr;
+    grid-template-rows: 1fr 1fr;
+    background: rgb(0,0,0, 20%);
+    margin-bottom: 10px;
 }
 
 .fighter {
@@ -77,11 +79,11 @@
 }
 
 @media screen and (min-width: 900px) {
-    .records-fighter-list {
+    .fight-on-card {
         display: grid;
         gap: 20px;
-        grid-template-rows: 1fr 1fr;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr 1fr;
     }
 
     .fighter {

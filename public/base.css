@@ -541,6 +541,10 @@ h2.post-description {
     }
 }
 
+.event-title {
+    margin-top: 0;
+}
+
 .sections-wrapper {
     width: 100%;
     display: flex;

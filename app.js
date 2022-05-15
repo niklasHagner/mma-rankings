@@ -55,10 +55,17 @@ var settings = {
 app.get('/', async function (req, res, next) {
   const viewModel = {};
   const rankData = await getRankingsFromFile(req, res);
+
   const rankingsHtmlString = viewBuilder.buildRankingsHtml(rankData.dates);
   viewModel.rankings = {
-      dates: rankData.dates,
-      htmlString: rankingsHtmlString 
+      allRankings: {
+        dates: rankData.dates,
+        htmlString: rankingsHtmlString, 
+      },
+      latestRankings: {
+        ...rankData.dates[0],
+        htmlString: viewBuilder.buildRankingsHtml(rankData.dates.slice(0,1))
+      },
   };
   const events = await getEvents(rankData);
   viewModel.events = events;
@@ -146,17 +153,10 @@ app.get('/mma-stats-by-date', async function (req, res) {
 //     });
 // });
 
-app.get('/fighters-from-next-events', async function (req, response) {
-  const events = await getEvents();
-  response.contentType('application/json');
-  response.send({ allEvents: events });
-  return;
-});
-
 async function getEvents(rankingsData) {
   if (!rankingsData) rankingsData = getRankingsFromFile();
   
-  const data = await wikipediaApi.getInfoAndFightersFromNextEvents(); // { events: [] }
+  const data = await wikipediaApi.getInfoAndFightersFromNextEvents();
   //Extend fighter-objects with historical ranking data
   const events = data.events.map(event => {
     let fighters = event.fighters.map((fighter) => {

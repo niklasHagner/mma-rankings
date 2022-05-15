@@ -113,7 +113,7 @@ const renderFighterProfileByName = function(name) {
       loader.classList.add("hidden");
       document.querySelector("#fighter-search-profile").innerHTML = `
       <article>
-        <section class="records-fighter-list">
+        <section class="fighters-on-card">
             ${buildFighterHtml(json)}
         </section>
       </article>
@@ -132,7 +132,7 @@ const renderFighterProfileByUrl = function(url) {
     loader.classList.add("hidden");
     const newEl = document.createElement("section");
     newEl.innerHTML = `
-      <section class="records-fighter-list">
+      <section class="fighters-on-card">
           ${buildFighterHtml(json)}
       </section>
     `;
@@ -140,32 +140,6 @@ const renderFighterProfileByUrl = function(url) {
     container.prepend(newEl);
   });
 }
-
-window.getFightersFromUpcomingEvents = function () {
-    loader.classList.remove("hidden");
-
-    fetch(`http://localhost:8081/fighters-from-next-events`)
-        .then((response) => {
-            return response.json();
-        })
-        .then((json) => {
-            loader.classList.add("hidden");
-            const htmlBlob = json.allEvents.map(x => {
-                const className = x.isBigEvent ? "post-title big-event" : "post-title";
-                return `
-                <article>
-                    ${x.isBigEvent ? '<p style="color: crimson;">Next big event</p>' : ''}
-                    <h1 class="${className}">${x.eventName}</h1>
-                    <p>${x.date}</p>
-                    <section class="records-fighter-list">
-                        ${buildAllFightersHtml(x.fighters)}
-                    </section>
-                </article>
-                `;
-        }).join("");
-            document.querySelector("#events").innerHTML = htmlBlob;
-        });
-};
 
 function formatDate(date) {
   var d = new Date(date),

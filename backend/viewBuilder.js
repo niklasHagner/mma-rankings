@@ -14,6 +14,7 @@ const buildRankingsHtml = function(pages) {
     const snapshotHtml = ` 
       <section class="snapshot">
         <h2>Rankings ${page.date}</h2>
+
         <div class="snapshot-divisions">
             ${divisionTemplates.join("")}
         </div>
@@ -37,8 +38,7 @@ const buildRankingsHtml = function(pages) {
     }
   }) 
 
-  let totalHtmlString = snapshotsGroupedByYear.map((annualSnapshot, index) => {
-    // const modifierClass = index === 0 ? " : "annual-rank-snapshots--collapsed";
+  let annualRankingsHtmlString = snapshotsGroupedByYear.map((annualSnapshot, index) => {
     const modifierClass = "annual-rank-snapshots--collapsed";
     return `
       <div class="annual-rank-snapshots ${modifierClass}">
@@ -47,18 +47,9 @@ const buildRankingsHtml = function(pages) {
       </div>
     `;
   }).join("");
+  
+  return annualRankingsHtmlString
 
-  totalHtmlString = `
-      <h2 id="latest-rankings">Rankings ${latestRanks.date}</h2>
-      <section class="snapshot-divisions">
-        ${latestRanks.divisions.map(x => divisionToHtml(x)).join("")}
-      </section>
-      <p class="next-big-event-text>Next event:</p>
-      <h1 class="post-title" id="historical-rankings">UFC rankings history</h1>
-      ${totalHtmlString}
-    </section>
-  `;
-  return totalHtmlString;
 };
 
 const getSortedDivisions = function(divisions) {
@@ -102,8 +93,8 @@ const divisionToHtml = function(division) {
   }).join("<br>");
   return `
     <article class="division">
-        <h3 class="division-name">${division.name}</h3>
-        <div class="division-fighters">${fighters}</div>
+      <h3 class="division-name">${division.name}</h3>
+      <div class="division-fighters">${fighters}</div>
     </article>
   `;
 };
