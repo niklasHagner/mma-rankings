@@ -187,9 +187,10 @@ function scrapeFighterData(wikiPageUrl) {
           fighterInfo["reach"] = partBeforeReference;
         }
         else if (propName === "team") {
-          const teams = htmlValue.split("<br>");
-          value = striptags(teams[teams.length - 1]);
-          fighterInfo["team"] = value;
+          const teams = htmlValue.split("<br>").map(x => striptags(x));
+          newestTeam = teams[0];
+          fighterInfo["team"] = newestTeam;
+          fighterInfo.teams = teams;
         }
         else { //Most props like wins/losses don't need modification
             fighterInfo[propName] = value;
