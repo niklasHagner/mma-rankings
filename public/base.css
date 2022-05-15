@@ -311,20 +311,21 @@ table tr {
 
 .site-header {
     display: flex;
-    padding: 10px;
-    background: black; 
+    padding: 5px 0 0;
+    background: #23275870;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 30px;
+    border-top: solid 2px #4c2685;
 }
 
 .site-header h1 {
     display: inline-block;
-    padding: 0 6px;
-    margin: 0;
-    background-color: orange;
+    margin: 0 auto;
     color: black;
-    display: inline-flex;
-    align-items: center;
+    font-weight: normal;
+    font-size: 37px;
+    text-shadow: 2px 4px 1px #4c2685;
+    color: white;
+    font-family: 'Bebas Neue';
 }
 
 .site-title a {
@@ -541,8 +542,16 @@ h2.post-description {
     }
 }
 
+.event time {
+    background: gold;
+    color: black;
+    padding: 0 18px 5px 0;
+    border-radius: 0 25px 0 0;
+}
+
 .event-title {
     margin-top: 0;
+    color: gold;
 }
 
 .sections-wrapper {

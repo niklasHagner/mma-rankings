@@ -52,8 +52,12 @@
     display: grid;
     gap: 20px;
     grid-template-rows: 1fr 1fr;
-    background: rgb(0,0,0, 20%);
     margin-bottom: 10px;
+}
+
+.fight-on-card,
+.other-fighters-on-card {
+    background: rgb(0,0,0, 20%);
 }
 
 .fighter {
