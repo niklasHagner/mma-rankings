@@ -29,16 +29,23 @@ function saveToFile(newArrayOfDates) {
   return { scrapedUrlCount: newArrayOfDates.length };
 }
 
-async function scrapeRankingsForMultipleDates(_startDate, _endDate) {
-  const startDate = _startDate || new Date("2019-01-01");
-  const endDate = _endDate || new Date("2020-03-08");
-  
+// Scrape startDate, then once per month, and also scrape the endDate if it's more than 4 days ahead of the previous date.
+async function scrapeRankingsForMultipleDates(startDate, endDate) {
   let date = moment(startDate);
   const dateStrings = [];
   for(let i=0; date.isBefore(endDate); i++) {
       dateStrings.push(date.format("YYYY-MM-DD"));
       date.add(1, "M");
   }
+  const diffLastAndEndDate = moment(dateStrings[dateStrings.length-1]).diff(moment(endDate), "days");
+  if (Math.abs(diffLastAndEndDate) > 4) {
+    dateStrings.push(moment(endDate).format("YYYY-MM-DD"));
+  }
+  if (dateStrings.length < 1) {
+    console.log("nothing to scrape");
+    return;
+  }
+
   console.log("dates to scrape", dateStrings);
   const promises = dateStrings.map(date => scrapeMmaStats(date))
   Promise.all(promises).then((data) => {

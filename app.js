@@ -4,11 +4,13 @@ const nunjucks = require("nunjucks");
 const fs = require('fs');
 const path = require('path');
 const winston = require('winston');
+const moment = require("moment");
+
 const mmaStatsScraper = require('./backend/scrapeMmaStatsDotCom');
 const { findRankAtTime } = require('./backend/findRank');
 const wikipediaApi = require('./backend/wikipediaApi.js');
-const viewBuilder = require('./backend/viewBuilder.js');
 
+const viewBuilder = require('./backend/viewBuilder.js');
 let existingData = fs.readFileSync("data/mmaStats.json");
 let jsonData = JSON.parse(existingData);
 let lastScapedDate = jsonData.dates[0].date;
@@ -94,11 +96,25 @@ app.get('/scrapeMissing', async function (req, res) {
   let existingData = fs.readFileSync("data/mmaStats.json");
   let jsonData = JSON.parse(existingData);
   let lastScapedJsonBlob = jsonData.dates[0];
-  const startDate = lastScapedJsonBlob.date;
+  const lastScrapedDate = lastScapedJsonBlob.date;
   const today = new Date().toISOString().split('T')[0];
-  const endDate = today;
-  const scrapeStatus = await mmaStatsScraper.scrapeRankingsForMultipleDates(startDate, endDate);
-  res.send(scrapeStatus);
+
+  let startDate;
+  const diff = moment(lastScrapedDate).diff(moment(today), "days");
+
+  if (Math.abs(diff) >= 7) {
+    const startDateMoment = moment(lastScrapedDate).add(1, "M");
+    startDate = startDateMoment.format("YYYY-MM-DD");
+  } else {
+    startDate = today;
+  }
+
+  if (moment(startDate).isAfter(moment(today))) {
+    startDate = today;
+  }
+
+  const scrapeStatus = await mmaStatsScraper.scrapeRankingsForMultipleDates(startDate, today);
+  return res.send(scrapeStatus);
 });
 
 app.get('/scrapeByQueryParams', async function (req, res) {
@@ -133,19 +149,17 @@ app.get('/mma-stats-by-date', async function (req, res) {
 
 //     if (!req.query.name) {
 //         console.error(" Error. Try something like this instead: /search-fighter-by-name?name=Fedor");
-//         response.send({error:true});
-//         return;
+//         return response.send({error:true});
 //     }
 
 //     var fighterName = decodeURIComponent(req.query.name);
 
 //     wikipediaApi.findFighterByName(fighterName).then(function (fighter) {
-//         //append historical record of fights to fighter-object
+//         //append historical records
 //         let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
 //         let allRankingsData = JSON.parse(allRankingsFromFile);
 //         fighter = mapFighterFromApiToExtraData(fighter, allRankingsData);
-//         response.send(fighter);
-//         return;
+//         return response.render(`{{ fighterView.render(fighter) }}`, fighter);
 //     }).catch(function (reason) {
 //         console.error("fail", reason);
 //         response.send("fail: " + reason);
