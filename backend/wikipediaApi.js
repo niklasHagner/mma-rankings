@@ -270,7 +270,13 @@ function scrapeFighterData(wikiPageUrl) {
           console.error("gis image search error:", error);
         }
         if (imageResults && imageResults.length > 0) {
-          const imgUrls = imageResults.map(x => x.url);
+          let imgUrls = imageResults.map(x => x.url);
+          const bestImage = imgUrls.find(x => x.includes("athlete_bio_full_body"));
+          if (bestImage) {
+            const ix = imgUrls.indexOf(bestImage);
+            imgUrls.splice(ix, 1);
+            imgUrls.unshift(bestImage);
+          }
           //Wikipedia's images suck so place them last in the array
           returnObj.fighterInfo.relevantImages = imgUrls.concat(returnObj.fighterInfo.relevantImages).slice(0, 3);
         }
