@@ -4,6 +4,9 @@ const request = require('request');
 const fetch = require('node-fetch');
 const striptags = require('striptags');
 const gisImageSearch = require("g-i-s");
+const fileHelper = require("./fileHelper.js");
+
+const READ_FROM_FILE = true;
 
 async function getNamesAndUrlsOfNextEventFighters() {
 
@@ -69,6 +72,15 @@ async function getInfoAndFightersFromSingleEvent(event) {
 
 async function fetchArrayOfFighters(fighters) {
   var promises = [];
+
+  if (READ_FROM_FILE) {
+    const fightersFromFiles = fighters.map(fileHelper.readFighter);
+    const nullCount = fightersFromFiles.filter(x => x === null).length;
+    if (nullCount === 0) { 
+      return fightersFromFiles;
+    };
+  }
+
   var fighterPagesToLookUp = fighters.filter(x => x.url).map(x => x.url);
 
   fighterPagesToLookUp.forEach((url) => {
@@ -86,8 +98,6 @@ async function fetchArrayOfFighters(fighters) {
 }
 
 function scrapeFighterData(wikiPageUrl) {
-  console.log("will scrape:", wikiPageUrl);
-
   return new Promise(function (fulfill, reject) {
     request(wikiPageUrl, function (error, response, html) {
       console.log("scraped:", wikiPageUrl);
@@ -110,7 +120,10 @@ function scrapeFighterData(wikiPageUrl) {
           });
         }
       });
-      var fighterInfo = {};
+      var fighterInfo = {
+        wikiUrl: wikiPageUrl
+      };
+
       infoBoxProps.forEach((x) => {
         let propName = x.propName;
         const valueNode = x.valueNode;

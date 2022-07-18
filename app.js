@@ -4,13 +4,15 @@ const nunjucks = require("nunjucks");
 const fs = require('fs');
 const winston = require('winston');
 const moment = require("moment");
+const config = require("exp-config");
 
 const mmaStatsScraper = require('./backend/scrapeMmaStatsDotCom');
 const { findRankAtTime } = require('./backend/findRank');
 const wikipediaApi = require('./backend/wikipediaApi.js');
 const viewBuilder = require('./backend/viewBuilder.js');
+const fileHelper = require('./backend/fileHelper.js');
 
-const SAVE_JSON_TO_FILE = true;
+const SAVE_JSON_TO_FILE = process.env.SAVE_JSON_TO_FILE || config.SAVE_JSON_TO_FILE;
 
 let existingData = fs.readFileSync("data/mmaStats.json");
 let jsonData = JSON.parse(existingData);
@@ -190,16 +192,7 @@ async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
   fighter.record = extendedRecord;
 
   if (SAVE_JSON_TO_FILE) {
-    const fileName = "data/fighters/" + fighter.fighterInfo.name.replace(/\s/g, "_") + ".json";
-    try {
-      const exists = await fs.promises.stat(fileName);
-      // if (exists) {
-      //   const data = await fs.promises.readFile(fileName);
-      //   const parsed = JSON.parse(data);
-      // }
-    } catch(err) {
-      await fs.promises.writeFile(fileName, JSON.stringify(fighter));
-    }
+    await fileHelper.saveFighter(fighter);
   }
   
   return fighter;
