@@ -158,7 +158,9 @@ p.small {
 }
 
 .fight__opponent-rank {
-    color: gold;
+    background-color: gold;
+    color: black;
+    padding: 0px 2px;
 }
 
 .fight__opponent-rank--past {

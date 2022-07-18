@@ -35,7 +35,7 @@
           <span class="fight__opponent">{{fight.opponentName}}</span>
           {% if fight.opponentInfoAtTheTime %}
             <span class="fight__opponent-rank {{ 'fight__opponent-rank--past' if fight.opponentInfoAtTheTime.fighter.wasInThePast }} {{ 'fight__opponent-rank--future' if fight.opponentInfoAtTheTime.fighter.wasInTheFuture }}">
-              {{ fight.opponentInfoAtTheTime.fighter.rank }} in {{ fight.opponentInfoAtTheTime.formattedDate }}
+              #{{ fight.opponentInfoAtTheTime.fighter.rank }} in {{ fight.opponentInfoAtTheTime.formattedDate }}
               {# {% if fight.opponentInfoAtTheTime.division %}
                 at division {{ fight.opponentInfoAtTheTime.division }}
               {% endif %} #}
