@@ -2,15 +2,16 @@ const express = require("express");
 const app = express();
 const nunjucks = require("nunjucks");
 const fs = require('fs');
-const path = require('path');
 const winston = require('winston');
 const moment = require("moment");
 
 const mmaStatsScraper = require('./backend/scrapeMmaStatsDotCom');
 const { findRankAtTime } = require('./backend/findRank');
 const wikipediaApi = require('./backend/wikipediaApi.js');
-
 const viewBuilder = require('./backend/viewBuilder.js');
+
+const SAVE_JSON_TO_FILE = true;
+
 let existingData = fs.readFileSync("data/mmaStats.json");
 let jsonData = JSON.parse(existingData);
 let lastScapedDate = jsonData.dates[0].date;
@@ -159,7 +160,7 @@ app.get('/mma-stats-by-date', async function (req, res) {
 //         //append historical records
 //         let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
 //         let allRankingsData = JSON.parse(allRankingsFromFile);
-//         fighter = mapFighterFromApiToExtraData(fighter, allRankingsData);
+//         fighter = extendFighterApiDataWithRecordInfo(fighter, allRankingsData);
 //         return response.render(`{{ fighterView.render(fighter) }}`, fighter);
 //     }).catch(function (reason) {
 //         console.error("fail", reason);
@@ -173,22 +174,37 @@ async function getEvents(rankingsData) {
   
   const data = await wikipediaApi.getInfoAndFightersFromNextEvents();
   //Extend fighter-objects with historical ranking data
-  const events = data.events.map(event => {
-    let fighters = event.fighters.map((fighter) => {
-      return mapFighterFromApiToExtraData(fighter, rankingsData);
-    });
+  const events = data.events.map(async (event) => {
+    const promises = event.fighters.map((fighter) => {
+      return extendFighterApiDataWithRecordInfo(fighter, rankingsData);
+    });;
+    let fighters = await Promise.all(promises);
     return { ...event, fighters };
   })
   return events;
 }
 
-function mapFighterFromApiToExtraData(fighter, allRankingsData) {
+async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
   const record = fighter.record;
   const extendedRecord = record.map((fight) => {
     const opponentInfoAtTheTime = findRankAtTime(allRankingsData, fight.opponentName, fight.date);
     return { ...fight, opponentInfoAtTheTime };
   });
   fighter.record = extendedRecord;
+
+  if (SAVE_JSON_TO_FILE) {
+    const fileName = "data/fighters/" + fighter.fighterInfo.name.replace(/\s/g, "_") + ".json";
+    try {
+      const exists = await fs.promises.stat(fileName);
+      if (exists) {
+        const data = await fs.promises.readFile(fileName);
+        const parsed = JSON.parse(data);
+      }
+    } catch(err) {
+      await fs.promises.writeFile(fileName, JSON.stringify(fighter));
+    }
+  }
+  
   return fighter;
 }
 
