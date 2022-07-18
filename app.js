@@ -173,15 +173,12 @@ async function getEvents(rankingsData) {
   if (!rankingsData) rankingsData = getRankingsFromFile();
   
   const data = await wikipediaApi.getInfoAndFightersFromNextEvents();
-  //Extend fighter-objects with historical ranking data
-  const events = data.events.map(async (event) => {
-    const promises = event.fighters.map((fighter) => {
-      return extendFighterApiDataWithRecordInfo(fighter, rankingsData);
-    });;
-    let fighters = await Promise.all(promises);
+
+  const asyncRes = await Promise.all(data.events.map(async (event) => {
+    const fighters = await Promise.all(event.fighters.map(fighter => extendFighterApiDataWithRecordInfo(fighter, rankingsData)));
     return { ...event, fighters };
-  })
-  return events;
+  }));
+  return asyncRes;
 }
 
 async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
@@ -196,10 +193,10 @@ async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
     const fileName = "data/fighters/" + fighter.fighterInfo.name.replace(/\s/g, "_") + ".json";
     try {
       const exists = await fs.promises.stat(fileName);
-      if (exists) {
-        const data = await fs.promises.readFile(fileName);
-        const parsed = JSON.parse(data);
-      }
+      // if (exists) {
+      //   const data = await fs.promises.readFile(fileName);
+      //   const parsed = JSON.parse(data);
+      // }
     } catch(err) {
       await fs.promises.writeFile(fileName, JSON.stringify(fighter));
     }
