@@ -46,12 +46,13 @@ async function getInfoAndFightersFromNextEvents() {
   }
 }
 
+const FIGHTERS_TO_LOOKUP = 12;
 async function getInfoAndFightersFromSingleEvent(event) {
   console.log("\nfighters in next event: ", event.fighters.map(x => x.name).join(","), "\n");
 
-  const fightersToLookUp = event.fighters.slice(0, 4);
+  const fightersToLookUp = event.fighters.slice(0, FIGHTERS_TO_LOOKUP);
   const fightersWithDetails = await fetchArrayOfFighters(fightersToLookUp);
-  const otherFightersOnCard = event.fighters.slice(4, event.fighters.length);
+  const otherFightersOnCard = event.fighters.slice(FIGHTERS_TO_LOOKUP, event.fighters.length);
   const moreMatches = [];
   for (let i = 0; i < otherFightersOnCard.length; i+=2) {
     moreMatches.push({ fighters: [ otherFightersOnCard[i], otherFightersOnCard[i+1] ]} );
