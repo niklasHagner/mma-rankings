@@ -100,10 +100,11 @@ app.get('/scrapeMissing', async function (req, res) {
   const today = new Date().toISOString().split('T')[0];
 
   let startDate;
-  const diff = moment(lastScrapedDate).diff(moment(today), "days");
+  const lastScrapedMoment = moment(lastScrapedDate, "MMM DD, YYYY");
+  const diff = lastScrapedMoment.diff(moment(today), "days");
 
   if (Math.abs(diff) >= 7) {
-    const startDateMoment = moment(lastScrapedDate).add(1, "M");
+    const startDateMoment = lastScrapedMoment.add(1, "M");
     startDate = startDateMoment.format("YYYY-MM-DD");
   } else {
     startDate = today;
