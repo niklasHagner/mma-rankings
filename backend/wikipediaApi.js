@@ -104,7 +104,10 @@ function scrapeFighterData(wikiPageUrl) {
         let infoBoxKey = row.querySelector(".infobox-label");
         let infoBoxValue = row.querySelector(".infobox-data");
         if (infoBoxKey && infoBoxValue) {
-          infoBoxProps.push({ propName: infoBoxKey.innerText, valueNode: infoBoxValue });
+          infoBoxProps.push({ 
+            propName: infoBoxKey.textContent.replace(/\s/g, "").replace(/\-/g, "_"), 
+            valueNode: infoBoxValue 
+          });
         }
       });
       var fighterInfo = {};

@@ -28,7 +28,7 @@ module.exports.parseWikipediaFightRecordTableToJson = function (html) {
        
         Object.keys(fight).forEach(function(key, ix){ 
           if (!fight || !fight[key]) {
-            console.log(`ix ${ix} - key ${key} is blank`);
+            // console.log(`ix ${ix} - key ${key} is blank`);
             return "";
           }
           if (fight[key].innerText) fight[key] = fight[key].innerText.replace("\n", "");
