@@ -325,7 +325,7 @@ table tr {
     font-size: 37px;
     text-shadow: 2px 4px 1px #4c2685;
     color: white;
-    font-family: 'Bebas Neue';
+    font-family: 'Bebas Neue', sans-serif;
 }
 
 .site-title a {
