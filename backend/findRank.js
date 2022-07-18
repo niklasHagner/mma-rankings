@@ -36,10 +36,7 @@ function findRankAtTime(data, name, lookupDate) {
     }
 
     const closestDate = new Date(closestEarlierDate.date);
-    let monthString = closestDate.getMonth();
-    if (monthString.length === 1) { 
-        monthString = "0" + monthString;
-    }
+    const monthString = `${closestDate.getMonth()}`.padStart(2, '0');
     const fullYearNumber = closestDate.getFullYear();
     closestEarlierDate.formattedDate = fullYearNumber + "-" + monthString;
     

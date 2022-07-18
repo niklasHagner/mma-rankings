@@ -28,7 +28,7 @@
       <h4>Record:</h4>
       {# buildFightHistory(fighter.record) #}
       {% for fight in fighter.record %}
-        {# {"result":"Win","record":"28–8","opponentName":"Israel Adesanya","method":"Decision (unanimous)","event":"UFC 259","date":"March 6, 2021","round":"5","time":"5:00","location":"Las Vegas, Nevada, United States","notes":"Defended the UFC Light Heavyweight Championship.","year":"2021","opponentInfoAtTheTime":{"fighter":{"rank":"C","link":"https://mma-stats.com/fighters/Israel-Adesanya","name":"Israel Adesanya"},"division":" Middleweight ","date":"February 15, 2021","formattedDate":"2021-1","wasInTheFuture":true}} #}
+        {# {"result":"Win","record":"28–8","opponentName":"Israel Adesanya","method":"Decision (unanimous)","event":"UFC 259","date":"March 6, 2021","round":"5","time":"5:00","location":"Las Vegas, Nevada, United States","notes":"Defended the UFC Light Heavyweight Championship.","year":"2021","opponentInfoAtTheTime":{"fighter":{"rank":"C","link":"https://mma-stats.com/fighters/Israel-Adesanya","name":"Israel Adesanya"},"division":" Middleweight ","date":"February 15, 2021","formattedDate":"2021-01","wasInTheFuture":true}} #}
         <p class="fight {{ 'fight--win' if fight.result === 'Win' }} {{ 'fight--loss' if fight.result === 'Loss'}}">
           <span class="fight__year">{{fight.year}}:</span>
           <span class="fight__result">{{fight.result}}</span>
