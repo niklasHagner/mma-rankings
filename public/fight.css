@@ -161,6 +161,7 @@ p.small {
     background-color: gold;
     color: black;
     padding: 0px 2px;
+    margin-right: 3px;
 }
 
 .fight__opponent-rank--past {
