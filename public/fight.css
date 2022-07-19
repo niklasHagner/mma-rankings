@@ -15,33 +15,21 @@
     font-size: 12px;
 }
 
-.annual-rank-snapshots p {
-    background-color: gold;
-    max-width: 400px;
-    color: black;
+.annual-rank-snapshots summary {
+    color: gold;
     cursor: pointer;
     font-weight: bold;
+    font-size: 2em;
+    padding: 5px;
 }
 
-.annual-rank-snapshots p:hover {
-    background-color: orange;
+.annual-rank-snapshots[open] {
+    box-shadow: 0 2px 5px 0 #666;
 }
 
-.annual-rank-snapshots .snapshot {
-    display: block;
-}
-
-.annual-rank-snapshots--collapsed .snapshot {
-    display: none;
-}
-
-.annual-rank-snapshots--collapsed p {
-    content: "🔼";
-}
-
-.annual-rank-snapshots p {
-    padding-left: 5px;
-    content: "🔽";
+.annual-rank-snapshots summary:hover {
+    text-decoration: underline;
+    color: orange;
 }
 
 .division {
@@ -162,6 +150,7 @@ p.small {
     color: black;
     padding: 0px 2px;
     margin-right: 3px;
+    border-radius: 5px;
 }
 
 .fight__opponent-rank--past {
@@ -175,10 +164,6 @@ p.small {
 .fight__opponent {
     font-weight: bold;
     cursor: pointer;
-}
-
-.fight__opponent:hover {
-    text-decoration: underline;
 }
 
 .fight__method {

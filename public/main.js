@@ -90,20 +90,10 @@ function clickFighterLink(url) {
   renderFighterProfileByUrl(url);
 }
 
-function clickAnnualRankingsSnapshot(ev) {
-  const target = ev.target.closest(".annual-rank-snapshots");
-  if (target.classList.contains("annual-rank-snapshots--collapsed")) {
-    target.classList.remove("annual-rank-snapshots--collapsed");
-  } else {
-    target.classList.add("annual-rank-snapshots--collapsed");
-  }
-}
-
 document.addEventListener('DOMContentLoaded', (e) => {  
   const searchForm = document.querySelector("#search-form");
   if (searchForm) {
     searchForm.addEventListener("submit", searchByName);
   }
 
-  Array.from(document.querySelectorAll(".annual-rank-snapshots p")).forEach(x => x.addEventListener("click", clickAnnualRankingsSnapshot));
 });
