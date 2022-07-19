@@ -5,7 +5,11 @@
     <header>
       <div class="left-col">
         {% for src in info.relevantImages %}
-          <img src="{{src}}" alt="fighter photo">
+          {% if loop.index0 == 0 %}
+            <img src="{{src}}" alt="">
+          {% else %}
+            <img src="{{src}}" alt="" loading="auto">
+          {% endif %}
         {% endfor %}
       </div>
       <div class="right-col">
