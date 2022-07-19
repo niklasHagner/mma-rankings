@@ -262,7 +262,10 @@ function scrapeFighterData(wikiPageUrl) {
           "mmanytt.se", // often wrong fighter
           "kimura.se", // often wrong fighter
           "lookaside.fbsbx.com", // broken
-          "images.google.com" // uncallable
+          "images.google.com", // 403
+          "instagram.com", // 403
+          "mmagirls.co", // 403
+          "24smi.org" // 403
         ]
       };
       gisImageSearch(gisOptions, (error, imageResults) => {
