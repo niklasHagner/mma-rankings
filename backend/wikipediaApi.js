@@ -48,19 +48,33 @@ async function getInfoAndFightersFromNextEvents() {
 
 const FIGHTERS_TO_LOOKUP = 12;
 async function getInfoAndFightersFromSingleEvent(event) {
-  console.log("\nfighters in next event: ", event.fighters.map(x => x.name).join(","), "\n");
+  console.log("\nFighters in next event: ", event.fighters.map(x => x.name).join(","), "\n");
 
-  const fightersToLookUp = event.fighters.slice(0, FIGHTERS_TO_LOOKUP);
-  const fightersWithDetails = await fetchArrayOfFighters(fightersToLookUp);
-  const otherFightersOnCard = event.fighters.slice(FIGHTERS_TO_LOOKUP, event.fighters.length);
-  const moreMatches = [];
-  for (let i = 0; i < otherFightersOnCard.length; i+=2) {
-    moreMatches.push({ fighters: [ otherFightersOnCard[i], otherFightersOnCard[i+1] ]} );
+  //Work in pairs. Look up both fighters, or neither.
+  const fighters = event.fighters;
+  const fighterProfiles = [];
+  const otherFightersOnCard = [];
+  for (let i=0; i < fighters.length; i+=2) {
+    if (fighterProfiles.length < FIGHTERS_TO_LOOKUP && fighters[i].url && fighters[i+1].url) {
+      fighterProfiles.push(fighters[i]);
+      fighterProfiles.push(fighters[i+1]);
+    } else {
+      otherFightersOnCard.push(fighters[i]);
+      otherFightersOnCard.push(fighters[i+1]);
+    }
   }
+
+  const fightersWithDetails = await fetchArrayOfFighters(fighterProfiles);
+
   const mainMatches = [];
   for (let i = 0; i < fightersWithDetails.length; i+=2) {
     mainMatches.push({ fighters: [ fightersWithDetails[i], fightersWithDetails[i+1] ]} );
   }
+  const moreMatches = [];
+  for (let i = 0; i < otherFightersOnCard.length; i+=2) {
+    moreMatches.push({ fighters: [ otherFightersOnCard[i], otherFightersOnCard[i+1] ]} );
+  }
+  
   const singleEvent = { 
     ...event,
     fighters: fightersWithDetails,
