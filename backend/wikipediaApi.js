@@ -264,7 +264,7 @@ function scrapeFighterData(wikiPageUrl) {
       returnObj.fighterInfo.relevantImages = [];
       const img = infoBox.querySelector("img");
 
-      let query = `${fighterInfo["name"]} + MMA`;
+      let query = `${fighterInfo["name"]} + ufc mma fighter profile`;
       var gisOptions = {
         searchTerm: query,
         queryStringAddition: '&tbs=iar:t', //portrait format only (via https://www.google.com/advanced_image_search)
@@ -289,7 +289,9 @@ function scrapeFighterData(wikiPageUrl) {
         }
         if (imageResults && imageResults.length > 0) {
           let imgUrls = imageResults.map(x => x.url);
-          const bestImage = imgUrls.find(x => x.includes("athlete_bio_full_body"));
+          const bestImage = imgUrls.find(x => x.includes("athlete_bio_full_body") 
+          && (x.toLowerCase().includes(returnObj.fighterInfo.name.split(" ")[0].toLowerCase()) || x.toLowerCase().includes(returnObj.fighterInfo.name.split(" ")[1].toLowerCase()))
+          );
           if (bestImage) {
             const ix = imgUrls.indexOf(bestImage);
             imgUrls.splice(ix, 1);
