@@ -279,7 +279,10 @@ function scrapeFighterData(wikiPageUrl) {
           "images.google.com", // 403
           "instagram.com", // 403
           "mmagirls.co", // 403
-          "24smi.org" // 403
+          "24smi.org", // 403,
+          "awakeningfighters.com", //hotlink blocked
+          "images.mma-core.com", //403
+          "preview.redd.it", //403
         ]
       };
       gisImageSearch(gisOptions, (error, imageResults) => {
