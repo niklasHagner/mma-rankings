@@ -85,11 +85,14 @@ async function getInfoAndFightersFromSingleEvent(event) {
   return singleEvent;
 }
 
+/*
+  [ { url: "wiki/Andrei_Arlovski"}  ]
+*/
 async function fetchArrayOfFighters(fighters) {
   var promises = [];
 
   if (READ_FROM_FILE) {
-    const fightersFromFiles = fighters.map(fileHelper.readFighter);
+    const fightersFromFiles = fighters.map(fileHelper.readFileByFighterObj);
     const nullCount = fightersFromFiles.filter(x => x === null).length;
     if (nullCount === 0) { 
       return fightersFromFiles;
@@ -309,4 +312,8 @@ function scrapeFighterData(wikiPageUrl) {
   });//promise
 }
 
-module.exports = { scrapeFighterData, getInfoAndFightersFromNextEvents }
+module.exports = { 
+  scrapeFighterData,
+  getInfoAndFightersFromNextEvents,
+  fetchArrayOfFighters
+}

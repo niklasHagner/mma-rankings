@@ -1,15 +1,7 @@
 const fs = require("fs");
 
-function getFileName(fighter) {
-  const url = fighter.url || fighter.fighterInfo.wikiUrl;
-  const split = url.split("/");
-  const slug = split[split.length-1];
-  const fileName = "data/fighters/" + slug + ".json";
-  return fileName;
-}
-
-function readFighter(fighter) {
-  const fileName = getFileName(fighter);
+function readFileByShortFileName(shortFileName) {
+  const fileName = "data/fighters/" + shortFileName + ".json"
   const fileExists = fs.existsSync(fileName);
   if (!fileExists) {
     return null;
@@ -19,8 +11,27 @@ function readFighter(fighter) {
   return data;
 }
 
+function readFileByFighterObj(fighter) {
+  const fileName = getFileNameByFighterObj(fighter);
+  const fileExists = fs.existsSync(fileName);
+  if (!fileExists) {
+    return null;
+  }
+  let rawdata = fs.readFileSync(fileName);
+  let data = JSON.parse(rawdata);
+  return data;
+}
+
+function getFileNameByFighterObj(fighter) {
+  const url = fighter.url || fighter.fighterInfo.wikiUrl;
+  const split = url.split("/");
+  const slug = split[split.length-1];
+  const fileName = "data/fighters/" + slug + ".json";
+  return fileName;
+}
+
 async function saveFighter(fighter) {
-  const fileName = getFileName(fighter);
+  const fileName = getFileNameByFighterObj(fighter);
   try {
     const exists = await fs.promises.stat(fileName);
     // if (exists) {
@@ -33,6 +44,7 @@ async function saveFighter(fighter) {
 }
 
 module.exports = {
-  readFighter,
-  saveFighter
+  readFileByFighterObj,
+  readFileByShortFileName,
+  saveFighter,
 }
