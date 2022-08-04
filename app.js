@@ -58,10 +58,9 @@ var settings = {
 }
 
 app.get('/', async function (req, res, next) {
-  const viewModel = {};
   const rankData = await getRankingsFromFile(req, res);
-
   const rankingsHtmlString = viewBuilder.buildRankingsHtml(rankData.dates);
+  const viewModel = {};
   viewModel.rankings = {
       allRankings: {
         dates: rankData.dates,
@@ -72,17 +71,12 @@ app.get('/', async function (req, res, next) {
         htmlString: viewBuilder.buildRankingsHtml(rankData.dates.slice(0,1))
       },
   };
-  const events = await getEvents(rankData);
-  viewModel.events = events;
-  res.render("base.njk", viewModel, (err, html) => {
+  viewModel.events = await getEvents(rankData);
+  res.render("events.njk", viewModel, (err, html) => {
     if (err) return next(err);
     res.send(html);
   });
 });
-
-const defaultResponse = {
-  error: true
-};
 
 app.get('/searchfileforfighter', function (req, res) {
   const name = req.query.name || "Jon Jones";
@@ -172,7 +166,7 @@ app.get('/mma-stats-by-date', async function (req, res) {
 // });
 
 async function getEvents(rankingsData) {
-  if (!rankingsData) rankingsData = getRankingsFromFile();
+  if (!rankingsData) rankingsData = await getRankingsFromFile();
   
   const data = await wikipediaApi.getInfoAndFightersFromNextEvents();
 
@@ -197,6 +191,31 @@ async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
   
   return fighter;
 }
+
+
+app.get('/scrape-array', async function (req, res) {
+  const rankingsData = await getRankingsFromFile();
+  const arr = [
+    { url: "wiki/Leon_Edwards" },
+    { url: "wiki/Stipe_Miocic" },
+  ];
+  const fighters = await wikipediaApi.fetchArrayOfFighters(arr);
+  const extendedFighters = await Promise.all(fighterBasicData.map(fighter => extendFighterApiDataWithRecordInfo(fighter, rankingsData)));
+  return;
+});
+
+//Expects ?fileName="Firstname_Lastname"
+app.get('/render-fighter', async function (req, res) {
+  const shortFileName = req.query.fileName || "Leon_Edwards";
+  const viewModel = { 
+    fighter: await fileHelper.readFileByShortFileName(shortFileName)
+  }
+  res.render("fighter.njk", viewModel, (err, html) => {
+    if (err) return next(err);
+    res.send(html);
+  });
+});
+
 
 var port = process.env.PORT || 8001;
 console.log('Server listening on:' + port);
