@@ -43,6 +43,19 @@ nunjucks.configure("views", {
     }
     return fileContent;
   })
+  .addFilter("divisionAbbreviation", (originalStr) => {
+    const str = originalStr.toLowerCase().trim().replace(" ", "").replace("women's", "");
+    if (str ==="flyweight") return "FlyW"; 
+    else if (str ==="strawweight") return "SW";
+    else if (str ==="bantamweight") return "BW";
+    else if (str ==="featherweight") return "FW";
+    else if (str ==="lightweight") return "LW";
+    else if (str ==="welterweight") return "WW";
+    else if (str ==="middleweight") return "MW";
+    else if (str ==="lightheavyweight") return "LHW";
+    else if (str ==="heavyweight") return "HW";
+    else return originalStr;
+  })
 
 winston.configure({
   transports: [
