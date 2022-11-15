@@ -202,9 +202,13 @@ function scrapeFighterData(wikiPageUrl) {
           //WikiTable ages can be identified via strings
           let matchingAgeItem = splitVals.filter(x => x.indexOf("(age&nbsp;") > -1 || x.indexOf("ForceAgeToShow") > -1);
           fighterInfo["ageFullString"] = matchingAgeItem.length > 0 ? striptags(matchingAgeItem[0]) : "-";
-          const ageStr = fighterInfo["ageFullString"].match(/\((age.*?)\)/)[1]; //returns like "age 32"
-          fighterInfo["age"] = ageStr.slice(ageStr.length - 2, ageStr.length);
-
+          const ageFullStringMatches = fighterInfo["ageFullString"].match(/\((age.*?)\)/)
+          if (ageFullStringMatches) {
+            const ageStr = ageFullStringMatches[1]; //returns like "age 32"
+            fighterInfo["age"] = ageStr.slice(ageStr.length - 2, ageStr.length);
+          } else {
+            fighterInfo["age"] = "?";
+          }
 
           //Wikitable Birthplaces often contain links to cities/countries. If not - they have to be guessed based on placement within the string array
           const linkCountPerSplitVal = splitVals.map((splitVal) => {
