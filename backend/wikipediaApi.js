@@ -203,7 +203,7 @@ function scrapeFighterData(wikiPageUrl) {
           let matchingAgeItem = splitVals.filter(x => x.indexOf("(age&nbsp;") > -1 || x.indexOf("ForceAgeToShow") > -1);
           fighterInfo["ageFullString"] = matchingAgeItem.length > 0 ? striptags(matchingAgeItem[0]) : "-";
           const ageFullStringMatches = fighterInfo["ageFullString"].match(/\((age.*?)\)/)
-          if (ageFullStringMatches) {
+          if (ageFullStringMatches && ageFullStringMatches.length > 2) {
             const ageStr = ageFullStringMatches[1]; //returns like "age 32"
             fighterInfo["age"] = ageStr.slice(ageStr.length - 2, ageStr.length);
           } else {
