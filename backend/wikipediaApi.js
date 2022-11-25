@@ -188,25 +188,27 @@ function scrapeFighterData(wikiPageUrl) {
             It's impossible to know which piece is the birthplace based on nodes. Sometimes it's an anchor tag but not always. We just have to assume that if there are 3 <br> elements the birthplace is the last one.
 
             ---Example1---
-            <span style="display:none"> (<span class="bday">1988-09-29</span>) </span>29 September 1988<span class="noprint ForceAgeToShow"> (age&nbsp;33)</span><sup id="cite_ref-1" class="reference"><a href="#cite_note-1" data-ol-has-click-handler="">[1]</a></sup>
-            <br>
-            <a href="/wiki/Warilla,_New_South_Wales" title="Warilla, New South Wales">Warilla, New South Wales</a>, Australia
-
-            ---Example2---
-            Landon Anthony Vannata<sup id="cite_ref-1" class="reference"><a href="#cite_note-1" data-ol-has-click-handler="">[1]</a></sup><br><span style="display:none"> (<span class="bday">1992-03-14</span>) </span>March 14, 1992<span class="noprint ForceAgeToShow"> (age&nbsp;29)</span>
-            <br>
-            <a href="/wiki/Neptune_City,_New_Jersey" title="Neptune City, New Jersey">Neptune City, New Jersey</a>, <a href="/wiki/United_States" title="United States">United States</a>
-             */
+            <td class="infobox-data">Landon Anthony Vannata<sup id="cite_ref-fn_1-0" class="reference"><a href="#cite_note-fn-1">[1]</a></sup><br><span style="display:none"> (<span class="bday">1992-03-14</span>) </span>March 14, 1992<span class="noprint ForceAgeToShow"> (age&nbsp;30)</span><br><a href="/wiki/Neptune_City,_New_Jersey" title="Neptune City, New Jersey">Neptune City, New Jersey</a>, United States</td>
+            
+            ---Example 2---
+            <td class="infobox-data">Stephen Thompson<br><span style="display:none"> (<span class="bday">1983-02-11</span>) </span>February 11, 1983<span class="noprint ForceAgeToShow"> (age&nbsp;39)</span><br><a href="/wiki/Simpsonville,_South_Carolina" title="Simpsonville, South Carolina">Simpsonville, South Carolina</a>, U.S.</td>
+            */
           const splitVals = htmlValue.split("<br>");
-
-          //WikiTable ages can be identified via strings
-          let matchingAgeItem = splitVals.filter(x => x.indexOf("(age&nbsp;") > -1 || x.indexOf("ForceAgeToShow") > -1);
+          
+          //Before nov2022 wikipedia used &nbsp;, then theey switched to the html code &#160;
+          let matchingAgeItem = splitVals.filter(x => x.indexOf("(age&nbsp;") > -1 || x.indexOf("(age&#160;") > -1  || x.indexOf("ForceAgeToShow") > -1);
+          
+          //example value: '(1989-09-29) September 29, 1989 (age&#160;33)'
           fighterInfo["ageFullString"] = matchingAgeItem.length > 0 ? striptags(matchingAgeItem[0]) : "-";
+          
+          //Example value: ['(age&#160;33)', 'age&#160;33']
           const ageFullStringMatches = fighterInfo["ageFullString"].match(/\((age.*?)\)/)
-          if (ageFullStringMatches && ageFullStringMatches.length > 2) {
-            const ageStr = ageFullStringMatches[1]; //returns like "age 32"
-            fighterInfo["age"] = ageStr.slice(ageStr.length - 2, ageStr.length);
+          if (ageFullStringMatches && ageFullStringMatches.length > 0) {
+            //Strip parenthesis, spaces, nbsp and similar
+            const ageStr = ageFullStringMatches[0].replace("age&nbsp;", "").replace("age&#160;", "").replace("(", "").replace(")", "");
+            fighterInfo["age"] = ageStr;
           } else {
+            console.warning(`Couldn't find age for ${fighterInfo["name"]}`);
             fighterInfo["age"] = "?";
           }
 
@@ -269,10 +271,8 @@ function scrapeFighterData(wikiPageUrl) {
       // });
       // returnObj.fighterInfo.relevantImages = relevantImages,
       returnObj.fighterInfo.relevantImages = [];
-      const img = infoBox.querySelector("img");
-
       let query = `${fighterInfo["name"]} + ufc mma fighter profile`;
-      var gisOptions = {
+      var googleImageSearchOptions = {
         searchTerm: query,
         queryStringAddition: '&tbs=iar:t', //portrait format only (via https://www.google.com/advanced_image_search)
         filterOutDomains: [ // AVOID THESE
@@ -292,7 +292,7 @@ function scrapeFighterData(wikiPageUrl) {
           "preview.redd.it", //403
         ]
       };
-      gisImageSearch(gisOptions, (error, imageResults) => {
+      gisImageSearch(googleImageSearchOptions, (error, imageResults) => {
         //imageResults will be an array of objects with 3 props: url, width, height
         if (error) {
           console.error("gis image search error:", error);
