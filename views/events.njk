@@ -44,16 +44,18 @@
     <section class="snapshot">
       <div class="snapshot-divisions">
         {% for division in rankings.latestRankings.divisions %}
-          <article class="division">
-            <h3 class="division-name">{{division.name}}</h3>
-            {% for fighter in division.fighters %}
-              <div class="division-fighters">
-                <div>
-                  <span class="rank">{{fighter.rank}}</span> <span class="name">{{fighter.name}}</span>
+          {% if division.name != " Women's Featherweight " %}
+            <article class="division">
+              <h3 class="division-name">{{division.name}}</h3>
+              {% for fighter in division.fighters %}
+                <div class="division-fighters">
+                  <div>
+                    <span class="rank">{{fighter.rank}}</span> <span class="name">{{fighter.name}}</span>
+                  </div>
                 </div>
-              </div>
-            {% endfor %}
-          </article>
+              {% endfor %}
+            </article>
+          {% endif %}
         {% endfor %}
       </div>
     </section>
