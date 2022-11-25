@@ -3,7 +3,6 @@ const buildRankingsHtml = function(pages) {
   pages.forEach((x) => {
     x.divisions = getSortedDivisions(x.divisions);
   });
-  let latestRanks = pages[0];
   pages = pages.slice(0,pages.length-1);
   const snapshots = pages.map((page) => {
     
@@ -27,18 +26,23 @@ const buildRankingsHtml = function(pages) {
     };
   });
 
-  const snapshotsGroupedByYear = [];
+  let snapshotsGroupedByYear = [];
   snapshots.forEach((snapshot) => {
     const matchingItem = snapshotsGroupedByYear.find(x => x.year === snapshot.year);
-    if (matchingItem) {
+    if (matchingItem ) {
       const matchingIndex = snapshotsGroupedByYear.indexOf(matchingItem);
-      snapshotsGroupedByYear[matchingIndex].html += snapshot.html;
+      
+      //Limit rankings per year to reduce HTML size
+      if (snapshotsGroupedByYear[matchingIndex].snapShotCount < 2) {
+        snapshotsGroupedByYear[matchingIndex].html += snapshot.html;
+        snapshotsGroupedByYear[matchingIndex].snapShotCount = typeof(snapshotsGroupedByYear[matchingIndex].snapShotCount) == "undefined" ? 0 : snapshotsGroupedByYear[matchingIndex].snapShotCount++;
+      }
     } else {
       snapshotsGroupedByYear.push(snapshot);
     }
-  }) 
+  });
 
-  let annualRankingsHtmlString = snapshotsGroupedByYear.map((annualSnapshot, index) => {
+  let annualRankingsHtmlString = snapshotsGroupedByYear.map((annualSnapshot) => {
     const modifierClass = "annual-rank-snapshots--collapsed";
     return `
       <details class="annual-rank-snapshots ${modifierClass}">
@@ -49,7 +53,6 @@ const buildRankingsHtml = function(pages) {
   }).join("");
   
   return annualRankingsHtmlString
-
 };
 
 const getSortedDivisions = function(divisions) {
