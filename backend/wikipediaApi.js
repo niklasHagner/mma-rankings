@@ -290,6 +290,7 @@ function scrapeFighterData(wikiPageUrl) {
           "awakeningfighters.com", //hotlink blocked
           "images.mma-core.com", //403
           "preview.redd.it", //403
+          "upload.wikimedia.org" // wikipedia's poor public domain photos
         ]
       };
       gisImageSearch(googleImageSearchOptions, (error, imageResults) => {
