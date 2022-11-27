@@ -13,9 +13,12 @@
         <section class="fighters-on-card">
           {% for match in event.mainMatches %}
             <div class="fight-on-card">
-              {% for fighter in match.fighters %}
-                {{ fighterView.render(fighter) }}
-              {% endfor %}
+              <h2 class="fight-on-card__title">{{match.fighters[0] | nicknameOrLastname}} VS {{match.fighters[1] | nicknameOrLastname}}</h2>
+              <div class="fight-on-card__grid">
+                {% for fighter in match.fighters %}
+                  {{ fighterView.render(fighter) }}
+                {% endfor %}
+              </div>
             </div>
           {% endfor %}
 

@@ -37,10 +37,13 @@
 }
 
 .fight-on-card {
-    display: grid;
-    gap: 20px;
-    grid-template-rows: 1fr 1fr;
     margin-bottom: 10px;
+}
+
+.fight-on-card__title {
+    background-color: orange;
+    text-align: center;
+    color: black;
 }
 
 .fight-on-card,
@@ -71,7 +74,7 @@
 }
 
 @media screen and (min-width: 900px) {
-    .fight-on-card {
+    .fight-on-card__grid {
         display: grid;
         gap: 20px;
         grid-template-rows: 1fr;

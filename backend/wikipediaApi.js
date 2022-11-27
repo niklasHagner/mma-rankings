@@ -179,20 +179,26 @@ function scrapeFighterData(wikiPageUrl) {
           years active: "2013–present"
         */
 
-        //Rewrite the propnames from Wikipedia Table to our dataModel
-        //Parse values differently based on each prop
+        /* FORMATTING QUIRKS
+        --------------------
+        fightingoutof can hold multiple rows
+          <td class="infobox-data"><a href="/wiki/Gastonia,_North_Carolina" title="Gastonia, North Carolina">Gastonia, North Carolina</a>, United States<sup id="cite_ref-bbmmafighting_2-1" class="reference"><a href="#cite_note-bbmmafighting-2">[2]</a></sup><br><a href="/wiki/Minneapolis,_Minnesota" class="mw-redirect" title="Minneapolis, Minnesota">Minneapolis, Minnesota</a>, United States (formerly)</td>
+        */
 
-        if (propName === "born") { /*
-            This field can contain 1-3 different things: age, name, birthplace.
+        //PROPERTY PARSER
+        //Parse wikipedia html to our dataModel, with various quirks depending on the type of fileds
 
-            It's impossible to know which piece is the birthplace based on nodes. Sometimes it's an anchor tag but not always. We just have to assume that if there are 3 <br> elements the birthplace is the last one.
+        if (propName === "born") { 
+          /*
+            We want to extract birthplace from a "born"-field which contain age, name and birthplace.
+            The html structure doesn't inform us of which element is which so we'll assume based off current wikipedia presentation that if there are 3 <br> elements the birthplace is the last one.
 
             ---Example1---
             <td class="infobox-data">Landon Anthony Vannata<sup id="cite_ref-fn_1-0" class="reference"><a href="#cite_note-fn-1">[1]</a></sup><br><span style="display:none"> (<span class="bday">1992-03-14</span>) </span>March 14, 1992<span class="noprint ForceAgeToShow"> (age&nbsp;30)</span><br><a href="/wiki/Neptune_City,_New_Jersey" title="Neptune City, New Jersey">Neptune City, New Jersey</a>, United States</td>
             
             ---Example 2---
             <td class="infobox-data">Stephen Thompson<br><span style="display:none"> (<span class="bday">1983-02-11</span>) </span>February 11, 1983<span class="noprint ForceAgeToShow"> (age&nbsp;39)</span><br><a href="/wiki/Simpsonville,_South_Carolina" title="Simpsonville, South Carolina">Simpsonville, South Carolina</a>, U.S.</td>
-            */
+          */
           const splitVals = htmlValue.split("<br>");
           
           //Before nov2022 wikipedia used &nbsp;, then theey switched to the html code &#160;

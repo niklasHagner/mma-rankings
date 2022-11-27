@@ -56,6 +56,12 @@ nunjucks.configure("views", {
     else if (str ==="heavyweight") return "HW";
     else return originalStr;
   })
+  .addFilter("nicknameOrLastname", (fighter) => {
+    if (fighter.fighterInfo.nickname) return fighter.fighterInfo.nickname;
+    
+    const splitName = fighter.fighterInfo.name.split(" ");
+    return splitName[splitName.length -1];
+  })
 
 winston.configure({
   transports: [
