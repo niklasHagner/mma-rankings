@@ -303,6 +303,7 @@ function scrapeFighterData(wikiPageUrl) {
         //imageResults will be an array of objects with 3 props: url, width, height
         if (error) {
           console.error("gis image search error:", error);
+          reject("gis image search error:", error);
         }
         if (imageResults && imageResults.length > 0) {
           let imgUrls = imageResults.map(x => x.url);
