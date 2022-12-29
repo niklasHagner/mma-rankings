@@ -9,17 +9,17 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "exp-config": "^4.1.0",
-    "express": "^4.17.1",
+    "exp-config": "^4.2.0",
+    "express": "^4.18.2",
     "g-i-s": "^2.1.6",
-    "jsdom": "^16.5.1",
+    "jsdom": "^16.7.0",
     "moment": "^2.29.4",
     "node-fetch": "^2.6.7",
-    "node-html-parser": "^4.1.3",
+    "node-html-parser": "^4.1.5",
     "nunjucks": "^3.2.3",
     "request": "^2.88.0",
     "striptags": "^3.2.0",
-    "winston": "^3.3.3"
+    "winston": "^3.8.2"
   },
   "keywords": [
     "ufc",
