@@ -1,4 +1,5 @@
 const fs = require("fs");
+const { removeDiacritics } = require('./stringHelper.js');
 
 function readFileByShortFileName(shortFileName) {
   const fileName = "data/fighters/" + shortFileName + ".json"
@@ -40,6 +41,14 @@ async function saveFighter(fighter) {
     // }
   } catch(err) {
     await fs.promises.writeFile(fileName, JSON.stringify(fighter));
+    let allFightersRaw = fs.readFileSync("data/allFighters.json");
+    let allFighters = JSON.parse(allFightersRaw);
+
+    let fighterAnsiName = fighterAnsiName.replaceAll("_", " ").replace("(fighter)", "").replace(".json","");
+    fighterAnsiName = decodeURIComponent(fighterAnsiName);
+    fighterAnsiName = removeDiacritics(fighterAnsiName);
+    allFighters.push({fileName, fighterAnsiName});
+    await fs.promises.writeFile(allFighters);
   }
 }
 

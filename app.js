@@ -14,10 +14,13 @@ const fileHelper = require('./backend/fileHelper.js');
 
 const SAVE_JSON_TO_FILE = process.env.SAVE_JSON_TO_FILE || config.SAVE_JSON_TO_FILE;
 
-let existingData = fs.readFileSync("data/mmaStats.json");
-let jsonData = JSON.parse(existingData);
-let lastScapedDate = jsonData.dates[0].date;
-console.log(`The last rank is dated ${lastScapedDate}. Maybe it's time to run /scrapeMissing `);
+const mmaStatsJsonRaw = fs.readFileSync("data/mmaStats.json");
+const mmaStatsJson = JSON.parse(mmaStatsJsonRaw);
+const lastScapedStatsDate = mmaStatsJson.dates[0].date;
+console.log(`The last rank is dated ${lastScapedStatsDate}. Maybe it's time to run /scrapeMissing `);
+
+const fightersWithProfileLinksRaw = fs.readFileSync("data/allFighters.json");
+global.fightersWithProfileLinks = JSON.parse(fightersWithProfileLinksRaw);
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -91,6 +94,7 @@ app.get('/', async function (req, res, next) {
       },
   };
   viewModel.events = await getEvents(rankData);
+  viewModel.fightersWithProfileLinks = global.fightersWithProfileLinks;
   res.render("events.njk", viewModel, (err, html) => {
     if (err) return next(err);
     res.send(html);
@@ -106,6 +110,19 @@ app.get('/searchfileforfighter', function (req, res) {
   const rank = findRankAtTime(data, name, date);
   const jsonResult = { "mostRecentMatch": rank };
   return res.json(jsonResult);
+});
+
+//shortFileName should a match a filename in data/fighters/*.json 
+//Examples: "Jan_B%C5%82achowicz"  or "Jon_Jones" 
+app.get('/fighter/:shortFileName', async function (req, res) {
+  const shortFileName = req.params.shortFileName;
+  const viewModel = { 
+    fighter: await fileHelper.readFileByShortFileName(shortFileName)
+  }
+  res.render("fighter.njk", viewModel, (err, html) => {
+    if (err) return next(err);
+    res.send(html);
+  });
 });
 
 app.get('/scrapeMissing', async function (req, res) {
@@ -221,18 +238,6 @@ app.get('/scrape-array', async function (req, res) {
   const fighters = await wikipediaApi.fetchArrayOfFighters(arr);
   const extendedFighters = await Promise.all(fighterBasicData.map(fighter => extendFighterApiDataWithRecordInfo(fighter, rankingsData)));
   return;
-});
-
-//Expects ?fileName="Firstname_Lastname"
-app.get('/render-fighter', async function (req, res) {
-  const shortFileName = req.query.fileName || "Leon_Edwards";
-  const viewModel = { 
-    fighter: await fileHelper.readFileByShortFileName(shortFileName)
-  }
-  res.render("fighter.njk", viewModel, (err, html) => {
-    if (err) return next(err);
-    res.send(html);
-  });
 });
 
 

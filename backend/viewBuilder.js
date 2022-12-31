@@ -87,10 +87,14 @@ const divisionToHtml = function(division) {
   const fighters = division.fighters.map((fighter) => {
     if (fighter.rank.toLowerCase().indexOf("champion") > -1) 
       fighter.rank = "C";
+    
+    const fighterFileMatch = global.fightersWithProfileLinks.find(x => x.fighterAnsiName === fighter.name);
+    const fighterLink = fighterFileMatch ? `/fighter/${fighterFileMatch.fileName.replace(".json", "")}` : null;
+    const fighterNameElement = fighterLink ? `<a href="${fighterLink}" class="name">${fighter.name}</a>` : `<span class="name">${fighter.name}</span>`;
 
     return `
       <article>
-        <span class="rank">${fighter.rank}</span> <span class="name">${fighter.name}</span>
+        <span class="rank">${fighter.rank}</span> ${fighterNameElement}
       </article>
     `;
   }).join("<br>");
