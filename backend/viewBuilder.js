@@ -88,10 +88,7 @@ const divisionToHtml = function(division) {
     if (fighter.rank.toLowerCase().indexOf("champion") > -1) 
       fighter.rank = "C";
     
-    const fighterFileMatch = global.fightersWithProfileLinks.find(x => x.fighterAnsiName === fighter.name);
-    const fighterLink = fighterFileMatch ? `/fighter/${fighterFileMatch.fileName.replace(".json", "")}` : null;
-    const fighterNameElement = fighterLink ? `<a href="${fighterLink}" class="name">${fighter.name}</a>` : `<span class="name">${fighter.name}</span>`;
-
+    const fighterNameElement = getFighterNameOrLinkHtml(fighter);
     return `
       <article>
         <span class="rank">${fighter.rank}</span> ${fighterNameElement}
@@ -106,4 +103,11 @@ const divisionToHtml = function(division) {
   `;
 };
 
-module.exports = { buildRankingsHtml }
+function getFighterNameOrLinkHtml(fighter) {
+  const fighterFileMatch = global.fightersWithProfileLinks.find(x => x.fighterAnsiName === fighter.name);
+  const fighterLink = fighterFileMatch ? `/fighter/${fighterFileMatch.fileName.replace(".json", "")}` : null;
+  const html = fighterLink ? `<a href="${fighterLink}" class="name">${fighter.name}</a>` : `<span class="name">${fighter.name}</span>`;
+  return html;
+}
+
+module.exports = { buildRankingsHtml, getFighterNameOrLinkHtml }

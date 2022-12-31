@@ -52,13 +52,13 @@
           {% if division.name != " Women's Featherweight " %}
             <article class="division">
               <h3 class="division-name">{{division.name}}</h3>
+              <div class="division-fighters">
               {% for fighter in division.fighters %}
-                <div class="division-fighters">
-                  <div>
-                    <span class="rank">{{fighter.rank}}</span> <span class="name">{{fighter.name}}</span>
-                  </div>
+                <div>
+                  {{ fighter | getFighterNameOrLinkHtml | safe }}
                 </div>
               {% endfor %}
+              </div>
             </article>
           {% endif %}
         {% endfor %}

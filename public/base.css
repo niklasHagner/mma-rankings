@@ -317,7 +317,7 @@ table tr {
     border-top: solid 2px #4c2685;
 }
 
-.site-header h1 {
+.site-header .logo {
     display: inline-block;
     margin: 0 auto;
     color: black;

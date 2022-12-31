@@ -65,6 +65,9 @@ nunjucks.configure("views", {
     const splitName = fighter.fighterInfo.name.split(" ");
     return splitName[splitName.length -1];
   })
+  .addFilter("getFighterNameOrLinkHtml", (fighter) => {
+    return viewBuilder.getFighterNameOrLinkHtml(fighter);
+  })
 
 winston.configure({
   transports: [
