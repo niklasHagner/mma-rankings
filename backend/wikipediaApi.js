@@ -5,6 +5,7 @@ const fetch = require('node-fetch');
 const striptags = require('striptags');
 const gisImageSearch = require("g-i-s");
 const fileHelper = require("./fileHelper.js");
+const { stripTagsAndDecode } = require("./stringHelper.js");
 
 const READ_FROM_FILE = true;
 
@@ -205,7 +206,7 @@ function scrapeFighterData(wikiPageUrl) {
           let matchingAgeItem = splitVals.filter(x => x.indexOf("(age&nbsp;") > -1 || x.indexOf("(age&#160;") > -1  || x.indexOf("ForceAgeToShow") > -1);
           
           //example value: '(1989-09-29) September 29, 1989 (age&#160;33)'
-          fighterInfo["ageFullString"] = matchingAgeItem.length > 0 ? striptags(matchingAgeItem[0]) : "-";
+          fighterInfo["ageFullString"] = matchingAgeItem.length > 0 ? stripTagsAndDecode(matchingAgeItem[0]) : "-";
           
           //Example value: ['(age&#160;33)', 'age&#160;33']
           const ageFullStringMatches = fighterInfo["ageFullString"].match(/\((age.*?)\)/)
@@ -225,19 +226,19 @@ function scrapeFighterData(wikiPageUrl) {
           const max = Math.max(...linkCountPerSplitVal);
           if (max > 0) {
             const indexOfItemWithMostLinks = linkCountPerSplitVal.indexOf(max);
-            fighterInfo["birthplace"] = striptags(splitVals[indexOfItemWithMostLinks]);
+            fighterInfo["birthplace"] = stripTagsAndDecode(splitVals[indexOfItemWithMostLinks]);
           }
           else {
             if (splitVals.length > 2) {
-              fighterInfo["birthplace"] = striptags(splitVals[2]);
+              fighterInfo["birthplace"] = stripTagsAndDecode(splitVals[2]);
             } else {
-              fighterInfo["birthplace"] = striptags(splitVals[0]);
+              fighterInfo["birthplace"] = stripTagsAndDecode(splitVals[0]);
             }
           }
           fighterInfo["birthplace"] = fighterInfo["birthplace"].trim();
         }
         else if (propName === "nicknames" || propName === "othernames") {
-          fighterInfo["nickname"] = striptags(htmlValue.split("<br>")[0]);
+          fighterInfo["nickname"] = stripTagsAndDecode(htmlValue.split("<br>")[0]);
         }
         else if (propName === "total") fighterInfo["totalFights"] = value;
         else if (propName === "bydecision") fighterInfo["decisionWins"] = value;
@@ -250,7 +251,7 @@ function scrapeFighterData(wikiPageUrl) {
           fighterInfo["reach"] = partBeforeReference;
         }
         else if (propName === "team") {
-          const teams = htmlValue.split("<br>").map(x => striptags(x));
+          const teams = htmlValue.split("<br>").map(x => stripTagsAndDecode(x));
           newestTeam = teams[0];
           fighterInfo["team"] = newestTeam;
           fighterInfo.teams = teams;

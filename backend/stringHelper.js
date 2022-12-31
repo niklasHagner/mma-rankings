@@ -1,3 +1,5 @@
+const striptags = require('striptags');
+
 /* Used to map strings with accents and diactrics to simplified strings.
 Example: "Błachowicz and José" will return "Blackwhocz and Jose" */
 var defaultDiacriticsRemovalMap = [
@@ -103,6 +105,31 @@ function removeDiacritics (str) {
   });
 }
 
+// Store markers outside of the function scope,
+// not to recreate them on every call
+var entities = {
+  'amp': '&',
+  'apos': '\'',
+  'lt': '<',
+  'gt': '>',
+  'quot': '"',
+  'nbsp': '\xa0',
+  '#160': '\xa0'
+};
+var htmlEntityPattern = /&([a-z]+);/ig;
+//Based on https://github.com/intesso/decode-html/blob/master/index.js
+function stripTagsAndDecode(inputStr) {
+  let text = striptags(inputStr);
+  return text.replace(htmlEntityPattern, function(match, entity) {
+    entity = entity.toLowerCase();
+    if (entities.hasOwnProperty(entity)) {
+      return entities[entity];
+    }
+    return match;
+  });
+};
+
 module.exports = {
-  removeDiacritics
+  removeDiacritics,
+  stripTagsAndDecode
 }
