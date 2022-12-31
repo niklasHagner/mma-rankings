@@ -17,7 +17,7 @@ const SAVE_JSON_TO_FILE = process.env.SAVE_JSON_TO_FILE || config.SAVE_JSON_TO_F
 const mmaStatsJsonRaw = fs.readFileSync("data/mmaStats.json");
 const mmaStatsJson = JSON.parse(mmaStatsJsonRaw);
 const lastScapedStatsDate = mmaStatsJson.dates[0].date;
-console.log(`The last rank is dated ${lastScapedStatsDate}. Maybe it's time to run /scrapeMissing `);
+console.log(`The last rank is dated ${lastScapedStatsDate}. Maybe it's time to run /scrapeLatestRankings`);
 
 const fightersWithProfileLinksRaw = fs.readFileSync("data/allFighters.json");
 global.fightersWithProfileLinks = JSON.parse(fightersWithProfileLinksRaw);
@@ -104,7 +104,7 @@ app.get('/', async function (req, res, next) {
   });
 });
 
-app.get('/searchfileforfighter', function (req, res) {
+app.get('/searchForNameAndDate', function (req, res) {
   const name = req.query.name || "Jon Jones";
   const date = req.query.date || "2016-01-02";
 
@@ -128,7 +128,7 @@ app.get('/fighter/:shortFileName', async function (req, res) {
   });
 });
 
-app.get('/scrapeMissing', async function (req, res) {
+app.get('/scrapeLatestRankings', async function (req, res) {
   let existingData = fs.readFileSync("data/mmaStats.json");
   let jsonData = JSON.parse(existingData);
   let lastScapedJsonBlob = jsonData.dates[0];
@@ -248,6 +248,3 @@ var port = process.env.PORT || 8001;
 console.log('Server listening on:' + port);
 app.listen(port);
 console.info(`Navigate to http://localhost:${port}/`);
-// console.info("...To scrape data navigate to http://localhost:${port}/scrapeMissing");
-// or http://localhost:${port}/scrape?startDate=2017-01-01&endDate=2017-12-31
-// console.info("* Endpoint example: /search-fighter-by-name?name=Fedor");

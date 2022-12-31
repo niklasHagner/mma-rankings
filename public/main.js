@@ -6,53 +6,11 @@ const buildAllFightersHtml = function(fighters) {
   return allHtml;
 };
 
-const searchByName = function(ev) {
-  ev.preventDefault();
-  var name = document.querySelector("#search-input").value;
-  renderFighterProfileByName(name);
-};
-
-const renderFighterProfileByName = function(name) {
-    console.log("fetching fighters");
-    loader.classList.remove("hidden");
-    if (name) {
-        name = encodeURIComponent(name);
-    }
-    fetch(`http://localhost:8081/search-fighter-by-name?name=${name}`)
-    .then((response) => {
-      return response.json();
-    })
-    .then((json) => {
-      loader.classList.add("hidden");
-      document.querySelector("#fighter-search-profile").innerHTML = `
-      <article>
-        <section class="fighters-on-card">
-            ${buildFighterHtml(json)}
-        </section>
-      </article>
-      `;
-    });
-}
-
-const renderFighterProfileByUrl = function(url) {
-  console.log("fetching fighters");
-  loader.classList.remove("hidden");
-  fetch(`/get-fighter-by-sherdog-url?url=${url}`)
-  .then((response) => {
-    return response.json();
-  })
-  .then((json) => {
-    loader.classList.add("hidden");
-    const newEl = document.createElement("section");
-    newEl.innerHTML = `
-      <section class="fighters-on-card">
-          ${buildFighterHtml(json)}
-      </section>
-    `;
-    const container = document.querySelector(".single-post-container");
-    container.prepend(newEl);
-  });
-}
+// const searchByName = function(ev) {
+//   ev.preventDefault();
+//   var name = document.querySelector("#search-input").value;
+//   renderFighterProfileByName(name);
+// };
 
 function formatDate(date) {
   var d = new Date(date),
@@ -86,14 +44,13 @@ function formatDate(date) {
 //     });
 // };
 
-function clickFighterLink(url) {
-  renderFighterProfileByUrl(url);
-}
+// function setupSearch() {
+//   const searchForm = document.querySelector("#search-form");
+//   if (!searchForm) return;
+
+//   searchForm.addEventListener("submit", searchByName);
+// }
 
 document.addEventListener('DOMContentLoaded', (e) => {  
-  const searchForm = document.querySelector("#search-form");
-  if (searchForm) {
-    searchForm.addEventListener("submit", searchByName);
-  }
-
+  // setupSearch();
 });

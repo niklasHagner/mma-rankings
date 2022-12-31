@@ -33,9 +33,9 @@ This project generates a json-file of the top15 rankings for every UFC division 
 ## Routes:
 
 * `/` - serves main view with events and all time rankings
-* `/scrapeMissing` - scrapes mmastats.com for all the dates we don't already have in `/data/mmaStats.json`
+* `/scrapeLatestRankings` - scrapes mmastats.com for all the dates we don't already have in `/data/mmaStats.json`
 * `/scrapeByQueryParams?startDate=2011-01-01&endDate=2015-12-31` - scrapes mmastats.com for specified date range
-* `/searchfileforfighter?date=%222016-03-02%22&name=Fedor` - used to look up one opponent's rank at the time of the fight
+* `/searchForNameAndDate?date=%222016-03-02%22&name=Fedor` - used to look up one opponent's rank at the time of the fight
 * `/mma-stats-by-date?date="2015-01-20"` - get rankings for 20th january 2015
 * `/search-fighter-by-name?name=Fedor` - search for a single fighter profile
 * `/fighter/:shortFileName` - render a profile page for a single fighter based off data in `data/fighter/*.json` - Example: `/fighter/Jan_B%C5%82achowicz`
