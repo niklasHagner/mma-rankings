@@ -90,9 +90,9 @@ const divisionToHtml = function(division) {
     
     const fighterNameElement = getFighterNameOrLinkHtml(fighter);
     return `
-      <article>
+      <div>
         <span class="rank">${fighter.rank}</span> ${fighterNameElement}
-      </article>
+      </div>
     `;
   }).join("<br>");
   return `
