@@ -103,7 +103,8 @@ async function fetchArrayOfFighters(fighters, alwaysFetchFromNetwork = false) {
   var fighterPagesToLookUp = fighters.filter(x => x.url).map(x => x.url);
 
   fighterPagesToLookUp.forEach((url) => {
-    var promise = scrapeFighterData("https://en.wikipedia.org/" + url);
+    if (!url.includes("https://en.wikipedia.org/")) "https://en.wikipedia.org/" + url;
+    var promise = scrapeFighterData(url);
     promises.push(promise);
   });
 
