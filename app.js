@@ -17,7 +17,7 @@ const SAVE_JSON_TO_FILE = process.env.SAVE_JSON_TO_FILE || config.SAVE_JSON_TO_F
 const mmaStatsJsonRaw = fs.readFileSync("data/mmaStats.json");
 const mmaStatsJson = JSON.parse(mmaStatsJsonRaw);
 const lastScapedStatsDate = mmaStatsJson.dates[0].date;
-console.log(`The last rank is dated ${lastScapedStatsDate}. Maybe it's time to run /scrapeLatestRankings`);
+console.log(`The last rank is dated ${lastScapedStatsDate}. Maybe it's time to run 'npm run scrapeLatestRankings'`);
 
 const fightersWithProfileLinksRaw = fs.readFileSync("data/allFighters.json");
 global.fightersWithProfileLinks = JSON.parse(fightersWithProfileLinksRaw);
@@ -129,39 +129,6 @@ app.get('/fighter/:name', async function (req, res) {
   });
 });
 
-app.get('/scrapeLatestRankings', async function (req, res) {
-  let existingData = fs.readFileSync("data/mmaStats.json");
-  let jsonData = JSON.parse(existingData);
-  let lastScapedJsonBlob = jsonData.dates[0];
-  const lastScrapedDate = lastScapedJsonBlob.date;
-  const today = new Date().toISOString().split('T')[0];
-
-  let startDate;
-  const lastScrapedMoment = moment(lastScrapedDate, "MMM DD, YYYY");
-  const diff = lastScrapedMoment.diff(moment(today), "days");
-
-  if (Math.abs(diff) >= 7) {
-    const startDateMoment = lastScrapedMoment.add(1, "M");
-    startDate = startDateMoment.format("YYYY-MM-DD");
-  } else {
-    startDate = today;
-  }
-
-  if (moment(startDate).isAfter(moment(today))) {
-    startDate = today;
-  }
-
-  const scrapeStatus = await mmaStatsScraper.scrapeRankingsForMultipleDates(startDate, today);
-  return res.send(scrapeStatus);
-});
-
-app.get('/scrapeByQueryParams', async function (req, res) {
-  const startDate = req.query.startDate;
-  const endDate = req.query.endDate;
-  const scrapeStatus = await mmaStatsScraper.scrapeRankingsForMultipleDates(startDate, endDate);
-  res.send(scrapeStatus);
-});
-
 async function getRankingsFromFile(req, res) {
   let rawdata = fs.readFileSync("data/mmaStats.json");
   let jsonData = JSON.parse(rawdata);
@@ -181,29 +148,6 @@ app.get('/mma-stats-by-date', async function (req, res) {
   const json = await mmaStatsScraper.scrapeMmaStats(req.query.date);
   res.send(json);
 });
-
-// app.get('/search-fighter-by-name', function(req, response) {
-//     response.contentType('application/json');
-
-//     if (!req.query.name) {
-//         console.error(" Error. Try something like this instead: /search-fighter-by-name?name=Fedor");
-//         return response.send({error:true});
-//     }
-
-//     var fighterName = decodeURIComponent(req.query.name);
-
-//     wikipediaApi.findFighterByName(fighterName).then(function (fighter) {
-//         //append historical records
-//         let allRankingsFromFile = fs.readFileSync("data/mmaStats.json");
-//         let allRankingsData = JSON.parse(allRankingsFromFile);
-//         fighter = extendFighterApiDataWithRecordInfo(fighter, allRankingsData);
-//         return response.render(`{{ fighterView.render(fighter) }}`, fighter);
-//     }).catch(function (reason) {
-//         console.error("fail", reason);
-//         response.send("fail: " + reason);
-//         return;
-//     });
-// });
 
 async function getEvents(rankingsData) {
   if (!rankingsData) rankingsData = await getRankingsFromFile();
@@ -231,19 +175,6 @@ async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
   
   return fighter;
 }
-
-//expected input: [{ url: "wiki/Leon_Edwards" }, { url: "wiki/Jan_B%C5%82achowicz"} ]
-//Note: avoid running this on a huge array to avoid scraper blockers
-app.get('/scrapeListOfFighters/', async function (req, res) {
-  const inputFighters = req.params.fighters;
-  const alwaysFetchFromNetwork = true;
-  const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, alwaysFetchFromNetwork);
-  const rankingsData = await getRankingsFromFile();
-  const extendedFighters = await Promise.all(fighterBasicData.map(fighter => extendFighterApiDataWithRecordInfo(fighter, rankingsData)));
-  fileHelper.updateListOfFighterFiles();
-  console.log("done");
-  return;
-});
 
 var port = process.env.PORT || 8001;
 console.log('Server listening on:' + port);

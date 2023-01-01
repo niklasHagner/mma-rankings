@@ -6,7 +6,9 @@
   "license": "MIT",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "scrapeListOfFighters": "node scripts/scrapeListOfFighters.js",
+    "scrapeLatestRankings": "node scripts/scrapeLatestRankings.js"
   },
   "dependencies": {
     "exp-config": "^4.2.0",
