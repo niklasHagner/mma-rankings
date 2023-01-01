@@ -89,10 +89,10 @@ async function getInfoAndFightersFromSingleEvent(event) {
 /*
   [ { url: "wiki/Andrei_Arlovski"}  ]
 */
-async function fetchArrayOfFighters(fighters) {
+async function fetchArrayOfFighters(fighters, alwaysFetchFromNetwork = false) {
   var promises = [];
 
-  if (READ_FROM_FILE) {
+  if (alwaysFetchFromNetwork === false && READ_FROM_FILE) {
     const fightersFromFiles = fighters.map(fileHelper.readFileByFighterObj);
     const nullCount = fightersFromFiles.filter(x => x === null).length;
     if (nullCount === 0) { 
@@ -124,7 +124,7 @@ function scrapeFighterData(wikiPageUrl) {
         console.error(msg);
         return reject(msg);
       }
-      console.log("scraped:", wikiPageUrl);
+      console.log("Starting to scrape:", wikiPageUrl);
       const root = HTMLParser.parse(html);
 
       const nodesToRemove = Array.from(root.querySelectorAll("script")).concat(Array.from(root.querySelectorAll("style")));

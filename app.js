@@ -225,24 +225,24 @@ async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
   fighter.record = extendedRecord;
 
   if (SAVE_JSON_TO_FILE) {
-    await fileHelper.saveFighter(fighter);
+    fileHelper.saveFighter(fighter);
   }
   
   return fighter;
 }
 
-
-app.get('/scrape-array', async function (req, res) {
+//expected input: [{ url: "wiki/Leon_Edwards" }, { url: "wiki/Jan_B%C5%82achowicz"} ]
+//Note: avoid running this on a huge array to avoid scraper blockers
+app.get('/scrapeListOfFighters/', async function (req, res) {
+  const inputFighters = req.params.fighters;
+  const alwaysFetchFromNetwork = true;
+  const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, alwaysFetchFromNetwork);
   const rankingsData = await getRankingsFromFile();
-  const arr = [
-    { url: "wiki/Leon_Edwards" },
-    { url: "wiki/Stipe_Miocic" },
-  ];
-  const fighters = await wikipediaApi.fetchArrayOfFighters(arr);
   const extendedFighters = await Promise.all(fighterBasicData.map(fighter => extendFighterApiDataWithRecordInfo(fighter, rankingsData)));
+  fileHelper.updateListOfFighterFiles();
+  console.log("done");
   return;
 });
-
 
 var port = process.env.PORT || 8001;
 console.log('Server listening on:' + port);

@@ -33,27 +33,48 @@ function getFileNameByFighterObj(fighter) {
 
 async function saveFighter(fighter) {
   const fileName = getFileNameByFighterObj(fighter);
-  try {
-    const exists = await fs.promises.stat(fileName);
-    // if (exists) {
-    //   const data = await fs.promises.readFile(fileName);
-    //   const parsed = JSON.parse(data);
-    // }
-  } catch(err) {
-    await fs.promises.writeFile(fileName, JSON.stringify(fighter));
-    const allFightersRaw = fs.readFileSync("data/allFighters.json");
-    const allFighters = JSON.parse(allFightersRaw);
 
-    let fighterAnsiName = fileName.replace(/_/g, " ").replace("(fighter)", "").replace(".json","");
-    fighterAnsiName = decodeURIComponent(fighterAnsiName);
-    fighterAnsiName = removeDiacritics(fighterAnsiName);
-    allFighters.push({fileName, fighterAnsiName});
-    await fs.promises.writeFile(allFighters);
-  }
+  //File-exist-check recommended by https://flaviocopes.com/how-to-check-if-file-exists-node/
+  fs.access(fileName, fs.F_OK, async(err) => {
+    if (err) { //File does NOT exist yet, so create it
+      await fs.promises.writeFile(fileName, JSON.stringify(fighter));
+
+      //Mention the new file in the list of files
+      const allFightersRaw = fs.readFileSync("data/allFighters.json");
+      const allFighters = JSON.parse(allFightersRaw);
+
+      let fighterAnsiName = getFighterAnsiNameFromFileName(fileName);
+      allFighters.push({fileName, fighterAnsiName});
+      await fs.promises.writeFile("data/allFighters.json", JSON.stringify(allFighters));
+      console.log(`Created file ${fileName} and updated allFighters.json`);
+      return;
+    }
+    //File exists, overwrite it
+    await fs.promises.writeFile(fileName, JSON.stringify(fighter));
+    console.log(`Updated contents of file ${fileName}`);
+  })
+}
+
+async function updateListOfFighterFiles() {
+  const allFighters = [];
+  fs.readdirSync("data/fighters").forEach(fileName => {
+    allFighters.push({fileName, fighterAnsiName: getFighterAnsiNameFromFileName(fileName)});
+  })
+  await fs.promises.writeFile("data/allFighters.json", JSON.stringify(allFighters));
+  console.log(`Updated allFighters.json`);
+  return;
+}
+
+function getFighterAnsiNameFromFileName(fileName) {
+  let fighterAnsiName = fileName.replace(/_/g, " ").replace("(fighter)", "").replace(".json","");
+  fighterAnsiName = decodeURIComponent(fighterAnsiName);
+  fighterAnsiName = removeDiacritics(fighterAnsiName);
+  return fighterAnsiName;
 }
 
 module.exports = {
   readFileByFighterObj,
   readFileByShortFileName,
   saveFighter,
+  updateListOfFighterFiles,
 }
