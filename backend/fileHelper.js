@@ -68,7 +68,7 @@ async function updateListOfFighterFiles() {
 function getFighterAnsiNameFromFileName(fileName) {
   let fighterAnsiName = fileName.replace(/_/g, " ").replace("(fighter)", "").replace(".json","");
   fighterAnsiName = decodeURIComponent(fighterAnsiName);
-  fighterAnsiName = removeDiacritics(fighterAnsiName);
+  fighterAnsiName = removeDiacritics(fighterAnsiName).trim();
   return fighterAnsiName;
 }
 

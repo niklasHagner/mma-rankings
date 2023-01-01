@@ -1,5 +1,9 @@
 [
   {
+    "fileName": "Aleksandar_Raki%C4%87.json",
+    "fighterAnsiName": "Aleksandar Rakic"
+  },
+  {
     "fileName": "Aleksei_Oleinik.json",
     "fighterAnsiName": "Aleksei Oleinik"
   },
@@ -12,8 +16,12 @@
     "fighterAnsiName": "Alex Morono"
   },
   {
+    "fileName": "Alex_Pereira.json",
+    "fighterAnsiName": "Alex Pereira"
+  },
+  {
     "fileName": "Alex_Perez_(fighter).json",
-    "fighterAnsiName": "Alex Perez "
+    "fighterAnsiName": "Alex Perez"
   },
   {
     "fileName": "Alexa_Grasso.json",
@@ -25,7 +33,15 @@
   },
   {
     "fileName": "Alexander_Romanov_(fighter).json",
-    "fighterAnsiName": "Alexander Romanov "
+    "fighterAnsiName": "Alexander Romanov"
+  },
+  {
+    "fileName": "Alexander_Volkanovski.json",
+    "fighterAnsiName": "Alexander Volkanovski"
+  },
+  {
+    "fileName": "Alexander_Volkov_(fighter).json",
+    "fighterAnsiName": "Alexander Volkov"
   },
   {
     "fileName": "Alexandre_Pantoja.json",
@@ -40,6 +56,10 @@
     "fighterAnsiName": "Alonzo Menifield"
   },
   {
+    "fileName": "Amanda_Lemos.json",
+    "fighterAnsiName": "Amanda Lemos"
+  },
+  {
     "fileName": "Amanda_Nunes.json",
     "fighterAnsiName": "Amanda Nunes"
   },
@@ -48,20 +68,24 @@
     "fighterAnsiName": "Andre Fialho"
   },
   {
+    "fileName": "Andr%C3%A9_Muniz.json",
+    "fighterAnsiName": "Andre Muniz"
+  },
+  {
     "fileName": "Angela_Hill.json",
     "fighterAnsiName": "Angela Hill"
   },
   {
     "fileName": "Angela_Hill_(fighter).json",
-    "fighterAnsiName": "Angela Hill "
+    "fighterAnsiName": "Angela Hill"
   },
   {
     "fileName": "Anthony_Hernandez_(fighter).json",
-    "fighterAnsiName": "Anthony Hernandez "
+    "fighterAnsiName": "Anthony Hernandez"
   },
   {
     "fileName": "Anthony_Smith_(fighter).json",
-    "fighterAnsiName": "Anthony Smith "
+    "fighterAnsiName": "Anthony Smith"
   },
   {
     "fileName": "Ariane_Lipski.json",
@@ -70,6 +94,10 @@
   {
     "fileName": "Arman_Tsarukyan.json",
     "fighterAnsiName": "Arman Tsarukyan"
+  },
+  {
+    "fileName": "Arnold_Allen.json",
+    "fighterAnsiName": "Arnold Allen"
   },
   {
     "fileName": "Aspen_Ladd.json",
@@ -92,6 +120,10 @@
     "fighterAnsiName": "Benoit Saint-Denis"
   },
   {
+    "fileName": "Blagoy_Ivanov.json",
+    "fighterAnsiName": "Blagoy Ivanov"
+  },
+  {
     "fileName": "Brad_Tavares.json",
     "fighterAnsiName": "Brad Tavares"
   },
@@ -104,8 +136,12 @@
     "fighterAnsiName": "Brendan Allen"
   },
   {
+    "fileName": "Brian_Ortega.json",
+    "fighterAnsiName": "Brian Ortega"
+  },
+  {
     "fileName": "Bruno_Silva_(fighter).json",
-    "fighterAnsiName": "Bruno Silva "
+    "fighterAnsiName": "Bruno Silva"
   },
   {
     "fileName": "Bryan_Barberena.json",
@@ -114,6 +150,14 @@
   {
     "fileName": "Bryce_Mitchell.json",
     "fighterAnsiName": "Bryce Mitchell"
+  },
+  {
+    "fileName": "Calvin_Kattar.json",
+    "fighterAnsiName": "Calvin Kattar"
+  },
+  {
+    "fileName": "Carla_Esparza.json",
+    "fighterAnsiName": "Carla Esparza"
   },
   {
     "fileName": "Charles_Oliveira.json",
@@ -125,7 +169,7 @@
   },
   {
     "fileName": "Chris_Curtis_(fighter).json",
-    "fighterAnsiName": "Chris Curtis "
+    "fighterAnsiName": "Chris Curtis"
   },
   {
     "fileName": "Chris_Daukaus.json",
@@ -144,6 +188,10 @@
     "fighterAnsiName": "Cody Garbrandt"
   },
   {
+    "fileName": "Colby_Covington.json",
+    "fighterAnsiName": "Colby Covington"
+  },
+  {
     "fileName": "Cory_Sandhagen.json",
     "fighterAnsiName": "Cory Sandhagen"
   },
@@ -160,8 +208,16 @@
     "fighterAnsiName": "Damir Ismagulov"
   },
   {
+    "fileName": "Dan_Hooker.json",
+    "fighterAnsiName": "Dan Hooker"
+  },
+  {
+    "fileName": "Dan_Ige.json",
+    "fighterAnsiName": "Dan Ige"
+  },
+  {
     "fileName": "Daniel_Rodriguez_(fighter).json",
-    "fighterAnsiName": "Daniel Rodriguez "
+    "fighterAnsiName": "Daniel Rodriguez"
   },
   {
     "fileName": "Darren_Till.json",
@@ -188,12 +244,32 @@
     "fighterAnsiName": "Dominick Cruz"
   },
   {
+    "fileName": "Dominick_Reyes.json",
+    "fighterAnsiName": "Dominick Reyes"
+  },
+  {
+    "fileName": "Drew_Dober.json",
+    "fighterAnsiName": "Drew Dober"
+  },
+  {
     "fileName": "Dricus_du_Plessis.json",
     "fighterAnsiName": "Dricus du Plessis"
   },
   {
+    "fileName": "Dustin_Poirier.json",
+    "fighterAnsiName": "Dustin Poirier"
+  },
+  {
+    "fileName": "Edson_Barboza.json",
+    "fighterAnsiName": "Edson Barboza"
+  },
+  {
     "fileName": "Eryk_Anders.json",
     "fighterAnsiName": "Eryk Anders"
+  },
+  {
+    "fileName": "Francis_Ngannou.json",
+    "fighterAnsiName": "Francis Ngannou"
   },
   {
     "fileName": "Francisco_Trinaldo.json",
@@ -220,6 +296,10 @@
     "fighterAnsiName": "Glover Teixeira"
   },
   {
+    "fileName": "Grant_Dawson.json",
+    "fighterAnsiName": "Grant Dawson"
+  },
+  {
     "fileName": "Gregory_Rodrigues.json",
     "fighterAnsiName": "Gregory Rodrigues"
   },
@@ -230,6 +310,10 @@
   {
     "fileName": "Hannah_Goldy.json",
     "fighterAnsiName": "Hannah Goldy"
+  },
+  {
+    "fileName": "Holly_Holm.json",
+    "fighterAnsiName": "Holly Holm"
   },
   {
     "fileName": "Ilia_Topuria.json",
@@ -252,6 +336,10 @@
     "fighterAnsiName": "Islam Makhachev"
   },
   {
+    "fileName": "Israel_Adesanya.json",
+    "fighterAnsiName": "Israel Adesanya"
+  },
+  {
     "fileName": "J%C3%A9ssica_Andrade.json",
     "fighterAnsiName": "Jessica Andrade"
   },
@@ -265,7 +353,11 @@
   },
   {
     "fileName": "Jake_Matthews_(fighter).json",
-    "fighterAnsiName": "Jake Matthews "
+    "fighterAnsiName": "Jake Matthews"
+  },
+  {
+    "fileName": "Jalin_Turner.json",
+    "fighterAnsiName": "Jalin Turner"
   },
   {
     "fileName": "Jamahal_Hill.json",
@@ -300,8 +392,12 @@
     "fighterAnsiName": "Jiri Prochazka"
   },
   {
+    "fileName": "Jimmy_Crute.json",
+    "fighterAnsiName": "Jimmy Crute"
+  },
+  {
     "fileName": "Joaquim_Silva_(fighter).json",
-    "fighterAnsiName": "Joaquim Silva "
+    "fighterAnsiName": "Joaquim Silva"
   },
   {
     "fileName": "Joaquin_Buckley.json",
@@ -313,15 +409,27 @@
   },
   {
     "fileName": "Johnny_Walker_(fighter).json",
-    "fighterAnsiName": "Johnny Walker "
+    "fighterAnsiName": "Johnny Walker"
+  },
+  {
+    "fileName": "Jon_Jones.json",
+    "fighterAnsiName": "Jon Jones"
   },
   {
     "fileName": "Jordan_Leavitt.json",
     "fighterAnsiName": "Jordan Leavitt"
   },
   {
+    "fileName": "Jorge_Masvidal.json",
+    "fighterAnsiName": "Jorge Masvidal"
+  },
+  {
     "fileName": "Jos%C3%A9_Aldo.json",
     "fighterAnsiName": "Jose Aldo"
+  },
+  {
+    "fileName": "Josh_Emmett.json",
+    "fighterAnsiName": "Josh Emmett"
   },
   {
     "fileName": "Journey_Newson.json",
@@ -338,6 +446,10 @@
   {
     "fileName": "Julianna_Pe%C3%B1a.json",
     "fighterAnsiName": "Julianna Pena"
+  },
+  {
+    "fileName": "Justin_Gaethje.json",
+    "fighterAnsiName": "Justin Gaethje"
   },
   {
     "fileName": "Kai_Kara-France.json",
@@ -360,8 +472,16 @@
     "fighterAnsiName": "Kennedy Nzechukwu"
   },
   {
+    "fileName": "Ketlen_Vieira.json",
+    "fighterAnsiName": "Ketlen Vieira"
+  },
+  {
     "fileName": "Kevin_Holland.json",
     "fighterAnsiName": "Kevin Holland"
+  },
+  {
+    "fileName": "Khalil_Rountree_Jr..json",
+    "fighterAnsiName": "Khalil Rountree Jr."
   },
   {
     "fileName": "Khamzat_Chimaev.json",
@@ -385,7 +505,7 @@
   },
   {
     "fileName": "Leonardo_Santos_(fighter).json",
-    "fighterAnsiName": "Leonardo Santos "
+    "fighterAnsiName": "Leonardo Santos"
   },
   {
     "fileName": "Li_Jingliang.json",
@@ -428,6 +548,10 @@
     "fighterAnsiName": "Marcin Tybura"
   },
   {
+    "fileName": "Marina_Rodriguez.json",
+    "fighterAnsiName": "Marina Rodriguez"
+  },
+  {
     "fileName": "Marlon_Vera.json",
     "fighterAnsiName": "Marlon Vera"
   },
@@ -456,6 +580,10 @@
     "fighterAnsiName": "Matthew Semelsberger"
   },
   {
+    "fileName": "Max_Holloway.json",
+    "fighterAnsiName": "Max Holloway"
+  },
+  {
     "fileName": "Mayra_Bueno_Silva.json",
     "fighterAnsiName": "Mayra Bueno Silva"
   },
@@ -468,6 +596,18 @@
     "fighterAnsiName": "Michal Oleksiejczuk"
   },
   {
+    "fileName": "Michael_Chandler.json",
+    "fighterAnsiName": "Michael Chandler"
+  },
+  {
+    "fileName": "Michael_Chiesa.json",
+    "fighterAnsiName": "Michael Chiesa"
+  },
+  {
+    "fileName": "Michel_Pereira.json",
+    "fighterAnsiName": "Michel Pereira"
+  },
+  {
     "fileName": "Miles_Johns.json",
     "fighterAnsiName": "Miles Johns"
   },
@@ -478,6 +618,10 @@
   {
     "fileName": "Molly_McCann.json",
     "fighterAnsiName": "Molly McCann"
+  },
+  {
+    "fileName": "Movsar_Evloev.json",
+    "fighterAnsiName": "Movsar Evloev"
   },
   {
     "fileName": "Muslim_Salikhov.json",
@@ -532,6 +676,10 @@
     "fighterAnsiName": "Paulo Costa"
   },
   {
+    "fileName": "Pedro_Munhoz.json",
+    "fighterAnsiName": "Pedro Munhoz"
+  },
+  {
     "fileName": "Petr_Yan.json",
     "fighterAnsiName": "Petr Yan"
   },
@@ -544,12 +692,16 @@
     "fighterAnsiName": "Priscila Cachoeira"
   },
   {
+    "fileName": "Rafael_Fiziev.json",
+    "fighterAnsiName": "Rafael Fiziev"
+  },
+  {
     "fileName": "Rafael_dos_Anjos.json",
     "fighterAnsiName": "Rafael dos Anjos"
   },
   {
     "fileName": "Randy_Brown_(fighter).json",
-    "fighterAnsiName": "Randy Brown "
+    "fighterAnsiName": "Randy Brown"
   },
   {
     "fileName": "Rani_Yahya.json",
@@ -560,16 +712,40 @@
     "fighterAnsiName": "Raoni Barcelos"
   },
   {
+    "fileName": "Renato_Moicano.json",
+    "fighterAnsiName": "Renato Moicano"
+  },
+  {
+    "fileName": "Ricky_Sim%C3%B3n.json",
+    "fighterAnsiName": "Ricky Simon"
+  },
+  {
+    "fileName": "Rob_Font.json",
+    "fighterAnsiName": "Rob Font"
+  },
+  {
     "fileName": "Robbie_Lawler.json",
     "fighterAnsiName": "Robbie Lawler"
   },
   {
     "fileName": "Robert_Whittaker_(fighter).json",
-    "fighterAnsiName": "Robert Whittaker "
+    "fighterAnsiName": "Robert Whittaker"
   },
   {
     "fileName": "Rodrigo_Nascimento.json",
     "fighterAnsiName": "Rodrigo Nascimento"
+  },
+  {
+    "fileName": "Roman_Dolidze.json",
+    "fighterAnsiName": "Roman Dolidze"
+  },
+  {
+    "fileName": "Rose_Namajunas.json",
+    "fighterAnsiName": "Rose Namajunas"
+  },
+  {
+    "fileName": "Ryan_Spann.json",
+    "fighterAnsiName": "Ryan Spann"
   },
   {
     "fileName": "Sam_Alvey.json",
@@ -585,11 +761,11 @@
   },
   {
     "fileName": "Sean_Brady_(fighter).json",
-    "fighterAnsiName": "Sean Brady "
+    "fighterAnsiName": "Sean Brady"
   },
   {
     "fileName": "Sean_O%27Malley_(fighter).json",
-    "fighterAnsiName": "Sean O'Malley "
+    "fighterAnsiName": "Sean O'Malley"
   },
   {
     "fileName": "Sean_Strickland.json",
@@ -601,15 +777,23 @@
   },
   {
     "fileName": "Sergey_Morozov_(fighter).json",
-    "fighterAnsiName": "Sergey Morozov "
+    "fighterAnsiName": "Sergey Morozov"
   },
   {
     "fileName": "Sergey_Spivak.json",
     "fighterAnsiName": "Sergey Spivak"
   },
   {
+    "fileName": "Shamil_Abdurakhimov.json",
+    "fighterAnsiName": "Shamil Abdurakhimov"
+  },
+  {
     "fileName": "Shamil_Gamzatov.json",
     "fighterAnsiName": "Shamil Gamzatov"
+  },
+  {
+    "fileName": "Shavkat_Rakhmonov.json",
+    "fighterAnsiName": "Shavkat Rakhmonov"
   },
   {
     "fileName": "Sijara_Eubanks.json",
@@ -629,7 +813,7 @@
   },
   {
     "fileName": "Stephen_Thompson_(fighter).json",
-    "fighterAnsiName": "Stephen Thompson "
+    "fighterAnsiName": "Stephen Thompson"
   },
   {
     "fileName": "Stipe_Miocic.json",
@@ -648,12 +832,20 @@
     "fighterAnsiName": "Tai Tuivasa"
   },
   {
+    "fileName": "Taila_Santos.json",
+    "fighterAnsiName": "Taila Santos"
+  },
+  {
     "fileName": "Tanner_Boser.json",
     "fighterAnsiName": "Tanner Boser"
   },
   {
+    "fileName": "The_Korean_Zombie.json",
+    "fighterAnsiName": "The Korean Zombie"
+  },
+  {
     "fileName": "Thiago_Santos_(fighter).json",
-    "fighterAnsiName": "Thiago Santos "
+    "fighterAnsiName": "Thiago Santos"
   },
   {
     "fileName": "Tom_Aspinall.json",
@@ -672,6 +864,10 @@
     "fighterAnsiName": "Tyson Nam"
   },
   {
+    "fileName": "Valentina_Shevchenko.json",
+    "fighterAnsiName": "Valentina Shevchenko"
+  },
+  {
     "fileName": "Vicente_Luque.json",
     "fighterAnsiName": "Vicente Luque"
   },
@@ -681,7 +877,7 @@
   },
   {
     "fileName": "Viviane_Ara%C3%BAjo_(fighter).json",
-    "fighterAnsiName": "Viviane Araujo "
+    "fighterAnsiName": "Viviane Araujo"
   },
   {
     "fileName": "Volkan_Oezdemir.json",
@@ -689,10 +885,18 @@
   },
   {
     "fileName": "Wu_Yanan_(fighter).json",
-    "fighterAnsiName": "Wu Yanan "
+    "fighterAnsiName": "Wu Yanan"
+  },
+  {
+    "fileName": "Yair_Rodr%C3%ADguez.json",
+    "fighterAnsiName": "Yair Rodriguez"
   },
   {
     "fileName": "Yan_Xiaonan.json",
     "fighterAnsiName": "Yan Xiaonan"
+  },
+  {
+    "fileName": "Zhang_Weili.json",
+    "fighterAnsiName": "Zhang Weili"
   }
 ]
