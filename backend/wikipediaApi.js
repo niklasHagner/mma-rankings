@@ -119,13 +119,23 @@ async function fetchArrayOfFighters(fighters) {
 function scrapeFighterData(wikiPageUrl) {
   return new Promise(function (fulfill, reject) {
     request(wikiPageUrl, function (error, response, html) {
+      if (!html) {
+        const msg = `Error scraping ${wikiPageUrl}`;
+        console.error(msg);
+        return reject(msg);
+      }
       console.log("scraped:", wikiPageUrl);
       const root = HTMLParser.parse(html);
 
       const nodesToRemove = Array.from(root.querySelectorAll("script")).concat(Array.from(root.querySelectorAll("style")));
       nodesToRemove.forEach((x) => x.parentNode.removeChild(x));
 
-      const infoBox = root.querySelector(".infobox.vcard tbody");
+      const infoBox = root.querySelector(".infobox.vcard tbody");//can be null
+      if (!infoBox) {
+        const msg = `Missing infobox for ${wikiPageUrl}`;
+        console.error(msg);
+        return reject(msg);
+      }
       infoBox.querySelectorAll("sup").forEach(x => x.remove()); //delete footnote references
       const rows = infoBox.querySelectorAll("tr");
       let infoBoxProps = [];
@@ -215,7 +225,7 @@ function scrapeFighterData(wikiPageUrl) {
             const ageStr = ageFullStringMatches[0].replace("age&nbsp;", "").replace("age&#160;", "").replace("(", "").replace(")", "");
             fighterInfo["age"] = ageStr;
           } else {
-            console.warning(`Couldn't find age for ${fighterInfo["name"]}`);
+            console.warn(`Couldn't find age for ${fighterInfo["name"]}`);
             fighterInfo["age"] = "?";
           }
 
@@ -305,7 +315,7 @@ function scrapeFighterData(wikiPageUrl) {
         //imageResults will be an array of objects with 3 props: url, width, height
         if (error) {
           console.error("gis image search error:", error);
-          reject("gis image search error:", error);
+          return reject("gis image search error:", error);
         }
         if (imageResults && imageResults.length > 0) {
           let imgUrls = imageResults.map(x => x.url);

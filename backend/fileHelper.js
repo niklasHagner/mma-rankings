@@ -41,10 +41,10 @@ async function saveFighter(fighter) {
     // }
   } catch(err) {
     await fs.promises.writeFile(fileName, JSON.stringify(fighter));
-    let allFightersRaw = fs.readFileSync("data/allFighters.json");
-    let allFighters = JSON.parse(allFightersRaw);
+    const allFightersRaw = fs.readFileSync("data/allFighters.json");
+    const allFighters = JSON.parse(allFightersRaw);
 
-    let fighterAnsiName = fighterAnsiName.replaceAll("_", " ").replace("(fighter)", "").replace(".json","");
+    let fighterAnsiName = fileName.replace(/_/g, " ").replace("(fighter)", "").replace(".json","");
     fighterAnsiName = decodeURIComponent(fighterAnsiName);
     fighterAnsiName = removeDiacritics(fighterAnsiName);
     allFighters.push({fileName, fighterAnsiName});
