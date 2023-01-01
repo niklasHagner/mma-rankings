@@ -117,10 +117,11 @@ app.get('/searchForNameAndDate', function (req, res) {
 
 //shortFileName should a match a filename in data/fighters/*.json 
 //Examples: "Jan_B%C5%82achowicz"  or "Jon_Jones" 
-app.get('/fighter/:shortFileName', async function (req, res) {
-  const shortFileName = req.params.shortFileName;
+app.get('/fighter/:name', async function (req, res) {
+  const name = req.params.name;
+  let encodedName = encodeURIComponent(name);
   const viewModel = { 
-    fighter: await fileHelper.readFileByShortFileName(shortFileName)
+    fighter: await fileHelper.readFileByShortFileName(encodedName)
   }
   res.render("fighter.njk", viewModel, (err, html) => {
     if (err) return next(err);
