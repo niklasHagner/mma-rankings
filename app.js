@@ -3,7 +3,6 @@ const app = express();
 const nunjucks = require("nunjucks");
 const fs = require('fs');
 const winston = require('winston');
-const moment = require("moment");
 const config = require("exp-config");
 
 const mmaStatsScraper = require('./backend/scrapeMmaStatsDotCom');
@@ -21,6 +20,9 @@ console.log(`The last rank is dated ${lastScapedStatsDate}. Maybe it's time to r
 
 const fightersWithProfileLinksRaw = fs.readFileSync("data/allFighters.json");
 global.fightersWithProfileLinks = JSON.parse(fightersWithProfileLinksRaw);
+
+let mmaStatsRaw = fs.readFileSync("data/mmaStats.json");
+global.rankData = JSON.parse(mmaStatsRaw);
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -83,7 +85,7 @@ var settings = {
 }
 
 app.get('/', async function (req, res, next) {
-  const rankData = await getRankingsFromFile(req, res);
+  const rankData = global.rankData;
   const rankingsHtmlString = viewBuilder.buildRankingsHtml(rankData.dates);
   const viewModel = {};
   viewModel.rankings = {
@@ -117,7 +119,7 @@ app.get('/searchForNameAndDate', function (req, res) {
 
 //shortFileName should a match a filename in data/fighters/*.json 
 //Examples: "Jan_B%C5%82achowicz"  or "Jon_Jones" 
-app.get('/fighter/:name', async function (req, res) {
+app.get('/fighter/:name', async function (req, res, next) {
   const name = req.params.name;
   let encodedName = encodeURIComponent(name);
   const viewModel = { 
@@ -128,12 +130,6 @@ app.get('/fighter/:name', async function (req, res) {
     res.send(html);
   });
 });
-
-async function getRankingsFromFile(req, res) {
-  let rawdata = fs.readFileSync("data/mmaStats.json");
-  let jsonData = JSON.parse(rawdata);
-  return jsonData;
-}
 
 app.get('/mma-stats-by-date', async function (req, res) {
   res.contentType('application/json');
@@ -150,8 +146,6 @@ app.get('/mma-stats-by-date', async function (req, res) {
 });
 
 async function getEvents(rankingsData) {
-  if (!rankingsData) rankingsData = await getRankingsFromFile();
-  
   const data = await wikipediaApi.getInfoAndFightersFromNextEvents();
 
   const asyncRes = await Promise.all(data.events.map(async (event) => {
