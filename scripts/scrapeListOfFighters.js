@@ -15,12 +15,6 @@ async function scrapeListOfFighters(inputFighters) {
   //   return {url: wikiUrl};
   // });
 
-
-  if (!inputFighters?.length > 0) {
-    console.log("called without input");
-    return;
-  }
-
   const alwaysFetchFromNetwork = true;
   const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, alwaysFetchFromNetwork);
   const rankingsData = await getRankingsFromFile();

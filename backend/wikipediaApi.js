@@ -3,7 +3,7 @@ const HTMLParser = require('node-html-parser');
 const fetch = require('node-fetch');
 const gisImageSearch = require("g-i-s");
 const fileHelper = require("./fileHelper.js");
-const { stripTagsAndDecode, removeScriptsAndShitFromParsedHtml } = require("./stringAndHtmlHelper.js");
+const { stripTagsAndDecode, removeUnwantedTagsFromHtmlNode } = require("./stringAndHtmlHelper.js");
 
 const READ_FROM_FILE = true;
 
@@ -339,7 +339,7 @@ async function scrapeFighterData(wikiPageUrl) {
     if (!response.ok) { console.log(`Error scraping ${wikiPageUrl}. Status: ${response.status}`); reject("scraping error"); }
     const html = await response.text();
     const root = HTMLParser.parse(html);
-    removeScriptsAndShitFromParsedHtml(root);
+    removeUnwantedTagsFromHtmlNode(root);
     const detect429Status = root.querySelector("body").innerHTML.indexOf("Wikimedia error") > -1;
     if (detect429Status) {
       console.warn(`Wikimedia error for ${wikiPageUrl}`);
