@@ -169,9 +169,9 @@ async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
   });
   fighter.record = extendedRecord;
 
-  if (SAVE_JSON_TO_FILE) {
-    fileHelper.saveFighter(fighter);
-  }
+  // if (SAVE_JSON_TO_FILE) {
+  //   fileHelper.saveFighter(fighter);
+  // }
   
   return fighter;
 }
