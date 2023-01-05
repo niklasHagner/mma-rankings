@@ -8,7 +8,8 @@
   "scripts": {
     "start": "node app.js",
     "scrapeListOfFighters": "node scripts/scrapeListOfFighters.js",
-    "scrapeLatestRankings": "node scripts/scrapeLatestRankings.js"
+    "scrapeLatestRankings": "node scripts/scrapeLatestRankings.js",
+    "eslint": "eslint backend/**/*.js"
   },
   "dependencies": {
     "exp-config": "^4.2.0",
@@ -27,5 +28,8 @@
     "ufc",
     "mma",
     "sherdog"
-  ]
+  ],
+  "devDependencies": {
+    "eslint": "^8.31.0"
+  }
 }
