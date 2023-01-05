@@ -1,6 +1,5 @@
 
 {% macro render(fighter) %}
-
   {% if not fighter or not fighter.fighterInfo %}
     <p>Missing fighter</p>
   {% else %}
@@ -35,15 +34,25 @@
       
       <div class="fights">
         <h4>Record:</h4>
-        {# buildFightHistory(fighter.record) #}
+        {# EXAMPLE FIGHT DATA 
+        {"result":"Win","record":"28–8","opponentName":"Israel Adesanya","method":"Decision (unanimous)","event":"UFC 259","date":"March 6, 2021","round":"5","time":"5:00","location":"Las Vegas, Nevada, United States","notes":"Defended the UFC Light Heavyweight Championship.","year":"2021","opponentInfoAtTheTime":{"fighter":{"rank":"C","link":"https://mma-stats.com/fighters/Israel-Adesanya","name":"Israel Adesanya"},"division":" Middleweight ","date":"February 15, 2021","formattedDate":"2021-01","wasInTheFuture":true}} #}
         {% for fight in fighter.record %}
-          {# {"result":"Win","record":"28–8","opponentName":"Israel Adesanya","method":"Decision (unanimous)","event":"UFC 259","date":"March 6, 2021","round":"5","time":"5:00","location":"Las Vegas, Nevada, United States","notes":"Defended the UFC Light Heavyweight Championship.","year":"2021","opponentInfoAtTheTime":{"fighter":{"rank":"C","link":"https://mma-stats.com/fighters/Israel-Adesanya","name":"Israel Adesanya"},"division":" Middleweight ","date":"February 15, 2021","formattedDate":"2021-01","wasInTheFuture":true}} #}
           <p class="fight {{ 'fight--win' if fight.result === 'Win' }} {{ 'fight--loss' if fight.result === 'Loss'}}">
-            <span class="fight__year">{{fight.year}}:</span>
+
+            {# {% if fight.fighterRankAtTheTime and not fight.fighterRankAtTheTime.wasInTheFuture %}
+              <span class="fight__opponent-rank {{ 'fight__opponent-rank--past' if fight.fighterRankAtTheTime.fighter.wasInThePast }} {{ 'fight__opponent-rank--future' if fight.fighterRankAtTheTime.wasInTheFuture }}">
+                {% if fight.fighterRankAtTheTime.division %}
+                  {{ fight.fighterRankAtTheTime.division | divisionAbbreviation }}
+                {% endif -%}
+                #{{ fight.fighterRankAtTheTime.fighter.rank | trim }} in {{ fight.fighterRankAtTheTime.formattedDate }}
+              </span>
+            {% endif %} #}
+
+            <span class="fight__year">{{fight.date | dateFormat}}:</span>
             <span class="fight__result">{{fight.result}}</span>
             <span class="fight__opponent">{{fight.opponentName}}</span>
             {% if fight.opponentInfoAtTheTime %}
-              <span class="fight__opponent-rank {{ 'fight__opponent-rank--past' if fight.opponentInfoAtTheTime.fighter.wasInThePast }} {{ 'fight__opponent-rank--future' if fight.opponentInfoAtTheTime.fighter.wasInTheFuture }}">
+              <span class="fight__opponent-rank {{ 'fight__opponent-rank--past' if fight.opponentInfoAtTheTime.wasInThePast }} {{ 'fight__opponent-rank--future' if fight.opponentInfoAtTheTime.wasInTheFuture }}">
                 {% if fight.opponentInfoAtTheTime.division %}
                   {{ fight.opponentInfoAtTheTime.division | divisionAbbreviation }}
                 {% endif -%}
@@ -54,6 +63,17 @@
           </p>
         {% endfor %}
       </div>
+
+      {# <div class="rank-history">
+        <h4>Rank histroy:</h4>
+        {% for rankObj in fighter.rankHistory %}
+          <p>
+            <span class="fight__year">{{rankObj.date | dateFormat}}:</span>
+            <span class="fight__opponent">{{rankObj.division | divisionAbbreviation}}</span>
+            <span class="fight__result">#{{rankObj.fighter.rank | trim}}</span>
+          </p>
+        {% endfor %}
+      </div> #}
     </article>
   {% endif %}
 {% endmacro %}

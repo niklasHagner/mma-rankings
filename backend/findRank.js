@@ -1,5 +1,9 @@
 const moment = require("moment");
 
+/*
+returns array of items like:
+{"fighter":{"rank":" 13","link":"https://mma-stats.com/fighters/Kelvin-Gastelum","name":"Kelvin Gastelum"},"division":" Middleweight ","date":"December 19, 2022"}
+*/
 function findAllRanksForFighter(data, name) {
   let matches = [];
   data.dates.forEach((date) => {

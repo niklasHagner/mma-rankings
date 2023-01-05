@@ -4,9 +4,10 @@ const nunjucks = require("nunjucks");
 const fs = require('fs');
 const winston = require('winston');
 const config = require("exp-config");
+const moment = require("moment");
 
 const mmaStatsScraper = require('./backend/scrapeMmaStatsDotCom');
-const { findRankAtTime } = require('./backend/findRank');
+const { findRankAtTime, findAllRanksForFighter } = require('./backend/findRank');
 const wikipediaApi = require('./backend/wikipediaApi.js');
 const viewBuilder = require('./backend/viewBuilder.js');
 const fileHelper = require('./backend/fileHelper.js');
@@ -69,6 +70,10 @@ nunjucks.configure("views", {
   })
   .addFilter("getFighterNameOrLinkHtml", (fighter) => {
     return viewBuilder.getFighterNameOrLinkHtml(fighter);
+  })
+  .addFilter("dateFormat", (str) => {
+    const date = new Date(str);
+    return moment(date.toISOString()).format("YYYY-MM");
   })
 
 winston.configure({
@@ -158,15 +163,17 @@ async function getEvents(rankingsData) {
 async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
   const record = fighter.record;
   const extendedRecord = record.map((fight) => {
+    const fighterRankAtTheTime = findRankAtTime(allRankingsData, fighter.fighterInfo.name, fight.date);
     const opponentInfoAtTheTime = findRankAtTime(allRankingsData, fight.opponentName, fight.date);
-    return { ...fight, opponentInfoAtTheTime };
+    return { ...fight, opponentInfoAtTheTime, fighterRankAtTheTime };
   });
   fighter.record = extendedRecord;
 
   // if (SAVE_JSON_TO_FILE) {
   //   fileHelper.saveFighter(fighter);
   // }
-  
+
+  fighter.rankHistory = findAllRanksForFighter(global.rankData, fighter.fighterInfo.name);
   return fighter;
 }
 
