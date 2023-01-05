@@ -43,7 +43,7 @@ function findRankAtTime(data, name, lookupDate) {
     if (new Date(lookupDate).getFullYear() > fullYearNumber) {
         closestEarlierDate.wasInThePast = true;
     } else {
-        rankModifierClass  = "fight__opponent-rank--future"
+        // rankModifierClass  = "fight__opponent-rank--future"
         closestEarlierDate.wasInTheFuture = true;
     }
 

@@ -1,14 +1,12 @@
 var HTMLParser = require('node-html-parser');
 
-module.exports.parseWikipediaFightRecordTableToJson = function (html) {
-  const root = HTMLParser.parse(html);
-  let mmaRecordsTable = root.querySelectorAll("table").filter(x => {
+module.exports.parseWikipediaFightRecordTableToJson = function (htmlNode) {
+  let mmaRecordsTable = htmlNode.querySelectorAll("table").filter(x => {
     var tr = x.querySelector("tr");
     return tr ? tr.innerText.trim().indexOf("Res.") === 0 : false;
   })
   mmaRecordsTable = mmaRecordsTable.map((html) => {
     // Res.	Record	Opponent	Method	Event	Date	Round	Time	Location	Notes
-    const headers = html.querySelectorAll("th").map(x => x.innerText);
     const cells = html.querySelectorAll("tr")
       .filter((row,ix) => ix > 0)
       .map(row => { 
@@ -26,9 +24,8 @@ module.exports.parseWikipediaFightRecordTableToJson = function (html) {
           notes: td[9],
         };
        
-        Object.keys(fight).forEach(function(key, ix){ 
+        Object.keys(fight).forEach(function(key){ 
           if (!fight || !fight[key]) {
-            // console.log(`ix ${ix} - key ${key} is blank`);
             return "";
           }
           if (fight[key].innerText) fight[key] = fight[key].innerText.replace("\n", "");
@@ -40,10 +37,10 @@ module.exports.parseWikipediaFightRecordTableToJson = function (html) {
       return cells;
   });
 
-  const recordBreakdownTable = root.querySelectorAll("table").filter(x => {
-    const row = x.querySelector("tr");
-    return !row ? false : row.innerText.trim().indexOf("Professional record breakdown") === 0;
-  })
+  // const recordBreakdownTable = htmlNode.querySelectorAll("table").filter(x => {
+  //   const row = x.querySelector("tr");
+  //   return !row ? false : row.innerText.trim().indexOf("Professional record breakdown") === 0;
+  // });
 
   return mmaRecordsTable;
 }
@@ -72,7 +69,7 @@ module.exports.parseWikipediaFutureEventsToJson = function(html) {
         location: td[3] ? td[3].innerText : prevLocation
       };
       
-      Object.keys(item).forEach(function(key, ix){
+      Object.keys(item).forEach(function(key){
         if (item[key]) item[key] = item[key].replace("\n", "");//trim crap
       });
       return item;
