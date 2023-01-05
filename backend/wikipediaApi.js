@@ -87,28 +87,39 @@ async function getInfoAndFightersFromSingleEvent(event) {
 }
 
 /*
-  [ { url: "wiki/Andrei_Arlovski"}  ]
+  arrayOfNamesAndUrls example data:
+  [ 
+    {name: 'Kelvin Gastelum', url: '/wiki/Kelvin_Gastelum'}  
+  ]
 */
-async function fetchArrayOfFighters(fighters, alwaysFetchFromNetwork = false) {
+async function fetchArrayOfFighters(arrayOfNamesAndUrls, alwaysFetchFromNetwork = false) {
   var promises = [];
 
+  let arrayOfNamesAndUrlsToScrape;
   if (alwaysFetchFromNetwork === false && READ_FROM_FILE) {
-    const fightersFromFiles = fighters.map(fileHelper.readFileByFighterObj);
-    const nullCount = fightersFromFiles.filter(x => x === null).length;
-    if (nullCount === 0) { 
+    //Possible output: [{fighterInfo:Object,...}, null, {fighterInfo:Object,...}]
+    const fightersFromFiles = arrayOfNamesAndUrls.map(fileHelper.readFileByFighterObj);
+    const indexesWhichDontHaveFiles = fightersFromFiles.map((item, ix) => { return {index: ix, data: item} }).filter(x => x.data === null).map(x => x.index);
+    const arrayOfNamesAndUrlsWhichAreMissingFiles = arrayOfNamesAndUrls.filter((item, ix) => indexesWhichDontHaveFiles.includes(ix));
+    console.log(`Missing files for ${arrayOfNamesAndUrlsWhichAreMissingFiles.length} fighters in the event`);
+    console.log(`${arrayOfNamesAndUrlsWhichAreMissingFiles.map(x => x.url).join(", ")}`);
+
+    if (arrayOfNamesAndUrlsWhichAreMissingFiles.length === 0) {
       return fightersFromFiles;
     };
+    arrayOfNamesAndUrlsToScrape = arrayOfNamesAndUrlsWhichAreMissingFiles;
+  } else {
+    arrayOfNamesAndUrlsToScrape = arrayOfNamesAndUrls;
   }
 
-  var fighterPagesToLookUp = fighters.filter(x => x.url).map(x => x.url);
-
-  fighterPagesToLookUp.forEach((url) => {
-    if (!url.includes("https://en.wikipedia.org/")) "https://en.wikipedia.org/" + url;
+  const urlsToLookUp = arrayOfNamesAndUrlsToScrape.filter(x => x.url).map(x => x.url);
+  urlsToLookUp.forEach((url) => {
+    url = url.includes("https://en.wikipedia.org/") ? url : `https://en.wikipedia.org/${url}`;
     var promise = scrapeFighterData(url);
     promises.push(promise);
   });
 
-  var allFighters = [];
+  const allFighters = [];
   const promiseValues = await Promise.all(promises);
   promiseValues.forEach((fighter) => {
     fighter.opponents = [];
