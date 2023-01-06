@@ -25,7 +25,8 @@ function findAllRanksForFighter(data, name) {
 /*
 Return the rank at the time, or if unranked - return the earliest possible rank
 */
-function findRankAtTime(data, name, lookupDate) {
+function findRankAtTime(data, name, lookupDateStr) {
+    const lookupDate = new Date(lookupDateStr);
     const matches = findAllRanksForFighter(data, name);
     if (matches.length === 0) {
         return 0;
@@ -35,22 +36,18 @@ function findRankAtTime(data, name, lookupDate) {
         return moment(new Date(match.date)).isBefore(new Date(lookupDate));
     });
     if (!closestEarlierDate) {
-        // console.log("no rank found for", name, "before", date);
         closestEarlierDate = matches.reverse()[0];
     }
 
     const closestDate = new Date(closestEarlierDate.date);
-    const monthString = `${closestDate.getMonth()}`.padStart(2, '0');
-    const fullYearNumber = closestDate.getFullYear();
-    closestEarlierDate.formattedDate = fullYearNumber + "-" + monthString;
+    closestEarlierDate.formattedDate = closestDate.getFullYear() + "-" + `${closestDate.getMonth() + 1}`.padStart(2, '0');
     
-    if (new Date(lookupDate).getFullYear() > fullYearNumber) {
+    const monthDiff = (closestDate.getFullYear()*12 + closestDate.getMonth()) - (lookupDate.getFullYear()*12 + lookupDate.getMonth() )
+    if (monthDiff <= -12) {
         closestEarlierDate.wasInThePast = true;
-    } else {
-        // rankModifierClass  = "fight__opponent-rank--future"
+    } else if (monthDiff >= 12 )  {
         closestEarlierDate.wasInTheFuture = true;
     }
-
     return closestEarlierDate;
 }
 
