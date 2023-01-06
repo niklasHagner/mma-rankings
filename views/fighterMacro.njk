@@ -64,16 +64,16 @@
         {% endfor %}
       </div>
 
-      {# <div class="rank-history">
-        <h4>Rank histroy:</h4>
-        {% for rankObj in fighter.rankHistory %}
-          <p>
-            <span class="fight__year">{{rankObj.date | dateFormat}}:</span>
-            <span class="fight__opponent">{{rankObj.division | divisionAbbreviation}}</span>
-            <span class="fight__result">#{{rankObj.fighter.rank | trim}}</span>
-          </p>
-        {% endfor %}
-      </div> #}
+      {% if fighter.limitedRankHistoryPerDivision and fighter.limitedRankHistoryPerDivision.length > 0 %}
+        <h4>Rank history</h4>
+        <div class="chart-container">
+          {# Danger! Will break if there are any singlequotes in the json...like "Women's flyweight" #}
+          <div class="chart-data-container" data-dump='{{fighter.limitedRankHistoryPerDivision|dump|safe}}'></div>
+          {# Placeholder for js rendering #}
+          <div class="apex-chart"></div>
+        </section>
+      {% endif %}
+      
     </article>
   {% endif %}
 {% endmacro %}

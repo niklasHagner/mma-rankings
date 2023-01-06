@@ -11,6 +11,7 @@ const { findRankAtTime, findAllRanksForFighter } = require('./backend/findRank')
 const wikipediaApi = require('./backend/wikipediaApi.js');
 const viewBuilder = require('./backend/viewBuilder.js');
 const fileHelper = require('./backend/fileHelper.js');
+const { divisionAbbreviation } = require('./backend/stringAndHtmlHelper.js');
 
 const SAVE_JSON_TO_FILE = process.env.SAVE_JSON_TO_FILE || config.SAVE_JSON_TO_FILE;
 
@@ -42,6 +43,14 @@ nunjucks.configure("views", {
   express: app
 })
   .addFilter("classList", (classList) => classList.filter((x) => x).join(" "))
+  .addFilter("dateFormat", (str) => {
+    const date = new Date(str);
+    return moment(date.toISOString()).format("YYYY-MM");
+  })
+  .addFilter("getTime", (str) => {
+    const date = new Date(str);
+    return date.getTime();
+  })
   .addFilter("inlineFileContent", (pathToFile) => {
     const fileContent = fs.readFileSync(pathToFile).toString();
     if (pathToFile.endsWith(".js")) {
@@ -50,17 +59,7 @@ nunjucks.configure("views", {
     return fileContent;
   })
   .addFilter("divisionAbbreviation", (originalStr) => {
-    const str = originalStr.toLowerCase().trim().replace(" ", "").replace("women's", "");
-    if (str ==="flyweight") return "FlyW"; 
-    else if (str ==="strawweight") return "SW";
-    else if (str ==="bantamweight") return "BW";
-    else if (str ==="featherweight") return "FW";
-    else if (str ==="lightweight") return "LW";
-    else if (str ==="welterweight") return "WW";
-    else if (str ==="middleweight") return "MW";
-    else if (str ==="lightheavyweight") return "LHW";
-    else if (str ==="heavyweight") return "HW";
-    else return originalStr;
+    return divisionAbbreviation(originalStr);
   })
   .addFilter("nicknameOrLastname", (fighter) => {
     if (fighter.fighterInfo.nickname) return fighter.fighterInfo.nickname;
@@ -71,9 +70,15 @@ nunjucks.configure("views", {
   .addFilter("getFighterNameOrLinkHtml", (fighter) => {
     return viewBuilder.getFighterNameOrLinkHtml(fighter);
   })
-  .addFilter("dateFormat", (str) => {
-    const date = new Date(str);
-    return moment(date.toISOString()).format("YYYY-MM");
+  .addFilter("limitRankHistoryToFewerDataPoints", (rankHistory) => {
+    
+    const rankObjects = rankHistory.map(rankObj => {
+      return { rank: rankObj.fighter.rank, date: rankObj.date, division: rankObj.division.trim() };
+    }).filter(rankObj => {
+      
+    })
+
+    return viewBuilder.getFighterNameOrLinkHtml(fighter);
   })
 
 winston.configure({
@@ -174,6 +179,45 @@ async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
   // }
 
   fighter.rankHistory = findAllRanksForFighter(global.rankData, fighter.fighterInfo.name);
+
+  const series=[];
+  fighter.rankHistory
+    .forEach(dataPoint => {
+      const dateObj = new Date(dataPoint.date)
+      const dataItemToAdd = {isoDate: dateObj.getTime(), dateObj, rank: Number(dataPoint.fighter.rank)};  
+      const trimmedDivisionStr = dataPoint.division.trim();
+      const matchingSeries = series.find(seriesItem => seriesItem.divisionFullName === trimmedDivisionStr)
+      if (matchingSeries) {
+        matchingSeries.data.push(dataItemToAdd);
+      } else {
+        series.push({divisionShortName: divisionAbbreviation(trimmedDivisionStr), data: [dataItemToAdd] });
+      }
+    });
+  fighter.allRankHistoryPerDivision = series;
+
+  const limitedSeries=[];
+  const MAX_MONTH_DIFF = 4;
+  series.forEach(seriesItem => {
+    seriesItem.data.forEach(dataPoint => {
+      let matchingSeries = limitedSeries.find(x => x.divisionShortName === seriesItem.divisionShortName);
+      if (!matchingSeries) {
+        const newSeriesItemWithoutRankData = { ...seriesItem}; 
+        newSeriesItemWithoutRankData.data = newSeriesItemWithoutRankData.data.slice(0,1); //Add first ranking, but nothing more
+        limitedSeries.push(newSeriesItemWithoutRankData);
+      } else {
+        const prevDataInThisSeriesItem = matchingSeries.data.length > 0 ? matchingSeries.data[matchingSeries.data.length - 1] : null;
+        if (prevDataInThisSeriesItem) {
+          const absoluteMonthDiff = Math.abs((dataPoint.dateObj.getFullYear()*12 + dataPoint.dateObj.getMonth() ) - (prevDataInThisSeriesItem.dateObj.getFullYear()*12 + prevDataInThisSeriesItem.dateObj.getMonth() ));
+          if (absoluteMonthDiff > MAX_MONTH_DIFF) {
+            const dataPointToPush = {...dataPoint};
+            matchingSeries.data.push(dataPointToPush);
+          }
+        }
+      }
+    });
+  });
+  fighter.limitedRankHistoryPerDivision = limitedSeries;
+
   return fighter;
 }
 

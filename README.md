@@ -1,8 +1,10 @@
 # UFC-rankings
 
-
-I'm interested in the UFC rankings.
-This project was created to show a fighter record. Not just their opponents - but the rank of the opponent during the date of the fight.
+A project for UFC nerds who love stats
+* lists upcoming UFC events + fighter profiles
+* lists UFC rankings since they were created in 2013
+* keeps track of each fighter's rankings throughout history
+* lists fighter profiles with their record, and rank of the opponent at the time of the fight
 
 This project generates a json-file of the top15 rankings for every UFC division across multiple points in history. based off that data we can look up what the ranking for every opponent was at any particular date.
 
@@ -36,7 +38,6 @@ This project generates a json-file of the top15 rankings for every UFC division 
 * `/scrapeByQueryParams?startDate=2011-01-01&endDate=2015-12-31` - scrapes mmastats.com for specified date range
 * `/searchForNameAndDate?date=%222016-03-02%22&name=Fedor` - used to look up one opponent's rank at the time of the fight
 * `/mma-stats-by-date?date="2015-01-20"` - get rankings for 20th january 2015
-* `/search-fighter-by-name?name=Fedor` - search for a single fighter profile
 * `/fighter/:shortFileName` - render a profile page for a single fighter based off data in `data/fighter/*.json` - Example: `/fighter/Jan_B%C5%82achowicz`
 
 ## Scripts
@@ -53,3 +54,7 @@ This project generates a json-file of the top15 rankings for every UFC division 
 
 ## Known issues
 * For a regular UFC event, Wikipedia has a table of fights. For an upcoming minor events sometimes it's just a bullet list - this repo doesn't even attempt to parse that list as it's not structured enough.
+
+## Dependencies
+
+* https://cdn.jsdelivr.net/npm/apexcharts
