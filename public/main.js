@@ -62,14 +62,13 @@ function setupSingleApexChart(fighterEl) {
   var apexChartOptions = {
     series: series,
     colors: ["#FFD700", "#FFA500", "#DC143C", "#4B0082"],
+    theme: {
+      mode: "dark",
+    },
     chart: {
       height: 200,
       type: 'scatter',
       toolbar: { show: false },
-      foreColor: "#f2f2f2",
-      zoom: {
-        type: 'xy'
-      }
     },
     dataLabels: {
       enabled: false
@@ -91,7 +90,10 @@ function setupSingleApexChart(fighterEl) {
     },
     yaxis: {
       reversed: true,
-      max: 15
+      min: 0,
+      max: 15,
+      tickAmount: 6,
+      forceNiceScale: true, //combined with tickamount 6 or 7 results in: 0, 3, 6, 9, 12, 15
     }
   };
 
