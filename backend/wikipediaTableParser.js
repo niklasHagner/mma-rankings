@@ -1,27 +1,50 @@
 var HTMLParser = require('node-html-parser');
 
-module.exports.parseWikipediaFightRecordTableToJson = function (htmlNode) {
+module.exports.parseWikipediaFightRecordTableToJson = function (htmlNode, fighterName) {
   let mmaRecordsTable = htmlNode.querySelectorAll("table").filter(x => {
     var tr = x.querySelector("tr");
     return tr ? tr.innerText.trim().indexOf("Res.") === 0 : false;
   })
   mmaRecordsTable = mmaRecordsTable.map((html) => {
-    // Res.	Record	Opponent	Method	Event	Date	Round	Time	Location	Notes
+    
+    let savedObjsWithRowspan;
     const cells = html.querySelectorAll("tr")
       .filter((row,ix) => ix > 0)
       .map(row => { 
-        const td = row.querySelectorAll("td");
+        //--- Expected table headers---
+        // Res	Record	Opponent	Method	Event	Date	Round	Time	Location	Notes
+
+        /*Note: it's possible to have two fights in the same night.
+        Example: https://en.wikipedia.org/wiki/Francis_Ngannou
+        Row1 will have more td:s than Row2, and some of them will be <td rowspan="2"> 
+        */
+        const tds = [...row.querySelectorAll("td")];
+        const someTdsSpanMultipleRows = tds.find(x => x.getAttribute("rowspan"));
+        if (someTdsSpanMultipleRows) {
+          savedObjsWithRowspan = tds
+            .map((td, index) => { const rowspan = td.getAttribute("rowspan"); return {index,td,rowspan} })
+            .filter(x => x.rowspan)
+        }
+        
+        if (tds.length < 10) {
+          const missingTdsCount = 10 - tds.length;
+          console.log(`Low amount of wikipediaTable cells (${tds.length}) for ${fighterName}`);
+          if (savedObjsWithRowspan && savedObjsWithRowspan.length === missingTdsCount ) {
+            console.log("Replacing the missing tds with previous ones that have rowspan attributes");
+            tds.splice(savedObjsWithRowspan[0].index, savedObjsWithRowspan.length, ...savedObjsWithRowspan.map(x => x.td));
+          }
+        }
         const fight = {
-          result: td[0],
-          record: td[1],
-          opponentName: td[2],
-          method: td[3],
-          event: td[4],
-          date: td[5],
-          round: td[6],
-          time: td[7],
-          location: td[8],
-          notes: td[9],
+          result: tds[0],
+          record: tds[1],
+          opponentName: tds[2],
+          method: tds[3],
+          event: tds[4],
+          date: tds[5],
+          round: tds[6],
+          time: tds[7],
+          location: tds[8],
+          notes: tds[9],
         };
        
         Object.keys(fight).forEach(function(key){ 
