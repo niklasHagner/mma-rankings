@@ -1,6 +1,10 @@
 {% extends "base.njk" %}
 {% import "fighterMacro.njk" as fighterView %}
 
+{% block title %}
+  <title>{{fighter.fighterInfo.name}}</title>
+{% endblock %}
+
 {% block viewBody %}
   {{ fighterView.render(fighter) }}
 {% endblock %}

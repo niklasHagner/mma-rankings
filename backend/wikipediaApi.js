@@ -1,6 +1,5 @@
 const { parseWikipediaFightRecordTableToJson, parseWikipediaFutureEventsToJson, parseWikipediaFightersOnNextEventToJson } = require('./wikipediaTableParser.js');
 const HTMLParser = require('node-html-parser');
-const fetch = require('node-fetch');
 const gisImageSearch = require("g-i-s");
 const fileHelper = require("./fileHelper.js");
 const { stripTagsAndDecode, removeUnwantedTagsFromHtmlNode } = require("./stringAndHtmlHelper.js");
@@ -99,11 +98,12 @@ async function fetchArrayOfFighters(arrayOfNamesAndUrls, alwaysFetchFromNetwork 
     const fightersFromFiles = arrayOfNamesAndUrls.map(fileHelper.readFileByFighterObj);
     const indexesWhichDontHaveFiles = fightersFromFiles.map((item, ix) => { return { index: ix, data: item } }).filter(x => x.data === null).map(x => x.index);
     const arrayOfNamesAndUrlsWhichAreMissingFiles = arrayOfNamesAndUrls.filter((item, ix) => indexesWhichDontHaveFiles.includes(ix));
-    console.log(`Missing files for ${arrayOfNamesAndUrlsWhichAreMissingFiles.length} fighters in the event`);
-    console.log(`${arrayOfNamesAndUrlsWhichAreMissingFiles.map(x => x.url).join(", ")}`);
-
+    
     if (arrayOfNamesAndUrlsWhichAreMissingFiles.length === 0) {
       return fightersFromFiles;
+    } else {
+      console.log(`Missing files for ${arrayOfNamesAndUrlsWhichAreMissingFiles.length} fighters in the event`);
+      console.log(`${arrayOfNamesAndUrlsWhichAreMissingFiles.map(x => x.url).join(", ")}`);
     }
     arrayOfNamesAndUrlsToScrape = arrayOfNamesAndUrlsWhichAreMissingFiles;
   } else {
@@ -267,7 +267,7 @@ function parseInfoBoxHtml(root, wikiPageUrl) {
       // console.log("Modified prop ->", propName, ":", value);
     }
   });
-  var recordTables = parseWikipediaFightRecordTableToJson(root);
+  var recordTables = parseWikipediaFightRecordTableToJson(root, fighterInfo.name);
   var record = recordTables[0];
   var returnObj = {
     fighterInfo,
@@ -347,10 +347,16 @@ async function scrapeFighterData(wikiPageUrl) {
     const fighterObj = parseInfoBoxHtml(root, wikiPageUrl);
     if (!fighterObj) { reject(`parseInfoBoxHtml failed for ${wikiPageUrl}`); }
 
-    const imageArray = await findImagesForFighter(fighterObj.fighterInfo["name"]);
-    if (!imageArray) { reject(`findImagesForFighter failed for ${wikiPageUrl}`); }
-    fighterObj.fighterInfo.relevantImages = imageArray;
     console.log(`Successfully scraped ${wikiPageUrl}`);
+    try {
+      const imageArray = await findImagesForFighter(fighterObj.fighterInfo["name"]);
+      fighterObj.fighterInfo.relevantImages = imageArray;
+    } catch(err){
+      console.log(`findImagesForFighter failed for ${wikiPageUrl}`);
+      fighterObj.fighterInfo.relevantImages = [];
+      // return reject(`findImagesForFighter failed for ${wikiPageUrl}`);
+      return;
+    }
     resolve(fighterObj);
   })
 }

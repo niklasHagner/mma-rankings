@@ -15,18 +15,17 @@
     "exp-config": "^4.2.0",
     "express": "^4.18.2",
     "g-i-s": "^2.1.6",
-    "jsdom": "^16.7.0",
+    "jsdom": "^21.0.0",
     "moment": "^2.29.4",
-    "node-fetch": "^2.6.7",
-    "node-html-parser": "^4.1.5",
+    "node-fetch": "^3.3.0",
+    "node-html-parser": "^6.1.4",
     "nunjucks": "^3.2.3",
     "striptags": "^3.2.0",
     "winston": "^3.8.2"
   },
   "keywords": [
     "ufc",
-    "mma",
-    "sherdog"
+    "mma"
   ],
   "devDependencies": {
     "eslint": "^8.31.0"

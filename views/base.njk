@@ -3,7 +3,10 @@
 <!doctype html>
 <html>
 <head>
-  <title>UFC rankings and events</title>
+  {% block title %}
+    <title>UFC rankings and events</title>
+  {% endblock %}
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     {{ "public/base.css" | inlineFileContent | safe }}
@@ -43,6 +46,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-  <script src="./main.js"></script>
+  <script src="/main.js"></script>
 </body>
 </html>

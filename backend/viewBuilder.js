@@ -1,3 +1,7 @@
+const config = require("exp-config");
+const { findRankAtTime, findAllRanksForFighter } = require('./findRank.js');
+const { divisionAbbreviation } = require('./stringAndHtmlHelper.js');
+const fileHelper = require('./fileHelper.js');
 
 const buildRankingsHtml = function(pages) {
   pages.forEach((x) => {
@@ -110,4 +114,63 @@ function getFighterNameOrLinkHtml(fighter) {
   return html;
 }
 
-module.exports = { buildRankingsHtml, getFighterNameOrLinkHtml }
+async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
+  const record = fighter.record;
+  const extendedRecord = record.map((fight) => {
+    const fighterRankAtTheTime = findRankAtTime(allRankingsData, fighter.fighterInfo.name, fight.date);
+    const opponentInfoAtTheTime = findRankAtTime(allRankingsData, fight.opponentName, fight.date);
+    return { ...fight, opponentInfoAtTheTime, fighterRankAtTheTime };
+  });
+  fighter.record = extendedRecord;
+
+  if (config.SAVE_JSON_TO_FILE) {
+    console.log("Saving to file", fighter.fighterInfo.name);
+    fileHelper.saveFighter(fighter);
+  }
+
+  fighter.rankHistory = findAllRanksForFighter(global.rankData, fighter.fighterInfo.name);
+
+  const series=[];
+  fighter.rankHistory
+    .forEach(dataPoint => {
+      const dateObj = new Date(dataPoint.date);
+      const rankStr = dataPoint.fighter.rank;
+      const rankNumber = rankStr.trim().toLowerCase().includes("c") ? Number(0) : Number(rankStr) //"C" must be converted to 0 for Apex Charts
+      const dataItemToAdd = {isoDate: dateObj.getTime(), dateObj, rank: rankNumber};  
+      const trimmedDivisionStr = dataPoint.division.trim();
+      const matchingSeries = series.find(seriesItem => seriesItem.divisionFullName === trimmedDivisionStr)
+      if (matchingSeries) {
+        matchingSeries.data.push(dataItemToAdd);
+      } else {
+        series.push({divisionShortName: divisionAbbreviation(trimmedDivisionStr), data: [dataItemToAdd] });
+      }
+    });
+  fighter.allRankHistoryPerDivision = series;
+
+  const limitedSeries=[];
+  const MAX_MONTH_DIFF = 4;
+  series.forEach(seriesItem => {
+    seriesItem.data.forEach(dataPoint => {
+      let matchingSeries = limitedSeries.find(x => x.divisionShortName === seriesItem.divisionShortName);
+      if (!matchingSeries) {
+        const newSeriesItemWithoutRankData = { ...seriesItem}; 
+        newSeriesItemWithoutRankData.data = newSeriesItemWithoutRankData.data.slice(0,1); //Add first ranking, but nothing more
+        limitedSeries.push(newSeriesItemWithoutRankData);
+      } else {
+        const prevDataInThisSeriesItem = matchingSeries.data.length > 0 ? matchingSeries.data[matchingSeries.data.length - 1] : null;
+        if (prevDataInThisSeriesItem) {
+          const absoluteMonthDiff = Math.abs((dataPoint.dateObj.getFullYear()*12 + dataPoint.dateObj.getMonth() ) - (prevDataInThisSeriesItem.dateObj.getFullYear()*12 + prevDataInThisSeriesItem.dateObj.getMonth() ));
+          if (absoluteMonthDiff > MAX_MONTH_DIFF) {
+            const dataPointToPush = {...dataPoint};
+            matchingSeries.data.push(dataPointToPush);
+          }
+        }
+      }
+    });
+  });
+  fighter.limitedRankHistoryPerDivision = limitedSeries;
+
+  return fighter;
+}
+
+module.exports = { buildRankingsHtml, getFighterNameOrLinkHtml, extendFighterApiDataWithRecordInfo }

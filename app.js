@@ -7,13 +7,11 @@ const config = require("exp-config");
 const moment = require("moment");
 
 const mmaStatsScraper = require('./backend/scrapeMmaStatsDotCom');
-const { findRankAtTime, findAllRanksForFighter } = require('./backend/findRank');
+const { findRankAtTime } = require('./backend/findRank.js');
 const wikipediaApi = require('./backend/wikipediaApi.js');
 const viewBuilder = require('./backend/viewBuilder.js');
 const fileHelper = require('./backend/fileHelper.js');
 const { divisionAbbreviation } = require('./backend/stringAndHtmlHelper.js');
-
-const SAVE_JSON_TO_FILE = process.env.SAVE_JSON_TO_FILE || config.SAVE_JSON_TO_FILE;
 
 const mmaStatsJsonRaw = fs.readFileSync("data/mmaStats.json");
 const mmaStatsJson = JSON.parse(mmaStatsJsonRaw);
@@ -70,16 +68,6 @@ nunjucks.configure("views", {
   .addFilter("getFighterNameOrLinkHtml", (fighter) => {
     return viewBuilder.getFighterNameOrLinkHtml(fighter);
   })
-  .addFilter("limitRankHistoryToFewerDataPoints", (rankHistory) => {
-    
-    const rankObjects = rankHistory.map(rankObj => {
-      return { rank: rankObj.fighter.rank, date: rankObj.date, division: rankObj.division.trim() };
-    }).filter(rankObj => {
-      
-    })
-
-    return viewBuilder.getFighterNameOrLinkHtml(fighter);
-  })
 
 winston.configure({
   transports: [
@@ -127,15 +115,21 @@ app.get('/searchForNameAndDate', function (req, res) {
   return res.json(jsonResult);
 });
 
-//shortFileName should a match a filename in data/fighters/*.json 
+//name should a match a filename in data/fighters/*.json 
 //Examples: "Jan_B%C5%82achowicz"  or "Jon_Jones" 
 app.get('/fighter/:name', async function (req, res, next) {
   const name = req.params.name;
   let encodedName = encodeURIComponent(name);
-  const viewModel = { 
-    fighter: await fileHelper.readFileByShortFileName(encodedName)
+  let fighter = await fileHelper.readFileByShortFileName(encodedName);
+  if (!fighter) {
+    return res.render("404.njk");
   }
-  res.render("fighter.njk", viewModel, (err, html) => {
+  fighter = await viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData);
+  const viewModel = { 
+    fighter
+  }
+
+  return res.render("fighter.njk", viewModel, (err, html) => {
     if (err) return next(err);
     res.send(html);
   });
@@ -159,66 +153,10 @@ async function getEvents(rankingsData) {
   const data = await wikipediaApi.getInfoAndFightersFromNextEvents();
 
   const asyncRes = await Promise.all(data.events.map(async (event) => {
-    const fighters = await Promise.all(event.fighters.map(fighter => extendFighterApiDataWithRecordInfo(fighter, rankingsData)));
+    const fighters = await Promise.all(event.fighters.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, rankingsData)));
     return { ...event, fighters };
   }));
   return asyncRes;
-}
-
-async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
-  const record = fighter.record;
-  const extendedRecord = record.map((fight) => {
-    const fighterRankAtTheTime = findRankAtTime(allRankingsData, fighter.fighterInfo.name, fight.date);
-    const opponentInfoAtTheTime = findRankAtTime(allRankingsData, fight.opponentName, fight.date);
-    return { ...fight, opponentInfoAtTheTime, fighterRankAtTheTime };
-  });
-  fighter.record = extendedRecord;
-
-  // if (SAVE_JSON_TO_FILE) {
-  //   fileHelper.saveFighter(fighter);
-  // }
-
-  fighter.rankHistory = findAllRanksForFighter(global.rankData, fighter.fighterInfo.name);
-
-  const series=[];
-  fighter.rankHistory
-    .forEach(dataPoint => {
-      const dateObj = new Date(dataPoint.date)
-      const dataItemToAdd = {isoDate: dateObj.getTime(), dateObj, rank: Number(dataPoint.fighter.rank)};  
-      const trimmedDivisionStr = dataPoint.division.trim();
-      const matchingSeries = series.find(seriesItem => seriesItem.divisionFullName === trimmedDivisionStr)
-      if (matchingSeries) {
-        matchingSeries.data.push(dataItemToAdd);
-      } else {
-        series.push({divisionShortName: divisionAbbreviation(trimmedDivisionStr), data: [dataItemToAdd] });
-      }
-    });
-  fighter.allRankHistoryPerDivision = series;
-
-  const limitedSeries=[];
-  const MAX_MONTH_DIFF = 4;
-  series.forEach(seriesItem => {
-    seriesItem.data.forEach(dataPoint => {
-      let matchingSeries = limitedSeries.find(x => x.divisionShortName === seriesItem.divisionShortName);
-      if (!matchingSeries) {
-        const newSeriesItemWithoutRankData = { ...seriesItem}; 
-        newSeriesItemWithoutRankData.data = newSeriesItemWithoutRankData.data.slice(0,1); //Add first ranking, but nothing more
-        limitedSeries.push(newSeriesItemWithoutRankData);
-      } else {
-        const prevDataInThisSeriesItem = matchingSeries.data.length > 0 ? matchingSeries.data[matchingSeries.data.length - 1] : null;
-        if (prevDataInThisSeriesItem) {
-          const absoluteMonthDiff = Math.abs((dataPoint.dateObj.getFullYear()*12 + dataPoint.dateObj.getMonth() ) - (prevDataInThisSeriesItem.dateObj.getFullYear()*12 + prevDataInThisSeriesItem.dateObj.getMonth() ));
-          if (absoluteMonthDiff > MAX_MONTH_DIFF) {
-            const dataPointToPush = {...dataPoint};
-            matchingSeries.data.push(dataPointToPush);
-          }
-        }
-      }
-    });
-  });
-  fighter.limitedRankHistoryPerDivision = limitedSeries;
-
-  return fighter;
 }
 
 var port = process.env.PORT || 8001;
