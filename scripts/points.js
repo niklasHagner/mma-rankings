@@ -51,8 +51,7 @@ async function generatePoints() {
     return b.points.wins - a.points.wins;
   });
   const pointPerName = allResultObjs.map(x => `${x.name}: ${x.points.wins}`);
-  console.log(pointPerName.join(", "));
-
+  fs.writeFileSync("data/points.txt", pointPerName.join("\n"));
   fs.writeFileSync("data/points.json", JSON.stringify(allResultObjs));
   return;
 }
