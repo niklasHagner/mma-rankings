@@ -56,11 +56,18 @@ async function saveFighter(fighter) {
 }
 
 async function updateListOfFighterFiles() {
-  const allFighters = [];
+  const existingList = JSON.parse(fs.readFileSync("data/allFighters.json"));
+
+  const newList = [];
   fs.readdirSync("data/fighters").forEach(fileName => {
-    allFighters.push({fileName, fighterAnsiName: getFighterAnsiNameFromFileName(fileName)});
-  })
-  await fs.promises.writeFile("data/allFighters.json", JSON.stringify(allFighters));
+    const exists = existingList.find(x => x.fileName === fileName);
+    if (!exists) {
+      newList.push({fileName, fighterAnsiName: getFighterAnsiNameFromFileName(fileName)});
+    }
+  });
+
+  const combinedList = existingList.concat(existingList);
+  await fs.promises.writeFile("data/allFighters.json", JSON.stringify(combinedList));
   console.log(`Updated allFighters.json`);
   return;
 }

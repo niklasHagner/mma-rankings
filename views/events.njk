@@ -55,7 +55,7 @@
               <div class="division-fighters">
               {% for fighter in division.fighters %}
                 <div>
-                  <span class="rank">{{fighter.rank}}</span> {{ fighter | getFighterNameOrLinkHtml | safe }}
+                  <span class="rank">{{fighter.rank}}</span> {{ fighter.name | getFighterNameOrLinkHtml | safe }}
                 </div>
               {% endfor %}
               </div>

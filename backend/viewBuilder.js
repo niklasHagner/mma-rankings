@@ -92,7 +92,7 @@ const divisionToHtml = function(division) {
     if (fighter.rank.toLowerCase().indexOf("champion") > -1) 
       fighter.rank = "C";
     
-    const fighterNameElement = getFighterNameOrLinkHtml(fighter);
+    const fighterNameElement = getFighterNameOrLinkHtml(fighter.name);
     return `
       <div>
         <span class="rank">${fighter.rank}</span> ${fighterNameElement}
@@ -107,10 +107,10 @@ const divisionToHtml = function(division) {
   `;
 };
 
-function getFighterNameOrLinkHtml(fighter) {
-  const fighterFileMatch = global.fightersWithProfileLinks.find(x => x.fighterAnsiName === fighter.name);
+function getFighterNameOrLinkHtml(fighterName) {
+  const fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.mmaStatsName?.toLowerCase() === fighterName.toLowerCase() || x.fighterAnsiName.toLowerCase() === fighterName.toLowerCase());
   const fighterLink = fighterFileMatch ? `/fighter/${fighterFileMatch.fileName.replace(".json", "")}` : null;
-  const html = fighterLink ? `<a href="${fighterLink}" class="name">${fighter.name}</a>` : `<span class="name">${fighter.name}</span>`;
+  const html = fighterLink ? `<a href="${fighterLink}" class="name">${fighterName}</a>` : `<span class="name">${fighterName}</span>`;
   return html;
 }
 
