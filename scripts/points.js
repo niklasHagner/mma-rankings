@@ -25,14 +25,14 @@ const pointsPerRank = {
   "15":1,
 }
 
-async function listMostRankedWins() {
+async function generatePoints() {
   const fighterBasicData = await fileHelper.getAllFightersFromFiles();
   const fighters = await Promise.all(fighterBasicData.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData)));
   const allResultObjs = [];
   fighters.forEach(fighter => {
     const resultObj = { name: fighter.fighterInfo.name, draws:[], wins: [], losses: [], points: { wins: 0, losses:0, draws: 0} }
     fighter.record.forEach(fight => {
-      const opponentRank = fight.opponentInfoAtTheTime?.wasInTheFuture ? fight.opponentInfoAtTheTime?.fighter?.rank : null;
+      const opponentRank = !fight.opponentInfoAtTheTime?.wasInTheFuture && !fight.opponentInfoAtTheTime?.wasInThePast ? fight.opponentInfoAtTheTime?.fighter?.rank : null;
       const points = pointsPerRank[opponentRank] || 0;
       if (fight.result === "Win") {
         resultObj.wins.push(points);
@@ -57,4 +57,4 @@ async function listMostRankedWins() {
   return;
 }
 
-listMostRankedWins();
+generatePoints();

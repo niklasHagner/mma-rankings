@@ -31,7 +31,8 @@ function getFileNameByFighterObj(fighter) {
   return fileName;
 }
 
-async function saveFighter(fighter) {
+async function saveFighter(incomingFighter) {
+  const fighter = {...incomingFighter};
   const fileName = getFileNameByFighterObj(fighter);
 
   //File-exist-check recommended by https://flaviocopes.com/how-to-check-if-file-exists-node/
@@ -40,14 +41,25 @@ async function saveFighter(fighter) {
       await fs.promises.writeFile(fileName, JSON.stringify(fighter));
       console.log(`Created file ${fileName}`);
       updateListOfFighterFiles();
-
-
       return;
     }
+    delete fighter.rankHistory;
+    delete fighter.allRankHistoryPerDivision;
+    delete fighter.limitedRankHistoryPerDivision;
+
     //File exists, overwrite it
     await fs.promises.writeFile(fileName, JSON.stringify(fighter));
     console.log(`Updated contents of file ${fileName}`);
   })
+}
+
+async function getAllFightersFromFiles() {
+  const allFighters = [];
+  fs.readdirSync("data/fighters").forEach(fileName => {
+    const fighter = JSON.parse(fs.readFileSync("data/fighters/"+fileName));
+    allFighters.push(fighter);
+  });
+  return allFighters;
 }
 
 async function updateListOfFighterFiles() {
@@ -80,4 +92,5 @@ module.exports = {
   readFileByShortFileName,
   saveFighter,
   updateListOfFighterFiles,
+  getAllFightersFromFiles,
 }
