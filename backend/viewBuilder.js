@@ -114,6 +114,7 @@ function getFighterNameOrLinkHtml(fighter) {
   return html;
 }
 
+//Should only extend with offline data
 async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
   const record = fighter.record;
   const extendedRecord = record.map((fight) => {
@@ -125,7 +126,12 @@ async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
 
   if (config.SAVE_JSON_TO_FILE) {
     console.log("Saving to file", fighter.fighterInfo.name);
-    fileHelper.saveFighter(fighter);
+    const fighterToSave = {...fighter};
+    //No need to save data which can be appended dynamically offline via extendFighterApiDataWithRecordInfo
+    delete fighterToSave.rankHistory;
+    delete fighterToSave.allRankHistoryPerDivision;
+    delete fighterToSave.limitedRankHistoryPerDivision;
+    fileHelper.saveFighter(fighterToSave);
   }
 
   fighter.rankHistory = findAllRanksForFighter(global.rankData, fighter.fighterInfo.name);
