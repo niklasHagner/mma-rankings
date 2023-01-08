@@ -4,11 +4,8 @@ const wikipediaApi = require('../backend/wikipediaApi.js');
 const fileHelper = require('../backend/fileHelper.js');
 const viewBuilder = require('../backend/viewBuilder.js');
 
-const fightersWithProfileLinksRaw = fs.readFileSync("data/allFighters.json");
-global.fightersWithProfileLinks = JSON.parse(fightersWithProfileLinksRaw);
-
-let mmaStatsRaw = fs.readFileSync("data/mmaStats.json");
-global.rankData = JSON.parse(mmaStatsRaw);
+global.fightersWithProfileLinks = JSON.parse(fs.readFileSync("data/allFighters.json"));
+global.rankData = JSON.parse(fs.readFileSync("data/mmaStats.json"));
 
 async function scrapeListOfFighters(inputFighters) {
   //expected input: [{ url: "wiki/Leon_Edwards" }, { url: "wiki/Jan_B%C5%82achowicz"} ]
