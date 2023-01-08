@@ -32,7 +32,7 @@
         </div>
       </header>
       
-      <div class="fights">
+      <section class="fights">
         <h4>Record:</h4>
         {# EXAMPLE FIGHT DATA 
         {"result":"Win","record":"28–8","opponentName":"Israel Adesanya","method":"Decision (unanimous)","event":"UFC 259","date":"March 6, 2021","round":"5","time":"5:00","location":"Las Vegas, Nevada, United States","notes":"Defended the UFC Light Heavyweight Championship.","year":"2021","opponentInfoAtTheTime":{"fighter":{"rank":"C","link":"https://mma-stats.com/fighters/Israel-Adesanya","name":"Israel Adesanya"},"division":" Middleweight ","date":"February 15, 2021","formattedDate":"2021-01","wasInTheFuture":true}} #}
@@ -62,11 +62,11 @@
             <span class="fight__method">{{fight.method}}</span>
           </p>
         {% endfor %}
-      </div>
+      </section>
 
       {% if fighter.limitedRankHistoryPerDivision and fighter.limitedRankHistoryPerDivision.length > 0 %}
-        <h4>Rank history</h4>
-        <div class="chart-container">
+        <section class="chart-container">
+          <h4>Rank history</h4>
           {# Danger! Will break if there are any singlequotes in the json...like "Women's flyweight" #}
           <div class="chart-data-container" data-dump='{{fighter.limitedRankHistoryPerDivision|dump|safe}}'></div>
           {# Placeholder for js rendering #}

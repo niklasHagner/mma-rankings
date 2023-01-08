@@ -9,21 +9,21 @@
           <p class"next-big-event-text">Next big event:</p>
         {% endif %}
         <time>{{ event.date }}</time>
-        <h1 class="{{ "post-title event-title big-event" if event.isBigEvent else "post-title event-title" }}">{{ event.eventName }}</h1>
-        <section class="fighters-on-card">
+        <section class="ufc-card">
+          <h1 class="{{ "post-title event-title big-event" if event.isBigEvent else "post-title event-title" }}">{{ event.eventName }}</h1>
           {% for match in event.mainMatches %}
             <div class="fight-on-card">
               <h2 class="fight-on-card__title">{{match.fighters[0] | nicknameOrLastname}} VS {{match.fighters[1] | nicknameOrLastname}}</h2>
               <div class="fight-on-card__grid">
                 {% for fighter in match.fighters %}
-                  {{ fighterView.render(fighter) }}
+                  {{ fighterMacro.render(fighter) }}
                 {% endfor %}
               </div>
             </div>
           {% endfor %}
 
         {% if event.moreMatches %} 
-          <div class="other-fighters-on-card">
+          <div class="more-fighters-on-card">
             <h2>Other fighters on card</h2>
             <ul>
             {% for match in event.moreMatches %}
@@ -65,7 +65,7 @@
       </div>
     </section>
     
-    <h2>Historical rankings</h2>
+    <h2 id="historical-rankings">Historical rankings</h2>
     {{ rankings.allRankings.htmlString | safe }}
   </section>
 {% endblock %}

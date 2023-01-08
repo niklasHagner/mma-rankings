@@ -1,4 +1,4 @@
-{% import "fighterMacro.njk" as fighterView %}
+{% import "fighterMacro.njk" as fighterMacro %}
 
 <!doctype html>
 <html>
@@ -17,33 +17,24 @@
 </head>
 
 <body class="dark">
-  <div id="wrapper">
-    <div id="container">
-        <header class="site-header">
-            <a class="logo" href="/"><h1>MMA STATS</h1></a>
-            {# <nav class="top-menu">
-                <div class="button-group">
-                    <a href="#historical-rankings">Historical rankings</a>
-                    <a href="#latest-rankings">Latest rankings</a>
-                </div> #}
-                <!-- <form id="search-form">
-                    <input type="search" id="search-input" />
-                    <button type="submit">Search</button>
-                </form> -->
-            {# </nav> #}
-        </header>
-        
-        <div class="triple-loader hidden"><div></div><div></div><div></div></div>
+  <main id="wrapper">
+    <header class="site-header">
+      <a class="logo" href="/"><h1>MMA STATS</h1></a>
+      <nav class="top-menu">
+        <ul class="button-group">
+            <li><a href="#historical-rankings">Historical rankings</a></li>
+            <li><a href="#latest-rankings">Latest rankings</a></li>
+        </ul>
+      </nav>
+    </header>
+    
+    <div class="triple-loader hidden"><div></div><div></div><div></div></div>
 
-        <div id="main-container" class="container single-post-container">
-            <section id="fighter-search-profile">
-              <!-- We'll inject templates here with clientside JS -->
-            </section>
-            {% block viewBody %}
-            {% endblock %}
-        </div>
+    <div id="main-container" class="container single-post-container">
+      {% block viewBody %}
+      {% endblock %}
     </div>
-  </div>
+  </main>
 
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script src="/main.js"></script>
