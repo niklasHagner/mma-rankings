@@ -12,7 +12,21 @@ global.rankData = JSON.parse(mmaStatsRaw);
 
 async function scrapeListOfFighters(inputFighters) {
   //expected input: [{ url: "wiki/Leon_Edwards" }, { url: "wiki/Jan_B%C5%82achowicz"} ]
-  inputFighters = [{ url: "wiki/Jan_B%C5%82achowicz"} ];
+  inputFighters = [
+    // { url:"/wiki/Muhammad_Mokaev" },
+    // { url:"/wiki/Tagir_Ulanbekov" },
+    // { url:"/wiki/Pannie_Kianzad" },
+    // { url:"/wiki/Karol_Rosa" },
+    // { url:"/wiki/Julia_Avila" },
+    // { url:"/wiki/Norma_Dumont" },
+    // { url:"/wiki/Erin_Blanchfield" },
+    // { url:"/wiki/Casey_O%27Neill" },
+    // { url:"/wiki/Tracy_Cortez" },
+    // { url:"/wiki/Amanda_Ribas" },
+    // { url:"/wiki/Virna_Jandiroba" },
+    // { url:"/wiki/Michelle_Waterson" },
+    // { url:"/wiki/Emily_Ducote" },
+  ];
   //Note: avoid running this on a huge array to avoid scraper blockers
   console.log("scrapeListOfFighters", inputFighters);
 
