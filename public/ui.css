@@ -22,14 +22,8 @@ button:active {
 
 .top-menu {
   padding: 10px;
-  text-align: center;
-  display: flex;
-  justify-content: space-between;
+  text-align: right;
   gap: 8px;
-}
-
-.top-menu button {
-    min-height: 35px;
 }
 
 #search-input {
