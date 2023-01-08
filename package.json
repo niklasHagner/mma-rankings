@@ -12,6 +12,8 @@
     "start": "node app.js",
     "scrapeListOfFighters": "node scripts/scrapeListOfFighters.js",
     "scrapeLatestRankings": "node scripts/scrapeLatestRankings.js",
+    "points": "node scripts/points.js",
+    "fixFighterFiles": "node scripts/fixFighterFiles.js",
     "eslint": "eslint backend/**/*.js"
   },
   "dependencies": {
