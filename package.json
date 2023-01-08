@@ -5,6 +5,9 @@
   "author": "niklasHagner",
   "license": "MIT",
   "main": "app.js",
+  "engines" : { 
+    "node" : ">=18.12.1"
+  },
   "scripts": {
     "start": "node app.js",
     "scrapeListOfFighters": "node scripts/scrapeListOfFighters.js",
@@ -17,7 +20,6 @@
     "g-i-s": "^2.1.6",
     "jsdom": "^21.0.0",
     "moment": "^2.29.4",
-    "node-fetch": "^3.3.0",
     "node-html-parser": "^6.1.4",
     "nunjucks": "^3.2.3",
     "striptags": "^3.2.0",
