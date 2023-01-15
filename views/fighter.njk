@@ -2,7 +2,11 @@
 {% import "fighterMacro.njk" as fighterMacro %}
 
 {% block title %}
-  <title>{{fighter.fighterInfo.name}}</title>
+  {% if fighter and fighter.fighterInfo and fighter.fighterInfo.name %}
+    <title>{{fighter.fighterInfo.name}}</title>
+  {% else %}
+    <title>Fighter</title>
+  {% endif %}
 {% endblock %}
 
 {% block viewBody %}

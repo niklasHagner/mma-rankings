@@ -39,8 +39,13 @@ nunjucks.configure("views", {
 })
   .addFilter("classList", (classList) => classList.filter((x) => x).join(" "))
   .addFilter("dateFormat", (str) => {
-    const date = new Date(str);
-    return moment(date.toISOString()).format("YYYY-MM");
+    try {
+      const date = new Date(str);
+      return moment(date.toISOString()).format("YYYY-MM");
+    } catch(error) { //Can happen if tableParser took incorrect cell
+      console.error(`This is an invalid date: ${str}`);
+      return "Unknown date";
+    }
   })
   .addFilter("getTime", (str) => {
     const date = new Date(str);
@@ -57,10 +62,16 @@ nunjucks.configure("views", {
     return divisionAbbreviation(originalStr);
   })
   .addFilter("nicknameOrLastname", (fighter) => {
-    if (fighter.fighterInfo.nickname) return fighter.fighterInfo.nickname;
+    if (!fighter?.fighterInfo?.name && !fighter?.fighterInfo?.nickname) {//Expects null for unknown fighters
+      return "?";
+    }
     
-    const splitName = fighter.fighterInfo.name.split(" ");
-    return splitName[splitName.length -1];
+    if (fighter.fighterInfo.nickname) {
+      return fighter.fighterInfo.nickname;
+    } else {
+      const splitName = fighter.fighterInfo.name.split(" ");
+      return splitName[splitName.length -1];
+    }
   })
   .addFilter("getFighterNameOrLinkHtml", (fighterName) => {
     return viewBuilder.getFighterNameOrLinkHtml(fighterName);

@@ -1,7 +1,14 @@
 
 {% macro render(fighter) %}
-  {% if not fighter or not fighter.fighterInfo %}
-    <p>Missing fighter</p>
+  {% if not fighter %}
+    <article class="fighter">
+      <p>Missing fighter info</p>
+    </article>
+  {% elif fighter.missingData and fighter.fighterInfo and fighter.fighterInfo.name %}
+    <article class="fighter">
+      <h2 class="fighter-name">{{ fighter.fighterInfo.name }}</h2>
+      <p>No data</p>
+    </article>
   {% else %}
     {% set info = fighter.fighterInfo %}
     <article class="fighter">

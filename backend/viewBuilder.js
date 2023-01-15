@@ -116,6 +116,9 @@ function getFighterNameOrLinkHtml(fighterName) {
 
 //Should only extend with offline data
 async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
+  if (!fighter || fighter.missingData) {
+    return fighter;
+  }
   const record = fighter.record;
   const extendedRecord = record.map((fight) => {
     const fighterRankAtTheTime = findRankAtTime(allRankingsData, fighter.fighterInfo.name, fight.date);

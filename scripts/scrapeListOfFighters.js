@@ -35,8 +35,9 @@ async function scrapeListOfFighters(inputFighters) {
   //   return {url: wikiUrl};
   // });
 
-  const alwaysFetchFromNetwork = true;
-  const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, alwaysFetchFromNetwork);
+  const readExistingFromFile = false;
+  const allowFetchingMissingFighters = true;
+  const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, readExistingFromFile, allowFetchingMissingFighters);
   const fighters = await Promise.all(fighterBasicData.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData)));
   fileHelper.updateListOfFighterFiles();
   console.log("done", fighters);

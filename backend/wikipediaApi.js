@@ -4,10 +4,7 @@ const gisImageSearch = require("g-i-s");
 const fileHelper = require("./fileHelper.js");
 const { stripTagsAndDecode, removeUnwantedTagsFromHtmlNode } = require("./stringAndHtmlHelper.js");
 
-const READ_FROM_FILE = true;
-
 async function getNamesAndUrlsOfNextEventFighters() {
-
   const response = await fetch('https://en.wikipedia.org/wiki/List_of_UFC_events');
   const htmlForAllUfcEvents = await response.text();
   const rows = await parseWikipediaFutureEventsToJson(htmlForAllUfcEvents);
@@ -89,12 +86,13 @@ async function getInfoAndFightersFromSingleEvent(event) {
     {name: 'Kelvin Gastelum', url: '/wiki/Kelvin_Gastelum'}  
   ]
 */
-async function fetchArrayOfFighters(arrayOfNamesAndUrls, alwaysFetchFromNetwork = false) {
+async function fetchArrayOfFighters(arrayOfNamesAndUrls, readExistingFromFile = true, allowFetchingMissingFighters = false) {
   var promises = [];
 
   let arrayOfNamesAndUrlsToScrape;
-  if (alwaysFetchFromNetwork === false && READ_FROM_FILE) {
-    //Possible output: [{fighterInfo:Object,...}, null, {fighterInfo:Object,...}]
+  if (readExistingFromFile) {
+    //If a fighter is not found, null will be appended to the array
+    //So an array can be [fighter, null, fighter, null, null]
     const fightersFromFiles = arrayOfNamesAndUrls.map(fileHelper.readFileByFighterObj);
     const indexesWhichDontHaveFiles = fightersFromFiles.map((item, ix) => { return { index: ix, data: item } }).filter(x => x.data === null).map(x => x.index);
     const arrayOfNamesAndUrlsWhichAreMissingFiles = arrayOfNamesAndUrls.filter((item, ix) => indexesWhichDontHaveFiles.includes(ix));
@@ -102,9 +100,25 @@ async function fetchArrayOfFighters(arrayOfNamesAndUrls, alwaysFetchFromNetwork 
     if (arrayOfNamesAndUrlsWhichAreMissingFiles.length === 0) {
       return fightersFromFiles;
     } else {
-      console.log(`Missing files for ${arrayOfNamesAndUrlsWhichAreMissingFiles.length} fighters in the event`);
-      console.log(`${arrayOfNamesAndUrlsWhichAreMissingFiles.map(x => x.url).join(", ")}`);
+      console.log(`Missing files for ${arrayOfNamesAndUrlsWhichAreMissingFiles.length} fighters in the event: ${arrayOfNamesAndUrlsWhichAreMissingFiles.map(x => x.url).join(", ")}`);
     }
+    
+    if (allowFetchingMissingFighters === false) {
+      console.log(`We'll just return fighters we have on file.`);
+      //Replace null with an object that has a name.
+      //Others will check for the missingData prop
+      indexesWhichDontHaveFiles.forEach(badIndex => {
+        const minimalFighter = {
+          fighterInfo: {
+            name: arrayOfNamesAndUrls[badIndex].name
+          },
+          missingData: true
+        }
+        fightersFromFiles[badIndex] = minimalFighter;
+      });
+      return fightersFromFiles;
+    }
+    
     arrayOfNamesAndUrlsToScrape = arrayOfNamesAndUrlsWhichAreMissingFiles;
   } else {
     arrayOfNamesAndUrlsToScrape = arrayOfNamesAndUrls;
