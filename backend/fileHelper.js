@@ -40,7 +40,7 @@ async function saveFighter(incomingFighter) {
     if (err) { //File does NOT exist yet, so create it
       await fs.promises.writeFile(fileName, JSON.stringify(fighter));
       console.log(`Created file ${fileName}`);
-      updateListOfFighterFiles();
+      await updateListOfFighterFiles();
       return;
     }
     delete fighter.rankHistory;
@@ -63,7 +63,8 @@ async function getAllFightersFromFiles() {
 }
 
 async function updateListOfFighterFiles() {
-  const existingList = JSON.parse(fs.readFileSync("data/allFighters.json"));
+  const existingFileData = fs.readFileSync("data/allFighters.json");
+  const existingList = existingFileData.length !== 0 ? JSON.parse(existingFileData) : [];
 
   const newList = [];
   fs.readdirSync("data/fighters").forEach(fileName => {

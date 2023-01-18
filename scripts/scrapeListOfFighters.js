@@ -1,4 +1,5 @@
 const fs = require('fs');
+const config = require("exp-config");
 
 const wikipediaApi = require('../backend/wikipediaApi.js');
 const fileHelper = require('../backend/fileHelper.js');
@@ -8,18 +9,17 @@ global.fightersWithProfileLinks = JSON.parse(fs.readFileSync("data/allFighters.j
 global.rankData = JSON.parse(fs.readFileSync("data/mmaStats.json"));
 
 async function scrapeListOfFighters(inputFighters) {
+  config.SAVE_JSON_TO_FILE = true;
   //expected input: [{ url: "wiki/Leon_Edwards" }, { url: "wiki/Jan_B%C5%82achowicz"} ]
   inputFighters = [
     // { url:"/wiki/Muhammad_Mokaev" },
     // { url:"/wiki/Tagir_Ulanbekov" },
-    // { url:"/wiki/Pannie_Kianzad" },
     // { url:"/wiki/Karol_Rosa" },
     // { url:"/wiki/Julia_Avila" },
     // { url:"/wiki/Norma_Dumont" },
     // { url:"/wiki/Erin_Blanchfield" },
     // { url:"/wiki/Casey_O%27Neill" },
     // { url:"/wiki/Tracy_Cortez" },
-    // { url:"/wiki/Amanda_Ribas" },
     // { url:"/wiki/Virna_Jandiroba" },
     // { url:"/wiki/Michelle_Waterson" },
     // { url:"/wiki/Emily_Ducote" },
