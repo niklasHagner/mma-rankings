@@ -101,22 +101,50 @@ module.exports.parseWikipediaFutureEventsToJson = function(html) {
   return cells;
 }
 
-module.exports.parseWikipediaFightersOnNextEventToJson = function(html) {
+module.exports.parseWikipediaFightersOnNextEventToJson = function(html, eventObj) {
   const root = HTMLParser.parse(html);
   let table = root.querySelector(".toccolours");
-  const tableRows = Array.from(table.querySelectorAll("tr"));
   const fighters = [];
+  if (!table) {
+    console.log(`no table for ${eventObj.url}`);
+    /*
+    ---Expected html for event with ul instead of table -- 
+    <h2>
+      <span class="mw-headline" id="Announced_bouts">Announced bouts</span>
+      <span></span>
+    </h2>
+    <ul><li>x vs y</li>
+    */
+    const ul = root.querySelector("#Announced_bouts")?.closest("h2")?.nextElementSibling;
+    if (ul?.tagName === "UL") {
+      const fightRows = [...ul.querySelectorAll("li")];
+      fightRows.forEach((row, rowIx) => {
+        const anchors = [...row.childNodes].filter(x => x.tagName === "A");
+        if (anchors.length === 2) {
+          const fighterPair = anchors.map(anchor => { 
+            return { name: anchor.innerText.trim(), url: anchor.getAttribute("href") };
+          });
+          fighters.push(...fighterPair);
+        } else {
+          console.log(`${row.innerText} with index ${rowIx} had ${anchors.length} anchors instead of 2.`);
+        }
+      });
+    }
+    
+    return fighters;
+  }
+  const tableRows = Array.from(table.querySelectorAll("tr"));
   tableRows
     .filter((row,ix) => ix > 0 && row.querySelectorAll("a").length > 0)
     .forEach(row => { 
       const td = row.querySelectorAll("td");
       const fighter1 = {
         name: td[1].innerText.trim(),
-        url: td[1].querySelector("a") && td[1].querySelector("a").getAttribute("href"),
+        url: td[1].querySelector("a")?.getAttribute("href"),
       };
       const fighter2 = {
         name: td[3].innerText.trim(),
-        url: td[3].querySelector("a") && td[3].querySelector("a").getAttribute("href"),
+        url: td[3].querySelector("a")?.getAttribute("href"),
       };
       fighters.push(fighter1);
       fighters.push(fighter2);

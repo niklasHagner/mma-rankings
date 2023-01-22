@@ -3,7 +3,6 @@ const app = express();
 const nunjucks = require("nunjucks");
 const fs = require('fs');
 const winston = require('winston');
-const config = require("exp-config");
 const moment = require("moment");
 
 const mmaStatsScraper = require('./backend/scrapeMmaStatsDotCom');
