@@ -1,5 +1,6 @@
+
 .snapshot h2 {
-    color: orange;
+    color: var(--color-1);
 }
 
 .snapshot-divisions {
@@ -16,7 +17,7 @@
 }
 
 .annual-rank-snapshots summary {
-    color: gold;
+    color: var(--color-2);
     cursor: pointer;
     font-weight: bold;
     font-size: 2em;
@@ -29,7 +30,7 @@
 
 .annual-rank-snapshots summary:hover {
     text-decoration: underline;
-    color: orange;
+    color: var(--color-1);
 }
 
 .division {
@@ -41,7 +42,7 @@
 }
 
 .fight-on-card__title {
-    background-color: orange;
+    background-color: var(--color-1);
     text-align: center;
     color: black;
 }
@@ -124,7 +125,7 @@ p.small {
 }
 
 .rank {
-    color: orange;
+    color: var(--color-1);
     font-weight: bold;
 }
 
@@ -137,7 +138,7 @@ p.small {
 }
 
 .fight--win .fight__result {
-    color: gold;
+    color: var(--color-2);
 }
 
 .fight--loss .fight__result {
@@ -145,11 +146,11 @@ p.small {
 }
 
 .fight__year {
-    color: gold;
+    color: var(--color-2);
 }
 
 .fight__opponent-rank {
-    background-color: gold;
+    background-color: var(--color-2);
     color: black;
     padding: 0px 2px;
     margin-right: 3px;
@@ -190,5 +191,5 @@ p.small {
 
 #rankings {
     padding-top: 20px;
-    border-top: solid 2px gold;
+    border-top: solid 2px var(--color-2);
 }

@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
+:root {
+  --color-1: orange;
+  --color-2: gold;
+}
+
 button, hr, input {
     overflow: visible
 }
@@ -377,7 +382,7 @@ table tr {
     font-weight: 900;
     margin: 15px 0;
     text-align: left;
-    border-bottom: solid 2px gold;
+    border-bottom: solid 2px var(--color-2);
 }
 
 .page-title {
@@ -544,8 +549,13 @@ h2.post-description {
     }
 }
 
+.event:nth-of-type(even) {
+  --color-1: mediumseagreen;
+  --color-2: mediumaquamarine;
+}
+
 .event time {
-    background: gold;
+    background: var(--color-2);
     color: black;
     padding: 0 18px 2px 0;
     border-radius: 0 25px 0 0;
@@ -553,7 +563,7 @@ h2.post-description {
 
 .event-title {
     margin-top: 0;
-    color: gold;
+    color: var(--color-2);;
 }
 
 .sections-wrapper {
