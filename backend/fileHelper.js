@@ -70,13 +70,17 @@ async function updateListOfFighterFiles() {
   fs.readdirSync("data/fighters").forEach(fileName => {
     const exists = existingList.find(x => x.fileName.includes(fileName));
     if (!exists) {
-      newList.push({ fileName, fighterAnsiName: getFighterAnsiNameFromFileName(fileName) });
+      newList.push({ 
+        fileName, 
+        fighterAnsiName: getFighterAnsiNameFromFileName(fileName),
+        mmaStatsName: null 
+      });
     }
   });
 
   const combinedList = existingList.concat(newList);
   console.log("existingList", existingList.length, "newList:", newList.length,"CombinedList:", combinedList.length, );
-  await fs.promises.writeFile("data/allFighters.json", JSON.stringify(combinedList));
+  await fs.promises.writeFile("data/allFighters.json", JSON.stringify(newList));
   console.log(`Updated allFighters.json`);
   return;
 }
