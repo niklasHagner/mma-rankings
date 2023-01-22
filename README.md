@@ -24,7 +24,7 @@ This project generates a json-file of the top15 rankings for every UFC division 
 * /data
     - `fighters/*.json` - the profile for a fighter. Contains a) basic info like birthplace b) their entire record. But not their ranking history
     - `mmaStats.json` - UFC ranking history with around one instance per month
-    - `allFighters.json` - lists all files in `data/fighters/`. When the rankings are rendered this file can be used to detect which fighters should have links to their profile pages (via the route `/fighter/name` )
+    - `allFighters.json` - lists all files in `data/fighters/`. When the rankings are rendered this file can be used to detect which fighters can have links to their profile pages. Note that some items in this file have a manually added property for `mmaStatsName` as mmaStats uses names like 'Weili Zhang' while Wikipedia uses names like 'Zhang Weili'
     
 ## Run this project:
 

@@ -320,6 +320,7 @@ function findImagesForFighter(fighterName) {
         "awakeningfighters.com", //hotlink blocked
         "images.mma-core.com", //403
         "preview.redd.it", //403
+        "pbs.twimg.com", //400
         "upload.wikimedia.org", // wikipedia's poor public domain photos
         "sherdog.com" //unstable, some images will not render
       ]
