@@ -5,8 +5,8 @@
   "author": "niklasHagner",
   "license": "MIT",
   "main": "app.js",
-  "engines" : { 
-    "node" : ">=18.12.1"
+  "engines": {
+    "node": ">=18.12.1"
   },
   "scripts": {
     "start": "node app.js",
@@ -17,6 +17,7 @@
     "eslint": "eslint backend/**/*.js"
   },
   "dependencies": {
+    "axios": "^1.2.3",
     "exp-config": "^4.2.0",
     "express": "^4.18.2",
     "g-i-s": "^2.1.6",

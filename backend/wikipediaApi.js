@@ -1,13 +1,19 @@
 const { parseWikipediaFightRecordTableToJson, parseWikipediaFutureEventsToJson, parseWikipediaFightersOnNextEventToJson } = require('./wikipediaTableParser.js');
 const HTMLParser = require('node-html-parser');
 const gisImageSearch = require("g-i-s");
+const axios = require('axios').default;
 const fileHelper = require("./fileHelper.js");
 const { stripTagsAndDecode, removeUnwantedTagsFromHtmlNode } = require("./stringAndHtmlHelper.js");
 
 async function getNamesAndUrlsOfNextEventFighters() {
-  const response = await fetch('https://en.wikipedia.org/wiki/List_of_UFC_events');
-  const htmlForAllUfcEvents = await response.text();
-  const rows = await parseWikipediaFutureEventsToJson(htmlForAllUfcEvents);
+  let htmlForEvents;
+  try {
+    const { data } = await axios.get('https://en.wikipedia.org/wiki/List_of_UFC_events');
+    htmlForEvents = data;
+  } catch(error) {
+    return;
+  }
+  const rows = await parseWikipediaFutureEventsToJson(htmlForEvents);
 
   //each row contains: {eventName,url,date,venue,location}
   const nextBigEvent = rows.reverse().find((row) => {
@@ -16,13 +22,12 @@ async function getNamesAndUrlsOfNextEventFighters() {
     return name.length < 5;
   });
   nextBigEvent.isBigEvent = true;
-  const otherEvents = rows.filter(x => x.url !== nextBigEvent.url).slice(0, 2);
-  const allEventObjs = [...otherEvents, nextBigEvent];
-  const promises = allEventObjs.map(event => fetch(event.url).then(response => response.text()));
+  const allEventObjs = rows.filter(x => x.url !== nextBigEvent.url).concat(nextBigEvent); //.slice(0, 2);
+  const promises = allEventObjs.map(event => axios.get(event.url).then(response => response.data));
   const promiseResponses = await Promise.all(promises);
   const all = promiseResponses.map((htmlForSingleEvent, ix) => {
-    const fightRows = parseWikipediaFightersOnNextEventToJson(htmlForSingleEvent);
     const eventInfo = allEventObjs[ix];
+    const fightRows = parseWikipediaFightersOnNextEventToJson(htmlForSingleEvent, eventInfo);
     return { fighters: fightRows, ...eventInfo };
   })
   return {
@@ -346,31 +351,37 @@ function findImagesForFighter(fighterName) {
 
 async function scrapeFighterData(wikiPageUrl) {
   return new Promise(async (resolve, reject) => {
-    console.log(`Start scraping ${wikiPageUrl}`);
-    const response = await fetch(wikiPageUrl)
-      .catch((error) => { console.log(`Error scraping ${wikiPageUrl}. Error:${error}`); reject("scraping error"); })
-    if (!response.ok) { console.log(`Error scraping ${wikiPageUrl}. Status: ${response.status}`); reject("scraping error"); }
-    const html = await response.text();
+    let response;
+    try {
+      console.log(`Start scraping ${wikiPageUrl}`);
+      response = await axios.get(wikiPageUrl);
+    } catch(error) {
+      console.log(`Error scraping ${wikiPageUrl}. Error:${error}`); 
+      reject("scraping error");
+    }
+    if (response.status !== 200) { console.log(`Error scraping ${wikiPageUrl}. Status: ${response.status}`); reject("scraping error"); }
+    const html = await response.data;
     const root = HTMLParser.parse(html);
     removeUnwantedTagsFromHtmlNode(root);
     const detect429Status = root.querySelector("body").innerHTML.indexOf("Wikimedia error") > -1;
     if (detect429Status) {
-      console.warn(`Wikimedia error for ${wikiPageUrl}`);
+      console.warn(`Wikimedia returned status:429 for ${wikiPageUrl}`);
     }
     const fighterObj = parseInfoBoxHtml(root, wikiPageUrl);
-    if (!fighterObj) { reject(`parseInfoBoxHtml failed for ${wikiPageUrl}`); }
+    if (!fighterObj) { 
+      reject(`parseInfoBoxHtml failed for ${wikiPageUrl}`); 
+    }
 
     console.log(`Successfully scraped ${wikiPageUrl}`);
     try {
       const imageArray = await findImagesForFighter(fighterObj.fighterInfo["name"]);
       fighterObj.fighterInfo.relevantImages = imageArray;
-    } catch(err){
+    } catch(err) {
       console.log(`findImagesForFighter failed for ${wikiPageUrl}`);
       fighterObj.fighterInfo.relevantImages = [];
-      // return reject(`findImagesForFighter failed for ${wikiPageUrl}`);
-      return;
+      return resolve(fighterObj);
     }
-    resolve(fighterObj);
+    return resolve(fighterObj);
   })
 }
 
