@@ -37,7 +37,8 @@ async function scrapeListOfFighters(inputFighters) {
 
   const readExistingFromFile = false;
   const allowFetchingMissingFighters = true;
-  const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, readExistingFromFile, allowFetchingMissingFighters);
+  const urlObjectsArray = inputFighters.map(x => { return {url:x}; });
+  const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(urlObjectsArray, readExistingFromFile, allowFetchingMissingFighters);
   const fighters = await Promise.all(fighterBasicData.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData)));
   fileHelper.updateListOfFighterFiles();
   console.log("done", fighters);

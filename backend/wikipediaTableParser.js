@@ -53,7 +53,7 @@ module.exports.parseWikipediaFightRecordTableToJson = function (htmlNode, fighte
           }
           if (fight[key].innerText) fight[key] = fight[key].innerText.replace("\n", "");
         });
-        const dateStrings = fight.date.split(" ");
+        const dateStrings = fight.date.split("(")[0].split(" ");
         fight.year = dateStrings[dateStrings.length-1];
         return fight;
       });

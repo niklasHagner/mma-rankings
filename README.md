@@ -16,11 +16,19 @@ This project generates a json-file of the top15 rankings for every UFC division 
 
 ![screenshot](https://i.imgur.com/daVexhr.png)
 
+## Tech and dependencies
+* node+express
+* nunjucks
+* vanilla css and vanilla js
+* draw charts via https://cdn.jsdelivr.net/npm/apexcharts
+* jsDOM for scraping rankings from mma-stats.com, and events and fighter profiles from wikipedia
+* google image search via package `g-i-s`
+
 ## Repo structure:
-* /backend = node
-    - JSDOM scraper for fetching historical rankings from mma-stats.com 
-    - node-backend for fetching fighter profiles from a sherdog-api
-* /public = contains index.html, and the js and css files that will be served to the client
+* app.js = routing and viewHelpers for nunjucks
+* /backend = nodeJs
+* /scripts = nodeJs scripts for manual scraping
+* /public = client assets
 * /data
     - `fighters/*.json` - the profile for a fighter. Contains a) basic info like birthplace b) their entire record. But not their ranking history
     - `mmaStats.json` - UFC ranking history with around one instance per month
@@ -31,6 +39,10 @@ This project generates a json-file of the top15 rankings for every UFC division 
 1. start the node-server `node app.js`
 
 2. browse to `localhost:8081` to serve `public/index.html` (or just open the html file directly)
+
+## Env var defaults
+* SAVE_JSON_TO_FILE=false
+* allowFetchingMissingFighters=false
 
 ## Routes:
 
@@ -55,7 +67,3 @@ This project generates a json-file of the top15 rankings for every UFC division 
 ## Known issues
 * For a regular UFC event, Wikipedia has a table of fights. For an upcoming minor events sometimes it's just a bullet list - this repo doesn't even attempt to parse that list as it's not structured enough.
 * The googleImageSearch fetch requests can fail and the exception isn't handled. They're called via `getInfoAndFightersFromSingleEvent -> fetchArrayOfFighters -> scrapeFighterData -> findImagesForFighter` 
-
-## Dependencies
-
-* https://cdn.jsdelivr.net/npm/apexcharts
