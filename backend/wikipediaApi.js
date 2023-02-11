@@ -64,7 +64,8 @@ async function getInfoAndFightersFromSingleEvent(event) {
     }
   }
 
-  const fightersWithDetails = await fetchArrayOfFighters(fighterProfiles, true, true);
+  const readExistingFromFile = true, allowFetchingMissingFighters = false;
+  const fightersWithDetails = await fetchArrayOfFighters(fighterProfiles, readExistingFromFile, allowFetchingMissingFighters);
 
   const mainMatches = [];
   for (let i = 0; i < fightersWithDetails.length; i += 2) {
