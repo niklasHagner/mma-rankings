@@ -158,6 +158,7 @@ app.get('/mma-stats-by-date', async function (req, res) {
 
 async function getEvents(rankingsData) {
   const data = await wikipediaApi.getInfoAndFightersFromNextEvents();
+  data.events = data.events.sort((a,b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
   const asyncRes = await Promise.all(data.events.map(async (event) => {
     const fighters = await Promise.all(event.fighters.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, rankingsData)));
