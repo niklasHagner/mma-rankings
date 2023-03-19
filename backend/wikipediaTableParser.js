@@ -70,38 +70,64 @@ module.exports.parseWikipediaFightRecordTableToJson = function (htmlNode, fighte
 
 module.exports.parseWikipediaFutureEventsToJson = function(html) {
   const root = HTMLParser.parse(html);
-  let table = root.querySelector("table#Scheduled_events");
-    // Event | Original date | Venue | Location | Reference
+  let tableEl = root.querySelector("table#Scheduled_events");
+  const tdIndexList = {
+    eventLink: 0,
+    date: 1,
+    venue: 2,
+    location: 3,
+    reference: 4
+  };
+  return mapTableToJson(tableEl, tdIndexList);
+}
 
-    //NOTE: the quirk with these event tables is that when venues and locations repeat a single location-cell and a single venue-cell like 'UFC apex' can be used for multiple rows.
-    //If this happens only one of the rows will have a venue/location and the rest will have to reuse the previously existing venue/location
+module.exports.parseWikipediaPastEventsToJson = function(html) {
+  const root = HTMLParser.parse(html);
+  let tableEl = root.querySelector("table#Past_events");
+  const tdIndexList = {
+    number: 0,
+    eventLink: 1,
+    date: 2,
+    venue: 3,
+    location: 4,
+    attendance: 5,
+    reference: 6
+  };
+  return mapTableToJson(tableEl, tdIndexList);
+}
+
+//Maps table from https://en.wikipedia.org/wiki/List_of_UFC_events to json
+function mapTableToJson(table, tdIndexList) {
+  //NOTE: the quirk with these event tables is that when venues and locations repeat a single location-cell and a single venue-cell like 'UFC apex' can be used for multiple rows.
+  //If this happens only one of the rows will have a venue/location and the rest will have to reuse the previously existing venue/location
   let prevVenue, prevLocation;
   const cells = Array.from(table.querySelectorAll("tr"))
     .filter((row, ix) => ix > 0)
     .map(row => { 
       const td = row.querySelectorAll("td");
 
-      if (td[2]) prevVenue = td[2].innerText;
-      if (td[3]) prevLocation = td[3].innerText;
+      if (td[tdIndexList.venue]) prevVenue = td[tdIndexList.venue].innerText;
+      if (td[tdIndexList.location]) prevLocation = td[tdIndexList.location].innerText;
       
       const item = {
         eventName: td[0].innerText,
-        url: 'https://en.wikipedia.org' + td[0].querySelector("a").getAttribute("href"),
-        date: td[1].innerText,
-        venue: td[2] ? td[2].innerText : prevVenue,
-        location: td[3] ? td[3].innerText : prevLocation
+        url: 'https://en.wikipedia.org' + td[tdIndexList.eventLink].querySelector("a").getAttribute("href"),
+        date: td[tdIndexList.date].innerText,
+        venue: td[tdIndexList.venue] ? td[tdIndexList.venue].innerText : prevVenue,
+        location: td[tdIndexList.location] ? td[tdIndexList.location].innerText : prevLocation
       };
       
-      Object.keys(item).forEach(function(key){
+      Object.keys(item).forEach((key) => {
         if (item[key]) item[key] = item[key].replace("\n", "");//trim crap
       });
+
       return item;
     });
 
   return cells;
 }
 
-module.exports.parseWikipediaFightersOnNextEventToJson = function(html, eventObj) {
+module.exports.parseSingleEventHtmlToJson = function(html, eventObj) {
   const root = HTMLParser.parse(html);
   let table = root.querySelector(".toccolours");
   const fighters = [];

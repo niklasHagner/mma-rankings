@@ -4,30 +4,42 @@ const config = require("exp-config");
 const wikipediaApi = require('../backend/wikipediaApi.js');
 const fileHelper = require('../backend/fileHelper.js');
 const viewBuilder = require('../backend/viewBuilder.js');
+const { uniqueBy } = require("../backend/arrHelper");
+
 
 global.fightersWithProfileLinks = JSON.parse(fs.readFileSync("data/allFighters.json"));
 global.rankData = JSON.parse(fs.readFileSync("data/mmaStats.json"));
 
-async function scrapeListOfFighters(inputFighters) {
+async function scrapeListOfFighters() {
   config.SAVE_JSON_TO_FILE = true;
-  //Example input: [{ url: "wiki/Leon_Edwards" }, { url: "wiki/Jan_B%C5%82achowicz"} ]
-  inputFighters = [
-    // { url:"/wiki/Kron_Gracie" },
-  ];
-  //Note: avoid running this on a huge array to avoid scraper blockers
-  console.log("scrapeListOfFighters", inputFighters);
 
-  //Alternative: update from data/allFighters.json
-  // const fileNames = pizza.map(x => x.fileName);
-  // const inputFighters = fileNames.map((fileName) => {
-  //   const fighter = JSON.parse(fs.readFileSync("data/fighters/" + fileName));
-  //   const wikiUrl = fighter.fighterInfo.wikiUrl;
-  //   return {url: wikiUrl};
-  // });
+//Example output: 
+//   {
+//     allEvents: [
+//       {
+//         fighters: [
+//           {
+//             name: "Edmen Shahbazyan",
+//             url: "/wiki/Edmen_Shahbazyan",
+//           }
+//         ],
+//         eventName: "UFC Fight Night 225",
+//         url: "https://en.wikipedia.org/wiki/UFC_Fight_Night_225",
+//         date: "May 20, 2023",
+//         venue: "TBD",
+//         location: "TBD",
+//       },
+//     ]
+//   }
+
+  const pastEventObj = await wikipediaApi.getNamesAndUrlsOfFightersInPastEvent("2023-03-15");
+  const allEvents = pastEventObj.allEvents;
+  let inputFighters = allEvents.map(event => event.fighters).flat();
+  inputFighters = uniqueBy(inputFighters, "url");
 
   const readExistingFromFile = false;
-  const allowFetchingMissingFighters = true;
-  const fetchImages = true;
+  const allowFetchingMissingFighters = false;
+  const fetchImages = false;
   const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, readExistingFromFile, allowFetchingMissingFighters, fetchImages);
   const fighters = await Promise.all(fighterBasicData.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData)));
   fileHelper.updateListOfFighterFiles();

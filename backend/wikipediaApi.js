@@ -1,4 +1,4 @@
-const { parseWikipediaFightRecordTableToJson, parseWikipediaFutureEventsToJson, parseWikipediaFightersOnNextEventToJson } = require('./wikipediaTableParser.js');
+const { parseWikipediaFightRecordTableToJson, parseWikipediaFutureEventsToJson, parseWikipediaPastEventsToJson, parseSingleEventHtmlToJson } = require('./wikipediaTableParser.js');
 const HTMLParser = require('node-html-parser');
 const gisImageSearch = require("g-i-s");
 const axios = require('axios').default;
@@ -27,13 +27,42 @@ async function getNamesAndUrlsOfNextEventFighters() {
   const promiseResponses = await Promise.all(promises);
   const all = promiseResponses.map((htmlForSingleEvent, ix) => {
     const eventInfo = allEventObjs[ix];
-    const fightRows = parseWikipediaFightersOnNextEventToJson(htmlForSingleEvent, eventInfo);
+    const fightRows = parseSingleEventHtmlToJson(htmlForSingleEvent, eventInfo);
     return { fighters: fightRows, ...eventInfo };
   })
   return {
     allEvents: all
   };
 }
+
+async function getNamesAndUrlsOfFightersInPastEvent(startDateString) {
+    const startDateTime = new Date(startDateString).getTime();
+    let htmlForEvents;
+    try {
+      const { data } = await axios.get('https://en.wikipedia.org/wiki/List_of_UFC_events');
+      htmlForEvents = data;
+    } catch(error) {
+      return;
+    }
+    let rows = await parseWikipediaPastEventsToJson(htmlForEvents);
+
+    rows = rows.filter((row) => {
+        const dateTime = new Date(row.date).getTime();
+        return dateTime > startDateTime; 
+    });
+  
+    //each row contains: {eventName,url,date,venue,location}
+    const promises = rows.map(event => axios.get(event.url).then(response => response.data));
+    const promiseResponses = await Promise.all(promises);
+    const all = promiseResponses.map((htmlForSingleEvent, ix) => {
+      const eventInfo = rows[ix];
+      const fightRows = parseSingleEventHtmlToJson(htmlForSingleEvent, eventInfo);
+      return { fighters: fightRows, ...eventInfo };
+    })
+    return {
+      allEvents: all
+    };
+  }
 
 async function getInfoAndFightersFromNextEvents() {
   const data = await getNamesAndUrlsOfNextEventFighters();
@@ -374,14 +403,22 @@ async function scrapeFighterData(wikiPageUrl) {
     }
 
     console.log(`Successfully scraped ${wikiPageUrl}`);
-    try {
-      const imageArray = await findImagesForFighter(fighterObj.fighterInfo["name"]);
-      fighterObj.fighterInfo.relevantImages = imageArray;
-    } catch(err) {
-      console.log(`findImagesForFighter failed for ${wikiPageUrl}`);
-      fighterObj.fighterInfo.relevantImages = [];
-      return resolve(fighterObj);
+
+    const fighterFromFile = fileHelper.readFileByFighterObj(fighterObj);
+    const existingImages = fighterFromFile ? fighterFromFile.fighterInfo.relevantImages : false;
+    if (existingImages) {
+      fighterObj.fighterInfo.relevantImages = existingImages;
+    } else {
+      try {
+        const imageArray = await findImagesForFighter(fighterObj.fighterInfo["name"]);
+        fighterObj.fighterInfo.relevantImages = imageArray;
+      } catch(err) {
+        console.log(`findImagesForFighter failed for ${wikiPageUrl}`);
+        fighterObj.fighterInfo.relevantImages = [];
+        return resolve(fighterObj);
+      }
     }
+   
     return resolve(fighterObj);
   })
 }
@@ -389,5 +426,6 @@ async function scrapeFighterData(wikiPageUrl) {
 module.exports = {
   scrapeFighterData,
   getInfoAndFightersFromNextEvents,
+  getNamesAndUrlsOfFightersInPastEvent,
   fetchArrayOfFighters
 }
