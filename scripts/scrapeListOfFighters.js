@@ -10,19 +10,9 @@ global.rankData = JSON.parse(fs.readFileSync("data/mmaStats.json"));
 
 async function scrapeListOfFighters(inputFighters) {
   config.SAVE_JSON_TO_FILE = true;
-  //expected input: [{ url: "wiki/Leon_Edwards" }, { url: "wiki/Jan_B%C5%82achowicz"} ]
+  //Example input: [{ url: "wiki/Leon_Edwards" }, { url: "wiki/Jan_B%C5%82achowicz"} ]
   inputFighters = [
-    // { url:"/wiki/Muhammad_Mokaev" },
-    // { url:"/wiki/Tagir_Ulanbekov" },
-    // { url:"/wiki/Karol_Rosa" },
-    // { url:"/wiki/Julia_Avila" },
-    // { url:"/wiki/Norma_Dumont" },
-    // { url:"/wiki/Erin_Blanchfield" },
-    // { url:"/wiki/Casey_O%27Neill" },
-    // { url:"/wiki/Tracy_Cortez" },
-    // { url:"/wiki/Virna_Jandiroba" },
-    // { url:"/wiki/Michelle_Waterson" },
-    // { url:"/wiki/Emily_Ducote" },
+    // { url:"/wiki/Kron_Gracie" },
   ];
   //Note: avoid running this on a huge array to avoid scraper blockers
   console.log("scrapeListOfFighters", inputFighters);
@@ -37,8 +27,7 @@ async function scrapeListOfFighters(inputFighters) {
 
   const readExistingFromFile = false;
   const allowFetchingMissingFighters = true;
-  const urlObjectsArray = inputFighters.map(x => { return {url:x}; });
-  const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(urlObjectsArray, readExistingFromFile, allowFetchingMissingFighters);
+  const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, readExistingFromFile, allowFetchingMissingFighters);
   const fighters = await Promise.all(fighterBasicData.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData)));
   fileHelper.updateListOfFighterFiles();
   console.log("done", fighters);

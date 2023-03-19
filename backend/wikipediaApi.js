@@ -130,9 +130,8 @@ async function fetchArrayOfFighters(arrayOfNamesAndUrls, readExistingFromFile = 
     arrayOfNamesAndUrlsToScrape = arrayOfNamesAndUrls;
   }
 
-  const urlsToLookUp = arrayOfNamesAndUrlsToScrape.filter(x => x.url).map(x => x.url);
-  urlsToLookUp.forEach((url) => {
-    url = url.includes("https://en.wikipedia.org/") ? url : `https://en.wikipedia.org/${url}`;
+  arrayOfNamesAndUrlsToScrape.filter(x => x.url).forEach((x) => {
+    const url = x.url.includes("https://en.wikipedia.org/") ? x.url : `https://en.wikipedia.org/${x.url}`;
     var promise = scrapeFighterData(url);
     promises.push(promise);
   });
