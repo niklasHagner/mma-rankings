@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { removeDiacritics } = require('./stringAndHtmlHelper.js');
+const { removeDiacritics } = require("./stringAndHtmlHelper.js");
 
 function readFileByShortFileName(shortFileName) {
   const fileName = "data/fighters/" + shortFileName + ".json"

@@ -2,13 +2,7 @@ const fs = require('fs');
 const moment = require("moment");
 const getMmaStatsUrl = (date) => `http://www.mma-stats.com/rankings/${date}`;
 const jsdom = require('jsdom');
-
-function uniqueBy(arr, prop){
-  return arr.reduce((acc, item) => {
-    if (!acc.includes(item[prop])) { acc.push(item); }
-    return acc;
-  }, []);
-}
+const { uniqueBy } = require("./arrHelper");
 
 function saveToFile(newArrayOfDates) {
   const fileName = "data/mmaStats.json";
