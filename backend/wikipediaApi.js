@@ -35,8 +35,9 @@ async function getNamesAndUrlsOfNextEventFighters() {
   };
 }
 
-async function getNamesAndUrlsOfFightersInPastEvent(startDateString) {
+async function getNamesAndUrlsOfFightersInPastEvent(startDateString, endDateString = "2050-01-01") {
     const startDateTime = new Date(startDateString).getTime();
+    const endDateTime = new Date(endDateString).getTime();
     let htmlForEvents;
     try {
       const { data } = await axios.get('https://en.wikipedia.org/wiki/List_of_UFC_events');
@@ -48,11 +49,13 @@ async function getNamesAndUrlsOfFightersInPastEvent(startDateString) {
 
     rows = rows.filter((row) => {
         const dateTime = new Date(row.date).getTime();
-        return dateTime > startDateTime; 
+        return dateTime >= startDateTime && dateTime < endDateTime; 
     });
   
     //each row contains: {eventName,url,date,venue,location}
-    const promises = rows.map(event => axios.get(event.url).then(response => response.data));
+    const urls = rows.map(event => event.url);
+    console.log(`fetching ${urls.length} ufc event urls`);
+    const promises = urls.map(url => axios.get(url).then(response => response.data));
     const promiseResponses = await Promise.all(promises);
     const all = promiseResponses.map((htmlForSingleEvent, ix) => {
       const eventInfo = rows[ix];
@@ -121,7 +124,7 @@ async function getInfoAndFightersFromSingleEvent(event) {
     {name: 'Kelvin Gastelum', url: '/wiki/Kelvin_Gastelum'}  
   ]
 */
-async function fetchArrayOfFighters(arrayOfNamesAndUrls, readExistingFromFile = true, allowFetchingMissingFighters = false) {
+async function fetchArrayOfFighters(arrayOfNamesAndUrls, readExistingFromFile=true, allowFetchingMissingFighters=false, findImages=true) {
   var promises = [];
 
   let arrayOfNamesAndUrlsToScrape;
@@ -159,9 +162,13 @@ async function fetchArrayOfFighters(arrayOfNamesAndUrls, readExistingFromFile = 
     arrayOfNamesAndUrlsToScrape = arrayOfNamesAndUrls;
   }
 
+  if (arrayOfNamesAndUrlsToScrape.length > 0 && !arrayOfNamesAndUrlsToScrape[0].url) {
+    arrayOfNamesAndUrlsToScrape = arrayOfNamesAndUrlsToScrape.map(x => { return {url: x} });
+  }
+
   arrayOfNamesAndUrlsToScrape.filter(x => x.url).forEach((x) => {
     const url = x.url.includes("https://en.wikipedia.org/") ? x.url : `https://en.wikipedia.org/${x.url}`;
-    var promise = scrapeFighterData(url);
+    var promise = scrapeFighterData(url, findImages);
     promises.push(promise);
   });
 
@@ -379,7 +386,7 @@ function findImagesForFighter(fighterName) {
   });
 }
 
-async function scrapeFighterData(wikiPageUrl) {
+async function scrapeFighterData(wikiPageUrl, findImages=true) {
   return new Promise(async (resolve, reject) => {
     let response;
     try {
@@ -406,7 +413,7 @@ async function scrapeFighterData(wikiPageUrl) {
 
     const fighterFromFile = fileHelper.readFileByFighterObj(fighterObj);
     const existingImages = fighterFromFile ? fighterFromFile.fighterInfo.relevantImages : false;
-    if (existingImages) {
+    if (findImages===false || existingImages) {
       fighterObj.fighterInfo.relevantImages = existingImages;
     } else {
       try {

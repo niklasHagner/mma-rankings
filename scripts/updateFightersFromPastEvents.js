@@ -32,13 +32,14 @@ async function scrapeListOfFighters() {
 //     ]
 //   }
 
-  const pastEventObj = await wikipediaApi.getNamesAndUrlsOfFightersInPastEvent("2023-03-15");
+  const pastEventObj = await wikipediaApi.getNamesAndUrlsOfFightersInPastEvent("2023-01-09", "2023-03-30");
   const allEvents = pastEventObj.allEvents;
-  let inputFighters = allEvents.map(event => event.fighters).flat();
+  let inputFighters = allEvents.map(event => event.fighters).flat().filter(x => x.url);
   inputFighters = uniqueBy(inputFighters, "url");
+  console.log(inputFighters);
 
   const readExistingFromFile = false;
-  const allowFetchingMissingFighters = false;
+  const allowFetchingMissingFighters = true;
   const fetchImages = false;
   const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, readExistingFromFile, allowFetchingMissingFighters, fetchImages);
   const fighters = await Promise.all(fighterBasicData.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData)));
