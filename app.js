@@ -36,6 +36,7 @@ nunjucks.configure("views", {
   lstripBlocks: true,
   express: app
 })
+  .addGlobal("getFighterNameOrLinkHtml", viewBuilder.getFighterNameOrLinkHtml)
   .addFilter("classList", (classList) => classList.filter((x) => x).join(" "))
   .addFilter("dateFormat", (str) => {
     try {
@@ -71,9 +72,6 @@ nunjucks.configure("views", {
       const splitName = fighter.fighterInfo.name.split(" ");
       return splitName[splitName.length -1];
     }
-  })
-  .addFilter("getFighterNameOrLinkHtml", (fighterName) => {
-    return viewBuilder.getFighterNameOrLinkHtml(fighterName);
   })
 
 winston.configure({

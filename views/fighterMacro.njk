@@ -57,7 +57,7 @@
 
             <span class="fight__year">{{fight.date | dateFormat}}:</span>
             <span class="fight__result">{{fight.result}}</span>
-            {{fight.opponentName | getFighterNameOrLinkHtml | safe}}
+            {{ getFighterNameOrLinkHtml(fight.opponentName) | safe}}
             {% if fight.opponentInfoAtTheTime %}
               <span class="fight__opponent-rank {{ 'fight__opponent-rank--past' if fight.opponentInfoAtTheTime.wasInThePast }} {{ 'fight__opponent-rank--future' if fight.opponentInfoAtTheTime.wasInTheFuture }}">
                 {% if fight.opponentInfoAtTheTime.division %}

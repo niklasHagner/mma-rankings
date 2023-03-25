@@ -107,14 +107,21 @@ const divisionToHtml = function(division) {
   `;
 };
 
-function getFighterNameOrLinkHtml(fighterName) {
-  const fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.mmaStatsName?.toLowerCase() === fighterName.toLowerCase() || x.fighterAnsiName.toLowerCase() === fighterName.toLowerCase());
+function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null) {
+  if (!fighterName && !mmaStatsName)
+    return "neeeej";
+    
+  let fighterFileMatch;
+  fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.fighterAnsiName?.toLowerCase() === fighterName.toLowerCase());
+  if (!fighterFileMatch && mmaStatsName) {
+    fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.fighterAnsiName?.toLowerCase() === mmaStatsName.toLowerCase());
+  }
   const fighterLink = fighterFileMatch ? `/fighter/${fighterFileMatch.fileName.replace(".json", "")}` : null;
   const html = fighterLink ? `<a href="${fighterLink}" class="name">${fighterName}</a>` : `<span class="name">${fighterName}</span>`;
   return html;
 }
 
-//Should only extend with offline data
+//Extends the wikipediaData with offline data like mmaStats.json for historic rankings
 async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
   if (!fighter || fighter.missingData) {
     return fighter;
@@ -128,6 +135,9 @@ async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
   fighter.record = extendedRecord;
 
   if (config.SAVE_JSON_TO_FILE) {
+    const previouslySavedFighter = fileHelper.readFileByFighterObj(fighter);
+    fighter.mmaStatsName = previouslySavedFighter.mmaStatsName;
+
     console.log("Saving to file", fighter.fighterInfo.name);
     const fighterToSave = {...fighter};
     //No need to save data which can be appended dynamically offline via extendFighterApiDataWithRecordInfo

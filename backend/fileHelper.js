@@ -73,7 +73,6 @@ async function updateListOfFighterFiles() {
       newList.push({ 
         fileName, 
         fighterAnsiName: getFighterAnsiNameFromFileName(fileName),
-        mmaStatsName: null 
       });
     }
   });
