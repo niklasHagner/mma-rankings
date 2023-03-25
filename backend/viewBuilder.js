@@ -1,6 +1,6 @@
 const config = require("exp-config");
 const { findRankAtTime, findAllRanksForFighter } = require('./findRank.js');
-const { divisionAbbreviation } = require('./stringAndHtmlHelper.js');
+const { divisionAbbreviation, removeDiacritics } = require('./stringAndHtmlHelper.js');
 const fileHelper = require('./fileHelper.js');
 
 const buildRankingsHtml = function(pages) {
@@ -92,7 +92,7 @@ const divisionToHtml = function(division) {
     if (fighter.rank.toLowerCase().indexOf("champion") > -1) 
       fighter.rank = "C";
     
-    const fighterNameElement = getFighterNameOrLinkHtml(fighter.name);
+    const fighterNameElement = getFighterNameOrLinkHtml(fighter.name, fighter.mmaStatsName, "divisionToHtml");
     return `
       <div>
         <span class="rank">${fighter.rank}</span> ${fighterNameElement}
@@ -107,15 +107,25 @@ const divisionToHtml = function(division) {
   `;
 };
 
-function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null) {
-  if (!fighterName && !mmaStatsName)
-    return "neeeej";
+function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, callee = null) {
+  if (!fighterName && !mmaStatsName) {
+    return "???";
+  }
     
   let fighterFileMatch;
   fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.fighterAnsiName?.toLowerCase() === fighterName.toLowerCase());
   if (!fighterFileMatch && mmaStatsName) {
     fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.fighterAnsiName?.toLowerCase() === mmaStatsName.toLowerCase());
   }
+
+  //use the slow diactics lookup only if necessary
+  if (!fighterFileMatch) {
+    fighterFileMatch = global.fightersWithProfileLinks.find(x => removeDiacritics(x?.fighterAnsiName?.toLowerCase()) === removeDiacritics(fighterName.toLowerCase()));
+    if (!fighterFileMatch && mmaStatsName) {
+      fighterFileMatch = global.fightersWithProfileLinks.find(x => removeDiacritics(x?.fighterAnsiName?.toLowerCase()) === removeDiacritics(mmaStatsName.toLowerCase()));
+    }
+  }
+
   const fighterLink = fighterFileMatch ? `/fighter/${fighterFileMatch.fileName.replace(".json", "")}` : null;
   const html = fighterLink ? `<a href="${fighterLink}" class="name">${fighterName}</a>` : `<span class="name">${fighterName}</span>`;
   return html;

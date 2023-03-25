@@ -63,22 +63,20 @@ async function getAllFightersFromFiles() {
 }
 
 async function updateListOfFighterFiles() {
-  const existingFileData = fs.readFileSync("data/allFighters.json");
-  const existingList = existingFileData.length !== 0 ? JSON.parse(existingFileData) : [];
-
   const newList = [];
   fs.readdirSync("data/fighters").forEach(fileName => {
-    const exists = existingList.find(x => x.fileName.includes(fileName));
-    if (!exists) {
-      newList.push({ 
-        fileName, 
-        fighterAnsiName: getFighterAnsiNameFromFileName(fileName),
-      });
+    const fighter = JSON.parse(fs.readFileSync("data/fighters/"+fileName));
+    const newListItem = { 
+      fileName, 
+      fighterName: fighter.name,
+      fighterAnsiName: getFighterAnsiNameFromFileName(fileName),
+    };
+    if (fighter?.fighterInfo?.mmaStatsName) {
+      newListItem.mmaStatsName = fighter?.fighterInfo?.mmaStatsName;
     }
+    newList.push(newListItem);
   });
 
-  const combinedList = existingList.concat(newList);
-  console.log("existingList", existingList.length, "newList:", newList.length,"CombinedList:", combinedList.length, );
   await fs.promises.writeFile("data/allFighters.json", JSON.stringify(newList));
   console.log(`Updated allFighters.json`);
   return;
