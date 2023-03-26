@@ -115,8 +115,12 @@ function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, callee = nul
   fighterFileMatch = global.fightersWithProfileLinks.find(x => 
     x?.wikipediaNameWithDiacritics?.toLowerCase() === fighterName.toLowerCase()
     || x?.fighterAnsiName?.toLowerCase() === fighterName.toLowerCase()
-    || x?.mmaStatsName?.toLowerCase() === mmaStatsName?.toLowerCase()
   );
+  if (!fighterFileMatch && mmaStatsName) {
+    fighterFileMatch = global.fightersWithProfileLinks.find(x => 
+        x?.mmaStatsName?.toLowerCase() === mmaStatsName?.toLowerCase()
+      );
+  }
 
   const fighterLink = fighterFileMatch ? `/fighter/${fighterFileMatch.fileName.replace(".json", "")}` : null;
   const html = fighterLink ? `<a href="${fighterLink}" class="name">${fighterName}</a>` : `<span class="name">${fighterName}</span>`;
@@ -138,7 +142,7 @@ async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
 
   if (config.SAVE_JSON_TO_FILE) {
     const previouslySavedFighter = fileHelper.readFileByFighterObj(fighter);
-    fighter.mmaStatsName = previouslySavedFighter.mmaStatsName;
+    fighter.mmaStatsName = previouslySavedFighter?.mmaStatsName;
 
     console.log("Saving to file", fighter.fighterInfo.name);
     const fighterToSave = {...fighter};
