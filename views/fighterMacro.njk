@@ -14,10 +14,10 @@
     <article class="fighter">
       <header>
         <div class="left-col">
-          {% for src in info.relevantImages | slice(3) %}
+          {% for src in info.relevantImages %}
             {% if loop.index0 == 0 %}
               <img src="{{src}}" alt="">
-            {% else %}
+            {% elif loop.index0 < 3 %}
               <img src="{{src}}" alt="" loading="auto">
             {% endif %}
           {% endfor %}
