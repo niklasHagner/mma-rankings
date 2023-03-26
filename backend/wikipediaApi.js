@@ -336,7 +336,7 @@ function parseInfoBoxHtml(root, wikiPageUrl) {
 }
 
 function findImagesForFighter(fighterName) {
-  const query = `${fighterName} + ufc mma fighter profile`;
+  const query = `${fighterName} + ufc mma fighter profile -poster`;
   return new Promise(async (resolve, reject) => {
     const googleImageSearchOptions = {
       searchTerm: query,
