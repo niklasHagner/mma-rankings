@@ -22,7 +22,7 @@
             </div>
           {% endfor %}
 
-        {% if event.moreMatches %} 
+        {% if event.moreMatches and event.moreMatches.length > 0  %} 
           <div class="more-fighters-on-card">
             <h2>Other fighters on card</h2>
             <ul>
