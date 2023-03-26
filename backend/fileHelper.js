@@ -68,7 +68,7 @@ async function updateListOfFighterFiles() {
     const fighter = JSON.parse(fs.readFileSync("data/fighters/"+fileName));
     const newListItem = { 
       fileName, 
-      fighterName: fighter.name,
+      wikipediaNameWithDiacritics: fighter.fighterInfo.name,
       fighterAnsiName: getFighterAnsiNameFromFileName(fileName),
     };
     if (fighter?.fighterInfo?.mmaStatsName) {

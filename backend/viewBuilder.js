@@ -9,7 +9,6 @@ const buildRankingsHtml = function(pages) {
   });
   pages = pages.slice(0,pages.length-1);
   const snapshots = pages.map((page) => {
-    
     const divisionTemplates = page.divisions
       .filter(currDivision => currDivision.fighters.length >= 10)
       .map(division => divisionToHtml(division));
@@ -113,18 +112,11 @@ function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, callee = nul
   }
     
   let fighterFileMatch;
-  fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.fighterAnsiName?.toLowerCase() === fighterName.toLowerCase());
-  if (!fighterFileMatch && mmaStatsName) {
-    fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.fighterAnsiName?.toLowerCase() === mmaStatsName.toLowerCase());
-  }
-
-  //use the slow diactics lookup only if necessary
-  if (!fighterFileMatch) {
-    fighterFileMatch = global.fightersWithProfileLinks.find(x => removeDiacritics(x?.fighterAnsiName?.toLowerCase()) === removeDiacritics(fighterName.toLowerCase()));
-    if (!fighterFileMatch && mmaStatsName) {
-      fighterFileMatch = global.fightersWithProfileLinks.find(x => removeDiacritics(x?.fighterAnsiName?.toLowerCase()) === removeDiacritics(mmaStatsName.toLowerCase()));
-    }
-  }
+  fighterFileMatch = global.fightersWithProfileLinks.find(x => 
+    x?.wikipediaNameWithDiacritics?.toLowerCase() === fighterName.toLowerCase()
+    || x?.fighterAnsiName?.toLowerCase() === fighterName.toLowerCase()
+    || x?.mmaStatsName?.toLowerCase() === mmaStatsName?.toLowerCase()
+  );
 
   const fighterLink = fighterFileMatch ? `/fighter/${fighterFileMatch.fileName.replace(".json", "")}` : null;
   const html = fighterLink ? `<a href="${fighterLink}" class="name">${fighterName}</a>` : `<span class="name">${fighterName}</span>`;

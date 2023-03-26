@@ -36,6 +36,10 @@
           {% endif %}  
           <p class="fighter-team"><span>Team:</span> {{ info.team }}</p>
           {# <p class="fighter-divisions"><span>Divisions:</span> {{ info.division }}</p> #}
+          {% set currentRank = getCurrentRank(info.name) %}
+          {% if currentRank %}
+            <p class="fighter-rank"><span>Rank:</span> {{ currentRank }}</p>
+          {% endif %}  
         </div>
       </header>
       

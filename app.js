@@ -6,7 +6,7 @@ const winston = require('winston');
 const moment = require("moment");
 
 const mmaStatsScraper = require('./backend/scrapeMmaStatsDotCom');
-const { findRankAtTime } = require('./backend/findRank.js');
+const { findRankAtTime, getCurrentRank } = require('./backend/findRank.js');
 const wikipediaApi = require('./backend/wikipediaApi.js');
 const viewBuilder = require('./backend/viewBuilder.js');
 const fileHelper = require('./backend/fileHelper.js');
@@ -37,6 +37,7 @@ nunjucks.configure("views", {
   express: app
 })
   .addGlobal("getFighterNameOrLinkHtml", viewBuilder.getFighterNameOrLinkHtml)
+  .addGlobal("getCurrentRank", getCurrentRank)
   .addFilter("classList", (classList) => classList.filter((x) => x).join(" "))
   .addFilter("dateFormat", (str) => {
     try {
