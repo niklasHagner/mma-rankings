@@ -101,7 +101,7 @@ async function scrapeListOfFighters(inputFighters) {
 
   const readExistingFromFile = false;
   const allowFetchingMissingFighters = true;
-  const fetchImages = true;
+  const fetchImages = false;
   const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, readExistingFromFile, allowFetchingMissingFighters, fetchImages);
   const fighters = await Promise.all(fighterBasicData.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData)));
   fileHelper.updateListOfFighterFiles();
