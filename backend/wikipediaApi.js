@@ -312,7 +312,7 @@ function parseInfoBoxHtml(root, wikiPageUrl) {
       fighterInfo["reach"] = partBeforeReference;
     }
     else if (propName === "team") {
-      const teams = htmlValue.split("<br>").map(x => stripTagsAndDecode(x));
+      const teams = htmlValue.split("<br>").map(x => stripTagsAndDecode(x).trim()).filter(x => x);
       fighterInfo.teams = teams;
       fighterInfo.team = teams[teams.length - 1];//Most recent team is placed last
     }
