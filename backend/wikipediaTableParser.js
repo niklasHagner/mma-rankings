@@ -109,7 +109,7 @@ function mapTableToJson(table, tdIndexList) {
   //NOTE: the quirk with these event tables is that when venues and locations repeat a single location-cell and a single venue-cell like 'UFC apex' can be used for multiple rows.
   //If this happens only one of the rows will have a venue/location and the rest will have to reuse the previously existing venue/location
   let prevVenue, prevLocation;
-  const cells = Array.from(table.querySelectorAll("tr"))
+  let cells = Array.from(table.querySelectorAll("tr"))
     .filter((row, ix) => ix > 0)
     .map(row => {
       const td = row.querySelectorAll("td");
@@ -117,9 +117,14 @@ function mapTableToJson(table, tdIndexList) {
       if (td[tdIndexList.venue]) prevVenue = td[tdIndexList.venue].innerText;
       if (td[tdIndexList.location]) prevLocation = td[tdIndexList.location].innerText;
 
+      const link = td[tdIndexList.eventLink].querySelector("a");
+      if (!link) {
+        return null;
+      }
+
       const item = {
         eventName: td[0].innerText,
-        url: 'https://en.wikipedia.org' + td[tdIndexList.eventLink].querySelector("a").getAttribute("href"),
+        url: 'https://en.wikipedia.org' + link.getAttribute("href"),
         date: td[tdIndexList.date].innerText,
         venue: td[tdIndexList.venue] ? td[tdIndexList.venue].innerText : prevVenue,
         location: td[tdIndexList.location] ? td[tdIndexList.location].innerText : prevLocation
@@ -132,6 +137,7 @@ function mapTableToJson(table, tdIndexList) {
       return item;
     });
 
+  cells = cells.filter(cell => cell);
   return cells;
 }
 
