@@ -27,7 +27,8 @@ This project generates a json-file of the top15 rankings for every UFC division 
 ## Repo structure:
 * app.js = routing and viewHelpers for nunjucks
 * /backend = nodeJs
-* /scripts = nodeJs scripts for manual scraping
+* /scripts = nodeJs scripts for manual scraping 
+    * updateFightersFromPastEvents.js - grabs all the events between two dates, lists all the fighters on those events - and scrapes their wiki pages
 * /public = client assets
 * /data
     - `fighters/*.json` - the profile for a fighter. Contains a) basic info like birthplace b) their entire record. But not their ranking history
