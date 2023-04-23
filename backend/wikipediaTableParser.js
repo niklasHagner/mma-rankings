@@ -4,61 +4,9 @@ module.exports.parseWikipediaFightRecordTableToJson = function (htmlNode, fighte
   let mmaRecordsTable = htmlNode.querySelectorAll("table").filter(x => {
     var tr = x.querySelector("tr");
     return tr ? tr.innerText.trim().indexOf("Res.") === 0 : false;
-  })
-  mmaRecordsTable = mmaRecordsTable.map((html) => {
-    
-    let savedObjsWithRowspan;
-    const cells = html.querySelectorAll("tr")
-      .filter((row,ix) => ix > 0)
-      .map(row => { 
-        //--- Expected table headers---
-        // Res	Record	Opponent	Method	Event	Date	Round	Time	Location	Notes
+  })[0] //Assume the UFC record is the first one. Avoid exhibiition/amatuer/wrestling records like on https://en.wikipedia.org/wiki/Tatiana_Suarez
 
-        /*Note: it's possible to have two fights in the same night.
-        Example: https://en.wikipedia.org/wiki/Francis_Ngannou
-        Row1 will have more td:s than Row2, and some of them will be <td rowspan="2"> 
-        */
-        const tds = [...row.querySelectorAll("td")];
-        const someTdsSpanMultipleRows = tds.find(x => x.getAttribute("rowspan"));
-        if (someTdsSpanMultipleRows) {
-          savedObjsWithRowspan = tds
-            .map((td, index) => { const rowspan = td.getAttribute("rowspan"); return {index,td,rowspan} })
-            .filter(x => x.rowspan)
-        }
-        
-        if (tds.length < 10) {
-          const missingTdsCount = 10 - tds.length;
-          console.log(`Low amount of wikipediaTable cells (${tds.length}) for ${fighterName}`);
-          if (savedObjsWithRowspan && savedObjsWithRowspan.length === missingTdsCount ) {
-            console.log("Replacing the missing tds with previous ones that have rowspan attributes");
-            tds.splice(savedObjsWithRowspan[0].index, savedObjsWithRowspan.length, ...savedObjsWithRowspan.map(x => x.td));
-          }
-        }
-        const fight = {
-          result: tds[0],
-          record: tds[1],
-          opponentName: tds[2],
-          method: tds[3],
-          event: tds[4],
-          date: tds[5],
-          round: tds[6],
-          time: tds[7],
-          location: tds[8],
-          notes: tds[9],
-        };
-       
-        Object.keys(fight).forEach(function(key){ 
-          if (!fight || !fight[key]) {
-            return "";
-          }
-          if (fight[key].innerText) fight[key] = fight[key].innerText.replace("\n", "");
-        });
-        const dateStrings = fight.date.split("(")[0].split(" ");
-        fight.year = dateStrings[dateStrings.length-1];
-        return fight;
-      });
-      return cells;
-  });
+  mmaRecordsTable = mapRecordsTableToJson(mmaRecordsTable, fighterName);
 
   // const recordBreakdownTable = htmlNode.querySelectorAll("table").filter(x => {
   //   const row = x.querySelector("tr");
@@ -68,7 +16,67 @@ module.exports.parseWikipediaFightRecordTableToJson = function (htmlNode, fighte
   return mmaRecordsTable;
 }
 
-module.exports.parseWikipediaFutureEventsToJson = function(html) {
+function mapRecordsTableToJson(html, fighterName) {
+  let savedObjsWithRowspan;
+  const cells = html.querySelectorAll("tr")
+    .filter((row, ix) => ix > 0)
+    .map(row => {
+      //--- Expected table headers---
+      // Res	Record	Opponent	Method	Event	Date	Round	Time	Location	Notes
+
+      /*Note: it's possible to have two fights in the same night.
+      Example: https://en.wikipedia.org/wiki/Francis_Ngannou
+      Row1 will have more td:s than Row2, and some of them will be <td rowspan="2"> 
+      */
+      const tds = [...row.querySelectorAll("td")];
+      const someTdsSpanMultipleRows = tds.find(x => x.getAttribute("rowspan"));
+      if (someTdsSpanMultipleRows) {
+        savedObjsWithRowspan = tds
+          .map((td, index) => { const rowspan = td.getAttribute("rowspan"); return { index, td, rowspan } })
+          .filter(x => x.rowspan)
+      }
+
+      if (tds.length < 10) {
+        const missingTdsCount = 10 - tds.length;
+        console.log(`Low amount of wikipediaTable cells (${tds.length}) for ${fighterName}`);
+        if (savedObjsWithRowspan && savedObjsWithRowspan.length === missingTdsCount) {
+          console.log("Replacing the missing tds with previous ones that have rowspan attributes");
+          tds.splice(savedObjsWithRowspan[0].index, savedObjsWithRowspan.length, ...savedObjsWithRowspan.map(x => x.td));
+        }
+      }
+      const fight = {
+        result: tds[0],
+        record: tds[1],
+        opponentName: tds[2],
+        method: tds[3],
+        event: tds[4],
+        date: tds[5],
+        round: tds[6],
+        time: tds[7],
+        location: tds[8],
+        notes: tds[9],
+      };
+
+      Object.keys(fight).forEach(function (key) {
+        if (!fight || !fight[key]) {
+          return "";
+        }
+        if (fight[key].innerText) fight[key] = fight[key].innerText.replace("\n", "");
+      });
+      try {
+        const dateStrings = fight.date.split("(")[0].split(" ");
+        fight.year = dateStrings[dateStrings.length - 1];
+      } catch (ex) {
+        console.error(`Exception when dateParsing for ${fighterName}`);
+        fight.year = null;
+      }
+
+      return fight;
+    });
+  return cells;
+}
+
+module.exports.parseWikipediaFutureEventsToJson = function (html) {
   const root = HTMLParser.parse(html);
   let tableEl = root.querySelector("table#Scheduled_events");
   const tdIndexList = {
@@ -81,7 +89,7 @@ module.exports.parseWikipediaFutureEventsToJson = function(html) {
   return mapTableToJson(tableEl, tdIndexList);
 }
 
-module.exports.parseWikipediaPastEventsToJson = function(html) {
+module.exports.parseWikipediaPastEventsToJson = function (html) {
   const root = HTMLParser.parse(html);
   let tableEl = root.querySelector("table#Past_events");
   const tdIndexList = {
@@ -103,12 +111,12 @@ function mapTableToJson(table, tdIndexList) {
   let prevVenue, prevLocation;
   const cells = Array.from(table.querySelectorAll("tr"))
     .filter((row, ix) => ix > 0)
-    .map(row => { 
+    .map(row => {
       const td = row.querySelectorAll("td");
 
       if (td[tdIndexList.venue]) prevVenue = td[tdIndexList.venue].innerText;
       if (td[tdIndexList.location]) prevLocation = td[tdIndexList.location].innerText;
-      
+
       const item = {
         eventName: td[0].innerText,
         url: 'https://en.wikipedia.org' + td[tdIndexList.eventLink].querySelector("a").getAttribute("href"),
@@ -116,7 +124,7 @@ function mapTableToJson(table, tdIndexList) {
         venue: td[tdIndexList.venue] ? td[tdIndexList.venue].innerText : prevVenue,
         location: td[tdIndexList.location] ? td[tdIndexList.location].innerText : prevLocation
       };
-      
+
       Object.keys(item).forEach((key) => {
         if (item[key]) item[key] = item[key].replace("\n", "");//trim crap
       });
@@ -127,7 +135,7 @@ function mapTableToJson(table, tdIndexList) {
   return cells;
 }
 
-module.exports.parseSingleEventHtmlToJson = function(html, eventObj) {
+module.exports.parseSingleEventHtmlToJson = function (html, eventObj) {
   const root = HTMLParser.parse(html);
   let table = root.querySelector(".toccolours");
   const fighters = [];
@@ -147,7 +155,7 @@ module.exports.parseSingleEventHtmlToJson = function(html, eventObj) {
       fightRows.forEach((row, rowIx) => {
         const anchors = [...row.childNodes].filter(x => x.tagName === "A");
         if (anchors.length === 2) {
-          const fighterPair = anchors.map(anchor => { 
+          const fighterPair = anchors.map(anchor => {
             return { name: anchor.innerText.trim(), url: anchor.getAttribute("href") };
           });
           fighters.push(...fighterPair);
@@ -156,13 +164,13 @@ module.exports.parseSingleEventHtmlToJson = function(html, eventObj) {
         }
       });
     }
-    
+
     return fighters;
   }
   const tableRows = Array.from(table.querySelectorAll("tr"));
   tableRows
-    .filter((row,ix) => ix > 0 && row.querySelectorAll("a").length > 0)
-    .forEach(row => { 
+    .filter((row, ix) => ix > 0 && row.querySelectorAll("a").length > 0)
+    .forEach(row => {
       const td = row.querySelectorAll("td");
       const fighter1 = {
         name: td[1].innerText.trim(),

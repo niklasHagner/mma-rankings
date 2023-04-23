@@ -321,11 +321,10 @@ function parseInfoBoxHtml(root, wikiPageUrl) {
       // console.log("Modified prop ->", propName, ":", value);
     }
   });
-  var recordTables = parseWikipediaFightRecordTableToJson(root, fighterInfo.name);
-  var record = recordTables[0];
+  var record = parseWikipediaFightRecordTableToJson(root, fighterInfo.name);
   var returnObj = {
     fighterInfo,
-    record: record,
+    record,
     recordString: "" //TODO
     // recordString: record.map((recordRow) => {
     //   var val = Object.keys(recordRow).map(key => fight[key]);
@@ -394,9 +393,12 @@ async function scrapeFighterData(wikiPageUrl, findImages=true) {
       response = await axios.get(wikiPageUrl);
     } catch(error) {
       console.log(`Error scraping ${wikiPageUrl}. Error:${error}`); 
-      reject("scraping error");
+      return reject("scraping error");
     }
-    if (response.status !== 200) { console.log(`Error scraping ${wikiPageUrl}. Status: ${response.status}`); reject("scraping error"); }
+    if (response.status !== 200) { 
+      console.log(`Error scraping ${wikiPageUrl}. Status: ${response.status}`); 
+      return reject("scraping error"); 
+    }
     const html = await response.data;
     const root = HTMLParser.parse(html);
     removeUnwantedTagsFromHtmlNode(root);
@@ -406,7 +408,7 @@ async function scrapeFighterData(wikiPageUrl, findImages=true) {
     }
     const fighterObj = parseInfoBoxHtml(root, wikiPageUrl);
     if (!fighterObj) { 
-      reject(`parseInfoBoxHtml failed for ${wikiPageUrl}`); 
+      return reject(`parseInfoBoxHtml failed for ${wikiPageUrl}`); 
     }
 
     console.log(`Successfully scraped ${wikiPageUrl}`);
