@@ -20,6 +20,11 @@ function mapRecordsTableToJson(html, fighterName) {
   let savedObjsWithRowspan;
   const cells = html.querySelectorAll("tr")
     .filter((row, ix) => ix > 0)
+    .filter((row) => {
+        //to avoid tables where the last row is 'Source' like https://en.wikipedia.org/wiki/Kron_Gracie we'll filter out rows that have less than 4 tds
+        const tds = [...row.querySelectorAll("td")];
+        return tds.length >= 4;
+    })
     .map(row => {
       //--- Expected table headers---
       // Res	Record	Opponent	Method	Event	Date	Round	Time	Location	Notes
