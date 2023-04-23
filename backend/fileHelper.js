@@ -65,7 +65,12 @@ async function getAllFightersFromFiles() {
 async function updateListOfFighterFiles() {
   const newList = [];
   fs.readdirSync("data/fighters").forEach(fileName => {
-    const fighter = JSON.parse(fs.readFileSync("data/fighters/"+fileName));
+    let fighter;
+    try {
+        fighter = JSON.parse(fs.readFileSync("data/fighters/"+fileName));
+    } catch(e) {
+        console.error("error parsing json:", fileName);
+    }
     const newListItem = { 
       fileName, 
       wikipediaNameWithDiacritics: fighter.fighterInfo.name,
