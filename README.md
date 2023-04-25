@@ -57,6 +57,9 @@ This project generates a json-file of the top15 rankings for every UFC division 
 * `npm run scrapeLatestRankings` - scrapes mmastats.com for all the dates we don't already have in `/data/mmaStats.json`
 * `npm run scrapeListOfFighters` - before running, edit this file by adding fighters to the inputArray
 
+## Maintenance
+* If a fighter name doesn't match between wikipedia and mma-stats.com, add "mmaStatsName:"X" to `allFighters.json` and their json file in the data folder
+
 ## Project history
 
 1. Scrape historical rankings from ufc.com via internetArchive, and scrape fighter profiles from sherdog.com
