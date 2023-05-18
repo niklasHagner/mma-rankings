@@ -67,6 +67,7 @@ This project generates a json-file of the top15 rankings for every UFC division 
 3. Change Scraper from cheerio to JsDOM
 4. Sherdog.com started hiding content, switch to Wikipedia via `wikijs` for fighter profiles
 5. Stop using `wikijs` due to API limits and lacking support for wikipedia-tables
+6. mma-stats.com stopped updating rankings, get latest rankings from Wikipedia
 
 ## Known issues
 * For a regular UFC event, Wikipedia has a table of fights. For an upcoming minor events sometimes it's just a bullet list - this repo doesn't even attempt to parse that list as it's not structured enough.
