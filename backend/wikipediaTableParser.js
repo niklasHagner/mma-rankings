@@ -167,7 +167,8 @@ module.exports.parseSingleEventHtmlToJson = function (html, eventObj) {
         const anchors = [...row.childNodes].filter(x => x.tagName === "A");
         if (anchors.length === 2) {
           const fighterPair = anchors.map(anchor => {
-            return { name: anchor.innerText.trim(), url: anchor.getAttribute("href") };
+            //Remove parens and whitespace like: "Aljamain Sterling (c)"
+            return { name: anchor.innerText.replace("(c)", "").trim(), url: anchor.getAttribute("href") };
           });
           fighters.push(...fighterPair);
         } else {
