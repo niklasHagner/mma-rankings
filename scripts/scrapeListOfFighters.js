@@ -53,13 +53,14 @@ async function scrapeListOfFighters(inputFighters) {
 }
 
 inputFighters = [
-  { url: '/wiki/Mike_Perry_(fighter)' },
-  { url: '/wiki/Joanna_Jędrzejczyk' },
-  { url: '/wiki/Antônio_Rogério_Nogueira' },
-  { url: '/wiki/David_Branch_(fighter)' },
-  { url: '/wiki/Donald_Cerrone' },
-  { url: '/wiki/Eddie_Alvarez' },
-  { url: '/wiki/Anthony_Pettis' },
+  { url: '/wiki/Gilbert_Melendez' },
+  { url: '/wiki/Ricardo_Lamas' },
+  { url: '/wiki/Azamat_Murzakanov' },
+  { url: '/wiki/Jeremy_Stephens' },
+  { url: '/wiki/John_Lineker' },
+  { url: '/wiki/Ronda_Rousey' },
+  { url: '/wiki/Liz_Carmouche' },
+
 
 
   // { name: 'Zhalgas Zhumagulov', url: '/wiki/Zhalgas_Zhumagulov' },

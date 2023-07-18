@@ -79,6 +79,9 @@ async function updateListOfFighterFiles() {
     if (fighter?.fighterInfo?.mmaStatsName) {
       newListItem.mmaStatsName = fighter?.fighterInfo?.mmaStatsName;
     }
+    if (fighter?.fighterInfo?.alternativeName) {
+      newListItem.alternativeName = fighter?.fighterInfo?.alternativeName;
+    }
     newList.push(newListItem);
   });
 

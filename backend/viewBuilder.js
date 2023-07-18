@@ -91,7 +91,7 @@ const divisionToHtml = function (division) {
     if (fighter.rank.toLowerCase().indexOf("champion") > -1)
       fighter.rank = "C";
 
-    const fighterNameElement = getFighterNameOrLinkHtml(fighter.name, fighter.mmaStatsName, "divisionToHtml");
+    const fighterNameElement = getFighterNameOrLinkHtml(fighter.name, fighter.mmaStatsName, fighter.alternativeName, "divisionToHtml");
     return `
       <div>
         <span class="rank">${fighter.rank}</span> ${fighterNameElement}
@@ -106,21 +106,31 @@ const divisionToHtml = function (division) {
   `;
 };
 
-function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, callee = null) {
-  if (!fighterName && !mmaStatsName) {
+/*
+Typically this is just called with argument `fighterName` equal to whatever is being rendered, and the job of this function is to map that to one of many possible props.
+
+Example: fighterName:'Korean Zombie' is  alternativeName:'Jung Chan-sung'
+
+*/
+function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeName = null, callee = null) {
+  if (!fighterName && !mmaStatsName && !alternativeName) {
     return "???";
   }
 
   let fighterFileMatch;
   fighterFileMatch = global.fightersWithProfileLinks.find(x =>
+    x?.alternativeName?.toLowerCase() === fighterName?.toLowerCase() ||
     x?.wikipediaNameWithDiacritics?.toLowerCase() === fighterName.toLowerCase()
     || x?.fighterAnsiName?.toLowerCase() === fighterName.toLowerCase()
   );
   if (!fighterFileMatch) {
-    const nameToFind = mmaStatsName?.toLowerCase() || fighterName?.toLowerCase();
-    fighterFileMatch = global.fightersWithProfileLinks.find(x =>
-      x?.mmaStatsName?.toLowerCase() === nameToFind
-    );
+      if (alternativeName?.toLowerCase()) {
+        fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.alternativeName?.toLowerCase() === alternativeName?.toLowerCase());
+      }
+      else {
+        const nameToFind =  mmaStatsName?.toLowerCase() || fighterName?.toLowerCase();
+        fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.mmaStatsName?.toLowerCase() === nameToFind);
+      }
   } 
   if (!fighterFileMatch) {
     console.log("no fighterfile found", fighterName);
@@ -156,6 +166,7 @@ async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
   if (config.SAVE_JSON_TO_FILE) {
     const previouslySavedFighter = fileHelper.readFileByFighterObj(fighter);
     fighter.mmaStatsName = previouslySavedFighter?.mmaStatsName;
+    fighter.alternativeName = previouslySavedFighter?.alternativeName;
 
     console.log("Saving to file", fighter.fighterInfo.name);
     const fighterToSave = { ...fighter };
