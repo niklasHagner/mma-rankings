@@ -54,7 +54,7 @@ This project generates a json-file of the top15 rankings for every UFC division 
 * `/fighter/:shortFileName` - render a profile page for a single fighter based off data in `data/fighter/*.json` - Example: `/fighter/Jan_B%C5%82achowicz`
 
 ## Scripts
-* `npm run scrapeLatestRankings` - scrapes mmastats.com for all the dates we don't already have in `/data/mmaStats.json`
+* `npm run scrapeLatestRankings` - scrapes rankings from wikipedia and saves to `/data/mmaStats.json`
 * `npm run scrapeListOfFighters` - before running, edit this file by adding fighters to the inputArray
 
 ## Maintenance

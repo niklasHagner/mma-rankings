@@ -1,27 +1,4 @@
-const fs = require('fs');
-const moment = require("moment");
-const getMmaStatsUrl = (date) => `http://www.mma-stats.com/rankings/${date}`;
 const jsdom = require('jsdom');
-const { uniqueBy } = require("./arrHelper");
-
-function saveToFile(newArrayOfDates) {
-  const fileName = "data/mmaStats.json";
-  let rawdata = fs.readFileSync(fileName);
-  let data = JSON.parse(rawdata);
-  if (data && data.dates) {
-    console.log("Reading", fileName, "\nIt contains", data.dates.length);
-  }
-
-  const concatted = data.dates.concat(newArrayOfDates);
-  const sorted = concatted.sort((a,b) => new Date(b.date) - new Date(a.date));
-  const unique = uniqueBy(sorted, "date");
-  data.dates = unique;
-  const dateLogText = data.dates.map(x => x.date).join(", ");
-  console.log("File now contains", data.dates.length, "dates:", dateLogText);
-  fs.writeFileSync(fileName, JSON.stringify(data));
-  console.log (`File ${fileName} updated successfully`);
-  return { scrapedUrlCount: newArrayOfDates.length };
-}
 
 async function scrapeRankings() {
   const url = "https://en.wikipedia.org/wiki/UFC_Rankings";
@@ -97,11 +74,13 @@ async function scrapeRankings() {
       };
       divisions = [unifiedp4pDivision, ...divisions ];
 
-      const paragraphWithDate = [...document.querySelectorAll("p")].find(x => x.textContent.indexOf("Rankings updated on") === 0); //Rankings updated on May 16, 2023, after 
-      const selectedDate = paragraphWithDate.textContent.split(",")[0].replace("Rankings updated on", "");
+      const paragraphWithDate = [...document.querySelectorAll("p")].find(x => x.textContent.indexOf("Rankings updated on") === 0); //Since march 2023 mma-stats.com/rankings stopped updating
+      const selectedDate = paragraphWithDate.textContent.split(", after")[0]
+        .replace("Rankings updated on", "")
+        .replace(", after", "");
   
       const json = {
-        date: selectedDate,
+        date: selectedDate.trim(),
         divisions
       }
   
@@ -109,7 +88,6 @@ async function scrapeRankings() {
       resolve(json);
     });
   })
- 
 }
 
 function mapRankStringToSortableNumber(rankStr) {
