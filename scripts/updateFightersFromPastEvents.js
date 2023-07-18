@@ -32,7 +32,7 @@ async function scrapeListOfFighters() {
 //     ]
 //   }
 
-  const pastEventObj = await wikipediaApi.getNamesAndUrlsOfFightersInPastEvent("2023-07-02", "2023-07-02");
+  const pastEventObj = await wikipediaApi.getNamesAndUrlsOfFightersInPastEvent("2023-07-03", "2023-07-18");
   const allEvents = pastEventObj.allEvents;
   let inputFighters = allEvents.map(event => event.fighters).flat().filter(x => x.url);
   inputFighters = uniqueBy(inputFighters, "url");

@@ -8,47 +8,112 @@ const viewBuilder = require('../backend/viewBuilder.js');
 global.fightersWithProfileLinks = JSON.parse(fs.readFileSync("data/allFighters.json"));
 global.rankData = JSON.parse(fs.readFileSync("data/mmaStats.json"));
 
+/*Problematic*/
+// { name: 'Austen Lane', url: '/wiki/Austen_Lane' },
+
+
 async function scrapeListOfFighters(inputFighters) {
   config.SAVE_JSON_TO_FILE = true;
   //Example input: [{ url: "wiki/Leon_Edwards" }, { url: "wiki/Jan_B%C5%82achowicz"} ]
   //Note: avoid running this on a huge array to avoid scraper blockers
-  inputFighters = [
+
+  //---Problematic fighters---
+  // "/wiki/Tatiana_Suarez",
+  // Low amount of wikipediaTable cells (9) for Raoni Barcelos
+
+  //Failed
+  // {
+  //     name: "Umar Nurmagomedov",
+  //     url: "/wiki/Umar_Nurmagomedov",
+  //   },
+    
+  //   {
+  //     name: "Raquel Pennington",
+  //     url: "/wiki/Raquel_Pennington",
+  //   },
+
+
+  // error parsing
+  // {
+  //     name: "Chidi Njokuani",
+  //     url: "/wiki/Chidi_Njokuani",
+  //   },
+
+  console.log("scrapeListOfFighters", inputFighters);
+
+
+  const readExistingFromFile = false;
+  const allowFetchingMissingFighters = true;
+  const fetchImages = false;
+  const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, readExistingFromFile, allowFetchingMissingFighters, fetchImages);
+  const fighters = await Promise.all(fighterBasicData.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData)));
+  fileHelper.updateListOfFighterFiles();
+  console.log("done");
+  return;
+}
+
+inputFighters = [
+  // { name: 'Gillian Robertson', url: '/wiki/Gillian_Robertson' },
+  // { name: 'Zhalgas Zhumagulov', url: '/wiki/Zhalgas_Zhumagulov' },
+  // { name: 'Cody Brundage', url: '/wiki/Cody_Brundage' },
+  // { name: 'Pat Sabatini', url: '/wiki/Pat_Sabatini' },
+  // { name: 'Nicolas Dalby', url: '/wiki/Nicolas_Dalby' },
+  // { name: 'Kang Kyung-ho', url: '/wiki/Kang_Kyung-ho' },
+  // { name: 'Modestas Bukauskas', url: '/wiki/Modestas_Bukauskas' },
+  // { name: 'Mike Malott', url: '/wiki/Mike_Malott' },
+  // {
+  //   name: 'Marc-André Barriault',
+  //   url: '/wiki/Marc-Andr%C3%A9_Barriault'
+  // },
+  // { name: 'Nassourdine Imavov', url: '/wiki/Nassourdine_Imavov' },
+  // { name: 'Aori Qileng', url: '/wiki/Aori_Qileng' },
+  // { name: 'Kyle Nelson', url: '/wiki/Kyle_Nelson_(fighter)' },
+  // { name: 'David Dvořák', url: '/wiki/David_Dvo%C5%99%C3%A1k' },
+  // { name: 'Diana Belbiţă', url: '/wiki/Diana_Belbi%C5%A3%C4%83' },
+  // { name: 'Amir Albazi', url: '/wiki/Amir_Albazi' },
+  // { name: 'Daniel Pineda', url: '/wiki/Daniel_Pineda_(fighter)' },
+  // { name: 'Ketlen Souza', url: '/wiki/Ketlen_Souza' },
+  // {
+  //   name: 'Elizeu Zaleski dos Santos',
+  //   url: '/wiki/Elizeu_Zaleski_dos_Santos'
+  // },
+  // { name: 'Abubakar Nurmagomedov', url: '/wiki/Abubakar_Nurmagomedov' },
+  // { name: 'Johnny Muñoz Jr.', url: '/wiki/Johnny_Mu%C3%B1oz_Jr.' },
+  // { name: "Don'Tale Mayes", url: '/wiki/Don%27Tale_Mayes' },
+  // { name: 'Andrei Arlovski', url: '/wiki/Andrei_Arlovski' },
+  // { name: 'John Castañeda', url: '/wiki/John_Casta%C3%B1eda' },
+  // { name: 'Jamie Mullarkey', url: '/wiki/Jamie_Mullarkey' },
+  // { name: 'Elise Reed', url: '/wiki/Elise_Reed' },
+  // { name: 'Jinh Yu Frey', url: '/wiki/Jinh_Yu_Frey' },
+  // { name: 'Maxim Grishin', url: '/wiki/Maxim_Grishin' },
+  // { name: 'Lupita Godinez', url: '/wiki/Lupita_Godinez' },
+  // { name: 'Emily Ducote', url: '/wiki/Emily_Ducote' },
+  // { name: 'Vanessa Demopoulos', url: '/wiki/Vanessa_Demopoulos' },
+  // { name: 'Rodrigo Nascimento', url: '/wiki/Rodrigo_Nascimento' },
+  // { name: 'Chase Hooper', url: '/wiki/Chase_Hooper' },
+  // { name: 'Victoria Leonardo', url: '/wiki/Victoria_Leonardo' },
+  // { name: 'Takashi Sato', url: '/wiki/Takashi_Sato' }
+
+//   { name: 'Jessica-Rose Clark', url: '/wiki/Jessica-Rose_Clark' },
+//   { name: 'Yan Xiaonan', url: '/wiki/Yan_Xiaonan' },
+//   { name: 'Movsar Evloev', url: '/wiki/Movsar_Evloev' },
+//   { name: 'Matt Frevola', url: '/wiki/Matt_Frevola' },
+//   { name: 'Kennedy Nzechukwu', url: '/wiki/Kennedy_Nzechukwu' },
+//   { name: 'Khaos Williams', url: '/wiki/Khaos_Williams' },
+//   { name: 'Virna Jandiroba', url: '/wiki/Virna_Jandiroba' },
+//   { name: 'Marina Rodriguez', url: '/wiki/Marina_Rodriguez' },
+//   { name: 'Parker Porter', url: '/wiki/Parker_Porter' },
+//   { name: 'Phil Hawes', url: '/wiki/Phil_Hawes' },
+//   { name: 'Cody Brundage', url: '/wiki/Cody_Brundage' },
+//   { name: 'Julian Erosa', url: '/wiki/Julian_Erosa' },
 //   {
-//     name: "Daniel Pineda",
-//     url: "/wiki/Daniel_Pineda_(fighter)",
+//     name: 'Marcos Rogério de Lima',
+//     url: '/wiki/Marcos_Rog%C3%A9rio_de_Lima'
 //   },
-//   {
-//     name: "Steven Peterson",
-//     url: "/wiki/Steven_Peterson",
-//   },
-//   {
-//     name: "Trevin Giles",
-//     url: "/wiki/Trevin_Giles",
-//   },
-//   {
-//     name: "C.J. Vergara",
-//     url: "/wiki/C.J._Vergara",
-//   },
-//   {
-//     name: "Casey O'Neill",
-//     url: "/wiki/Casey_O%27Neill",
-//   },
-//   {
-//     name: "Roman Dolidze",
-//     url: "/wiki/Roman_Dolidze",
-//   },
-//   {
-//     name: "Jack Shore",
-//     url: "/wiki/Jack_Shore",
-//   },
-//   {
-//     name: "Makwan Amirkhani",
-//     url: "/wiki/Makwan_Amirkhani",
-//   },
-//   {
-//     name: "Omar Morales",
-//     url: "/wiki/Omar_Morales_(fighter)",
-//   },
+//   { name: 'Jake Collier', url: '/wiki/Jake_Collier' },
+//   { name: 'Cody Durden', url: '/wiki/Cody_Durden' },
+//   { name: 'Stephanie Egger', url: '/wiki/Stephanie_Egger' },
+//   { name: 'Journey Newson', url: '/wiki/Journey_Newson' }
 //   {
 //     name: "Lerone Murphy",
 //     url: "/wiki/Lerone_Murphy",
@@ -126,10 +191,6 @@ async function scrapeListOfFighters(inputFighters) {
 //     name: "Don'Tale Mayes",
 //     url: "/wiki/Don%27Tale_Mayes",
 //   },
-  {
-    name: "Tatiana Suarez",
-    url: "/wiki/Tatiana_Suarez",
-  },
 //   {
 //     name: "Montana De La Rosa",
 //     url: "/wiki/Montana_De_La_Rosa",
@@ -150,11 +211,6 @@ async function scrapeListOfFighters(inputFighters) {
 //     name: "Erin Blanchfield",
 //     url: "/wiki/Erin_Blanchfield",
 //   },
-
-  {
-    name: "Jordan Wright",
-    url: "/wiki/Jordan_Wright",
-  },
 //   {
 //     name: "Josh Parisian",
 //     url: "/wiki/Josh_Parisian",
@@ -175,18 +231,10 @@ async function scrapeListOfFighters(inputFighters) {
 //     name: "Mayra Bueno Silva",
 //     url: "/wiki/Mayra_Bueno_Silva",
 //   },
-  {
-    name: "Lina Länsberg",
-    url: "/wiki/Lina_L%C3%A4nsberg",
-  },
 //   {
 //     name: "Jamall Emmers",
 //     url: "/wiki/Jamall_Emmers",
 //   },
-  {
-    name: "Philipe Lins",
-    url: "/wiki/Philipe_Lins",
-  },
 //   {
 //     name: "Jack Della Maddalena",
 //     url: "/wiki/Jack_Della_Maddalena",
@@ -301,41 +349,26 @@ async function scrapeListOfFighters(inputFighters) {
 //     url: "/wiki/Roman_Kopylov",
 //   },
 
-  ];
-
-//---Problematic fighters---
-// "/wiki/Tatiana_Suarez",
-// Low amount of wikipediaTable cells (9) for Raoni Barcelos
-
-//Failed
-// {
-//     name: "Umar Nurmagomedov",
-//     url: "/wiki/Umar_Nurmagomedov",
-//   },
-  
-//   {
-//     name: "Raquel Pennington",
-//     url: "/wiki/Raquel_Pennington",
-//   },
+];
 
 
-// error parsing
-// {
-//     name: "Chidi Njokuani",
-//     url: "/wiki/Chidi_Njokuani",
-//   },
-
-  console.log("scrapeListOfFighters", inputFighters);
-
-
-  const readExistingFromFile = false;
-  const allowFetchingMissingFighters = true;
-  const fetchImages = false;
-  const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, readExistingFromFile, allowFetchingMissingFighters, fetchImages);
-  const fighters = await Promise.all(fighterBasicData.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData)));
-  fileHelper.updateListOfFighterFiles();
-  console.log("done");
-  return;
+async function scrapeAndWait() {
+  let minutes = 1;
+  for (let i = 0; i < inputFighters.length; i++) {
+    await scrapeListOfFighters(inputFighters);
+    minutes += minutes * 1.5;
+    console.log(`Iteration complete, waiting for ${minutes} minutes`);
+    await wait(1*1000*60* minutes);
+  }
+  console.log("scrapeAndWait done");
 }
 
-scrapeListOfFighters();
+function wait(ms) {
+  return new Promise((resolve,reject) => {
+    setTimeout(() => {
+      resolve();
+    }, ms)
+  });
+}
+
+scrapeAndWait();

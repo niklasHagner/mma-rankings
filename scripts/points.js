@@ -30,7 +30,8 @@ async function generatePoints() {
   const fighters = await Promise.all(fighterBasicData.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData)));
   const allResultObjs = [];
   fighters.forEach(fighter => {
-    const resultObj = { name: fighter.fighterInfo.name, draws:[], wins: [], losses: [], points: { wins: 0, losses:0, draws: 0} }
+    const resultObj = { name: fighter.fighterInfo.name, draws:[], wins: [], losses: [], points: { wins: 0, losses:0, draws: 0}, fightsSince2019: 0 }
+    
     fighter.record.forEach(fight => {
       const opponentRank = !fight.opponentInfoAtTheTime?.wasInTheFuture && !fight.opponentInfoAtTheTime?.wasInThePast ? fight.opponentInfoAtTheTime?.fighter?.rank : null;
       const points = pointsPerRank[opponentRank] || 0;
@@ -41,6 +42,12 @@ async function generatePoints() {
       } else if (fight.result === "Draw") {
         resultObj.draws.push(points);
       }
+
+
+        //Fights since 2019
+        if (Number(fight.year) > 2018 ) {
+            resultObj.fightsSince2019++;
+        }
     });
     resultObj.points.wins = resultObj.wins.length < 1 ? 0 : resultObj.wins.reduce((total,curr) => total+curr);
     resultObj.points.losses = resultObj.losses.length < 1 ? 0 : resultObj.losses.reduce((total,curr) => total+curr);
@@ -53,6 +60,10 @@ async function generatePoints() {
   const pointPerName = allResultObjs.map(x => `${x.name}: ${x.points.wins}`);
   fs.writeFileSync("data/points.txt", pointPerName.join("\n"));
   fs.writeFileSync("data/points.json", JSON.stringify(allResultObjs));
+
+  const fightsSince2019PerName = allResultObjs.sort((a,b) => b.fightsSince2019 - a.fightsSince2019).map(x => `${x.name}: ${x.fightsSince2019}`);
+  fs.writeFileSync("data/fightsSince2019.txt", fightsSince2019PerName.join("\n"));
+
   return;
 }
 
