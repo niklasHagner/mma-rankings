@@ -53,27 +53,6 @@ async function scrapeListOfFighters(inputFighters) {
 }
 
 inputFighters = [
-  { url: '/wiki/Gilbert_Melendez' },
-  { url: '/wiki/Ricardo_Lamas' },
-  { url: '/wiki/Azamat_Murzakanov' },
-  { url: '/wiki/Jeremy_Stephens' },
-  { url: '/wiki/John_Lineker' },
-  { url: '/wiki/Ronda_Rousey' },
-  { url: '/wiki/Liz_Carmouche' },
-
-
-
-  // { name: 'Zhalgas Zhumagulov', url: '/wiki/Zhalgas_Zhumagulov' },
-  // { name: 'Kang Kyung-ho', url: '/wiki/Kang_Kyung-ho' },
-  // { name: 'Modestas Bukauskas', url: '/wiki/Modestas_Bukauskas' },
-  // { name: 'Mike Malott', url: '/wiki/Mike_Malott' },
-  // {
-  //   name: 'Marc-André Barriault',
-  //   url: '/wiki/Marc-Andr%C3%A9_Barriault'
-  // },
-  // { name: 'Nassourdine Imavov', url: '/wiki/Nassourdine_Imavov' },
-  // { name: 'Aori Qileng', url: '/wiki/Aori_Qileng' },
-  // { name: 'Kyle Nelson', url: '/wiki/Kyle_Nelson_(fighter)' },
   // { name: 'David Dvořák', url: '/wiki/David_Dvo%C5%99%C3%A1k' },
   // { name: 'Diana Belbiţă', url: '/wiki/Diana_Belbi%C5%A3%C4%83' },
   // { name: 'Amir Albazi', url: '/wiki/Amir_Albazi' },
@@ -360,11 +339,16 @@ inputFighters = [
 
 async function scrapeAndWait() {
   let minutes = 1;
-  for (let i = 0; i < inputFighters.length; i++) {
-    await scrapeListOfFighters(inputFighters);
+  const clonedInputFighters = [...inputFighters];
+  for (let i = 0; i < clonedInputFighters.length; i++) {
+    const fewItems = clonedInputFighters.splice(0,10);
+    await scrapeListOfFighters(fewItems);
     minutes += minutes * 1.5;
-    console.log(`Iteration complete, waiting for ${minutes} minutes`);
-    await wait(1*1000*60* minutes);
+
+    if (clonedInputFighters.length > 0) {
+      console.log(`Iteration complete, waiting for ${minutes} minutes`);
+      await wait(1*1000*60* minutes);
+    }
   }
   console.log("scrapeAndWait done");
 }
