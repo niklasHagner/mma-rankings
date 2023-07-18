@@ -53,11 +53,16 @@ async function scrapeListOfFighters(inputFighters) {
 }
 
 inputFighters = [
-  // { name: 'Gillian Robertson', url: '/wiki/Gillian_Robertson' },
+  { url: '/wiki/Mike_Perry_(fighter)' },
+  { url: '/wiki/Joanna_Jędrzejczyk' },
+  { url: '/wiki/Antônio_Rogério_Nogueira' },
+  { url: '/wiki/David_Branch_(fighter)' },
+  { url: '/wiki/Donald_Cerrone' },
+  { url: '/wiki/Eddie_Alvarez' },
+  { url: '/wiki/Anthony_Pettis' },
+
+
   // { name: 'Zhalgas Zhumagulov', url: '/wiki/Zhalgas_Zhumagulov' },
-  // { name: 'Cody Brundage', url: '/wiki/Cody_Brundage' },
-  // { name: 'Pat Sabatini', url: '/wiki/Pat_Sabatini' },
-  // { name: 'Nicolas Dalby', url: '/wiki/Nicolas_Dalby' },
   // { name: 'Kang Kyung-ho', url: '/wiki/Kang_Kyung-ho' },
   // { name: 'Modestas Bukauskas', url: '/wiki/Modestas_Bukauskas' },
   // { name: 'Mike Malott', url: '/wiki/Mike_Malott' },
