@@ -173,7 +173,8 @@ async function fetchArrayOfFighters(arrayOfNamesAndUrls, readExistingFromFile=tr
   });
 
   const allFighters = [];
-  const promiseValues = await Promise.all(promises);
+  const promiseResponses = await Promise.allSettled(promises);
+  const promiseValues = promiseResponses.filter(x => x.status === "fulfilled").map(x => x.value);
   promiseValues.forEach((fighter) => {
     allFighters.push(fighter);
   });
@@ -392,11 +393,11 @@ async function scrapeFighterData(wikiPageUrl, findImages=true) {
       console.log(`Start scraping ${wikiPageUrl}`);
       response = await axios.get(wikiPageUrl);
     } catch(error) {
-      console.log(`Error scraping ${wikiPageUrl}. Error:${error}`); 
+      console.log(`❌ Error scraping ${wikiPageUrl}. Error:${error}`); 
       return reject("scraping error");
     }
     if (response.status !== 200) { 
-      console.log(`Error scraping ${wikiPageUrl}. Status: ${response.status}`); 
+      console.log(`❌ Error scraping ${wikiPageUrl}. Status: ${response.status}`); 
       return reject("scraping error"); 
     }
     const html = await response.data;

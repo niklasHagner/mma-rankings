@@ -32,7 +32,7 @@ function getFileNameByFighterObj(fighter) {
 }
 
 async function saveFighter(incomingFighter) {
-  const fighter = {...incomingFighter};
+  const fighter = { ...incomingFighter };
   const fileName = getFileNameByFighterObj(fighter);
 
   //File-exist-check recommended by https://flaviocopes.com/how-to-check-if-file-exists-node/
@@ -56,7 +56,7 @@ async function saveFighter(incomingFighter) {
 async function getAllFightersFromFiles() {
   const allFighters = [];
   fs.readdirSync("data/fighters").forEach(fileName => {
-    const fighter = JSON.parse(fs.readFileSync("data/fighters/"+fileName));
+    const fighter = JSON.parse(fs.readFileSync("data/fighters/" + fileName));
     allFighters.push(fighter);
   });
   return allFighters;
@@ -67,12 +67,17 @@ async function updateListOfFighterFiles() {
   fs.readdirSync("data/fighters").forEach(fileName => {
     let fighter;
     try {
-        fighter = JSON.parse(fs.readFileSync("data/fighters/"+fileName));
-    } catch(e) {
-        console.error("error parsing json:", fileName);
+      const fileData = fs.readFileSync("data/fighters/" + fileName);
+      if (fileData.length === 0) {
+        throw new Error("file is empty");
+      }
+      fighter = JSON.parse(fileData);
+    } catch (err) {
+      console.error(fileName, err);
+      return;
     }
-    const newListItem = { 
-      fileName, 
+    const newListItem = {
+      fileName,
       wikipediaNameWithDiacritics: fighter.fighterInfo.name,
       fighterAnsiName: getFighterAnsiNameFromFileName(fileName),
     };
