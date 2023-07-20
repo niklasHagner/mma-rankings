@@ -107,10 +107,12 @@ const divisionToHtml = function (division) {
 };
 
 /*
-Typically this is just called with argument `fighterName` equal to whatever is being rendered, and the job of this function is to map that to one of many possible props.
+Typically called with only `fighterName` argument equal to whatever is being rendered.
+This function maps that string to other potential spelling variants like `alternativeName` and `mmaStatsName` in allFighters.json
 
-Example: fighterName:'Korean Zombie' is  alternativeName:'Jung Chan-sung'
-
+Examples: 
+* fighterName:'Korean Zombie' has alternativeName:'Jung Chan-sung'
+* fighterName:'Weili Zhang' has mmaStatsName:'Zhang Weili'
 */
 function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeName = null, callee = null) {
   if (!fighterName && !mmaStatsName && !alternativeName) {
