@@ -70,6 +70,10 @@ function setupSingleApexChart(fighterEl) {
       type: 'scatter',
       toolbar: { show: false },
     },
+    markers: {
+      strokeWidth: 0,
+      shape: "circle",
+    },
     dataLabels: {
       enabled: false
     },
