@@ -416,7 +416,7 @@ async function scrapeFighterData(wikiPageUrl, findImages=true) {
 
     const fighterFromFile = fileHelper.readFileByFighterObj(fighterObj);
     const existingImages = fighterFromFile ? fighterFromFile.fighterInfo.relevantImages : false;
-    if (findImages===false || existingImages) {
+    if (findImages===false || (existingImages && existingImages.length > 0)) {
       fighterObj.fighterInfo.relevantImages = existingImages;
     } else {
       try {

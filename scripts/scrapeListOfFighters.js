@@ -42,12 +42,11 @@ async function scrapeListOfFighters(inputFighters) {
 
 inputFighters = [
   {
-    url: "/wiki/Paige_VanZant",
+    url: "/wiki/Cub_Swanson",
   },
   {
     url: "/wiki/Diego_Brandão",
   },
-
 ];
 
 async function scrapeInBatchesWithWaits() {
