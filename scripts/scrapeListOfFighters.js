@@ -41,12 +41,16 @@ async function scrapeListOfFighters(inputFighters) {
 }
 
 inputFighters = [
-  {
-    url: "/wiki/Cub_Swanson",
-  },
-  {
-    url: "/wiki/Diego_Brandão",
-  },
+    { url: '/wiki/Roxanne_Modafferi' },
+    { url: '/wiki/Jessica_Eye' },
+    { url: '/wiki/Alexis_Davis_(fighter)' },
+    { url: '/wiki/Marion_Reneau' },
+    { url: '/wiki/Henrique_da_Silva_(fighter)' },
+    { url: '/wiki/Gleison_Tibau' },
+    { url: '/wiki/Felice_Herrig' },
+    { url: '/wiki/Fábio_Maldonado' },
+
+
 ];
 
 async function scrapeInBatchesWithWaits() {
