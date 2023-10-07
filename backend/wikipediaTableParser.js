@@ -91,10 +91,12 @@ module.exports.parseWikipediaFutureEventsToJson = function (html) {
     location: 3,
     reference: 4
   };
-  return mapTableToJson(tableEl, tdIndexList);
+  const futureEvents = mapEventTableToJson(tableEl, tdIndexList);
+  const mostRecentPastEvent = parseWikipediaPastEventsToJson(html)[0];
+  return [mostRecentPastEvent, ...futureEvents];
 }
 
-module.exports.parseWikipediaPastEventsToJson = function (html) {
+function parseWikipediaPastEventsToJson (html) {
   const root = HTMLParser.parse(html);
   let tableEl = root.querySelector("table#Past_events");
   const tdIndexList = {
@@ -106,11 +108,13 @@ module.exports.parseWikipediaPastEventsToJson = function (html) {
     attendance: 5,
     reference: 6
   };
-  return mapTableToJson(tableEl, tdIndexList);
+  return mapEventTableToJson(tableEl, tdIndexList);
 }
 
+module.exports.parseWikipediaPastEventsToJson = parseWikipediaPastEventsToJson;
+
 //Maps table from https://en.wikipedia.org/wiki/List_of_UFC_events to json
-function mapTableToJson(table, tdIndexList) {
+function mapEventTableToJson(table, tdIndexList) {
   //NOTE: the quirk with these event tables is that when venues and locations repeat a single location-cell and a single venue-cell like 'UFC apex' can be used for multiple rows.
   //If this happens only one of the rows will have a venue/location and the rest will have to reuse the previously existing venue/location
   let prevVenue, prevLocation;
@@ -128,7 +132,7 @@ function mapTableToJson(table, tdIndexList) {
       }
 
       const item = {
-        eventName: td[0].innerText,
+        eventName: td[tdIndexList.eventLink].innerText,
         url: 'https://en.wikipedia.org' + link.getAttribute("href"),
         date: td[tdIndexList.date].innerText,
         venue: td[tdIndexList.venue] ? td[tdIndexList.venue].innerText : prevVenue,

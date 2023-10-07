@@ -38,6 +38,12 @@ nunjucks.configure("views", {
 })
   .addGlobal("getFighterNameOrLinkHtml", viewBuilder.getFighterNameOrLinkHtml)
   .addGlobal("getCurrentRank", getCurrentRank)
+  .addGlobal("isDateInPast", (date) => { 
+    const now = new Date();
+    const inputDate = new Date(date);
+    const isOld = moment(inputDate).isBefore(now, "day");
+    return isOld;
+  })
   .addFilter("classList", (classList) => classList.filter((x) => x).join(" "))
   .addFilter("dateFormat", (str) => {
     try {
