@@ -32,7 +32,7 @@ async function scrapeListOfFighters(inputFighters) {
 
   const readExistingFromFile = false;
   const allowFetchingMissingFighters = true;
-  const fetchImages = false;
+  const fetchImages = true;
   const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, readExistingFromFile, allowFetchingMissingFighters, fetchImages);
   await Promise.allSettled(fighterBasicData.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData)));
   fileHelper.updateListOfFighterFiles();
@@ -41,15 +41,11 @@ async function scrapeListOfFighters(inputFighters) {
 }
 
 inputFighters = [
-    { url: '/wiki/Roxanne_Modafferi' },
-    { url: '/wiki/Jessica_Eye' },
-    { url: '/wiki/Alexis_Davis_(fighter)' },
-    { url: '/wiki/Marion_Reneau' },
-    { url: '/wiki/Henrique_da_Silva_(fighter)' },
-    { url: '/wiki/Gleison_Tibau' },
-    { url: '/wiki/Felice_Herrig' },
-    { url: '/wiki/Fábio_Maldonado' },
-
+    { url: '/wiki/Darren_Elkins' },
+    { url: '/wiki/T.J._Brown' },
+    { url: '/wiki/Loopy_Godinez' },
+    { url: '/wiki/Muhammad_Mokaev' },
+    { url: '/wiki/Mark_Madsen_(fighter)' },
 
 ];
 

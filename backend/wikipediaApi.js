@@ -1,6 +1,7 @@
 const { parseWikipediaFightRecordTableToJson, parseWikipediaFutureEventsToJson, parseWikipediaPastEventsToJson, parseSingleEventHtmlToJson } = require('./wikipediaTableParser.js');
 const HTMLParser = require('node-html-parser');
 const gisImageSearch = require("g-i-s");
+const asyncGis = require('async-g-i-s');
 const axios = require('axios').default;
 const fileHelper = require("./fileHelper.js");
 const { stripTagsAndDecode, removeUnwantedTagsFromHtmlNode } = require("./stringAndHtmlHelper.js");
@@ -383,7 +384,7 @@ function findImagesForFighter(fighterName) {
       }
       return resolve(imgUrls);
     });
-  });
+});
 }
 
 async function scrapeFighterData(wikiPageUrl, findImages=true) {

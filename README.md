@@ -17,12 +17,10 @@ This project generates a json-file of the top15 rankings for every UFC division 
 ![screenshot](https://i.imgur.com/daVexhr.png)
 
 ## Tech and dependencies
-* node+express
-* nunjucks
-* vanilla css and vanilla js
-* draw charts via https://cdn.jsdelivr.net/npm/apexcharts
+* node with serverside-rendered nunjucks views
 * jsDOM for scraping rankings from mma-stats.com, and events and fighter profiles from wikipedia
 * google image search via package `g-i-s`
+* On the clientside: charts via https://cdn.jsdelivr.net/npm/apexcharts
 
 ## Repo structure:
 * app.js = routing and viewHelpers for nunjucks
