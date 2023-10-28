@@ -1,7 +1,6 @@
 const { parseWikipediaFightRecordTableToJson, parseWikipediaFutureEventsToJson, parseWikipediaPastEventsToJson, parseSingleEventHtmlToJson } = require('./wikipediaTableParser.js');
 const HTMLParser = require('node-html-parser');
 const gisImageSearch = require("g-i-s");
-const asyncGis = require('async-g-i-s');
 const axios = require('axios').default;
 const fileHelper = require("./fileHelper.js");
 const { stripTagsAndDecode, removeUnwantedTagsFromHtmlNode } = require("./stringAndHtmlHelper.js");
@@ -343,21 +342,14 @@ function findImagesForFighter(fighterName) {
       searchTerm: query,
       queryStringAddition: '&tbs=iar:t', //portrait format only (via https://www.google.com/advanced_image_search)
       filterOutDomains: [ // AVOID THESE
-        "gettyimages.com", // water marked
-        "ebayimg.com", // ugly sports cards
-        "sportscardinvestor.s3.amazonaws.com", // ugly sports cards
-        "tiktok.com", // broken
-        "mmanytt.se", // often wrong fighter
-        "kimura.se", // often wrong fighter
-        "lookaside.fbsbx.com", // broken
-        "images.google.com", // 403
-        "instagram.com", // 403
-        "mmagirls.co", // 403
-        "24smi.org", // 403,
+        "c8.alamy.com", "gettyimages.com", // water marked
+        "ebayimg.com", "sportscardinvestor.s3.amazonaws.com", // ugly sports cards
+        "tiktok.com", "lookaside.fbsbx.com",  // broken
+        "mmanytt.se","kimura.se", // often wrong fighter
+        "images.google.com", "instagram.com",  // 403
+        "24smi.org", "mmagirls.co", "images.mma-core.com", // 403
         "awakeningfighters.com", //hotlink blocked
-        "images.mma-core.com", //403
-        "preview.redd.it", //403
-        "pbs.twimg.com", //400
+        "preview.redd.it", "pbs.twimg.com", //400
         "upload.wikimedia.org", // wikipedia's poor public domain photos
         "sherdog.com" //unstable, some images will not render
       ]
@@ -438,5 +430,6 @@ module.exports = {
   scrapeFighterData,
   getInfoAndFightersFromNextEvents,
   getNamesAndUrlsOfFightersInPastEvent,
-  fetchArrayOfFighters
+  fetchArrayOfFighters,
+  findImagesForFighter
 }
