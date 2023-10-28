@@ -40,13 +40,32 @@ async function scrapeListOfFighters(inputFighters) {
   return;
 }
 
-inputFighters = [
-    { url: '/wiki/Darren_Elkins' },
-    { url: '/wiki/T.J._Brown' },
-    { url: '/wiki/Loopy_Godinez' },
-    { url: '/wiki/Muhammad_Mokaev' },
-    { url: '/wiki/Mark_Madsen_(fighter)' },
+//Potential name issues: Jacare Souza, Fabricio Werdum, Rogerio Nogueira
 
+inputFighters = [
+    // { url: '/wiki/Costas_Philippou' },
+    { url: '/wiki/Dennis_Siver' },
+    { url: '/wiki/Eddie_Wineland' },
+    { url: '/wiki/Takeya_Mizugaki' },
+    { url: '/wiki/Pat_Healy_(fighter)' },
+
+
+    /*
+Mike Easton
+Chris Cariaso
+Louis Gaudinot
+Darren Uyenoyama
+Sarah Kaufman
+Julie Kedzie
+Mark Munoz
+Francis Carmont
+Tim Boetsch
+Jake Ellenberger
+TJ Grant
+Josh Thomson
+Erik Koch
+    
+    */
 ];
 
 async function scrapeInBatchesWithWaits() {
