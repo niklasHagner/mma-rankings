@@ -1,0 +1,29 @@
+{% extends "base.njk" %}
+{% import "fighterMacro.njk" as fighterView %}
+
+{% block viewBody %}
+  <section id="rankings">
+    <h2 class="post-title" id="latest-rankings" style="color: orange;">Latest rankings ({{ rankings.latestRankings.date }})</h2>
+    <section class="snapshot">
+      <div class="snapshot-divisions">
+        {% for division in rankings.latestRankings.divisions %}
+          {% if division.name != " Women's Featherweight " %}
+            <article class="division">
+              <h3 class="division-name">{{division.name}}</h3>
+              <div class="division-fighters">
+              {% for fighter in division.fighters %}
+                <div>
+                  <span class="rank">{{fighter.rank}}</span> {{ getFighterNameOrLinkHtml(fighter.name, fighter.mmaStatsName, fighter.alternativeName, "rank") | safe }}
+                </div>
+              {% endfor %}
+              </div>
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+    
+    <h2 id="historical-rankings">Historical rankings</h2>
+    {{ rankings.allRankings.htmlString | safe }}
+  </section>
+{% endblock %}

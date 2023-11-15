@@ -48,7 +48,7 @@ const buildRankingsHtml = function (pages) {
   let annualRankingsHtmlString = snapshotsGroupedByYear.map((annualSnapshot) => {
     const modifierClass = "annual-rank-snapshots--collapsed";
     return `
-      <details class="annual-rank-snapshots ${modifierClass}">
+      <details open class="annual-rank-snapshots ${modifierClass}">
         <summary>${annualSnapshot.year}</summary>
         ${annualSnapshot.html}
       </details>
