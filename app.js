@@ -147,6 +147,27 @@ app.get('/fighter/:name', async function (req, res, next) {
   });
 });
 
+app.get('/rankings', async function (req, res, next) {
+    const rankData = global.rankData;
+    const rankingsHtmlString = viewBuilder.buildRankingsHtml(rankData.dates);
+    const viewModel = {};
+    viewModel.rankings = {
+        allRankings: {
+          dates: rankData.dates,
+          htmlString: rankingsHtmlString, 
+        },
+        latestRankings: {
+          ...rankData.dates[0],
+          htmlString: viewBuilder.buildRankingsHtml(rankData.dates.slice(0,1))
+        },
+    };
+  
+    return res.render("rankings.njk", viewModel, (err, html) => {
+      if (err) return next(err);
+      res.send(html);
+    });
+  });
+
 app.get('/mma-stats-by-date', async function (req, res) {
   res.contentType('application/json');
   if (typeof req.query.date === 'undefined') {
