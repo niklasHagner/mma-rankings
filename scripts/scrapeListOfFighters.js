@@ -44,10 +44,12 @@ async function scrapeListOfFighters(inputFighters) {
 
 inputFighters = [
     // { url: '/wiki/Costas_Philippou' },
-    { url: '/wiki/Dennis_Siver' },
-    { url: '/wiki/Eddie_Wineland' },
-    { url: '/wiki/Takeya_Mizugaki' },
-    { url: '/wiki/Pat_Healy_(fighter)' },
+    { url: '/wiki/Claudio_Puelles' },
+    { url: '/wiki/Thiago_Moisés' },
+    { url: '/wiki/James_Vick' },
+    { url: '/wiki/Muhammed_Lawal' },
+    { url: '/wiki/Fábio_Maldonado' },
+    { url: '/wiki/C._B._Dollaway' },
 
 
     /*
