@@ -126,6 +126,11 @@ function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeN
     || x?.fighterAnsiName?.toLowerCase() === fighterName.toLowerCase()
   );
   if (!fighterFileMatch) {
+    //Example: 'José Aldo' to 'Jos%C3%A9Aldo.json
+    const encodedName = encodeURIComponent(fighterName).replace("%20", "_");
+    fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.fileName?.toLowerCase() === `${encodedName?.toLowerCase()}.json`);
+  }
+  if (!fighterFileMatch) {
       if (alternativeName?.toLowerCase()) {
         fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.alternativeName?.toLowerCase() === alternativeName?.toLowerCase());
       }
@@ -133,7 +138,7 @@ function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeN
         const nameToFind =  mmaStatsName?.toLowerCase() || fighterName?.toLowerCase();
         fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.mmaStatsName?.toLowerCase() === nameToFind);
       }
-  } 
+  }
   if (!fighterFileMatch) {
     console.log("no fighterfile found", fighterName);
   }
