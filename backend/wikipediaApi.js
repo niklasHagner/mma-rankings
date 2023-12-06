@@ -1,14 +1,13 @@
 const { parseWikipediaFightRecordTableToJson, parseWikipediaFutureEventsToJson, parseWikipediaPastEventsToJson, parseSingleEventHtmlToJson } = require('./wikipediaTableParser.js');
 const HTMLParser = require('node-html-parser');
 const gisImageSearch = require("g-i-s");
-const axios = require('axios').default;
 const fileHelper = require("./fileHelper.js");
 const { stripTagsAndDecode, removeUnwantedTagsFromHtmlNode } = require("./stringAndHtmlHelper.js");
 
 async function getNamesAndUrlsOfNextEventFighters() {
   let htmlForEvents;
   try {
-    const { data } = await axios.get('https://en.wikipedia.org/wiki/List_of_UFC_events');
+    const { data } = await fetch('https://en.wikipedia.org/wiki/List_of_UFC_events');
     htmlForEvents = data;
   } catch(error) {
     return;
@@ -23,7 +22,7 @@ async function getNamesAndUrlsOfNextEventFighters() {
   });
   nextBigEvent.isBigEvent = true;
   const allEventObjs = rows.filter(x => x.url !== nextBigEvent.url).concat(nextBigEvent); //.slice(0, 2);
-  const promises = allEventObjs.map(event => axios.get(event.url).then(response => response.data));
+  const promises = allEventObjs.map(event => fetch(event.url).then(response => response.data));
   const promiseResponses = await Promise.all(promises);
   const all = promiseResponses.map((htmlForSingleEvent, ix) => {
     const eventInfo = allEventObjs[ix];
@@ -40,7 +39,7 @@ async function getNamesAndUrlsOfFightersInPastEvent(startDateString, endDateStri
     const endDateTime = new Date(endDateString).getTime();
     let htmlForEvents;
     try {
-      const { data } = await axios.get('https://en.wikipedia.org/wiki/List_of_UFC_events');
+      const { data } = await fetch('https://en.wikipedia.org/wiki/List_of_UFC_events');
       htmlForEvents = data;
     } catch(error) {
       return;
@@ -55,7 +54,7 @@ async function getNamesAndUrlsOfFightersInPastEvent(startDateString, endDateStri
     //each row contains: {eventName,url,date,venue,location}
     const urls = rows.map(event => event.url);
     console.log(`fetching ${urls.length} ufc event urls`);
-    const promises = urls.map(url => axios.get(url).then(response => response.data));
+    const promises = urls.map(url => fetch(url).then(response => response.data));
     const promiseResponses = await Promise.all(promises);
     const all = promiseResponses.map((htmlForSingleEvent, ix) => {
       const eventInfo = rows[ix];
@@ -384,7 +383,7 @@ async function scrapeFighterData(wikiPageUrl, findImages=true) {
     let response;
     try {
       console.log(`Start scraping ${wikiPageUrl}`);
-      response = await axios.get(wikiPageUrl);
+      response = await fetch(wikiPageUrl);
     } catch(error) {
       console.log(`❌ Error scraping ${wikiPageUrl}. Error:${error}`); 
       return reject("scraping error");
