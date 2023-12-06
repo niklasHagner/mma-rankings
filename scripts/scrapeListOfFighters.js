@@ -43,13 +43,11 @@ async function scrapeListOfFighters(inputFighters) {
 //Potential name issues: Jacare Souza, Fabricio Werdum, Rogerio Nogueira
 
 inputFighters = [
-    // { url: '/wiki/Costas_Philippou' },
-    { url: '/wiki/Claudio_Puelles' },
-    { url: '/wiki/Thiago_Moisés' },
-    { url: '/wiki/James_Vick' },
-    { url: '/wiki/Muhammed_Lawal' },
-    { url: '/wiki/Fábio_Maldonado' },
-    { url: '/wiki/C._B._Dollaway' },
+    { url: '/wiki/Alex_Oliveira' },
+    { url: '/wiki/Antonina_Shevchenko' },
+    { url: '/wiki/Mara_Romero_Borella' },
+    { url: '/wiki/Omari_Akhmedov' },
+
 
 
     /*

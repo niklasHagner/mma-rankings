@@ -1,4 +1,5 @@
 const striptags = require('striptags');
+const removeAccents = require('remove-accents');
 
 function removeUnwantedTagsFromHtmlNode(htmlNode) {
   const nodesToRemove = Array.from(htmlNode.querySelectorAll("script"))
@@ -129,9 +130,12 @@ function removeDiacritics(str) {
       diacriticsMap[letters[j]] = defaultDiacriticsRemovalMap[i].base;
     }
   }
-  return str.replace(/[^\u0000-\u007E]/g, function (a) {
+  str = str.replace(/[^\u0000-\u007E]/g, function (a) {
     return diacriticsMap[a] || a;
   });
+
+  str = removeAccents(str);
+  return str;
 }
 
 function divisionAbbreviation(originalStr) {

@@ -76,11 +76,16 @@ async function updateListOfFighterFiles() {
       console.error(fileName, err);
       return;
     }
+    const existingFromAllFightersJson = global.fightersWithProfileLinks.find(f => f.fileName === fileName);
+
     const newListItem = {
       fileName,
       wikipediaNameWithDiacritics: fighter.fighterInfo.name,
-      fighterAnsiName: getFighterAnsiNameFromFileName(fileName),
+      fighterAnsiName: existingFromAllFightersJson?.fighterAnsiName || getFighterAnsiNameFromFileName(fileName),
     };
+    if (existingFromAllFightersJson?.alternativeName) {
+        newListItem.alternativeName = existingFromAllFightersJson.alternativeName;
+    }
     if (fighter?.fighterInfo?.mmaStatsName) {
       newListItem.mmaStatsName = fighter?.fighterInfo?.mmaStatsName;
     }

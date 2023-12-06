@@ -114,6 +114,8 @@ Examples:
 * fighterName:'Korean Zombie' has alternativeName:'Jung Chan-sung'
 * fighterName:'Weili Zhang' has mmaStatsName:'Zhang Weili'
 */
+const notFoundCounts = [];
+let lastLog = 1;
 function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeName = null, callee = null) {
   if (!fighterName && !mmaStatsName && !alternativeName) {
     return "???";
@@ -123,7 +125,7 @@ function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeN
   fighterFileMatch = global.fightersWithProfileLinks.find(x =>
     x?.alternativeName?.toLowerCase() === fighterName?.toLowerCase() ||
     x?.wikipediaNameWithDiacritics?.toLowerCase() === fighterName.toLowerCase()
-    || x?.fighterAnsiName?.toLowerCase() === fighterName.toLowerCase()
+    || x?.fighterAnsiName?.toLowerCase() === removeDiacritics(fighterName.toLowerCase())
   );
   if (!fighterFileMatch) {
     //Example: 'José Aldo' to 'Jos%C3%A9Aldo.json
@@ -140,7 +142,20 @@ function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeN
       }
   }
   if (!fighterFileMatch) {
-    console.log("no fighterfile found", fighterName);
+    const match = notFoundCounts.find(x => x.name === fighterName);
+    if (match) {
+        match.count++;
+    } else {
+        notFoundCounts.push({ name: fighterName, count: 1 });
+    }
+
+
+    const shouldLog = (notFoundCounts.length - lastLog) > 20;
+    if (shouldLog) {
+        lastLog = notFoundCounts.length;
+        notFoundCounts.sort((a, b) => b.count - a.count);
+        console.log(`${notFoundCounts.length} fighters not found`, notFoundCounts);
+    }
   }
 
   const fighterLink = fighterFileMatch ? `/fighter/${fighterFileMatch.fileName.replace(".json", "")}` : null;
