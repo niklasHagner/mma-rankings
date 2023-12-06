@@ -82,6 +82,10 @@ function mapRecordsTableToJson(html, fighterName) {
 }
 
 module.exports.parseWikipediaFutureEventsToJson = function (html) {
+  if (!html) {
+    console.warn("No html for future events");
+    return [];
+  }
   const root = HTMLParser.parse(html);
   let tableEl = root.querySelector("table#Scheduled_events");
   const tdIndexList = {

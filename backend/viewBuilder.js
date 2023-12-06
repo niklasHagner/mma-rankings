@@ -115,18 +115,33 @@ Examples:
 * fighterName:'Weili Zhang' has mmaStatsName:'Zhang Weili'
 */
 const notFoundCounts = [];
+const foundFighters = [];
 let lastLog = 1;
-function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeName = null, callee = null) {
+function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeName = null, callee = "") {
   if (!fighterName && !mmaStatsName && !alternativeName) {
     return "???";
   }
 
+  const isNotFound = notFoundCounts.find(x => x.name === fighterName);
+  if (isNotFound) { 
+    return `<span class="name">${fighterName}</span>`;
+  }
+
   let fighterFileMatch;
-  fighterFileMatch = global.fightersWithProfileLinks.find(x =>
-    x?.alternativeName?.toLowerCase() === fighterName?.toLowerCase() ||
-    x?.wikipediaNameWithDiacritics?.toLowerCase() === fighterName.toLowerCase()
-    || x?.fighterAnsiName?.toLowerCase() === removeDiacritics(fighterName.toLowerCase())
-  );
+  fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.alternativeName?.toLowerCase() === fighterName?.toLowerCase());
+  if (fighterFileMatch) {
+    console.log("match alternativeName", callee, fighterName);
+  }
+  fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.wikipediaNameWithDiacritics?.toLowerCase() === fighterName.toLowerCase());
+  if (fighterFileMatch) {
+    console.log("match wikipediaNameWithDiacritics", callee)
+  }
+
+  fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.fighterAnsiName?.toLowerCase() === removeDiacritics(fighterName.toLowerCase()));
+  if (fighterFileMatch) {
+    console.log("match fighterAnsiName", callee, fighterName);
+  }
+
   if (!fighterFileMatch) {
     //Example: 'José Aldo' to 'Jos%C3%A9Aldo.json
     const encodedName = encodeURIComponent(fighterName).replace("%20", "_");
@@ -148,7 +163,6 @@ function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeN
     } else {
         notFoundCounts.push({ name: fighterName, count: 1 });
     }
-
 
     const shouldLog = (notFoundCounts.length - lastLog) > 20;
     if (shouldLog) {
