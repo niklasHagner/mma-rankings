@@ -8,8 +8,7 @@ const { stripTagsAndDecode, removeUnwantedTagsFromHtmlNode } = require("./string
 async function getNamesAndUrlsOfNextEventFighters() {
   let htmlForEvents;
   try {
-    const { data } = await fs.readFileSync("data/upcoming-events.html");
-    htmlForEvents = data;
+    htmlForEvents = await fs.readFileSync("data/upcoming-events.html", "utf8");
   } catch(error) {
     return;
   }
@@ -40,8 +39,7 @@ async function getNamesAndUrlsOfFightersInPastEvent(startDateString, endDateStri
     const endDateTime = new Date(endDateString).getTime();
     let htmlForEvents;
     try {
-    const { data } = await fs.readFileSync("data/upcoming-events.html");
-      htmlForEvents = data;
+      htmlForEvents = await fs.readFileSync("data/upcoming-events.html", "utf8");
     } catch(error) {
       return;
     }
