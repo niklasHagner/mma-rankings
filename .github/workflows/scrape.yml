@@ -1,7 +1,8 @@
 name: Curl URL and Save to HTML
 
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # Runs every day at 00:00
 
 jobs:
   curl-and-save:
