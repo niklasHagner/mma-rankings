@@ -130,16 +130,16 @@ function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeN
   let fighterFileMatch;
   fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.alternativeName?.toLowerCase() === fighterName?.toLowerCase());
   if (fighterFileMatch) {
-    console.log("match alternativeName", callee, fighterName);
+    // console.log("match alternativeName", callee, fighterName);
   }
   fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.wikipediaNameWithDiacritics?.toLowerCase() === fighterName.toLowerCase());
   if (fighterFileMatch) {
-    console.log("match wikipediaNameWithDiacritics", callee)
+    // console.log("match wikipediaNameWithDiacritics", callee);
   }
 
   fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.fighterAnsiName?.toLowerCase() === removeDiacritics(fighterName.toLowerCase()));
   if (fighterFileMatch) {
-    console.log("match fighterAnsiName", callee, fighterName);
+    // console.log("match fighterAnsiName", callee, fighterName);
   }
 
   if (!fighterFileMatch) {

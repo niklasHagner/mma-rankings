@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { parseWikipediaFightRecordTableToJson, parseWikipediaFutureEventsToJson, parseWikipediaPastEventsToJson, parseSingleEventHtmlToJson } = require('./wikipediaTableParser.js');
 const HTMLParser = require('node-html-parser');
 const gisImageSearch = require("g-i-s");
@@ -7,7 +8,7 @@ const { stripTagsAndDecode, removeUnwantedTagsFromHtmlNode } = require("./string
 async function getNamesAndUrlsOfNextEventFighters() {
   let htmlForEvents;
   try {
-    const { data } = await fetch('https://en.wikipedia.org/wiki/List_of_UFC_events');
+    const { data } = await fs.readFileSync("data/upcoming-events.html");
     htmlForEvents = data;
   } catch(error) {
     return;
@@ -39,7 +40,7 @@ async function getNamesAndUrlsOfFightersInPastEvent(startDateString, endDateStri
     const endDateTime = new Date(endDateString).getTime();
     let htmlForEvents;
     try {
-      const { data } = await fetch('https://en.wikipedia.org/wiki/List_of_UFC_events');
+    const { data } = await fs.readFileSync("data/upcoming-events.html");
       htmlForEvents = data;
     } catch(error) {
       return;
