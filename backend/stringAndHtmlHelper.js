@@ -134,7 +134,6 @@ function removeDiacritics(str) {
     return diacriticsMap[a] || a;
   });
 
-  str = removeAccents(str);
   return str;
 }
 
