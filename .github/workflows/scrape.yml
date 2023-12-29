@@ -1,0 +1,24 @@
+name: Curl URL and Save to HTML
+
+on:
+  workflow_dispatch:
+
+jobs:
+  curl-and-save:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Curl URL and save to HTML
+      run: |
+        curl https://en.wikipedia.org/wiki/List_of_UFC_events --output data/upcoming-events.html --fail
+
+    - name: Commit and push if it changed
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "github-actions@github.com"
+        git add -A
+        git diff --quiet && git diff --staged --quiet || git commit -m "Update HTML file with upcoming events"
+        git push
