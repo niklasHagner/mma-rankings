@@ -91,7 +91,7 @@ const divisionToHtml = function (division) {
     if (fighter.rank.toLowerCase().indexOf("champion") > -1)
       fighter.rank = "C";
 
-    const fighterNameElement = getFighterNameOrLinkHtml(fighter.name, fighter.mmaStatsName, fighter.alternativeName, "divisionToHtml");
+    const fighterNameElement = `<span class="name">${fighter.name}</span>`; //getFighterNameOrLinkHtml(fighter.name, fighter.mmaStatsName, fighter.alternativeName, "divisionToHtml");
     return `
       <div>
         <span class="rank">${fighter.rank}</span> ${fighterNameElement}
