@@ -22,7 +22,7 @@ async function getNamesAndUrlsOfNextEventFighters() {
   });
   nextBigEvent.isBigEvent = true;
   const allEventObjs = rows.filter(x => x.url !== nextBigEvent.url).concat(nextBigEvent); //.slice(0, 2);
-  const promises = allEventObjs.map(event => fetch(event.url).then(response => response.data));
+  const promises = allEventObjs.map(event => fetch(event.url, {headers: {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}}).then(response => response.text()));
   const promiseResponses = await Promise.all(promises);
   const all = promiseResponses.map((htmlForSingleEvent, ix) => {
     const eventInfo = allEventObjs[ix];
@@ -53,7 +53,7 @@ async function getNamesAndUrlsOfFightersInPastEvent(startDateString, endDateStri
     //each row contains: {eventName,url,date,venue,location}
     const urls = rows.map(event => event.url);
     console.log(`fetching ${urls.length} ufc event urls`);
-    const promises = urls.map(url => fetch(url).then(response => response.data));
+    const promises = urls.map(url => fetch(url, {headers: {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}}).then(response => response.text()));
     const promiseResponses = await Promise.all(promises);
     const all = promiseResponses.map((htmlForSingleEvent, ix) => {
       const eventInfo = rows[ix];
@@ -382,7 +382,7 @@ async function scrapeFighterData(wikiPageUrl, findImages=true) {
     let response;
     try {
       console.log(`Start scraping ${wikiPageUrl}`);
-      response = await fetch(wikiPageUrl);
+      response = await fetch(wikiPageUrl, {headers: {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}});
     } catch(error) {
       console.log(`❌ Error scraping ${wikiPageUrl}. Error:${error}`); 
       return reject("scraping error");
@@ -391,7 +391,7 @@ async function scrapeFighterData(wikiPageUrl, findImages=true) {
       console.log(`❌ Error scraping ${wikiPageUrl}. Status: ${response.status}`); 
       return reject("scraping error"); 
     }
-    const html = await response.data;
+    const html = await response.text();
     const root = HTMLParser.parse(html);
     removeUnwantedTagsFromHtmlNode(root);
     const detect429Status = root.querySelector("body").innerHTML.indexOf("Wikimedia error") > -1;
