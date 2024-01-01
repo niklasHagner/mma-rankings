@@ -588,3 +588,9 @@ h2.post-description {
         padding-right: 8px
     }
 }
+
+.past-event {
+    margin: 20px 0;
+    background: #444;
+    display: inline-block;
+}

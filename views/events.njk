@@ -1,46 +1,59 @@
 {% extends "base.njk" %}
-{% import "fighterMacro.njk" as fighterView %}
+{% import "fighterMacro.njk" as fighterMacro %}
+
+
+{% macro renderEvent(event, isEventInPast) %}
+  <time>{% if event.isBigEvent %}Next big event: {% endif %}{% if isEventInPast %}Last event: {% endif %}{{ event.date }}</time>
+  <section class="ufc-card">
+    <h1 class="{{ "post-title event-title big-event" if event.isBigEvent else "post-title event-title" }}">
+      {{ event.eventName }}
+    </h1>
+    {% for match in event.mainMatches %}
+      <div class="fight-on-card">
+        <h2 class="fight-on-card__title">{{match.fighters[0] | nicknameOrLastname}} VS {{match.fighters[1] | nicknameOrLastname}}</h2>
+        <div class="fight-on-card__grid">
+          {% for fighter in match.fighters %}
+            {{ fighterMacro.render(fighter) }}
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+
+  {% if event.moreMatches and event.moreMatches.length > 0  %} 
+    <div class="more-fighters-on-card">
+      <h2>Other fighters on card</h2>
+      <ul>
+      {% for match in event.moreMatches %}
+        <li>
+          {% for otherFighter in match.fighters %}
+            <span class="other-fighter-name">{{ otherFighter.name }}</span>
+            {% if loop.index0 == 0 %}
+              <span> VS </span>
+            {% endif %}
+          {% endfor %}
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+    
+  </section>
+{% endmacro %}
 
 {% block viewBody %}
   <section id="events">
     {% for event in events %}
-      <div class="event">
-        <time>{% if event.isBigEvent %}Next big event: {% endif %}{% if isDateInPast(event.date) %}Last event: {% endif %}{{ event.date }}</time>
-        <section class="ufc-card">
-          <h1 class="{{ "post-title event-title big-event" if event.isBigEvent else "post-title event-title" }}">
-            {{ event.eventName }}
-          </h1>
-          {% for match in event.mainMatches %}
-            <div class="fight-on-card">
-              <h2 class="fight-on-card__title">{{match.fighters[0] | nicknameOrLastname}} VS {{match.fighters[1] | nicknameOrLastname}}</h2>
-              <div class="fight-on-card__grid">
-                {% for fighter in match.fighters %}
-                  {{ fighterMacro.render(fighter) }}
-                {% endfor %}
-              </div>
-            </div>
-          {% endfor %}
-
-        {% if event.moreMatches and event.moreMatches.length > 0  %} 
-          <div class="more-fighters-on-card">
-            <h2>Other fighters on card</h2>
-            <ul>
-            {% for match in event.moreMatches %}
-              <li>
-                {% for otherFighter in match.fighters %}
-                  <span class="other-fighter-name">{{ otherFighter.name }}</span>
-                  {% if loop.index0 == 0 %}
-                    <span> VS </span>
-                  {% endif %}
-                {% endfor %}
-              </li>
-            {% endfor %}
-            </ul>
-          </div>
-        {% endif %}
-          
-        </section>
-      </div>
+      {% set isEventInPast = isDateInPast(event.date) %}
+      {% if isEventInPast %}
+        <details class="past-event">
+          <summary></strong>Past event</strong> {{ event.date }} {{ event.eventName }}</summary>
+          {{ renderEvent(event, isEventInPast) }}
+        </details>
+      {% else %}
+        <div class="event">
+          {{ renderEvent(event, isEventInPast) }}
+        </div>
+      {% endif %}
     {% endfor %}
   </section>
   <section id="rankings">
