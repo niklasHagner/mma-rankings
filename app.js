@@ -110,8 +110,12 @@ app.get('/', async function (req, res, next) {
   };
   viewModel.events = await getEvents(rankData);
   viewModel.fightersWithProfileLinks = global.fightersWithProfileLinks;
+  const t0 = performance.now();
+  
   res.render("events.njk", viewModel, (err, html) => {
     if (err) return next(err);
+    const t1 = performance.now();
+    console.log("Rendering events.njk took " + (t1 - t0) + " milliseconds.")
     res.send(html);
   });
 });

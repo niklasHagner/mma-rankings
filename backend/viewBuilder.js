@@ -107,16 +107,15 @@ const divisionToHtml = function (division) {
 };
 
 /*
-Typically called with only `fighterName` argument equal to whatever is being rendered.
-This function maps that string to other potential spelling variants like `alternativeName` and `mmaStatsName` in allFighters.json
+This function renders a link for fighters which have profile pages according to global.fightersWithProfileLinks (which is allFighters.json)
+
+The quirk is that fighter name spelling can differ as they come from multiple data sources (mma-stats, ufc, wikipedia)
 
 Examples: 
 * fighterName:'Korean Zombie' has alternativeName:'Jung Chan-sung'
 * fighterName:'Weili Zhang' has mmaStatsName:'Zhang Weili'
 */
 const notFoundCounts = [];
-const foundFighters = [];
-let lastLog = 1;
 function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeName = null, callee = "") {
   if (!fighterName && !mmaStatsName && !alternativeName) {
     return "???";
@@ -128,47 +127,23 @@ function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeN
   }
 
   let fighterFileMatch;
-  fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.alternativeName?.toLowerCase() === fighterName?.toLowerCase());
-  if (fighterFileMatch) {
-    // console.log("match alternativeName", callee, fighterName);
-  }
-  fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.wikipediaNameWithDiacritics?.toLowerCase() === fighterName.toLowerCase());
-  if (fighterFileMatch) {
-    // console.log("match wikipediaNameWithDiacritics", callee);
-  }
 
-  fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.fighterAnsiName?.toLowerCase() === removeDiacritics(fighterName.toLowerCase()));
-  if (fighterFileMatch) {
-    // console.log("match fighterAnsiName", callee, fighterName);
-  }
+  //Example: 'José Aldo' to 'Jos%C3%A9Aldo.json
+  const encodedName = encodeURIComponent(fighterName).replaceAll("%20", "_");
+  fighterFileMatch = global.fightersWithProfileLinks.find(x => 
+       x?.fileName?.toLowerCase() === `${encodedName?.toLowerCase()}.json`
+    || x?.fighterAnsiName?.toLowerCase() === removeDiacritics(fighterName.toLowerCase())
+    || x?.wikipediaNameWithDiacritics?.toLowerCase() === fighterName.toLowerCase()
+    || x?.alternativeName ? x?.alternativeName?.toLowerCase() == mmaStatsName?.toLowerCase() || x?.alternativeName?.toLowerCase() === fighterName?.toLowerCase() : false
+    || x?.mmaStatsName ? x?.mmaStatsName?.toLowerCase() == mmaStatsName?.toLowerCase() || x?.mmaStatsName?.toLowerCase() === fighterName?.toLowerCase() : false
+  );
 
-  if (!fighterFileMatch) {
-    //Example: 'José Aldo' to 'Jos%C3%A9Aldo.json
-    const encodedName = encodeURIComponent(fighterName).replace("%20", "_");
-    fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.fileName?.toLowerCase() === `${encodedName?.toLowerCase()}.json`);
-  }
-  if (!fighterFileMatch) {
-      if (alternativeName?.toLowerCase()) {
-        fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.alternativeName?.toLowerCase() === alternativeName?.toLowerCase());
-      }
-      else {
-        const nameToFind =  mmaStatsName?.toLowerCase() || fighterName?.toLowerCase();
-        fighterFileMatch = global.fightersWithProfileLinks.find(x => x?.mmaStatsName?.toLowerCase() === nameToFind);
-      }
-  }
   if (!fighterFileMatch) {
     const match = notFoundCounts.find(x => x.name === fighterName);
     if (match) {
         match.count++;
     } else {
         notFoundCounts.push({ name: fighterName, count: 1 });
-    }
-
-    const shouldLog = (notFoundCounts.length - lastLog) > 20;
-    if (shouldLog) {
-        lastLog = notFoundCounts.length;
-        notFoundCounts.sort((a, b) => b.count - a.count);
-        console.log(`${notFoundCounts.length} fighters not found`, notFoundCounts);
     }
   }
 
