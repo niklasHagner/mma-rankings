@@ -18,6 +18,13 @@ const lastScapedStatsDate = mmaStatsJson.dates[0].date;
 console.log(`The last rank is dated ${lastScapedStatsDate}. Maybe it's time to run 'npm run scrapeLatestRankings'`);
 
 global.fightersWithProfileLinks = JSON.parse(fs.readFileSync("data/allFighters.json"));
+
+// To make lookups easier use fileName as key
+global.fightersWithProfileLinks_hashMap = global.fightersWithProfileLinks.reduce((map, obj) => {
+    map[obj.fileName] = obj;
+    return map;
+}, {});
+
 global.rankData = JSON.parse(fs.readFileSync("data/mmaStats.json"));
 
 app.use(function (req, res, next) {
