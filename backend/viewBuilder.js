@@ -124,7 +124,11 @@ function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeN
   const encodedName = encodeURIComponent(fighterName).replaceAll("%20", "_");
   const expectedFileName = `${encodedName}.json`; //Example: 'José Aldo' to 'Jos%C3%A9Aldo.json
 
-  if (notFoundFileNames[expectedFileName]) { 
+  if (notFoundFileNames[expectedFileName]) {
+    return `<span class="name">${fighterName}</span>`;
+  }
+
+  if (global.missingFightersHashMap[expectedFileName]) {
     return `<span class="name">${fighterName}</span>`;
   }
 
@@ -136,11 +140,24 @@ function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeN
   }
 
   if (!fighterFileMatch) {
+     const aliasMatch = global.aliasesToFileNameHashMap[expectedFileName]; 
+     if (aliasMatch) {
+        fighterFileMatch = global.fightersWithProfileLinks_hashMap[aliasMatch];
+     }
+  }
+
+
+  if (!fighterFileMatch) {
     lookForFightersWithAliases();
+    if (fighterFileMatch) {
+        console.log(`"${expectedFileName}": "${fighterFileMatch.fileName}"`);
+    }
   }
 
   if (!fighterFileMatch) {
     notFoundFileNames[expectedFileName] = true;
+    console.log(`"${expectedFileName}": "missing"`);
+    return `<span class="name">${fighterName}</span>`;
   }
 
   const fighterLink = fighterFileMatch ? `/fighter/${fighterFileMatch.fileName.replace(".json", "")}` : null;

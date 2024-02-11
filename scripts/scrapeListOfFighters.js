@@ -384,10 +384,6 @@ inputFighters = [
     //     url: "/wiki/Gregory_Rodrigues",
     //   },
     //   {
-    //     name: "Kurt Holobaugh",
-    //     url: "/wiki/Kurt_Holobaugh_(fighter)",
-    //   },
-    //   {
     //     name: "Austin Hubbard",
     //     url: "/wiki/Austin_Hubbard",
     //   },

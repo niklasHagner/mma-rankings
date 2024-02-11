@@ -11,6 +11,7 @@ const wikipediaApi = require('./backend/wikipediaApi.js');
 const viewBuilder = require('./backend/viewBuilder.js');
 const fileHelper = require('./backend/fileHelper.js');
 const { divisionAbbreviation } = require('./backend/stringAndHtmlHelper.js');
+const { missingFightersHashMap, aliasesToFileNameHashMap } = require('./data/allFightersMissingOrAliased.js');
 
 const mmaStatsJsonRaw = fs.readFileSync("data/mmaStats.json");
 const mmaStatsJson = JSON.parse(mmaStatsJsonRaw);
@@ -18,6 +19,8 @@ const lastScapedStatsDate = mmaStatsJson.dates[0].date;
 console.log(`The last rank is dated ${lastScapedStatsDate}. Maybe it's time to run 'npm run scrapeLatestRankings'`);
 
 global.fightersWithProfileLinks = JSON.parse(fs.readFileSync("data/allFighters.json"));
+global.missingFightersHashMap = missingFightersHashMap;
+global.aliasesToFileNameHashMap = aliasesToFileNameHashMap;
 
 // To make lookups easier use fileName as key
 global.fightersWithProfileLinks_hashMap = global.fightersWithProfileLinks.reduce((map, obj) => {
