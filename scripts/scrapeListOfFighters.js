@@ -44,54 +44,6 @@ async function scrapeListOfFighters(inputFighters) {
 
 inputFighters = [
     //   {
-    //     name: "Alexander Hernandez",
-    //     url: "/wiki/Alexander_Hernandez",
-    //   },
-    //   {
-    //     name: "Karolina Kowalkiewicz",
-    //     url: "/wiki/Karolina_Kowalkiewicz",
-    //   },
-    //   {
-    //     name: "Diana Belbiţă",
-    //     url: "/wiki/Diana_Belbi%C5%A3%C4%83",
-    //   },
-    //   {
-    //     name: "Nate Maness",
-    //     url: "/wiki/Nate_Maness",
-    //   },
-    //   {
-    //     name: "Vanessa Demopoulos",
-    //     url: "/wiki/Vanessa_Demopoulos",
-    //   },
-    //   {
-    //     name: "Kanako Murata",
-    //     url: "/wiki/Kanako_Murata",
-    //   },
-    //   {
-    //     name: "Aori Qileng",
-    //     url: "/wiki/Aori_Qileng",
-    //   },
-    //   {
-    //     name: "Johnny Muñoz Jr.",
-    //     url: "/wiki/Johnny_Mu%C3%B1oz_Jr.",
-    //   },
-    //   {
-    //     name: "JJ Aldrich",
-    //     url: "/wiki/JJ_Aldrich",
-    //   },
-    //   {
-    //     name: "Montana De La Rosa",
-    //     url: "/wiki/Montana_De_La_Rosa",
-    //   },
-    //   {
-    //     name: "Mateusz Gamrot",
-    //     url: "/wiki/Mateusz_Gamrot",
-    //   },
-    //   {
-    //     name: "Rafael Fiziev",
-    //     url: "/wiki/Rafael_Fiziev",
-    //   },
-    //   {
     //     name: "Bryce Mitchell",
     //     url: "/wiki/Bryce_Mitchell",
     //   },
@@ -192,14 +144,6 @@ inputFighters = [
     //     url: "/wiki/Josefine_Lindgren_Knutsson",
     //   },
     //   {
-    //     name: "Sean Strickland",
-    //     url: "/wiki/Sean_Strickland",
-    //   },
-    //   {
-    //     name: "Israel Adesanya (c)",
-    //     url: "/wiki/Israel_Adesanya",
-    //   },
-    //   {
     //     name: "Alexander Volkov",
     //     url: "/wiki/Alexander_Volkov_(fighter)",
     //   },
@@ -218,10 +162,6 @@ inputFighters = [
     //   {
     //     name: "Austen Lane",
     //     url: "/wiki/Austen_Lane",
-    //   },
-    //   {
-    //     name: "Tyson Pedro",
-    //     url: "/wiki/Tyson_Pedro",
     //   },
     //   {
     //     name: "Carlos Ulberg",
@@ -248,10 +188,6 @@ inputFighters = [
     //     url: "/wiki/Shane_Young",
     //   },
     //   {
-    //     name: "Ciryl Gane",
-    //     url: "/wiki/Ciryl_Gane",
-    //   },
-    //   {
     //     name: "Sergey Spivak",
     //     url: "/wiki/Sergey_Spivak",
     //   },
@@ -260,120 +196,8 @@ inputFighters = [
     //     url: "/wiki/Manon_Fiorot",
     //   },
     //   {
-    //     name: "Rose Namajunas",
-    //     url: "/wiki/Rose_Namajunas",
-    //   },
-    //   {
     //     name: "Thiago Moisés",
     //     url: "/wiki/Thiago_Mois%C3%A9s",
-    //   },
-    //   {
-    //     name: "Volkan Oezdemir",
-    //     url: "/wiki/Volkan_Oezdemir",
-    //   },
-    //   {
-    //     name: "Taylor Lapilus",
-    //     url: "/wiki/Taylor_Lapilus",
-    //   },
-    //   {
-    //     name: "Joselyne Edwards",
-    //     url: "/wiki/Joselyne_Edwards",
-    //   },
-    //   {
-    //     name: "Zarah Fairn",
-    //     url: "/wiki/Zarah_Fairn",
-    //   },
-    //   {
-    //     name: "Max Holloway",
-    //     url: "/wiki/Max_Holloway",
-    //   },
-    //   {
-    //     name: "Jung Chan-sung",
-    //     url: "/wiki/The_Korean_Zombie",
-    //   },
-    //   {
-    //     name: "Anthony Smith",
-    //     url: "/wiki/Anthony_Smith_(fighter)",
-    //   },
-    //   {
-    //     name: "Ryan Spann",
-    //     url: "/wiki/Ryan_Spann",
-    //   },
-    //   {
-    //     name: "Giga Chikadze",
-    //     url: "/wiki/Giga_Chikadze",
-    //   },
-    //   {
-    //     name: "Alex Caceres",
-    //     url: "/wiki/Alex_Caceres",
-    //   },
-    //   {
-    //     name: "Rinya Nakamura",
-    //     url: "/wiki/Rinya_Nakamura",
-    //   },
-    //   {
-    //     name: "Erin Blanchfield",
-    //     url: "/wiki/Erin_Blanchfield",
-    //   },
-    //   {
-    //     name: "Taila Santos",
-    //     url: "/wiki/Taila_Santos",
-    //   },
-    //   {
-    //     name: "Parker Porter",
-    //     url: "/wiki/Parker_Porter",
-    //   },
-    //   {
-    //     name: "Michał Oleksiejczuk",
-    //     url: "/wiki/Micha%C5%82_Oleksiejczuk",
-    //   },
-    //   {
-    //     name: "Chidi Njokuani",
-    //     url: "/wiki/Chidi_Njokuani",
-    //   },
-    //   {
-    //     name: "Song Kenan",
-    //     url: "/wiki/Song_Kenan",
-    //   },
-    //   {
-    //     name: "JJ Aldrich",
-    //     url: "/wiki/JJ_Aldrich",
-    //   },
-    //   {
-    //     name: "Choi Seung-woo",
-    //     url: "/wiki/Seung_Woo_Choi",
-    //   },
-    //   {
-    //     name: "Sean O'Malley",
-    //     url: "/wiki/Sean_O%27Malley_(fighter)",
-    //   },
-    //   {
-    //     name: "Aljamain Sterling (c)",
-    //     url: "/wiki/Aljamain_Sterling",
-    //   },
-    //   {
-    //     name: "Zhang Weili (c)",
-    //     url: "/wiki/Zhang_Weili",
-    //   },
-    //   {
-    //     name: "Amanda Lemos",
-    //     url: "/wiki/Amanda_Lemos",
-    //   },
-    //   {
-    //     name: "Mario Bautista",
-    //     url: "/wiki/Mario_Bautista",
-    //   },
-    //   {
-    //     name: "Marlon Vera",
-    //     url: "/wiki/Marlon_Vera",
-    //   },
-    //   {
-    //     name: "Pedro Munhoz",
-    //     url: "/wiki/Pedro_Munhoz",
-    //   },
-    //   {
-    //     name: "Brad Tavares",
-    //     url: "/wiki/Brad_Tavares",
     //   },
     //   {
     //     name: "Chris Weidman",
@@ -412,18 +236,6 @@ inputFighters = [
     //     url: "/wiki/Maryna_Moroz",
     //   },
     //   {
-    //     name: "Vicente Luque",
-    //     url: "/wiki/Vicente_Luque",
-    //   },
-    //   {
-    //     name: "Rafael dos Anjos",
-    //     url: "/wiki/Rafael_dos_Anjos",
-    //   },
-    //   {
-    //     name: "Cub Swanson",
-    //     url: "/wiki/Cub_Swanson",
-    //   },
-    //   {
     //     name: "Hakeem Dawodu",
     //     url: "/wiki/Hakeem_Dawodu",
     //   },
@@ -458,10 +270,6 @@ inputFighters = [
     //   {
     //     name: "Montserrat Ruiz",
     //     url: "/wiki/Montserrat_Ruiz",
-    //   },
-    //   {
-    //     name: "Cory Sandhagen",
-    //     url: "/wiki/Cory_Sandhagen",
     //   },
     //   {
     //     name: "Rob Font",
@@ -540,40 +348,8 @@ inputFighters = [
     //     url: "/wiki/Ode%27_Osbourne",
     //   },
     //   {
-    //     name: "Justin Gaethje",
-    //     url: "/wiki/Justin_Gaethje",
-    //   },
-    //   {
-    //     name: "Dustin Poirier",
-    //     url: "/wiki/Dustin_Poirier",
-    //   },
-    //   {
-    //     name: "Alex Pereira",
-    //     url: "/wiki/Alex_Pereira",
-    //   },
-    //   {
-    //     name: "Jan Błachowicz",
-    //     url: "/wiki/Jan_B%C5%82achowicz",
-    //   },
-    //   {
-    //     name: "Derrick Lewis",
-    //     url: "/wiki/Derrick_Lewis",
-    //   },
-    //   {
     //     name: "Marcos Rogério de Lima",
     //     url: "/wiki/Marcos_Rog%C3%A9rio_de_Lima",
-    //   },
-    //   {
-    //     name: "Tony Ferguson",
-    //     url: "/wiki/Tony_Ferguson",
-    //   },
-    //   {
-    //     name: "Kevin Holland",
-    //     url: "/wiki/Kevin_Holland",
-    //   },
-    //   {
-    //     name: "Michael Chiesa",
-    //     url: "/wiki/Michael_Chiesa",
     //   },
     //   {
     //     name: "Trevin Giles",
@@ -608,10 +384,6 @@ inputFighters = [
     //     url: "/wiki/Priscila_Cachoeira",
     //   },
     //   {
-    //     name: "Tom Aspinall",
-    //     url: "/wiki/Tom_Aspinall",
-    //   },
-    //   {
     //     name: "Marcin Tybura",
     //     url: "/wiki/Marcin_Tybura",
     //   },
@@ -626,14 +398,6 @@ inputFighters = [
     //   {
     //     name: "Nathaniel Wood",
     //     url: "/wiki/Nathaniel_Wood_(fighter)",
-    //   },
-    //   {
-    //     name: "Andre Fili",
-    //     url: "/wiki/Andre_Fili",
-    //   },
-    //   {
-    //     name: "Paul Craig",
-    //     url: "/wiki/Paul_Craig",
     //   },
     //   {
     //     name: "André Muniz",
@@ -674,10 +438,6 @@ inputFighters = [
     //   {
     //     name: "Makhmud Muradov",
     //     url: "/wiki/Makhmud_Muradov",
-    //   },
-    //   {
-    //     name: "Bryan Barberena",
-    //     url: "/wiki/Bryan_Barberena",
     //   },
     //   {
     //     name: "Ketlen Vieira",
