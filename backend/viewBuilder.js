@@ -3,7 +3,9 @@ const { findRankAtTime, findAllRanksForFighter } = require('./findRank.js');
 const { divisionAbbreviation, removeDiacritics } = require('./stringAndHtmlHelper.js');
 const fileHelper = require('./fileHelper.js');
 
+let missingFighterLogs = [];
 const buildRankingsHtml = function (pages) {
+  missingFighterLogs = [];
   pages.forEach((x) => {
     x.divisions = getSortedDivisions(x.divisions);
   });
@@ -156,7 +158,7 @@ function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeN
 
   if (!fighterFileMatch) {
     notFoundFileNames[expectedFileName] = true;
-    console.log(`"${expectedFileName}": "missing"`);
+    missingFighterLogs.push(`"${expectedFileName}": "missing"`);
     return `<span class="name">${fighterName}</span>`;
   }
 
