@@ -43,18 +43,7 @@ async function scrapeListOfFighters(inputFighters) {
 //Potential name issues: Jacare Souza, Fabricio Werdum, Rogerio Nogueira
 
 inputFighters = [
-    //   {
-    //     name: "Bryce Mitchell",
-    //     url: "/wiki/Bryce_Mitchell",
-    //   },
-    //   {
-    //     name: "Dan Ige",
-    //     url: "/wiki/Dan_Ige",
-    //   },
-    //   {
-    //     name: "Marina Rodriguez",
-    //     url: "/wiki/Marina_Rodriguez",
-    //   },
+
     //   {
     //     name: "Michelle Waterson-Gomez",
     //     url: "/wiki/Michelle_Waterson-Gomez",
