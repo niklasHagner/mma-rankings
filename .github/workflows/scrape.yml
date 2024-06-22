@@ -1,8 +1,6 @@
-name: Curl URL and Save to HTML
-
 on:
   schedule:
-    - cron: '0 13 * * *' # Runs every day at 13:00
+    - cron: '0 13 * * 1,6' # Runs every Monday and Saturday at 13:00
 
 jobs:
   curl-and-save:
@@ -12,9 +10,19 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Curl URL and save to HTML
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9' # Specify the Python version you need
+
+    - name: Install Python dependencies
       run: |
-        curl https://en.wikipedia.org/wiki/List_of_UFC_events --output data/upcoming-events.html --fail
+        python -m pip install --upgrade pip
+        pip install requests beautifulsoup4
+
+    - name: Run scrapeUpcomingEventsUrl.py
+      run: |
+        python scrapeUpcomingEventsUrl.py
 
     - name: Commit and push if it changed
       run: |
