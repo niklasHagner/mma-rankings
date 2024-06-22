@@ -2,7 +2,7 @@ name: Curl URL and Save to HTML
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs every day at 00:00
+    - cron: '0 13 * * *' # Runs every day at 13:00
 
 jobs:
   curl-and-save:
@@ -10,7 +10,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Curl URL and save to HTML
       run: |
