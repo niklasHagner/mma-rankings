@@ -120,12 +120,13 @@ app.get('/', async function (req, res, next) {
   };
   viewModel.events = await getEvents(rankData);
   viewModel.fightersWithProfileLinks = global.fightersWithProfileLinks;
-  const t0 = performance.now();
+  const timeBeforeRender = performance.now();
   
   res.render("events.njk", viewModel, (err, html) => {
     if (err) return next(err);
-    const t1 = performance.now();
-    console.log("Rendering events.njk took " + (t1 - t0) + " milliseconds.")
+    const timeAfterRender = performance.now();
+    const secondsTaken = ((timeAfterRender - timeBeforeRender) / 1000).toFixed(2);; // Convert milliseconds to seconds
+    console.log(`Rendering events.njk took ${secondsTaken} seconds.`)
     res.send(html);
   });
 });
@@ -200,10 +201,14 @@ async function getEvents(rankingsData) {
   const data = await wikipediaApi.getInfoAndFightersFromNextEvents();
   data.events = data.events.sort((a,b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
+  const t1 = performance.now();
   const asyncRes = await Promise.all(data.events.map(async (event) => {
     const fighters = await Promise.all(event.fighters.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, rankingsData)));
     return { ...event, fighters };
   }));
+  const t2 = performance.now();
+  const secondsTaken = ((t2 - t1) / 1000, 2).toFixed(2); // Convert milliseconds to seconds
+  console.log(`Fetching event data took ${secondsTaken} seconds.`)
   return asyncRes;
 }
 
