@@ -29,40 +29,37 @@ async function getNamesAndUrlsOfNextEventFighters() {
         const fightRows = parseSingleEventHtmlToJson(htmlForSingleEvent, eventInfo);
         return { fighters: fightRows, ...eventInfo };
     })
-    return {
-        allEvents: all
-    };
-}
+// Not part of the runtime, just the /scripts-folder
+async function getNamesAndUrlsOfFightersInPastEvents() {
+    const fileData = await fsPromises.readFile('data/pastEventsPythonScraped.json', 'utf8');
+    const rows = JSON.parse(fileData);
+    rows.forEach(row => row.url = `https://en.wikipedia.org${row.url}`);
 
-async function getNamesAndUrlsOfFightersInPastEvent(startDateString, endDateString = "2050-01-01") {
-    const startDateTime = new Date(startDateString).getTime();
-    const endDateTime = new Date(endDateString).getTime();
-    let htmlForEvents;
-    try {
-        htmlForEvents = await fs.readFileSync("data/upcoming-events.html", "utf8");
-    } catch (error) {
-        return;
-    }
-    let rows = await parseWikipediaPastEventsToJson(htmlForEvents);
-
-    rows = rows.filter((row) => {
-        const dateTime = new Date(row.date).getTime();
-        return dateTime >= startDateTime && dateTime < endDateTime;
+    //A big event is named 'UFC 250' so just look for the first numbered event
+    const nextBigEvent = rows.reverse().find((row) => {
+        const firstThreeChars = row.url.replace("https://en.wikipedia.org/wiki/UFC_", "").substring(0, 3);
+        return !isNaN(+firstThreeChars); // Notice the unary plus operator to convet string to number
     });
-
-    //each row contains: {eventName,url,date,venue,location}
-    const urls = rows.map(event => event.url);
-    console.log(`fetching ${urls.length} ufc event urls`);
-    const promises = urls.map(url => fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' } }).then(response => response.text()));
+    if  (nextBigEvent) {
+        nextBigEvent.isBigEvent = true;
+    }
+    const allEventObjs = rows.filter(x => x.url !== nextBigEvent.url).concat(nextBigEvent); //.slice(0, 2);
+    const promises = allEventObjs.map(event => fetch(event.url, { headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' } }).then(response => response.text()));
     const promiseResponses = await Promise.all(promises);
     const all = promiseResponses.map((htmlForSingleEvent, ix) => {
-        const eventInfo = rows[ix];
+        const eventInfo = allEventObjs[ix];
         const fightRows = parseSingleEventHtmlToJson(htmlForSingleEvent, eventInfo);
         return { fighters: fightRows, ...eventInfo };
     })
-    return {
-        allEvents: all
-    };
+
+    const returnObj = { allEvents: all }
+
+    // Save this to file for the future
+    const dataToWrite = JSON.stringify(returnObj, null, 2); // null and 2 are for formatting purposes
+    // Specify the path to the file and write the data
+    await fsPromises.writeFile('data/pastEvents.json', dataToWrite, 'utf8');
+
+    return returnObj;
 }
 
 // Same as getNamesAndUrlsOfFightersInPastEvent but without fetching 
@@ -465,7 +462,7 @@ async function scrapeFighterData(wikiPageUrl, findImages = true) {
 module.exports = {
     scrapeFighterData,
     getInfoAndFightersFromNextEvents,
-    getNamesAndUrlsOfFightersInPastEvent,
+    getNamesAndUrlsOfFightersInPastEvents,
     getNamesAndUrlsOfFightersInPastEvents_LocalFiles,
     fetchArrayOfFighters,
     findImagesForFighter
