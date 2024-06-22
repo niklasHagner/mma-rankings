@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: '0 21 * * 6' # Runs every Saturday at 21:00
+    - cron: '55 20 * * 6' # Runs every Saturday at 21:00
 
 jobs:
   curl-and-save:
@@ -10,19 +10,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9' # Specify the Python version you need
-
-    - name: Install Python dependencies
+    - name: Run scripts/curlSiteToHtml.sh
       run: |
-        python -m pip install --upgrade pip
-        pip install requests beautifulsoup4
-
-    - name: Run scrapeEventUrls.py
-      run: |
-        python scripts/scrapeEventToJson.py
+        chmod +x scripts/curlSiteToHtml.sh
+        ./scripts/curlSiteToHtml.sh
 
     - name: Commit and push if it changed
       run: |
