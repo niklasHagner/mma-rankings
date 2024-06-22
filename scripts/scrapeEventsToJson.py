@@ -20,7 +20,7 @@ def past_events_to_file():
     rows = soup.select("#Past_events tr")
 
     # Comparison date
-    comp_date = datetime.strptime("2024-01-13", "%Y-%m-%d")
+    comp_date = datetime.strptime("2024-06-21", "%Y-%m-%d")
 
     # Filter rows based on conditions
     good_rows = []

@@ -56,7 +56,7 @@ async function scrapeListOfFighters(inputFighters) {
 //Potential name issues: Jacare Souza, Fabricio Werdum, Rogerio Nogueira
 // { "name": "Carlston Harris", "url": "/wiki/Carlston_Harris" },
 
-// Updated 2024-06-22
+// Updated 2024-06-21
 let inputFighters = [
     
     {
