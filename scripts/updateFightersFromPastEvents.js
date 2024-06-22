@@ -32,13 +32,16 @@ async function scrapeListOfFighters() {
 //     ]
 //   }
 
-  const pastEventObj = await wikipediaApi.getNamesAndUrlsOfFightersInPastEvents_LocalFiles("2023-07-18", "2024-01-14");
+  const pastEventObj = await wikipediaApi.getNamesAndUrlsOfFightersInPastEvents();
   const allEvents = pastEventObj.allEvents;
   let inputFighters = allEvents.map(event => event.fighters).flat().filter(x => x.url);
   inputFighters = uniqueBy(inputFighters, "url");
+  inputFighters = inputFighters.sort((a, b) => a.name.localeCompare(b.name));
   console.log("inputFighters:", inputFighters);
 
   debugger; //Set a debugger here to grab the list of fighters that need scraping. Example data: [{ name: 'Matt Brown', url: '/wiki/Matt_Brown_(fighter)' } ]
+
+  // You probably wanna copy these to scripts/scrapeListOfFighters.js instead of resuming
 
   const readExistingFromFile = false;
   const allowFetchingMissingFighters = true;

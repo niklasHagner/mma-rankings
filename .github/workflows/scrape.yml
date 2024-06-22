@@ -22,7 +22,7 @@ jobs:
 
     - name: Run scrapeEventUrls.py
       run: |
-        python scrapeEventUrls.py
+        python scripts/scrapeEventToJson.py
 
     - name: Commit and push if it changed
       run: |
