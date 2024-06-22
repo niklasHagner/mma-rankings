@@ -149,7 +149,7 @@ app.get('/fighter/:name', async function (req, res, next) {
   let encodedName = encodeURIComponent(name);
   let fighter = await fileHelper.readFileByShortFileName(encodedName);
   if (!fighter) {
-    return res.render("404.njk");
+    return res.status(404).render("404.njk");
   }
   fighter = await viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData);
   const viewModel = { 
@@ -195,6 +195,11 @@ app.get('/mma-stats-by-date', async function (req, res) {
 
   const json = await mmaStatsScraper.scrapeMmaStats(req.query.date);
   res.send(json);
+});
+
+// Catch-all for routes that are not found
+app.use((req, res, next) => {
+    return res.status(404).render("404.njk");
 });
 
 async function getEvents(rankingsData) {
