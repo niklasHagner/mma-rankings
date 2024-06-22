@@ -16,7 +16,7 @@
       "type": "node",
       "request": "launch",
       "name": "Node current file",
-      "runtimeExecutable": "/${userHome}/.nvm/versions/node/v20.9.0/bin/node",
+      "runtimeExecutable": "/${userHome}/.nvm/versions/node/v20.12.1/bin/node",
       "program": "${file}",
       "restart": true,
       "console": "integratedTerminal",
