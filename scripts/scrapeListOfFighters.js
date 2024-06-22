@@ -43,15 +43,6 @@ async function scrapeListOfFighters(inputFighters) {
 //Potential name issues: Jacare Souza, Fabricio Werdum, Rogerio Nogueira
 
 inputFighters = [
-
-    //   {
-    //     name: "Michelle Waterson-Gomez",
-    //     url: "/wiki/Michelle_Waterson-Gomez",
-    //   },
-    //   {
-    //     name: "Charles Jourdain",
-    //     url: "/wiki/Charles_Jourdain",
-    //   },
     //   {
     //     name: "Ricardo Ramos",
     //     url: "/wiki/Ricardo_Ramos_(fighter)",
@@ -175,10 +166,6 @@ inputFighters = [
     //   {
     //     name: "Shane Young",
     //     url: "/wiki/Shane_Young",
-    //   },
-    //   {
-    //     name: "Sergey Spivak",
-    //     url: "/wiki/Sergey_Spivak",
     //   },
     //   {
     //     name: "Manon Fiorot",
