@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const nunjucks = require("nunjucks");
 const fs = require('fs');
+const path = require('path');
 const winston = require('winston');
 const moment = require("moment");
 
@@ -97,14 +98,13 @@ winston.configure({
   ]
 })
 
-var settings = {
-  logOutputOnce: true,
-  loggedResponses: 0,
-  caching: false,
-  storedResponses: {}, //keymap
-}
-
 app.get('/', async function (req, res, next) {
+  // --- RENDER STATIC index.html ---
+  const storedHtml = path.join(__dirname, 'data', 'index.html');
+  // Send the file to the client
+  return res.sendFile(storedHtml);
+  
+  // --- NORMAL NJK RENDERING ---
   const rankData = global.rankData;
   const rankingsHtmlString = viewBuilder.buildRankingsHtml(rankData.dates);
   const viewModel = {};

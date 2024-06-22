@@ -1,11 +1,12 @@
-# curls https://ufc.onrender.com/ and saves index.html to data-folder IF it returns 200. Otherwise try again in 1 minuteBelow is a Bash script that curls https://ufc.onrender.com/, checks if the response code is 200, and saves the output to index.html in a directory named `data-folder`. If the response code is not 200, the script will retry every minute.
 #!/bin/bash
 
-# Define the URL, output directory, and file
-URL="https://ufc.onrender.com/"
-OUTPUT_FILE="..data/index.html"
+# Define necessary variables
+URL="http://example.com"
+OUTPUT_FILE="../data/index.html"
 
 curlAttemptCount=0
+
+echo "Curling: $URL."
 
 # Function to curl and check the HTTP status code
 fetch_content() {
@@ -15,20 +16,20 @@ fetch_content() {
     HTTP_STATUS=$(curl -o "$OUTPUT_FILE" -s -w "%{http_code}" "$URL")
 
     if [ "$HTTP_STATUS" -eq 200 ]; then
-        echo "Successfully saved index.html to ${OUTPUT_DIR}"
-        exit 0
+        echo "Successfully saved data/index.html"
     else
         echo "Failed with status code: $HTTP_STATUS."
         
-        # Try again after 1 minute...at least once
-        if [[ $curlAttemptCount -le 3 ]]; then
+        # Try again after 1 minute, up to 3 times
+        if [ $curlAttemptCount -le 3 ]; then
             echo "Retrying in 1 minute..."
             sleep 60
             fetch_content
+        else
+            echo "Failed to fetch content after 3 attempts."
+            return 1 # Use return instead of exit to allow for future script extension
         fi
-    
-
     fi
 }
 
-fetch_content
+fetch_content || echo "Fetching content failed."

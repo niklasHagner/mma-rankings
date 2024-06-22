@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: '55 20 * * 6' # Runs every Saturday at 21:00
+    - cron: '20 21 * * 6' # Runs every Saturday at 21:20
 
 jobs:
   curl-and-save:
