@@ -1,26 +1,36 @@
 const fs = require('fs');
+const fsPromises = require('fs').promises;
 const { parseWikipediaFightRecordTableToJson, parseWikipediaFutureEventsToJson, parseWikipediaPastEventsToJson, parseSingleEventHtmlToJson } = require('./wikipediaTableParser.js');
 const HTMLParser = require('node-html-parser');
 const gisImageSearch = require("g-i-s");
 const fileHelper = require("./fileHelper.js");
 const { stripTagsAndDecode, removeUnwantedTagsFromHtmlNode } = require("./stringAndHtmlHelper.js");
 
+// Either A) serve previously saved events.json
+// Or B) Scrape list of urls from python file, and save to events.json and serve
 async function getNamesAndUrlsOfNextEventFighters() {
-    let htmlForEvents;
-    try {
-        htmlForEvents = await fs.readFileSync("data/upcoming-events.html", "utf8");
-    } catch (error) {
-        return;
-    }
-    const rows = await parseWikipediaFutureEventsToJson(htmlForEvents);
 
-    //each row contains: {eventName,url,date,venue,location}
+    // --- OFFLINE ---
+    const fileExists = fs.existsSync('data/events.json');
+    if (fileExists) {
+        const fileData = await fsPromises.readFile('data/events.json', 'utf8');
+        return JSON.parse(fileData); // Return the parsed JSON
+    }
+
+    // --- ONLINE ---
+
+    const fileData = await fsPromises.readFile('data/futureEventsPythonScraped.json', 'utf8');
+    const rows = JSON.parse(fileData);
+    rows.forEach(row => row.url = `https://en.wikipedia.org${row.url}`);
+
+    //A big event is named 'UFC 250' so just look for the first numbered event
     const nextBigEvent = rows.reverse().find((row) => {
-        const name = row.eventName.split(":")[0].replace("UFC ", "");
-        //A big event is named 'UFC 200' or 'UFC 260: X vs Y'. But not 'UFC Fight Night 50'
-        return name.length < 5;
+        const firstThreeChars = row.url.replace("https://en.wikipedia.org/wiki/UFC_", "").substring(0, 3);
+        return !isNaN(+firstThreeChars); // Notice the unary plus operator to convet string to number
     });
-    nextBigEvent.isBigEvent = true;
+    if  (nextBigEvent) {
+        nextBigEvent.isBigEvent = true;
+    }
     const allEventObjs = rows.filter(x => x.url !== nextBigEvent.url).concat(nextBigEvent); //.slice(0, 2);
     const promises = allEventObjs.map(event => fetch(event.url, { headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' } }).then(response => response.text()));
     const promiseResponses = await Promise.all(promises);
@@ -29,6 +39,17 @@ async function getNamesAndUrlsOfNextEventFighters() {
         const fightRows = parseSingleEventHtmlToJson(htmlForSingleEvent, eventInfo);
         return { fighters: fightRows, ...eventInfo };
     })
+
+    const returnObj = { allEvents: all }
+
+    // Save this to file for the future
+    const dataToWrite = JSON.stringify(returnObj, null, 2); // null and 2 are for formatting purposes
+    // Specify the path to the file and write the data
+    await fsPromises.writeFile('data/events.json', dataToWrite, 'utf8');
+
+    return returnObj;
+}
+
 // Not part of the runtime, just the /scripts-folder
 async function getNamesAndUrlsOfFightersInPastEvents() {
     const fileData = await fsPromises.readFile('data/pastEventsPythonScraped.json', 'utf8');
@@ -63,6 +84,7 @@ async function getNamesAndUrlsOfFightersInPastEvents() {
 }
 
 // Same as getNamesAndUrlsOfFightersInPastEvent but without fetching 
+// Obsolete as of june 2024 💀
 async function getNamesAndUrlsOfFightersInPastEvents_LocalFiles(startDateString, endDateString = "2050-01-01") {
     const startDateTime = new Date(startDateString).getTime();
     const endDateTime = new Date(endDateString).getTime();
@@ -79,7 +101,7 @@ async function getNamesAndUrlsOfFightersInPastEvents_LocalFiles(startDateString,
         return dateTime >= startDateTime && dateTime < endDateTime;
     })
 
-    const all = rows.map((row) => {
+    const allEvents = rows.map((row) => {
         const eventInfo = row;
         //each row contains: eventName,url,date,venue,location
         let htmlForSingleEvent = '';
@@ -96,7 +118,7 @@ async function getNamesAndUrlsOfFightersInPastEvents_LocalFiles(startDateString,
     });
 
     return {
-        allEvents: all
+        allEvents
     };
 }
 
@@ -113,7 +135,7 @@ async function getInfoAndFightersFromNextEvents() {
 
 const FIGHTERS_TO_LOOKUP = 12;
 async function getInfoAndFightersFromSingleEvent(event) {
-    console.log("\nFighters in next event: ", event.fighters.map(x => x.name).join(","), "\n");
+    console.log("\nFighters in", event.eventName, event.fighters.map(x => x.name).join(","), "\n");
 
     //Work in pairs. Look up both fighters, or neither.
     const fighters = event.fighters;
