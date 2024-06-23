@@ -16,20 +16,14 @@ const { missingFightersHashMap, aliasesToFileNameHashMap } = require('./data/all
 
 const mmaStatsJsonRaw = fs.readFileSync("data/mmaStats.json");
 const mmaStatsJson = JSON.parse(mmaStatsJsonRaw);
-const lastScapedStatsDate = mmaStatsJson.dates[0].date;
-console.log(`The last rank is dated ${lastScapedStatsDate}. Maybe it's time to run 'npm run scrapeLatestRankings'`);
-
+global.rankData = mmaStatsJson;
 global.fightersWithProfileLinks = JSON.parse(fs.readFileSync("data/allFighters.json"));
 global.missingFightersHashMap = missingFightersHashMap;
 global.aliasesToFileNameHashMap = aliasesToFileNameHashMap;
-
-// To make lookups easier use fileName as key
-global.fightersWithProfileLinks_hashMap = global.fightersWithProfileLinks.reduce((map, obj) => {
+global.fightersWithProfileLinks_hashMap = global.fightersWithProfileLinks.reduce((map, obj) => { // Use fileName as key - to simplify lookups. Example: 'Jos%C3%A9Aldo.json
     map[obj.fileName] = obj;
     return map;
 }, {});
-
-global.rankData = JSON.parse(fs.readFileSync("data/mmaStats.json"));
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -98,6 +92,9 @@ winston.configure({
   ]
 })
 
+// This function has two variants
+// Static: index.html
+// Dynamic: events.njk. This takes about 25 seconds to render due to hundreds of fighter lookup calls
 app.get('/', async function (req, res, next) {
   // --- RENDER STATIC index.html ---
   const storedHtml = path.join(__dirname, 'data', 'index.html');
@@ -135,11 +132,8 @@ app.get('/searchForNameAndDate', function (req, res) {
   const name = req.query.name || "Jon Jones";
   const date = req.query.date || "2016-01-02";
 
-  let rawdata = fs.readFileSync("data/mmaStats.json");
-  let data = JSON.parse(rawdata);
-  const rank = findRankAtTime(data, name, date);
-  const jsonResult = { "mostRecentMatch": rank };
-  return res.json(jsonResult);
+  const rank = findRankAtTime(global.rankData, name, date);
+  return res.json({ "mostRecentMatch": rank });
 });
 
 //name should a match a filename in data/fighters/*.json 
@@ -216,6 +210,10 @@ async function getEvents(rankingsData) {
   console.log(`Fetching event data took ${secondsTaken} seconds.`)
   return asyncRes;
 }
+
+// Startup 
+const lastScapedStatsDate = global.rankData.dates[0].date;
+console.log(`The last rank is dated ${lastScapedStatsDate}. Maybe it's time to run 'npm run scrapeLatestRankings'`);
 
 var port = process.env.PORT || 8001;
 console.log('Server listening on:' + port);

@@ -1,13 +1,14 @@
 const fs = require('fs');
 const fsPromises = require('fs').promises;
-const { parseWikipediaFightRecordTableToJson, parseWikipediaFutureEventsToJson, parseWikipediaPastEventsToJson, parseSingleEventHtmlToJson } = require('./wikipediaTableParser.js');
+const { parseWikipediaFightRecordTableToJson, parseWikipediaPastEventsToJson, parseSingleEventHtmlToJson } = require('./wikipediaTableParser.js');
 const HTMLParser = require('node-html-parser');
 const gisImageSearch = require("g-i-s");
 const fileHelper = require("./fileHelper.js");
 const { stripTagsAndDecode, removeUnwantedTagsFromHtmlNode } = require("./stringAndHtmlHelper.js");
 
-// Either A) serve previously saved events.json
-// Or B) Scrape list of urls from python file, and save to events.json and serve
+// This function has two variants
+// Offline: reads events.json with pre-fetched data from all future events in futureEventsPythonScraped.json
+// Online: scrape urls in futureEventsPythonScraped.json
 async function getNamesAndUrlsOfNextEventFighters() {
 
     // --- OFFLINE ---
