@@ -150,9 +150,9 @@ function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeN
 
 
   if (!fighterFileMatch) {
-    lookForFightersWithAliases();
+    fighterFileMatch = lookForFightersWithAliases(fighterName);
     if (fighterFileMatch) {
-        console.log(`"${expectedFileName}": "${fighterFileMatch.fileName}"`);
+      console.log(`"${expectedFileName}": "${fighterFileMatch.fileName}"`);
     }
   }
 
@@ -165,28 +165,25 @@ function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeN
   const fighterLink = fighterFileMatch ? `/fighter/${fighterFileMatch.fileName.replace(".json", "")}` : null;
   const html = fighterLink ? `<a href="${fighterLink}" class="name">${fighterName}</a>` : `<span class="name">${fighterName}</span>`;
   return html;
+}
 
-  function lookForFightersWithAliases() {
-    for(let i=0; i<global.fightersWithProfileLinks.length; i++) {
-      const fighter = global.fightersWithProfileLinks[i];
-      if (fighter?.fighterAnsiName?.toLowerCase() === removeDiacritics(fighterName.toLowerCase())) {
-        fighterFileMatch = fighter;
-      } else if (fighter?.wikipediaNameWithDiacritics?.toLowerCase() === fighterName.toLowerCase()) {
-        fighterFileMatch = fighter;
-      } else if (fighter?.alternativeName) {
-        if (fighter?.alternativeName?.toLowerCase() == mmaStatsName?.toLowerCase() || fighter?.alternativeName?.toLowerCase() === fighterName?.toLowerCase()) {
-          fighterFileMatch = fighter;
-        }
-      } else if (fighter?.mmaStatsName) {
-        if (fighter?.mmaStatsName?.toLowerCase() == mmaStatsName?.toLowerCase() || fighter?.mmaStatsName?.toLowerCase() === fighterName?.toLowerCase()) {
-            fighterFileMatch = fighter;
-        }
+function lookForFightersWithAliases(fighterName) {
+  for(let i=0; i<global.fightersWithProfileLinks.length; i++) {
+    const fighter = global.fightersWithProfileLinks[i];
+    if (fighter?.fighterAnsiName?.toLowerCase() === removeDiacritics(fighterName.toLowerCase())) {
+      return fighter;
+    } else if (fighter?.wikipediaNameWithDiacritics?.toLowerCase() === fighterName.toLowerCase()) {
+      return fighter;
+    } else if (fighter?.alternativeName) {
+      if (fighter?.alternativeName?.toLowerCase() == mmaStatsName?.toLowerCase() || fighter?.alternativeName?.toLowerCase() === fighterName?.toLowerCase()) {
+        return fighter;
       }
-        
-      if (fighterFileMatch) {
-        break;
+    } else if (fighter?.mmaStatsName) {
+      if (fighter?.mmaStatsName?.toLowerCase() == mmaStatsName?.toLowerCase() || fighter?.mmaStatsName?.toLowerCase() === fighterName?.toLowerCase()) {
+        return fighter;
       }
     }
+    break;
   }
 }
 
@@ -272,4 +269,4 @@ async function extendFighterApiDataWithRecordInfo(fighter, allRankingsData) {
   return fighter;
 }
 
-module.exports = { buildRankingsHtml, getFighterNameOrLinkHtml, extendFighterApiDataWithRecordInfo }
+module.exports = { buildRankingsHtml, getFighterNameOrLinkHtml, extendFighterApiDataWithRecordInfo, lookForFightersWithAliases }
