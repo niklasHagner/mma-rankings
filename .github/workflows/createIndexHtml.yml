@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: '20 21 * * 6' # Runs every Saturday at 21:20
+    - cron: '30 15 * * 0' # Runs every Sunday at 15:30
 
 jobs:
   curl-and-save:
@@ -10,10 +10,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Run scripts/curlSiteToHtml.sh
+    - name: Run scripts/createIndexHtml.sh
       run: |
-        chmod +x scripts/curlSiteToHtml.sh
-        ./scripts/curlSiteToHtml.sh
+        chmod +x scripts/createIndexHtml.sh
+        ./scripts/createIndexHtml.sh
 
     - name: Commit and push if it changed
       run: |

@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: '15 21 * * 6' # Runs every Saturday at 21:15
+    - cron: '20 15 * * 0' # Runs every Sunday at 15:20
 
 jobs:
   curl-and-save:
@@ -20,9 +20,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests beautifulsoup4
 
-    - name: Run scrapeEventUrls.py
+    - name: Run Python script
       run: |
-        python scripts/scrapeEventToJson.py
+        python scripts/scrapeEventsToJson.py
 
     - name: Commit and push if it changed
       run: |
