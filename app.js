@@ -116,12 +116,12 @@ winston.configure({
 // Static: index.html
 // Dynamic: events.njk. This takes about 25 seconds to render due to hundreds of fighter lookup calls
 app.get('/', async function (req, res, next) {
-  // --- RENDER STATIC index.html ---
-  const storedHtml = path.join(__dirname, 'data', 'index.html');
-  // Send the file to the client
-  return res.sendFile(storedHtml);
+  // --- STATIC index.html ---
+//   const storedHtml = path.join(__dirname, 'data', 'index.html');
+//   // Send the file to the client
+//   return res.sendFile(storedHtml);
   
-  // --- NORMAL NJK RENDERING ---
+  // --- DYNAMIC TEMPLATE RENDERING ---
   const rankData = global.rankData;
   const rankingsHtmlString = viewBuilder.buildRankingsHtml(rankData.dates);
   const viewModel = {};
