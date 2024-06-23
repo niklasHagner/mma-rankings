@@ -119,9 +119,11 @@ function setupSingleApexChart(fighterEl) {
     yaxis: {
       reversed: true,
       min: 0,
-      max: 15,
-      tickAmount: 6,
-      forceNiceScale: true, //combined with tickamount 6 or 7 results in: 0, 3, 6, 9, 12, 15
+      max: 16, // Rankings end at 15 but an even max number is required to have stepSize: 2
+      stepSize: 2, // C, 2, 4, 6...
+      labels: {
+        formatter: (val) => { if (val === 0) return "C"; return val }, // Format 0 to C for champion
+      },
     }
   };
 
