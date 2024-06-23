@@ -333,6 +333,7 @@ table tr {
         font-weight: normal;
         font-family: 'Caveat', cursive;
         text-shadow: 2px 4px 1px #4c2685;
+        white-space: nowrap;
     }
 }
 
@@ -345,6 +346,10 @@ table tr {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media only screen and (max-width:600px) { 
+        display: block;
+    }
 }
 
 .site-title a {

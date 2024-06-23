@@ -3,7 +3,7 @@
 
 
 {% macro renderEvent(event, isEventInPast) %}
-  <time>{% if event.isBigEvent %}Next big event: {% endif %}{% if isEventInPast %}Last event: {% endif %}{{ event.date }}</time>
+  {% if not isEventInPast %}<time>{% if event.isBigEvent %}Next big event: {% endif %}{{ event.date }}</time>{% endif %}
   <section class="ufc-card">
     <h1 class="{{ "post-title event-title big-event" if event.isBigEvent else "post-title event-title" }}">
       {{ event.eventName }}
