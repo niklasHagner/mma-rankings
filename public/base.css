@@ -319,23 +319,32 @@ table tr {
 
 .site-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 5px 20px;
     background: #23275870;
     font-family: 'Avenir', sans-serif;
     border-top: solid 2px #4c2685;
+
+    .logo {
+        display: inline-block;
+        color: white;
+        font-size: 37px;
+        font-weight: normal;
+        font-family: 'Caveat', cursive;
+        text-shadow: 2px 4px 1px #4c2685;
+    }
 }
 
-.site-header .logo {
-    display: inline-block;
-    margin: 0 auto;
-    color: black;
-    font-weight: normal;
-    font-size: 37px;
-    text-shadow: 2px 4px 1px #4c2685;
-    color: white;
-    font-family: 'Avenir', sans-serif;
+.site-header-inner {
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .site-title a {
@@ -487,7 +496,8 @@ table tr {
     .site-header {
         padding-top: 40px
     }
-    .page-title, .post-title {
+    .page-title, 
+    .post-title {
         font-size: 48px;
         line-height: 1.2;
         word-wrap: break-word;
@@ -593,4 +603,14 @@ h2.post-description {
     margin: 20px 0;
     background: #444;
     display: inline-block;
+}
+
+.search-results {
+    &::before {
+        content: "Search results: ";
+        font-weight: 700;
+    }
+
+    padding: 15px;
+    background: #23275870;
 }

@@ -8,6 +8,7 @@ const moment = require("moment");
 
 const mmaStatsScraper = require('./backend/scrapeMmaStatsDotCom');
 const { findRankAtTime, getCurrentRank } = require('./backend/findRank.js');
+const { search } = require('./backend/search.js');
 const wikipediaApi = require('./backend/wikipediaApi.js');
 const viewBuilder = require('./backend/viewBuilder.js');
 const fileHelper = require('./backend/fileHelper.js');
@@ -148,6 +149,10 @@ app.get('/', async function (req, res, next) {
   });
 });
 
+// user input search
+app.get('/search', search);
+  
+// Look up ranking of an opponent at the time of the fight
 app.get('/searchForNameAndDate', function (req, res) {
   const name = req.query.name || "Jon Jones";
   const date = req.query.date || "2016-01-02";
@@ -183,20 +188,20 @@ app.get('/rankings', async function (req, res, next) {
     const viewModel = {};
     viewModel.rankings = {
         allRankings: {
-          dates: rankData.dates,
-          htmlString: rankingsHtmlString, 
+            dates: rankData.dates,
+            htmlString: rankingsHtmlString, 
         },
         latestRankings: {
-          ...rankData.dates[0],
-          htmlString: viewBuilder.buildRankingsHtml(rankData.dates.slice(0,1))
+            ...rankData.dates[0],
+            htmlString: viewBuilder.buildRankingsHtml(rankData.dates.slice(0,1))
         },
     };
-  
+
     return res.render("rankings.njk", viewModel, (err, html) => {
-      if (err) return next(err);
-      res.send(html);
+        if (err) return next(err);
+        res.send(html);
     });
-  });
+});
 
 app.get('/mma-stats-by-date', async function (req, res) {
   res.contentType('application/json');

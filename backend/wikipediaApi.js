@@ -86,42 +86,42 @@ async function getNamesAndUrlsOfFightersInPastEvents() {
 
 // Same as getNamesAndUrlsOfFightersInPastEvent but without fetching 
 // Obsolete as of june 2024 💀
-async function getNamesAndUrlsOfFightersInPastEvents_LocalFiles(startDateString, endDateString = "2050-01-01") {
-    const startDateTime = new Date(startDateString).getTime();
-    const endDateTime = new Date(endDateString).getTime();
-    let htmlForEvents;
-    try {
-        htmlForEvents = await fs.readFileSync("data/upcoming-events.html", "utf8");
-    } catch (error) {
-        return;
-    }
-    let rows = await parseWikipediaPastEventsToJson(htmlForEvents);
+// async function getNamesAndUrlsOfFightersInPastEvents_LocalFiles(startDateString, endDateString = "2050-01-01") {
+//     const startDateTime = new Date(startDateString).getTime();
+//     const endDateTime = new Date(endDateString).getTime();
+//     let htmlForEvents;
+//     try {
+//         htmlForEvents = await fs.readFileSync("data/upcoming-events.html", "utf8");
+//     } catch (error) {
+//         return;
+//     }
+//     let rows = await parseWikipediaPastEventsToJson(htmlForEvents);
 
-    rows = rows.filter((row) => {
-        const dateTime = new Date(row.date).getTime();
-        return dateTime >= startDateTime && dateTime < endDateTime;
-    })
+//     rows = rows.filter((row) => {
+//         const dateTime = new Date(row.date).getTime();
+//         return dateTime >= startDateTime && dateTime < endDateTime;
+//     })
 
-    const allEvents = rows.map((row) => {
-        const eventInfo = row;
-        //each row contains: eventName,url,date,venue,location
-        let htmlForSingleEvent = '';
-        try {
-            const eventUrl = eventInfo.url.replace("https://en.wikipedia.org/wiki/", "");
-            htmlForSingleEvent = fs.readFileSync(`data/past-events/${eventUrl}.html`, "utf8");
-        } catch (error) {
-            console.error(`Couldn't read file for ${row.url}`);
-            return;
-        }
+//     const allEvents = rows.map((row) => {
+//         const eventInfo = row;
+//         //each row contains: eventName,url,date,venue,location
+//         let htmlForSingleEvent = '';
+//         try {
+//             const eventUrl = eventInfo.url.replace("https://en.wikipedia.org/wiki/", "");
+//             htmlForSingleEvent = fs.readFileSync(`data/past-events/${eventUrl}.html`, "utf8");
+//         } catch (error) {
+//             console.error(`Couldn't read file for ${row.url}`);
+//             return;
+//         }
 
-        const fightRows = parseSingleEventHtmlToJson(htmlForSingleEvent, eventInfo);
-        return { fighters: fightRows, ...eventInfo };
-    });
+//         const fightRows = parseSingleEventHtmlToJson(htmlForSingleEvent, eventInfo);
+//         return { fighters: fightRows, ...eventInfo };
+//     });
 
-    return {
-        allEvents
-    };
-}
+//     return {
+//         allEvents
+//     };
+// }
 
 async function getInfoAndFightersFromNextEvents() {
     const data = await getNamesAndUrlsOfNextEventFighters();
@@ -486,7 +486,6 @@ module.exports = {
     scrapeFighterData,
     getInfoAndFightersFromNextEvents,
     getNamesAndUrlsOfFightersInPastEvents,
-    getNamesAndUrlsOfFightersInPastEvents_LocalFiles,
     fetchArrayOfFighters,
     findImagesForFighter
 }

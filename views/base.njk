@@ -8,6 +8,9 @@
   {% endblock %}
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
   <style>
     {{ "public/base.css" | inlineFileContent | safe }}
     {{ "public/ui.css" | inlineFileContent | safe }}
@@ -19,11 +22,22 @@
 <body class="dark">
   <main id="wrapper">
     <header class="site-header">
-      <a class="logo" href="/"><h1>MMA STATS</h1></a>
-      <nav class="top-menu">
-        <a href="/rankings">Rankings</a>
-      </nav>
+      <div class="site-header-inner">
+        <a class="logo" href="/"><h1>UFC STATS</h1></a>
+        <nav class="top-menu">
+            <a class="menu-item" href="/rankings">Rankings</a>
+            <span class="menu-item">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+            <a class="menu-item menu-item--search" href="#">Search</a>
+            <form action="/search" method="get" class="search-form hidden" style="height: 22px; display: flex; gap: 5px;">
+              <input type="search" id="search-input" class="search-input" name="query" placeholder="name">
+              <button type="submit">Search</button>
+              <button type="button" class="search-clear">Clear</button>
+            </form>
+        </nav>
+      </div>
     </header>
+              
+    <div class="search-results hidden"></div>
     
     <div class="triple-loader hidden"><div></div><div></div><div></div></div>
 

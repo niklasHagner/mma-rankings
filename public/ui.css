@@ -2,12 +2,10 @@ button {
   background: orange;
   color: #333;
   border-radius: 30px;
-  padding: 5px 10px;
   font-size: 14px;
   border: solid 1px orange;
   border-radius: 20px;
   font-weight: bold;
-  padding: 10px 12px
 }
 
 button:hover {
@@ -22,8 +20,11 @@ button:active {
 
 .top-menu {
   padding: 10px;
-  text-align: right;
-  gap: 8px;
+}
+
+.menu-item {
+  color: orange;
+  font-weight: bold;
 }
 
 #search-input {

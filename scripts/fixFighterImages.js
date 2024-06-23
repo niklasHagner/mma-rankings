@@ -1,7 +1,6 @@
 const fs = require('fs');
 
 const fileHelper = require('../backend/fileHelper.js');
-const viewBuilder = require('../backend/viewBuilder.js');
 const { findImagesForFighter } = require('../backend/wikipediaApi.js');
 
 global.fightersWithProfileLinks = JSON.parse(fs.readFileSync("data/allFighters.json"));

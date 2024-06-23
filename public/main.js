@@ -1,20 +1,44 @@
+const loader = document.querySelector(".triple-loader");
+const searchMenuItem = document.querySelector(".menu-item--search"); // toggles searchForm
+const searchInput = document.querySelector(".search-input"); // child of searchForm
+const searchForm = document.querySelector(".search-form");
+const searchResults = document.querySelector(".search-results");
+const searchClearButton = document.querySelector(".search-clear");
 
-// const searchByName = function(ev) {
-  //   ev.preventDefault();
-  //   var name = document.querySelector("#search-input").value;
-  //   renderFighterProfileByName(name);
-  // };  
-// const loader = document.querySelector(".triple-loader");
-// function setupSearch() {
-//   const searchForm = document.querySelector("#search-form");
-//   if (!searchForm) return;
+searchClearButton.addEventListener("click", function () { 
+searchResults.classList.add("hidden");
+  searchResults.innerHTML = "";
+  searchInput.value = "";
+});
 
-//   searchForm.addEventListener("submit", searchByName);
-// }
+searchMenuItem.addEventListener("click", function () {
+  searchForm.classList.toggle("hidden");
+  searchInput.focus();
+});
+
+const searchByName = async function (ev) {
+  var q = searchInput.value;
+  const response = await fetch(`/search?query=${q}`);
+  const html = await response.text();
+  searchResults.classList.remove("hidden");
+  searchResults.innerHTML = html;
+};
+
+function setupSearch() {
+  if (!searchForm) {
+    return;
+  }
+
+  searchForm.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const q = searchInput.value;
+    searchByName(q);
+  });
+}
 
 function setupAllApexCharts() {
   const fighterElements = [...document.querySelectorAll(".fighter")];
-  
+
   fighterElements.forEach(fighterEl => {
     setupSingleApexChart(fighterEl);
   });
@@ -40,23 +64,23 @@ function setupSingleApexChart(fighterEl) {
   if (!chartPlaceholderElement || !chartDataElement) {
     return;
   }
-  
+
   let unformattedSeries;
   try {
     unformattedSeries = JSON.parse(chartDataElement.getAttribute("data-dump"));
-  } catch(error) {
+  } catch (error) {
     console.log("JSON error for", fighterEl, chartDataElement.getAttribute("data-dump"));
     return;
   }
-  
+
   //Adapt data for apex
   const series = unformattedSeries.map(seriesItem => {
     const apexDataArray = seriesItem.data.map(dataPoint => {
-      return [dataPoint.isoDate, dataPoint.rank]; 
+      return [dataPoint.isoDate, dataPoint.rank];
     });
-    return {name: seriesItem.divisionShortName, data: apexDataArray };
+    return { name: seriesItem.divisionShortName, data: apexDataArray };
   });
-  
+
   console.log(series);
 
   var apexChartOptions = {
@@ -106,6 +130,6 @@ function setupSingleApexChart(fighterEl) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // setupSearch();
+  setupSearch();
   setupAllApexCharts();
 });
