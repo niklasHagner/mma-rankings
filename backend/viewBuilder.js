@@ -148,9 +148,8 @@ function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeN
      }
   }
 
-
   if (!fighterFileMatch) {
-    fighterFileMatch = lookForFightersWithAliases(fighterName);
+    fighterFileMatch = lookForFightersWithAliases(fighterName, mmaStatsName);
     if (fighterFileMatch) {
       console.log(`"${expectedFileName}": "${fighterFileMatch.fileName}"`);
     }
@@ -167,26 +166,37 @@ function getFighterNameOrLinkHtml(fighterName, mmaStatsName = null, alternativeN
   return html;
 }
 
-function lookForFightersWithAliases(fighterName) {
-  for(let i=0; i<global.fightersWithProfileLinks.length; i++) {
-    const fighter = global.fightersWithProfileLinks[i];
-    if (fighter?.fighterAnsiName?.toLowerCase() === removeDiacritics(fighterName.toLowerCase())) {
+// This is a huge potential bottleneck. Can take 24 seconds to run.
+// function lookForFightersWithAliases(fighterName, mmaStatsName = "blargh") {
+//   for(let i=0; i<global.fightersWithProfileLinks.length; i++) {
+//     const fighter = global.fightersWithProfileLinks[i];
+//     if (fighter?.fighterAnsiName?.toLowerCase() === removeDiacritics(fighterName.toLowerCase())) {
+//       return fighter;
+//     } else if (fighter?.wikipediaNameWithDiacritics?.toLowerCase() === fighterName.toLowerCase()) {
+//       return fighter;
+//     } else if (fighter?.alternativeName) {
+//       if (fighter?.alternativeName?.toLowerCase() == mmaStatsName?.toLowerCase() || fighter?.alternativeName?.toLowerCase() === fighterName?.toLowerCase()) {
+//         return fighter;
+//       }
+//     } else if (fighter?.mmaStatsName) {
+//       if (fighter?.mmaStatsName?.toLowerCase() == mmaStatsName?.toLowerCase() || fighter?.mmaStatsName?.toLowerCase() === fighterName?.toLowerCase()) {
+//         return fighter;
+//       }
+//     }
+//   }
+// }
+
+function lookForFightersWithAliases(fighterName, mmaStatsName = "blargh") {
+  const searchNames = [fighterName, mmaStatsName].filter(Boolean);
+
+  for (const name of searchNames) {
+    const lowerCaseName = removeDiacritics(name.toLowerCase());
+    const fighter = global.fightersWithProfiles_optimizedMap.get(lowerCaseName);
+    if (fighter) {
       return fighter;
-    } else if (fighter?.wikipediaNameWithDiacritics?.toLowerCase() === fighterName.toLowerCase()) {
-      return fighter;
-    } else if (fighter?.alternativeName) {
-      if (fighter?.alternativeName?.toLowerCase() == mmaStatsName?.toLowerCase() || fighter?.alternativeName?.toLowerCase() === fighterName?.toLowerCase()) {
-        return fighter;
-      }
-    } else if (fighter?.mmaStatsName) {
-      if (fighter?.mmaStatsName?.toLowerCase() == mmaStatsName?.toLowerCase() || fighter?.mmaStatsName?.toLowerCase() === fighterName?.toLowerCase()) {
-        return fighter;
-      }
     }
-    break;
   }
 }
-
 
 //Extends the wikipediaData with offline data from mmaStats.json
 //Add fighter.rankHistory and add rank at the time for all their opponents in fighter.record

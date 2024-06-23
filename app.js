@@ -11,7 +11,7 @@ const { findRankAtTime, getCurrentRank } = require('./backend/findRank.js');
 const wikipediaApi = require('./backend/wikipediaApi.js');
 const viewBuilder = require('./backend/viewBuilder.js');
 const fileHelper = require('./backend/fileHelper.js');
-const { divisionAbbreviation } = require('./backend/stringAndHtmlHelper.js');
+const { divisionAbbreviation, removeDiacritics } = require('./backend/stringAndHtmlHelper.js');
 const { missingFightersHashMap, aliasesToFileNameHashMap } = require('./data/allFightersMissingOrAliased.js');
 
 const mmaStatsJsonRaw = fs.readFileSync("data/mmaStats.json");
@@ -24,6 +24,27 @@ global.fightersWithProfileLinks_hashMap = global.fightersWithProfileLinks.reduce
     map[obj.fileName] = obj;
     return map;
 }, {});
+global.fightersWithProfiles_optimizedMap = preprocessFighters(global.fightersWithProfileLinks); // Preprocess the fighters list for faster access
+function preprocessFighters(fighters) {
+  const fightersMap = new Map();
+
+  fighters.forEach(fighter => {
+    const namesToConsider = [
+    fighter.fighterAnsiName,
+    fighter.wikipediaNameWithDiacritics,
+    fighter.alternativeName,
+    fighter.mmaStatsName,
+    ].filter(Boolean); // Remove undefined or null values
+
+    namesToConsider.forEach(name => {
+    const lowerCaseName = removeDiacritics(name.toLowerCase());
+    // Store the reference to the fighter object against each name variant
+    fightersMap.set(lowerCaseName, fighter);
+    });
+  });
+
+  return fightersMap;
+}
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -39,8 +60,7 @@ nunjucks.configure("views", {
   autoescape: true,
   trimBlocks: true,
   lstripBlocks: true,
-  express: app
-})
+  express: app })
   .addGlobal("getFighterNameOrLinkHtml", viewBuilder.getFighterNameOrLinkHtml)
   .addGlobal("getCurrentRank", getCurrentRank)
   .addGlobal("isDateInPast", (date) => { 
@@ -90,7 +110,7 @@ winston.configure({
   transports: [
     new (winston.transports.File)({ filename: 'app.log' })
   ]
-})
+});
 
 // This function has two variants
 // Static: index.html
@@ -136,8 +156,9 @@ app.get('/searchForNameAndDate', function (req, res) {
   return res.json({ "mostRecentMatch": rank });
 });
 
-//name should a match a filename in data/fighters/*.json 
-//Examples: "Jan_B%C5%82achowicz"  or "Jon_Jones" 
+// Used by viewBuilder to render fighter.njk
+// name should a match a filename in data/fighters/*.json 
+// Examples: "Jan_B%C5%82achowicz"  or "Jon_Jones" 
 app.get('/fighter/:name', async function (req, res, next) {
   const name = req.params.name;
   let encodedName = encodeURIComponent(name);
