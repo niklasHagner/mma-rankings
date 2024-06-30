@@ -68,7 +68,10 @@ def past_events_to_file():
     # Serialize the list of dictionaries to a JSON string
     json_data = json.dumps(data_to_save, indent=4)
 
-    # Write the JSON string to a file
+    file_path = '../data/pastEventsPythonScraped.json'
+
+    # Write to file (Create if it doesn't exist, overwrite if it does)
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open('../data/pastEventsPythonScraped.json', 'w', encoding='utf-8') as file:
         file.write(json_data)
 
