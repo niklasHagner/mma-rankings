@@ -18,6 +18,9 @@ function search(req, res, next) {
   }
 
   let fuseHits = fuse.search(query);
+  if (fuseHits.length === 0) {
+    return res.status(200).send("<span>No hits</span>");
+  }
   const htmlStrings = fuseHits.map((fuseHit) => {
     const fighterObject = fuseHit?.item;
     const fighterLink = fighterObject?.fileName ? `/fighter/${fighterObject.fileName.replace(".json", "")}` : null;
