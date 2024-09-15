@@ -1,62 +1,57 @@
 [
     {
+        "date": "Dec 14, 2024",
+        "eventName": "UFC Fight Night 249",
+        "url": "/wiki/UFC_Fight_Night_249"
+    },
+    {
+        "date": "Dec 7, 2024",
+        "eventName": "UFC 310",
+        "url": "/wiki/UFC_310"
+    },
+    {
+        "date": "Nov 23, 2024",
+        "eventName": "UFC Fight Night 248",
+        "url": "/wiki/UFC_Fight_Night_248"
+    },
+    {
+        "date": "Nov 16, 2024",
+        "eventName": "UFC 309: Jones vs. Miocic",
+        "url": "/wiki/UFC_309"
+    },
+    {
+        "date": "Nov 9, 2024",
+        "eventName": "UFC Fight Night 247",
+        "url": "/wiki/UFC_Fight_Night_247"
+    },
+    {
+        "date": "Nov 2, 2024",
+        "eventName": "UFC Fight Night: Moreno vs. Albazi",
+        "url": "/wiki/UFC_Fight_Night:_Moreno_vs._Albazi"
+    },
+    {
         "date": "Oct 26, 2024",
-        "eventName": "UFC 308",
+        "eventName": "UFC 308: Topuria vs. Holloway",
         "url": "/wiki/UFC_308"
     },
     {
+        "date": "Oct 19, 2024",
+        "eventName": "UFC Fight Night: Pereira vs. Hernandez",
+        "url": "/wiki/UFC_Fight_Night:_Pereira_vs._Hernandez"
+    },
+    {
+        "date": "Oct 12, 2024",
+        "eventName": "UFC Fight Night: Royval vs. Taira",
+        "url": "/wiki/UFC_Fight_Night:_Royval_vs._Taira"
+    },
+    {
+        "date": "Oct 5, 2024",
+        "eventName": "UFC 307: Pereira vs. Rountree Jr.",
+        "url": "/wiki/UFC_307"
+    },
+    {
         "date": "Sep 28, 2024",
-        "eventName": "UFC Fight Night 244",
-        "url": "/wiki/UFC_Fight_Night_244"
-    },
-    {
-        "date": "Sep 14, 2024",
-        "eventName": "UFC 306",
-        "url": "/wiki/UFC_306"
-    },
-    {
-        "date": "Sep 7, 2024",
-        "eventName": "UFC Fight Night 243",
-        "url": "/wiki/UFC_Fight_Night_243"
-    },
-    {
-        "date": "Aug 18, 2024",
-        "eventName": "UFC 305: du Plessis vs. Adesanya",
-        "url": "/wiki/UFC_305"
-    },
-    {
-        "date": "Aug 10, 2024",
-        "eventName": "UFC Fight Night 242",
-        "url": "/wiki/UFC_Fight_Night_242"
-    },
-    {
-        "date": "Aug 3, 2024",
-        "eventName": "UFC on ABC: Sandhagen vs. Nurmagomedov",
-        "url": "/wiki/UFC_on_ABC:_Sandhagen_vs._Nurmagomedov"
-    },
-    {
-        "date": "Jul 27, 2024",
-        "eventName": "UFC 304: Edwards vs. Muhammad 2",
-        "url": "/wiki/UFC_304"
-    },
-    {
-        "date": "Jul 20, 2024",
-        "eventName": "UFC on ESPN 60",
-        "url": "/wiki/UFC_on_ESPN_60"
-    },
-    {
-        "date": "Jul 13, 2024",
-        "eventName": "UFC on ESPN: Barber vs. Namajunas",
-        "url": "/wiki/UFC_on_ESPN:_Barber_vs._Namajunas"
-    },
-    {
-        "date": "Jun 29, 2024",
-        "eventName": "UFC 303: Pereira vs. Proch\u00e1zka 2",
-        "url": "/wiki/UFC_303"
-    },
-    {
-        "date": "Jun 22, 2024",
-        "eventName": "UFC on ABC: Whittaker vs. Aliskerov",
-        "url": "/wiki/UFC_on_ABC:_Whittaker_vs._Aliskerov"
+        "eventName": "UFC Fight Night: Moicano vs. Saint Denis",
+        "url": "/wiki/UFC_Fight_Night:_Moicano_vs._Saint_Denis"
     }
 ]

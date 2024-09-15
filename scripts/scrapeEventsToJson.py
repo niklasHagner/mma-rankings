@@ -18,8 +18,7 @@ def past_events_to_file():
 
     # Comparison date
     today = datetime.now()
-    way_back = timedelta(days=50)
-    comp_date = datetime.strptime(way_back, "%Y-%m-%d")
+    past_date = today - timedelta(days=50)
 
     # Filter rows based on conditions
     good_rows = []
@@ -40,7 +39,7 @@ def past_events_to_file():
         except ValueError:
             continue
 
-        is_date_good = date > comp_date
+        is_date_good = date > past_date
         
         if is_date_good and link:
             print(date, link)
