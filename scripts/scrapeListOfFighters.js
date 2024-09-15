@@ -58,39 +58,7 @@ async function scrapeListOfFighters(inputFighters) {
 
 // Updated 2024-06-21
 let inputFighters = [
-    
-    {
-        "name": "Jonathan Pearce",
-        "url": "/wiki/Jonathan_Pearce_(fighter)"
-    },
-    {
-        "name": "José Aldo",
-        "url": "/wiki/Jos%C3%A9_Aldo"
-    },
-    {
-        "name": "Josefine Lindgren Knutsson",
-        "url": "/wiki/Josefine_Lindgren_Knutsson"
-    },
-    {
-        "name": "Joselyne Edwards",
-        "url": "/wiki/Joselyne_Edwards"
-    },
-    {
-        "name": "Josh Parisian",
-        "url": "/wiki/Josh_Parisian"
-    },
-    {
-        "name": "Joshua Culibao",
-        "url": "/wiki/Joshua_Culibao"
-    },
-    {
-        "name": "Josiane Nunes",
-        "url": "/wiki/Josiane_Nunes"
-    },
-    {
-        "name": "Julian Erosa",
-        "url": "/wiki/Julian_Erosa"
-    },
+   
     {
         "name": "Julian Marquez",
         "url": "/wiki/Julian_Marquez"
@@ -279,14 +247,7 @@ let inputFighters = [
         "name": "Montana De La Rosa",
         "url": "/wiki/Montana_De_La_Rosa"
     },
-    {
-        "name": "Movsar Evloev",
-        "url": "/wiki/Movsar_Evloev"
-    },
-    {
-        "name": "Muhammad Mokaev",
-        "url": "/wiki/Muhammad_Mokaev"
-    },
+    
     {
         "name": "Muhammad Naimov",
         "url": "/wiki/Muhammad_Naimov"
@@ -311,14 +272,7 @@ let inputFighters = [
         "name": "Nate Maness",
         "url": "/wiki/Nate_Maness"
     },
-    {
-        "name": "Neil Magny",
-        "url": "/wiki/Neil_Magny"
-    },
-    {
-        "name": "Niko Price",
-        "url": "/wiki/Niko_Price"
-    },
+    
     {
         "name": "Norma Dumont",
         "url": "/wiki/Norma_Dumont"
@@ -339,18 +293,7 @@ let inputFighters = [
         "name": "Pannie Kianzad",
         "url": "/wiki/Pannie_Kianzad"
     },
-    {
-        "name": "Paul Craig",
-        "url": "/wiki/Paul_Craig"
-    },
-    {
-        "name": "Paulo Costa",
-        "url": "/wiki/Paulo_Costa"
-    },
-    {
-        "name": "Pedro Munhoz",
-        "url": "/wiki/Pedro_Munhoz"
-    },
+   
     {
         "name": "Philip Rowe",
         "url": "/wiki/Philip_Rowe"
@@ -419,22 +362,12 @@ let inputFighters = [
         "name": "Roman Kopylov",
         "url": "/wiki/Roman_Kopylov"
     },
-    {
-        "name": "Rose Namajunas",
-        "url": "/wiki/Rose_Namajunas"
-    },
-    {
-        "name": "Ryan Spann",
-        "url": "/wiki/Ryan_Spann"
-    },
+   
     {
         "name": "Sam Hughes",
         "url": "/wiki/Sam_Hughes_(fighter)"
     },
-    {
-        "name": "Sean Strickland",
-        "url": "/wiki/Sean_Strickland"
-    },
+    
     {
         "name": "Sean Woodson",
         "url": "/wiki/Sean_Woodson"
@@ -503,14 +436,8 @@ let inputFighters = [
         "name": "Vanessa Demopoulos",
         "url": "/wiki/Vanessa_Demopoulos"
     },
-    {
-        "name": "Veronica Hardy",
-        "url": "/wiki/Veronica_Hardy"
-    },
-    {
-        "name": "Vicente Luque",
-        "url": "/wiki/Vicente_Luque"
-    },
+    
+    
     {
         "name": "Victor Henry",
         "url": "/wiki/Victor_Henry_(fighter)"
