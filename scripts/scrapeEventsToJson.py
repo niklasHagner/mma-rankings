@@ -2,16 +2,12 @@ import requests
 import os
 import json
 from bs4 import BeautifulSoup
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Fetch the HTML content
 url = "https://en.wikipedia.org/wiki/List_of_UFC_events"
 response = requests.get(url)
 html_content = response.text
-
-# with open('a.html', 'r', encoding='utf-8') as file:
-#     html_content = file.read()
-
 
 # Parse the HTML
 soup = BeautifulSoup(html_content, 'html.parser')
@@ -21,7 +17,9 @@ def past_events_to_file():
     rows = soup.select("#Past_events tr")
 
     # Comparison date
-    comp_date = datetime.strptime("2024-06-21", "%Y-%m-%d")
+    today = datetime.now()
+    way_back = timedelta(days=50)
+    comp_date = datetime.strptime(way_back, "%Y-%m-%d")
 
     # Filter rows based on conditions
     good_rows = []
