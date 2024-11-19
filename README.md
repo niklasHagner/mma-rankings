@@ -12,7 +12,7 @@ This project generates a json-file of the top15 rankings for every UFC division 
 
 ![screenshot](https://i.imgur.com/jZV8gA6.png)
 
-**Bonus feature: Historical UFC rankings**
+**Historical UFC rankings**
 
 ![screenshot](https://i.imgur.com/daVexhr.png)
 
