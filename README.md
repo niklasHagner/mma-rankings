@@ -16,11 +16,24 @@ This project generates a json-file of the top15 rankings for every UFC division 
 
 ![screenshot](https://i.imgur.com/daVexhr.png)
 
+
+## Run this project:
+
+1. start the node-server `node app.js`
+
+2. browse to `localhost:8081` to serve `public/index.html` (or just open the html file directly)
+
+## Env var defaults
+* SAVE_JSON_TO_FILE=false
+* allowFetchingMissingFighters=false
+
 ## Tech and dependencies
 * node with serverside-rendered nunjucks views
 * jsDOM for scraping rankings from mma-stats.com, and events and fighter profiles from wikipedia
 * google image search via package `g-i-s`
 * On the clientside: charts via https://cdn.jsdelivr.net/npm/apexcharts
+
+# Details
 
 ## Repo structure:
 * app.js = routing and viewHelpers for nunjucks
@@ -33,16 +46,6 @@ This project generates a json-file of the top15 rankings for every UFC division 
     - `mmaStats.json` - UFC ranking history with around one instance per month
     - `allFighters.json` - lists all files in `data/fighters/`. When the rankings are rendered this file can be used to detect which fighters can have links to their profile pages. Note that some items in this file have a manually added property for `mmaStatsName` as mmaStats uses names like 'Weili Zhang' while Wikipedia uses names like 'Zhang Weili'
     
-## Run this project:
-
-1. start the node-server `node app.js`
-
-2. browse to `localhost:8081` to serve `public/index.html` (or just open the html file directly)
-
-## Env var defaults
-* SAVE_JSON_TO_FILE=false
-* allowFetchingMissingFighters=false
-
 ## Routes:
 
 * `/` - serves main view with events and all time rankings
@@ -50,14 +53,6 @@ This project generates a json-file of the top15 rankings for every UFC division 
 * `/searchForNameAndDate?date=%222016-03-02%22&name=Fedor` - used to look up one opponent's rank at the time of the fight
 * `/mma-stats-by-date?date="2015-01-20"` - get rankings for 20th january 2015
 * `/fighter/:shortFileName` - render a profile page for a single fighter based off data in `data/fighter/*.json` - Example: `/fighter/Jan_B%C5%82achowicz`
-
-## Scripts
-* `npm run scrapeLatestRankings` - scrapes rankings from wikipedia and saves to `/data/mmaStats.json`
-* Scrape fighter names. First edit the input array of `scrapeListOfFighters.js` then run `npm run scrapeListOfFighters` - it will run a batched scrape that scrapes 6 urls then waits a few minutes, to avoid getting bot-blocked.
-* To update fighter records based on recently past events, first run run `scrapeLatestEvents.bash` which stores files in `data/past-events`. Then run `updateFightersFromPastEvents.js` which is configured to run entirely on local files.
-
-## Maintenance
-* If a fighter name doesn't match between wikipedia and mma-stats.com, add "mmaStatsName:"X" to `allFighters.json` and their json file in the data folder
 
 ## Project history
 
@@ -71,3 +66,13 @@ This project generates a json-file of the top15 rankings for every UFC division 
 ## Known issues
 * For a regular UFC event, Wikipedia has a table of fights. For an upcoming minor events sometimes it's just a bullet list - this repo doesn't even attempt to parse that list as it's not structured enough.
 * The googleImageSearch fetch requests can fail and the exception isn't handled. They're called via `getInfoAndFightersFromSingleEvent -> fetchArrayOfFighters -> scrapeFighterData -> findImagesForFighter` 
+
+
+# Scripts / Maintenance / Regular update jobs
+
+* Check 'Latest rankings' date on bottom of page, and run `npm run scrapeLatestRankings` if it's out of date. This saves data to `/data/mmaStats.json`
+
+* First run `scrapeListOfFighters.js` in a debugger (or `npm run scrapeListOfFighters`) - this will scrape 6 fighters, then wait a while (to avoid getting rate-limited)
+
+* To update fighter records based on recent events, first run run `scrapeLatestEvents.bash` which stores files in `data/past-events`. Then run `updateFightersFromPastEvents.js` which is configured to run entirely on local files.
+

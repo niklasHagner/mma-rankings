@@ -8,31 +8,24 @@ const viewBuilder = require('../backend/viewBuilder.js');
 global.fightersWithProfileLinks = JSON.parse(fs.readFileSync("data/allFighters.json"));
 global.rankData = JSON.parse(fs.readFileSync("data/mmaStats.json"));
 
-/*Problematic*/
+/* Fighters with problematic wikipedia pages that we struggle to scrape:*/
 // { name: 'Austen Lane', url: '/wiki/Austen_Lane' },
+// "/wiki/Tatiana_Suarez",
+// Low amount of wikipediaTable cells (9) for Raoni Barcelos
+// Low amount of wikipediaTable cells (9) for Marcin Tybura
 
+// error parsing
+// {
+//     name: "Chidi Njokuani",
+//     url: "/wiki/Chidi_Njokuani",
+//   },
 
-async function scrapeListOfFighters(inputFighters) {
-    config.SAVE_JSON_TO_FILE = true;
-    //Example input: [{ url: "wiki/Leon_Edwards" }, { url: "wiki/Jan_B%C5%82achowicz"} ]
-    //Note: avoid running this on a huge array to avoid scraper blockers
+// emtpy file
 
-    //---Problematic fighters---
-    // "/wiki/Tatiana_Suarez",
-    // Low amount of wikipediaTable cells (9) for Raoni Barcelos
-
-    // error parsing
-    // {
-    //     name: "Chidi Njokuani",
-    //     url: "/wiki/Chidi_Njokuani",
-    //   },
-
-    // emtpy file
-
-    // {
-    //     "name": "Derrick Lewis",
-    //     "url": "/wiki/Derrick_Lewis"
-    // },
+// {
+//     "name": "Derrick Lewis",
+//     "url": "/wiki/Derrick_Lewis"
+// },
 
 
 // {
@@ -40,8 +33,12 @@ async function scrapeListOfFighters(inputFighters) {
 //     "url": "/wiki/Diana_Belbi%C5%A3%C4%83"
 // },
 
-    console.log("scrapeListOfFighters", inputFighters);
+async function scrapeListOfFighters(inputFighters) {
+    config.SAVE_JSON_TO_FILE = true;
+    //Example input: [{ url: "wiki/Leon_Edwards" }, { url: "wiki/Jan_B%C5%82achowicz"} ]
+    //Note: avoid running this on a huge array to avoid scraper blockers
 
+    console.log("scrapeListOfFighters", inputFighters);
 
     const readExistingFromFile = false;
     const allowFetchingMissingFighters = true;
@@ -58,171 +55,6 @@ async function scrapeListOfFighters(inputFighters) {
 
 // Updated 2024-06-21
 let inputFighters = [
-   
-    {
-        "name": "Julian Marquez",
-        "url": "/wiki/Julian_Marquez"
-    },
-    {
-        "name": "Julija Stoliarenko",
-        "url": "/wiki/Julija_Stoliarenko"
-    },
-    {
-        "name": "Julio Arce",
-        "url": "/wiki/Julio_Arce"
-    },
-    {
-        "name": "Junior Tafa",
-        "url": "/wiki/Junior_Tafa"
-    },
-    {
-        "name": "Justin Tafa",
-        "url": "/wiki/Justin_Tafa"
-    },
-    {
-        "name": "Karine Silva",
-        "url": "/wiki/Karine_Silva"
-    },
-    {
-        "name": "Karolina Kowalkiewicz",
-        "url": "/wiki/Karolina_Kowalkiewicz"
-    },
-    {
-        "name": "Katlyn Cerminara",
-        "url": "/wiki/Katlyn_Cerminara"
-    },
-    {
-        "name": "Kennedy Nzechukwu",
-        "url": "/wiki/Kennedy_Nzechukwu"
-    },
-    {
-        "name": "Ketlen Souza",
-        "url": "/wiki/Ketlen_Souza"
-    },
-    {
-        "name": "Khaos Williams",
-        "url": "/wiki/Khaos_Williams"
-    },
-    {
-        "name": "Kurt Holobaugh",
-        "url": "/wiki/Kurt_Holobaugh"
-    },
-    {
-        "name": "Kyle Nelson",
-        "url": "/wiki/Kyle_Nelson_(fighter)"
-    },
-    {
-        "name": "Lerone Murphy",
-        "url": "/wiki/Lerone_Murphy"
-    },
-    {
-        "name": "Loma Lookboonmee",
-        "url": "/wiki/Loma_Lookboonmee"
-    },
-    {
-        "name": "Loopy Godinez",
-        "url": "/wiki/Loopy_Godinez"
-    },
-    {
-        "name": "Luana Carolina",
-        "url": "/wiki/Luana_Carolina"
-    },
-    {
-        "name": "Luana Pinheiro",
-        "url": "/wiki/Luana_Pinheiro"
-    },
-    {
-        "name": "Ľudovít Klein",
-        "url": "/wiki/%C4%BDudov%C3%ADt_Klein"
-    },
-    {
-        "name": "Mackenzie Dern",
-        "url": "/wiki/Mackenzie_Dern"
-    },
-    {
-        "name": "Macy Chiasson",
-        "url": "/wiki/Macy_Chiasson"
-    },
-    {
-        "name": "Makhmud Muradov",
-        "url": "/wiki/Makhmud_Muradov"
-    },
-    {
-        "name": "Malcolm Gordon",
-        "url": "/wiki/Malcolm_Gordon_(fighter)"
-    },
-    {
-        "name": "Manon Fiorot",
-        "url": "/wiki/Manon_Fiorot"
-    },
-    {
-        "name": "Marc-André Barriault",
-        "url": "/wiki/Marc-Andr%C3%A9_Barriault"
-    },
-    {
-        "name": "Marcin Prachnio",
-        "url": "/wiki/Marcin_Prachnio"
-    },
-    {
-        "name": "Marcin Tybura",
-        "url": "/wiki/Marcin_Tybura"
-    },
-    {
-        "name": "Marcos Rogério de Lima",
-        "url": "/wiki/Marcos_Rog%C3%A9rio_de_Lima"
-    },
-    {
-        "name": "Marina Rodriguez",
-        "url": "/wiki/Marina_Rodriguez"
-    },
-    {
-        "name": "Maryna Moroz",
-        "url": "/wiki/Maryna_Moroz"
-    },
-    {
-        "name": "Mateusz Gamrot",
-        "url": "/wiki/Mateusz_Gamrot"
-    },
-    {
-        "name": "Matheus Nicolau",
-        "url": "/wiki/Matheus_Nicolau"
-    },
-    {
-        "name": "Max Griffin",
-        "url": "/wiki/Max_Griffin"
-    },
-    {
-        "name": "Maycee Barber",
-        "url": "/wiki/Maycee_Barber"
-    },
-    {
-        "name": "Mayra Bueno Silva",
-        "url": "/wiki/Mayra_Bueno_Silva"
-    },
-    {
-        "name": "Melissa Gatto",
-        "url": "/wiki/Melissa_Gatto"
-    },
-    {
-        "name": "Merab Dvalishvili",
-        "url": "/wiki/Merab_Dvalishvili"
-    },
-    {
-        "name": "Michał Oleksiejczuk",
-        "url": "/wiki/Micha%C5%82_Oleksiejczuk"
-    },
-    {
-        "name": "Michel Pereira",
-        "url": "/wiki/Michel_Pereira"
-    },
-    {
-        "name": "Mickey Gall",
-        "url": "/wiki/Mickey_Gall"
-    },
-    {
-        "name": "Miguel Baeza",
-        "url": "/wiki/Miguel_Baeza"
-    },
     {
         "name": "Mike Davis",
         "url": "/wiki/Mike_Davis_(fighter)"
@@ -247,7 +79,7 @@ let inputFighters = [
         "name": "Montana De La Rosa",
         "url": "/wiki/Montana_De_La_Rosa"
     },
-    
+
     {
         "name": "Muhammad Naimov",
         "url": "/wiki/Muhammad_Naimov"
@@ -272,7 +104,7 @@ let inputFighters = [
         "name": "Nate Maness",
         "url": "/wiki/Nate_Maness"
     },
-    
+
     {
         "name": "Norma Dumont",
         "url": "/wiki/Norma_Dumont"
@@ -293,7 +125,7 @@ let inputFighters = [
         "name": "Pannie Kianzad",
         "url": "/wiki/Pannie_Kianzad"
     },
-   
+
     {
         "name": "Philip Rowe",
         "url": "/wiki/Philip_Rowe"
@@ -362,12 +194,12 @@ let inputFighters = [
         "name": "Roman Kopylov",
         "url": "/wiki/Roman_Kopylov"
     },
-   
+
     {
         "name": "Sam Hughes",
         "url": "/wiki/Sam_Hughes_(fighter)"
     },
-    
+
     {
         "name": "Sean Woodson",
         "url": "/wiki/Sean_Woodson"
@@ -436,8 +268,8 @@ let inputFighters = [
         "name": "Vanessa Demopoulos",
         "url": "/wiki/Vanessa_Demopoulos"
     },
-    
-    
+
+
     {
         "name": "Victor Henry",
         "url": "/wiki/Victor_Henry_(fighter)"
