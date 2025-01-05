@@ -68,7 +68,20 @@ This project generates a json-file of the top15 rankings for every UFC division 
 * The googleImageSearch fetch requests can fail and the exception isn't handled. They're called via `getInfoAndFightersFromSingleEvent -> fetchArrayOfFighters -> scrapeFighterData -> findImagesForFighter` 
 
 
-# Scripts / Maintenance / Regular update jobs
+# Run scripts to update stats and records
+
+* Update rankings `node ./scripts/scrapeLatestRankingsFromWikipedia.js`
+
+* Update the last events
+```
+pip3 install requests bs4
+python ./scripts/scrapeEventsToJson.py
+```
+
+* Run /scripts/updateFightersFromPastEvents.js in a debugger, and copy names to scripts/scrapeListOfFighters.js 
+
+
+## Old scripts instructions 
 
 * Check 'Latest rankings' date on bottom of page, and run `npm run scrapeLatestRankings` if it's out of date. This saves data to `/data/mmaStats.json`
 
