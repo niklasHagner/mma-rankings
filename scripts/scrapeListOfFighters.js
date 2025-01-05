@@ -65,7 +65,7 @@ async function scrapeInBatchesWithWaits() {
     for (let i = 0; i < clonedInputFighters.length; i++) {
         const inputFighterBatch = clonedInputFighters.splice(0, 6);
         await scrapeListOfFighters(inputFighterBatch);
-        minutes = Math.min(minutes * 1.5, 10);
+        minutes = Math.min(minutes * 1.5, 6);
 
         if (clonedInputFighters.length > 0) {
             console.log(`Iteration complete, waiting for ${minutes} minutes`);

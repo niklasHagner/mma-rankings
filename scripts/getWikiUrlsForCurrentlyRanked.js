@@ -18,5 +18,6 @@ function scrapeWikiUrlsForCurrentlyRankedFighters() {
   }).filter(x => x);
 
   const uniqueHrefs = [... new Set(hrefs)];
+  console.log("unique", uniqueHrefs)
   return uniqueHrefs;
 }
