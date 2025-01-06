@@ -80,6 +80,15 @@ python ./scripts/scrapeEventsToJson.py
 
 * Run /scripts/updateFightersFromPastEvents.js in a debugger, and copy names to scripts/scrapeListOfFighters.js 
 
+* Save `events.json` by running the project and removing this
+```
+ // --- OFFLINE (enable on server to boost perf) ---
+    const fileExists = fs.existsSync('data/events.json');
+    if (fileExists) {
+        const fileData = await fsPromises.readFile('data/events.json', 'utf8');
+        return JSON.parse(fileData); // Return the parsed JSON
+    }
+```
 
 ## Old scripts instructions 
 
