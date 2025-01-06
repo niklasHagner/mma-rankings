@@ -81,7 +81,7 @@ function setupSingleApexChart(fighterEl) {
     return { name: seriesItem.divisionShortName, data: apexDataArray };
   });
 
-  console.log(series);
+//   console.log(series);
 
   var apexChartOptions = {
     series: series,

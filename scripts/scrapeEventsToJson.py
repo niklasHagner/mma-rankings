@@ -13,7 +13,7 @@ html_content = response.text
 soup = BeautifulSoup(html_content, 'html.parser')
 
 def past_events_to_file():
-    print("Past events")
+    print("\nPast events")
     rows = soup.select("#Past_events tr")
 
     # Comparison date
@@ -65,18 +65,22 @@ def past_events_to_file():
 
     # Serialize the list of dictionaries to a JSON string
     json_data = json.dumps(data_to_save, indent=4)
+    print(json_data)  # Print JSON data for past events
 
-    file_path = '../data/pastEventsPythonScraped.json'
+    file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'pastEventsPythonScraped.json'))
 
-    # Write to file (Create if it doesn't exist, overwrite if it does)
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    with open('../data/pastEventsPythonScraped.json', 'w', encoding='utf-8') as file:
-        file.write(json_data)
+    try:
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, 'w', encoding='utf-8') as file:
+            file.write(json_data)
+        print(f"Successfully wrote to {file_path}")
+    except Exception as e:
+        print(f"Failed to write to {file_path}: {e}")
 
 
 
 def future_events_to_file():
-    print("Future events")
+    print("\n\nFuture events")
     rows = soup.select("#Scheduled_events tr")
 
 
@@ -114,10 +118,18 @@ def future_events_to_file():
 
     # Serialize the list of dictionaries to a JSON string
     json_data = json.dumps(data_to_save, indent=4)
+    print(json_data)  # Print JSON data for future events
+    
 
     # Write the JSON string to a file
-    with open('../data/futureEventsPythonScraped.json', 'w', encoding='utf-8') as file:
-        file.write(json_data)
+    file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'futureEventsPythonScraped.json'))
+    try:
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, 'w', encoding='utf-8') as file:
+            file.write(json_data)
+        print(f"Successfully wrote to {file_path}")
+    except Exception as e:
+        print(f"Failed to write to {file_path}: {e}")
 
 
 past_events_to_file()

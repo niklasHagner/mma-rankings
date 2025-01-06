@@ -72,7 +72,7 @@ This project generates a json-file of the top15 rankings for every UFC division 
 
 * Update rankings `node ./scripts/scrapeLatestRankingsFromWikipedia.js`
 
-* Update the last events
+* Update futureEventsPythonScraped.json and pastEventsPythonScraped.json via
 ```
 pip3 install requests bs4
 python ./scripts/scrapeEventsToJson.py
