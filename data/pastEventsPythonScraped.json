@@ -1,17 +1,17 @@
 [
     {
+        "date": "Jan 18, 2025",
+        "eventName": "UFC 311: Makhachev vs. Moicano",
+        "url": "/wiki/UFC_311"
+    },
+    {
+        "date": "Jan 11, 2025",
+        "eventName": "UFC Fight Night: Dern vs. Ribas 2",
+        "url": "/wiki/UFC_Fight_Night:_Dern_vs._Ribas_2"
+    },
+    {
         "date": "Dec 14, 2024",
         "eventName": "UFC on ESPN: Covington vs. Buckley",
         "url": "/wiki/UFC_on_ESPN:_Covington_vs._Buckley"
-    },
-    {
-        "date": "Dec 7, 2024",
-        "eventName": "UFC 310: Pantoja vs. Asakura",
-        "url": "/wiki/UFC_310"
-    },
-    {
-        "date": "Nov 23, 2024",
-        "eventName": "UFC Fight Night: Yan vs. Figueiredo",
-        "url": "/wiki/UFC_Fight_Night:_Yan_vs._Figueiredo"
     }
 ]

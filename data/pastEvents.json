@@ -3,445 +3,253 @@
     {
       "fighters": [
         {
-          "name": "Umar Nurmagomedov",
-          "url": "/wiki/Umar_Nurmagomedov"
+          "name": "Joaquin Buckley",
+          "url": "/wiki/Joaquin_Buckley"
         },
         {
-          "name": "Cory Sandhagen",
-          "url": "/wiki/Cory_Sandhagen"
+          "name": "Colby Covington",
+          "url": "/wiki/Colby_Covington"
         },
         {
-          "name": "Sharabutdin Magomedov",
-          "url": "/wiki/Sharabutdin_Magomedov"
+          "name": "Cub Swanson",
+          "url": "/wiki/Cub_Swanson"
         },
         {
-          "name": "Michał Oleksiejczuk",
-          "url": "/wiki/Micha%C5%82_Oleksiejczuk"
+          "name": "Billy Quarantillo",
+          "url": "/wiki/Billy_Quarantillo"
         },
         {
-          "name": "Deiveson Figueiredo",
-          "url": "/wiki/Deiveson_Figueiredo"
+          "name": "Manel Kape",
+          "url": "/wiki/Manel_Kape"
         },
         {
-          "name": "Marlon Vera",
-          "url": "/wiki/Marlon_Vera"
+          "name": "Bruno Gustavo da Silva",
+          "url": "/wiki/Bruno_Gustavo_da_Silva"
         },
         {
-          "name": "Michael Chiesa",
-          "url": "/wiki/Michael_Chiesa"
+          "name": "Dustin Jacoby",
+          "url": "/wiki/Dustin_Jacoby"
         },
         {
-          "name": "Tony Ferguson",
-          "url": "/wiki/Tony_Ferguson"
+          "name": "Vitor Petrino",
+          "url": "/wiki/Vitor_Petrino"
         },
         {
-          "name": "Mackenzie Dern",
-          "url": "/wiki/Mackenzie_Dern"
+          "name": "Daniel Marcos",
+          "url": "/wiki/Daniel_Marcos"
         },
         {
-          "name": "Loopy Godinez",
-          "url": "/wiki/Loopy_Godinez"
+          "name": "Adrian Yañez",
+          "url": "/wiki/Adrian_Ya%C3%B1ez"
+        },
+        {
+          "name": "Michael Johnson",
+          "url": "/wiki/Michael_Johnson_(fighter)"
+        },
+        {
+          "name": "Ottman Azaitar",
+          "url": "/wiki/Ottman_Azaitar"
         },
         {
           "name": "Joel Álvarez",
           "url": "/wiki/Joel_%C3%81lvarez"
         },
         {
-          "name": "Elves Brener"
+          "name": "Drakkar Klose",
+          "url": "/wiki/Drakkar_Klose"
         },
         {
-          "name": "Azamat Murzakanov",
-          "url": "/wiki/Azamat_Murzakanov"
+          "name": "Sean Woodson",
+          "url": "/wiki/Sean_Woodson"
         },
         {
-          "name": "Alonzo Menifield",
-          "url": "/wiki/Alonzo_Menifield"
+          "name": "Fernando Padilla"
         },
         {
-          "name": "Shamil Gaziev"
+          "name": "Felipe Lima"
         },
         {
-          "name": "Don'Tale Mayes",
-          "url": "/wiki/Don%27Tale_Mayes"
+          "name": "Miles Johns",
+          "url": "/wiki/Miles_Johns"
         },
         {
-          "name": "Sam Hughes",
-          "url": "/wiki/Sam_Hughes_(fighter)"
+          "name": "Miranda Maverick",
+          "url": "/wiki/Miranda_Maverick"
         },
         {
-          "name": "Victoria Dudakova"
+          "name": "Jamey-Lyn Horth"
         },
         {
-          "name": "Jai Herbert",
-          "url": "/wiki/Jai_Herbert"
+          "name": "Davey Grant",
+          "url": "/wiki/Davey_Grant"
         },
         {
-          "name": "Rolando Bedoya"
+          "name": "Ramon Taveras"
+        },
+        {
+          "name": "Piera Rodríguez"
+        },
+        {
+          "name": "Josefine Lindgren Knutsson",
+          "url": "/wiki/Josefine_Lindgren_Knutsson"
         }
       ],
-      "date": "Aug 3, 2024",
-      "eventName": "UFC on ABC: Sandhagen vs. Nurmagomedov",
-      "url": "https://en.wikipedia.org/wiki/UFC_on_ABC:_Sandhagen_vs._Nurmagomedov"
+      "date": "Dec 14, 2024",
+      "eventName": "UFC on ESPN: Covington vs. Buckley",
+      "url": "https://en.wikipedia.org/wiki/UFC_on_ESPN:_Covington_vs._Buckley"
     },
     {
       "fighters": [
+        {
+          "name": "Mackenzie Dern",
+          "url": "/wiki/Mackenzie_Dern"
+        },
+        {
+          "name": "Amanda Ribas",
+          "url": "/wiki/Amanda_Ribas"
+        },
+        {
+          "name": "Santiago Ponzinibbio",
+          "url": "/wiki/Santiago_Ponzinibbio"
+        },
+        {
+          "name": "Carlston Harris",
+          "url": "/wiki/Carlston_Harris"
+        },
+        {
+          "name": "César Almeida",
+          "url": "/wiki/C%C3%A9sar_Almeida_(fighter)"
+        },
+        {
+          "name": "Abdul Razak Alhassan",
+          "url": "/wiki/Abdul_Razak_Alhassan"
+        },
+        {
+          "name": "Roman Kopylov",
+          "url": "/wiki/Roman_Kopylov"
+        },
+        {
+          "name": "Chris Curtis",
+          "url": "/wiki/Chris_Curtis_(fighter)"
+        },
+        {
+          "name": "Punahele Soriano",
+          "url": "/wiki/Punahele_Soriano"
+        },
+        {
+          "name": "Uroš Medić",
+          "url": "/wiki/Uro%C5%A1_Medi%C4%87"
+        },
+        {
+          "name": "Thiago Moisés",
+          "url": "/wiki/Thiago_Mois%C3%A9s"
+        },
+        {
+          "name": "Trey Ogden"
+        },
+        {
+          "name": "Nurullo Aliev"
+        },
+        {
+          "name": "Joe Solecki",
+          "url": "/wiki/Joe_Solecki"
+        }
+      ],
+      "date": "Jan 11, 2025",
+      "eventName": "UFC Fight Night: Dern vs. Ribas 2",
+      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Dern_vs._Ribas_2"
+    },
+    {
+      "fighters": [
+        {
+          "name": "Islam Makhachev (c)",
+          "url": "/wiki/Islam_Makhachev"
+        },
+        {
+          "name": "Renato Moicano",
+          "url": "/wiki/Renato_Moicano"
+        },
+        {
+          "name": "Merab Dvalishvili (c)",
+          "url": "/wiki/Merab_Dvalishvili"
+        },
+        {
+          "name": "Umar Nurmagomedov",
+          "url": "/wiki/Umar_Nurmagomedov"
+        },
+        {
+          "name": "Jiří Procházka",
+          "url": "/wiki/Ji%C5%99%C3%AD_Proch%C3%A1zka"
+        },
+        {
+          "name": "Jamahal Hill",
+          "url": "/wiki/Jamahal_Hill"
+        },
+        {
+          "name": "Jailton Almeida",
+          "url": "/wiki/Jailton_Almeida"
+        },
         {
           "name": "Serghei Spivac",
           "url": "/wiki/Serghei_Spivac"
         },
         {
-          "name": "Marcin Tybura",
-          "url": "/wiki/Marcin_Tybura"
+          "name": "Reinier de Ridder",
+          "url": "/wiki/Reinier_de_Ridder"
         },
         {
-          "name": "Chepe Mariscal"
+          "name": "Kevin Holland",
+          "url": "/wiki/Kevin_Holland"
         },
         {
-          "name": "Damon Jackson",
-          "url": "/wiki/Damon_Jackson"
+          "name": "Raoni Barcelos",
+          "url": "/wiki/Raoni_Barcelos"
         },
         {
-          "name": "Chris Gutiérrez",
-          "url": "/wiki/Chris_Guti%C3%A9rrez"
+          "name": "Payton Talbott",
+          "url": "/wiki/Payton_Talbott"
         },
         {
-          "name": "Quang Le"
+          "name": "Bogdan Guskov",
+          "url": "/wiki/Bogdan_Guskov"
         },
         {
-          "name": "Yana Santos",
-          "url": "/wiki/Yana_Santos"
+          "name": "Billy Elekana"
         },
         {
-          "name": "Chelsea Chandler",
-          "url": "/wiki/Chelsea_Chandler"
+          "name": "Grant Dawson",
+          "url": "/wiki/Grant_Dawson"
+        },
+        {
+          "name": "Carlos Diego Ferreira",
+          "url": "/wiki/Carlos_Diego_Ferreira"
+        },
+        {
+          "name": "Ailín Pérez",
+          "url": "/wiki/Ail%C3%ADn_P%C3%A9rez"
         },
         {
           "name": "Karol Rosa",
           "url": "/wiki/Karol_Rosa"
         },
         {
-          "name": "Pannie Kianzad",
-          "url": "/wiki/Pannie_Kianzad"
+          "name": "Muin Gafurov"
         },
         {
-          "name": "Jhonata Diniz",
-          "url": "/wiki/Jhonata_Diniz"
+          "name": "Rinya Nakamura",
+          "url": "/wiki/Rinya_Nakamura"
         },
         {
-          "name": "Karl Williams"
+          "name": "Tagir Ulanbekov",
+          "url": "/wiki/Tagir_Ulanbekov"
         },
         {
-          "name": "Youssef Zalal",
-          "url": "/wiki/Youssef_Zalal"
-        },
-        {
-          "name": "Jarno Errens"
-        },
-        {
-          "name": "Stephanie Luciano"
-        },
-        {
-          "name": "Talita Alencar",
-          "url": "/wiki/Talita_Alencar"
+          "name": "Clayton Carpenter"
         }
       ],
-      "date": "Aug 10, 2024",
-      "eventName": "UFC on ESPN: Tybura vs. Spivac 2",
-      "url": "https://en.wikipedia.org/wiki/UFC_on_ESPN:_Tybura_vs._Spivac_2"
-    },
-    {
-      "fighters": [
-        {
-          "name": "Caio Borralho",
-          "url": "/wiki/Caio_Borralho"
-        },
-        {
-          "name": "Jared Cannonier",
-          "url": "/wiki/Jared_Cannonier"
-        },
-        {
-          "name": "Tabatha Ricci",
-          "url": "/wiki/Tabatha_Ricci"
-        },
-        {
-          "name": "Angela Hill",
-          "url": "/wiki/Angela_Hill"
-        },
-        {
-          "name": "Ryan Loder"
-        },
-        {
-          "name": "Robert Valentin"
-        },
-        {
-          "name": "Mairon Santos"
-        },
-        {
-          "name": "Kaan Ofli"
-        },
-        {
-          "name": "Michael Morales",
-          "url": "/wiki/Michael_Morales_(fighter)"
-        },
-        {
-          "name": "Neil Magny",
-          "url": "/wiki/Neil_Magny"
-        },
-        {
-          "name": "Gerald Meerschaert",
-          "url": "/wiki/Gerald_Meerschaert"
-        },
-        {
-          "name": "Edmen Shahbazyan",
-          "url": "/wiki/Edmen_Shahbazyan"
-        },
-        {
-          "name": "Jacqueline Cavalcanti",
-          "url": "/wiki/Jacqueline_Cavalcanti"
-        },
-        {
-          "name": "Josiane Nunes",
-          "url": "/wiki/Josiane_Nunes"
-        },
-        {
-          "name": "Wang Cong",
-          "url": "/wiki/Wang_Cong"
-        },
-        {
-          "name": "Victoria Leonardo",
-          "url": "/wiki/Victoria_Leonardo"
-        }
-      ],
-      "date": "Aug 24, 2024",
-      "eventName": "UFC on ESPN: Cannonier vs. Borralho",
-      "url": "https://en.wikipedia.org/wiki/UFC_on_ESPN:_Cannonier_vs._Borralho"
-    },
-    {
-      "fighters": [
-        {
-          "name": "Sean Brady",
-          "url": "/wiki/Sean_Brady_(fighter)"
-        },
-        {
-          "name": "Gilbert Burns",
-          "url": "/wiki/Gilbert_Burns"
-        },
-        {
-          "name": "Natália Silva",
-          "url": "/wiki/Nat%C3%A1lia_Silva_(fighter)"
-        },
-        {
-          "name": "Jéssica Andrade",
-          "url": "/wiki/J%C3%A9ssica_Andrade"
-        },
-        {
-          "name": "Steve Garcia",
-          "url": "/wiki/Steve_Garcia"
-        },
-        {
-          "name": "Kyle Nelson",
-          "url": "/wiki/Kyle_Nelson_(fighter)"
-        },
-        {
-          "name": "Cody Durden",
-          "url": "/wiki/Cody_Durden"
-        },
-        {
-          "name": "Matt Schnell",
-          "url": "/wiki/Matt_Schnell"
-        },
-        {
-          "name": "Chris Padilla"
-        },
-        {
-          "name": "Rong Zhu",
-          "url": "/wiki/Rong_Zhu"
-        },
-        {
-          "name": "Jaqueline Amorim"
-        },
-        {
-          "name": "Vanessa Demopoulos",
-          "url": "/wiki/Vanessa_Demopoulos"
-        },
-        {
-          "name": "Andre Petroski",
-          "url": "/wiki/Andre_Petroski"
-        },
-        {
-          "name": "Dylan Budka"
-        }
-      ],
-      "date": "Sep 7, 2024",
-      "eventName": "UFC Fight Night: Burns vs. Brady",
-      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Burns_vs._Brady"
-    },
-    {
-      "fighters": [
-        {
-          "name": "Merab Dvalishvili",
-          "url": "/wiki/Merab_Dvalishvili"
-        },
-        {
-          "name": "Sean O'Malley (c)",
-          "url": "/wiki/Sean_O%27Malley_(fighter)"
-        },
-        {
-          "name": "Valentina Shevchenko",
-          "url": "/wiki/Valentina_Shevchenko"
-        },
-        {
-          "name": "Alexa Grasso (c)",
-          "url": "/wiki/Alexa_Grasso"
-        },
-        {
-          "name": "Diego Lopes",
-          "url": "/wiki/Diego_Lopes_(fighter)"
-        },
-        {
-          "name": "Brian Ortega",
-          "url": "/wiki/Brian_Ortega"
-        },
-        {
-          "name": "Esteban Ribovics"
-        },
-        {
-          "name": "Daniel Zellhuber",
-          "url": "/wiki/Daniel_Zellhuber"
-        },
-        {
-          "name": "Ronaldo Rodríguez"
-        },
-        {
-          "name": "Ode' Osbourne",
-          "url": "/wiki/Ode%27_Osbourne"
-        },
-        {
-          "name": "Norma Dumont",
-          "url": "/wiki/Norma_Dumont"
-        },
-        {
-          "name": "Irene Aldana",
-          "url": "/wiki/Irene_Aldana"
-        },
-        {
-          "name": "Ignacio Bahamondes",
-          "url": "/wiki/Ignacio_Bahamondes"
-        },
-        {
-          "name": "Manuel Torres"
-        },
-        {
-          "name": "Ketlen Souza",
-          "url": "/wiki/Ketlen_Souza"
-        },
-        {
-          "name": "Yazmin Jauregui",
-          "url": "/wiki/Yazmin_Jauregui"
-        },
-        {
-          "name": "Joshua Van",
-          "url": "/wiki/Joshua_Van"
-        },
-        {
-          "name": "Édgar Cháirez"
-        },
-        {
-          "name": "Raul Rosas Jr.",
-          "url": "/wiki/Raul_Rosas_Jr."
-        },
-        {
-          "name": "Aori Qileng",
-          "url": "/wiki/Aori_Qileng"
-        }
-      ],
-      "date": "Sep 14, 2024",
-      "eventName": "UFC 306: O'Malley vs. Dvalishvili",
-      "url": "https://en.wikipedia.org/wiki/UFC_306"
-    },
-    {
-      "fighters": [
-        {
-          "name": "Dricus du Plessis (c)",
-          "url": "/wiki/Dricus_du_Plessis"
-        },
-        {
-          "name": "Israel Adesanya",
-          "url": "/wiki/Israel_Adesanya"
-        },
-        {
-          "name": "Kai Kara-France",
-          "url": "/wiki/Kai_Kara-France"
-        },
-        {
-          "name": "Steve Erceg",
-          "url": "/wiki/Steve_Erceg"
-        },
-        {
-          "name": "Dan Hooker",
-          "url": "/wiki/Dan_Hooker"
-        },
-        {
-          "name": "Mateusz Gamrot",
-          "url": "/wiki/Mateusz_Gamrot"
-        },
-        {
-          "name": "Jairzinho Rozenstruik",
-          "url": "/wiki/Jairzinho_Rozenstruik"
-        },
-        {
-          "name": "Tai Tuivasa",
-          "url": "/wiki/Tai_Tuivasa"
-        },
-        {
-          "name": "Carlos Prates",
-          "url": "/wiki/Carlos_Prates"
-        },
-        {
-          "name": "Li Jingliang",
-          "url": "/wiki/Li_Jingliang"
-        },
-        {
-          "name": "Valter Walker"
-        },
-        {
-          "name": "Junior Tafa",
-          "url": "/wiki/Junior_Tafa"
-        },
-        {
-          "name": "Ricardo Ramos",
-          "url": "/wiki/Ricardo_Ramos_(fighter)"
-        },
-        {
-          "name": "Joshua Culibao",
-          "url": "/wiki/Joshua_Culibao"
-        },
-        {
-          "name": "Casey O'Neill",
-          "url": "/wiki/Casey_O%27Neill"
-        },
-        {
-          "name": "Luana Santos"
-        },
-        {
-          "name": "Jack Jenkins"
-        },
-        {
-          "name": "Herbert Burns",
-          "url": "/wiki/Herbert_Burns"
-        },
-        {
-          "name": "Song Kenan",
-          "url": "/wiki/Song_Kenan"
-        },
-        {
-          "name": "Ricky Glenn",
-          "url": "/wiki/Ricky_Glenn"
-        }
-      ],
-      "date": "Aug 18, 2024",
-      "eventName": "UFC 305: du Plessis vs. Adesanya",
-      "url": "https://en.wikipedia.org/wiki/UFC_305",
+      "date": "Jan 18, 2025",
+      "eventName": "UFC 311: Makhachev vs. Moicano",
+      "url": "https://en.wikipedia.org/wiki/UFC_311",
       "isBigEvent": true
     }
   ]

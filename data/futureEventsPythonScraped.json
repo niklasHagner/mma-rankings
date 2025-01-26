@@ -1,13 +1,23 @@
 [
     {
+        "date": "Apr 12, 2025",
+        "eventName": "UFC 314",
+        "url": "/wiki/UFC_314"
+    },
+    {
+        "date": "Apr 5, 2025",
+        "eventName": "UFC Fight Night 256",
+        "url": "/wiki/UFC_Fight_Night_256"
+    },
+    {
         "date": "Mar 29, 2025",
         "eventName": "UFC on ESPN 64",
         "url": "/wiki/UFC_on_ESPN_64"
     },
     {
         "date": "Mar 22, 2025",
-        "eventName": "UFC Fight Night 255",
-        "url": "/wiki/UFC_Fight_Night_255"
+        "eventName": "UFC Fight Night: Edwards vs. Della Maddalena",
+        "url": "/wiki/UFC_Fight_Night:_Edwards_vs._Della_Maddalena"
     },
     {
         "date": "Mar 15, 2025",
@@ -16,18 +26,18 @@
     },
     {
         "date": "Mar 8, 2025",
-        "eventName": "UFC 313",
+        "eventName": "UFC 313: Pereira vs. Ankalaev",
         "url": "/wiki/UFC_313"
     },
     {
         "date": "Mar 1, 2025",
-        "eventName": "UFC Fight Night 253",
-        "url": "/wiki/UFC_Fight_Night_253"
+        "eventName": "UFC Fight Night: Royval vs. Kape",
+        "url": "/wiki/UFC_Fight_Night:_Royval_vs._Kape"
     },
     {
         "date": "Feb 22, 2025",
-        "eventName": "UFC Fight Night 252",
-        "url": "/wiki/UFC_Fight_Night_252"
+        "eventName": "UFC Fight Night: Cejudo vs. Song",
+        "url": "/wiki/UFC_Fight_Night:_Cejudo_vs._Song"
     },
     {
         "date": "Feb 15, 2025",
@@ -36,22 +46,12 @@
     },
     {
         "date": "Feb 9, 2025",
-        "eventName": "UFC 312: du Plessis vs Strickland 2",
+        "eventName": "UFC 312: du Plessis vs. Strickland 2",
         "url": "/wiki/UFC_312"
     },
     {
         "date": "Feb 1, 2025",
         "eventName": "UFC Fight Night: Adesanya vs. Imavov",
         "url": "/wiki/UFC_Fight_Night:_Adesanya_vs._Imavov"
-    },
-    {
-        "date": "Jan 18, 2025",
-        "eventName": "UFC 311: Makhachev vs. Tsarukyan 2",
-        "url": "/wiki/UFC_311"
-    },
-    {
-        "date": "Jan 11, 2025",
-        "eventName": "UFC Fight Night: Dern vs. Ribas 2",
-        "url": "/wiki/UFC_Fight_Night:_Dern_vs._Ribas_2"
     }
 ]
