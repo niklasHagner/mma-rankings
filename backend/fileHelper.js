@@ -24,7 +24,7 @@ function readFileByFighterObj(fighter) {
 }
 
 function getFileNameByFighterObj(fighter) {
-  const url = fighter.url || fighter.fighterInfo.wikiUrl;
+  const url = fighter.url || fighter?.fighterInfo?.wikiUrl;
   const split = url.split("/");
   const slug = split[split.length - 1];
   const fileName = "data/fighters/" + slug + ".json";

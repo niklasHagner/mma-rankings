@@ -8,6 +8,24 @@ const viewBuilder = require('../backend/viewBuilder.js');
 global.fightersWithProfileLinks = JSON.parse(fs.readFileSync("data/allFighters.json"));
 global.rankData = JSON.parse(fs.readFileSync("data/mmaStats.json"));
 
+
+async function scrapeListOfFighters(inputFighters) {
+    config.SAVE_JSON_TO_FILE = true;
+    //Example input: [{ url: "wiki/Leon_Edwards" }, { url: "wiki/Jan_B%C5%82achowicz"} ]
+    //Note: avoid running this on a huge array to avoid scraper blockers
+
+    console.log("scrapeListOfFighters", inputFighters);
+
+    const readExistingFromFile = false;
+    const allowFetchingMissingFighters = true;
+    const fetchImages = true;
+    const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, readExistingFromFile, allowFetchingMissingFighters, fetchImages);
+    await Promise.allSettled(fighterBasicData.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData)));
+    fileHelper.updateListOfFighterFiles();
+    console.log("done");
+    return;
+}
+
 /* Fighters with problematic wikipedia pages that we struggle to scrape:*/
 // { name: 'Austen Lane', url: '/wiki/Austen_Lane' },
 // "/wiki/Tatiana_Suarez",
@@ -33,34 +51,43 @@ global.rankData = JSON.parse(fs.readFileSync("data/mmaStats.json"));
 //     "url": "/wiki/Diana_Belbi%C5%A3%C4%83"
 // },
 
-async function scrapeListOfFighters(inputFighters) {
-    config.SAVE_JSON_TO_FILE = true;
-    //Example input: [{ url: "wiki/Leon_Edwards" }, { url: "wiki/Jan_B%C5%82achowicz"} ]
-    //Note: avoid running this on a huge array to avoid scraper blockers
-
-    console.log("scrapeListOfFighters", inputFighters);
-
-    const readExistingFromFile = false;
-    const allowFetchingMissingFighters = true;
-    const fetchImages = true;
-    const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, readExistingFromFile, allowFetchingMissingFighters, fetchImages);
-    await Promise.allSettled(fighterBasicData.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData)));
-    fileHelper.updateListOfFighterFiles();
-    console.log("done");
-    return;
-}
 
 //Potential name issues: Jacare Souza, Fabricio Werdum, Rogerio Nogueira
 // { "name": "Carlston Harris", "url": "/wiki/Carlston_Harris" },
 
-
-
 let inputFighters = [
-   
+
 ];
+
+function fillArrayWithRankedFightersMissingFiles() {
+    const latestRankings = global.rankData.dates[0];
+
+    // Initialize an array to hold fighters with undefined return values
+    const missingRankedFighters = [];
+    // Iterate through the fighters array
+    latestRankings.divisions.forEach(division => {
+        division.fighters.map(x => ({name: x.name, url: x.link})).forEach(fighter => {
+            if (!fighter.url) {
+                console.log("This fighter lacks wikipedia url", fighter);
+            } else {
+                const result = fileHelper.readFileByFighterObj(fighter);
+                if (!result) {
+                    missingRankedFighters.push(fighter);
+                }
+            }
+            
+        });
+    });
+
+    return missingRankedFighters;
+}
 
 async function scrapeInBatchesWithWaits() {
     let minutes = 1;
+
+    const missingRankedFighters = fillArrayWithRankedFightersMissingFiles();
+    inputFighters = inputFighters.concat(missingRankedFighters);
+
     const clonedInputFighters = [...inputFighters];
     for (let i = 0; i < clonedInputFighters.length; i++) {
         const inputFighterBatch = clonedInputFighters.splice(0, 6);

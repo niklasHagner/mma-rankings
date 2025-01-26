@@ -72,13 +72,9 @@ This project generates a json-file of the top15 rankings for every UFC division 
 
 * Update rankings `node ./scripts/scrapeLatestRankingsFromWikipedia.js`
 
-* Update futureEventsPythonScraped.json and pastEventsPythonScraped.json via
-```
-pip3 install requests bs4
-python ./scripts/scrapeEventsToJson.py
-```
+* `python ./scripts/scrapeEventsToJson.py` ( if necessary install `pip3 install requests bs4` ) to update  the files futureEventsPythonScraped.json and pastEventsPythonScraped.json
 
-* Run /scripts/updateFightersFromPastEvents.js in a debugger, and copy names to scripts/scrapeListOfFighters.js 
+* Run `/scripts/updateFightersFromPastEvents.js` in a debugger, and copy names to scripts/scrapeListOfFighters.js 
 
 * Save `events.json` by running the project and removing this
 ```
