@@ -70,7 +70,7 @@ This project generates a json-file of the top15 rankings for every UFC division 
 
 # Run scripts to update stats and records
 
-* Update rankings `node ./scripts/scrapeLatestRankingsFromWikipedia.js`
+* Update rankings `node ./scripts/scrapeLatestRankingsFromWikipedia.js` - This saves data to `/data/mmaStats.json`
 
 * `python ./scripts/scrapeEventsToJson.py` ( if necessary install `pip3 install requests bs4` ) - this updates `futureEventsPythonScraped.json` and `pastEventsPythonScraped.json`
 
@@ -86,12 +86,4 @@ B) copy names to `scripts/scrapeListOfFighters.js` and run that file in a debugg
         return JSON.parse(fileData); // Return the parsed JSON
     }
 ```
-
-## Old scripts instructions 
-
-* Check 'Latest rankings' date on bottom of page, and run `npm run scrapeLatestRankings` if it's out of date. This saves data to `/data/mmaStats.json`
-
-* First run `scrapeListOfFighters.js` in a debugger (or `npm run scrapeListOfFighters`) - this will scrape 6 fighters, then wait a while (to avoid getting rate-limited)
-
-* To update fighter records based on recent events, first run run `scrapeLatestEvents.bash` which stores files in `data/past-events`. Then run `updateFightersFromPastEvents.js` which is configured to run entirely on local files.
 
