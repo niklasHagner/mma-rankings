@@ -1,17 +1,32 @@
 [
     {
+        "date": "Mar 1, 2025",
+        "eventName": "UFC Fight Night: Kape vs. Almabayev",
+        "url": "/wiki/UFC_Fight_Night:_Kape_vs._Almabayev"
+    },
+    {
+        "date": "Feb 22, 2025",
+        "eventName": "UFC Fight Night: Cejudo vs. Song",
+        "url": "/wiki/UFC_Fight_Night:_Cejudo_vs._Song"
+    },
+    {
+        "date": "Feb 15, 2025",
+        "eventName": "UFC Fight Night: Cannonier vs. Rodrigues",
+        "url": "/wiki/UFC_Fight_Night:_Cannonier_vs._Rodrigues"
+    },
+    {
+        "date": "Feb 8, 2025",
+        "eventName": "UFC 312: du Plessis vs. Strickland 2",
+        "url": "/wiki/UFC_312"
+    },
+    {
+        "date": "Feb 1, 2025",
+        "eventName": "UFC Fight Night: Adesanya vs. Imavov",
+        "url": "/wiki/UFC_Fight_Night:_Adesanya_vs._Imavov"
+    },
+    {
         "date": "Jan 18, 2025",
         "eventName": "UFC 311: Makhachev vs. Moicano",
         "url": "/wiki/UFC_311"
-    },
-    {
-        "date": "Jan 11, 2025",
-        "eventName": "UFC Fight Night: Dern vs. Ribas 2",
-        "url": "/wiki/UFC_Fight_Night:_Dern_vs._Ribas_2"
-    },
-    {
-        "date": "Dec 14, 2024",
-        "eventName": "UFC on ESPN: Covington vs. Buckley",
-        "url": "/wiki/UFC_on_ESPN:_Covington_vs._Buckley"
     }
 ]
