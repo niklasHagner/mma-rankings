@@ -56,7 +56,8 @@ async function scrapeListOfFighters(inputFighters) {
 // { "name": "Carlston Harris", "url": "/wiki/Carlston_Harris" },
 
 let inputFighters = [
-{ name: 'Zhang Weili (c)', url: '/wiki/Zhang_Weili' }
+    
+    
 ];
 
 function fillArrayWithRankedFightersMissingFiles() {

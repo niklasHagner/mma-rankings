@@ -1,5 +1,25 @@
 [
     {
+        "date": "Mar 29, 2025",
+        "eventName": "UFC on ESPN: Moreno vs. Erceg",
+        "url": "/wiki/UFC_on_ESPN:_Moreno_vs._Erceg"
+    },
+    {
+        "date": "Mar 22, 2025",
+        "eventName": "UFC Fight Night: Edwards vs. Brady",
+        "url": "/wiki/UFC_Fight_Night:_Edwards_vs._Brady"
+    },
+    {
+        "date": "Mar 15, 2025",
+        "eventName": "UFC Fight Night: Vettori vs. Dolidze 2",
+        "url": "/wiki/UFC_Fight_Night:_Vettori_vs._Dolidze_2"
+    },
+    {
+        "date": "Mar 8, 2025",
+        "eventName": "UFC 313: Pereira vs. Ankalaev",
+        "url": "/wiki/UFC_313"
+    },
+    {
         "date": "Mar 1, 2025",
         "eventName": "UFC Fight Night: Kape vs. Almabayev",
         "url": "/wiki/UFC_Fight_Night:_Kape_vs._Almabayev"
@@ -13,20 +33,5 @@
         "date": "Feb 15, 2025",
         "eventName": "UFC Fight Night: Cannonier vs. Rodrigues",
         "url": "/wiki/UFC_Fight_Night:_Cannonier_vs._Rodrigues"
-    },
-    {
-        "date": "Feb 8, 2025",
-        "eventName": "UFC 312: du Plessis vs. Strickland 2",
-        "url": "/wiki/UFC_312"
-    },
-    {
-        "date": "Feb 1, 2025",
-        "eventName": "UFC Fight Night: Adesanya vs. Imavov",
-        "url": "/wiki/UFC_Fight_Night:_Adesanya_vs._Imavov"
-    },
-    {
-        "date": "Jan 18, 2025",
-        "eventName": "UFC 311: Makhachev vs. Moicano",
-        "url": "/wiki/UFC_311"
     }
 ]

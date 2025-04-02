@@ -3,222 +3,6 @@
     {
       "fighters": [
         {
-          "name": "Mackenzie Dern",
-          "url": "/wiki/Mackenzie_Dern"
-        },
-        {
-          "name": "Amanda Ribas",
-          "url": "/wiki/Amanda_Ribas"
-        },
-        {
-          "name": "Santiago Ponzinibbio",
-          "url": "/wiki/Santiago_Ponzinibbio"
-        },
-        {
-          "name": "Carlston Harris",
-          "url": "/wiki/Carlston_Harris"
-        },
-        {
-          "name": "César Almeida",
-          "url": "/wiki/C%C3%A9sar_Almeida_(fighter)"
-        },
-        {
-          "name": "Abdul Razak Alhassan",
-          "url": "/wiki/Abdul_Razak_Alhassan"
-        },
-        {
-          "name": "Roman Kopylov",
-          "url": "/wiki/Roman_Kopylov"
-        },
-        {
-          "name": "Chris Curtis",
-          "url": "/wiki/Chris_Curtis_(fighter)"
-        },
-        {
-          "name": "Punahele Soriano",
-          "url": "/wiki/Punahele_Soriano"
-        },
-        {
-          "name": "Uroš Medić",
-          "url": "/wiki/Uro%C5%A1_Medi%C4%87"
-        },
-        {
-          "name": "Thiago Moisés",
-          "url": "/wiki/Thiago_Mois%C3%A9s"
-        },
-        {
-          "name": "Trey Ogden"
-        },
-        {
-          "name": "Nurullo Aliev"
-        },
-        {
-          "name": "Joe Solecki",
-          "url": "/wiki/Joe_Solecki"
-        }
-      ],
-      "date": "Jan 11, 2025",
-      "eventName": "UFC Fight Night: Dern vs. Ribas 2",
-      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Dern_vs._Ribas_2"
-    },
-    {
-      "fighters": [
-        {
-          "name": "Nassourdine Imavov",
-          "url": "/wiki/Nassourdine_Imavov"
-        },
-        {
-          "name": "Israel Adesanya",
-          "url": "/wiki/Israel_Adesanya"
-        },
-        {
-          "name": "Michael Page",
-          "url": "/wiki/Michael_Page"
-        },
-        {
-          "name": "Sharabutdin Magomedov",
-          "url": "/wiki/Sharabutdin_Magomedov"
-        },
-        {
-          "name": "Sergei Pavlovich",
-          "url": "/wiki/Sergei_Pavlovich"
-        },
-        {
-          "name": "Jairzinho Rozenstruik",
-          "url": "/wiki/Jairzinho_Rozenstruik"
-        },
-        {
-          "name": "Vinicius Oliveira"
-        },
-        {
-          "name": "Said Nurmagomedov",
-          "url": "/wiki/Said_Nurmagomedov"
-        },
-        {
-          "name": "Farès Ziam",
-          "url": "/wiki/Far%C3%A8s_Ziam"
-        },
-        {
-          "name": "Mike Davis",
-          "url": "/wiki/Mike_Davis_(fighter)"
-        },
-        {
-          "name": "Muhammad Naimov",
-          "url": "/wiki/Muhammad_Naimov"
-        },
-        {
-          "name": "Kaan Ofli"
-        },
-        {
-          "name": "Shamil Gaziev",
-          "url": "/wiki/Shamil_Gaziev"
-        },
-        {
-          "name": "Thomas Petersen"
-        },
-        {
-          "name": "Terrance McKinney",
-          "url": "/wiki/Terrance_McKinney"
-        },
-        {
-          "name": "Damir Hadžović",
-          "url": "/wiki/Damir_Had%C5%BEovi%C4%87"
-        },
-        {
-          "name": "Jasmine Jasudavicius",
-          "url": "/wiki/Jasmine_Jasudavicius"
-        },
-        {
-          "name": "Mayra Bueno Silva",
-          "url": "/wiki/Mayra_Bueno_Silva"
-        },
-        {
-          "name": "Hamdy Abdelwahab",
-          "url": "/wiki/Hamdy_Abdelwahab"
-        },
-        {
-          "name": "Jamal Pogues"
-        }
-      ],
-      "date": "Feb 1, 2025",
-      "eventName": "UFC Fight Night: Adesanya vs. Imavov",
-      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Adesanya_vs._Imavov"
-    },
-    {
-      "fighters": [
-        {
-          "name": "Dricus du Plessis (c)",
-          "url": "/wiki/Dricus_du_Plessis"
-        },
-        {
-          "name": "Sean Strickland",
-          "url": "/wiki/Sean_Strickland"
-        },
-        {
-          "name": "Zhang Weili (c)",
-          "url": "/wiki/Zhang_Weili"
-        },
-        {
-          "name": "Tatiana Suarez",
-          "url": "/wiki/Tatiana_Suarez"
-        },
-        {
-          "name": "Tallison Teixeira"
-        },
-        {
-          "name": "Justin Tafa",
-          "url": "/wiki/Justin_Tafa"
-        },
-        {
-          "name": "Jimmy Crute",
-          "url": "/wiki/Jimmy_Crute"
-        },
-        {
-          "name": "Rodolfo Bellato"
-        },
-        {
-          "name": "Jake Matthews",
-          "url": "/wiki/Jake_Matthews_(fighter)"
-        },
-        {
-          "name": "Francisco Prado"
-        },
-        {
-          "name": "Wang Cong",
-          "url": "/wiki/Wang_Cong"
-        },
-        {
-          "name": "Bruna Brasil"
-        },
-        {
-          "name": "Rong Zhu",
-          "url": "/wiki/Rong_Zhu"
-        },
-        {
-          "name": "Kody Steele"
-        },
-        {
-          "name": "Jonathan Micallef"
-        },
-        {
-          "name": "Kevin Jousset",
-          "url": "/wiki/Kevin_Jousset"
-        },
-        {
-          "name": "Quillan Salkilld"
-        },
-        {
-          "name": "Anshul Jubli",
-          "url": "/wiki/Anshul_Jubli"
-        }
-      ],
-      "date": "Feb 8, 2025",
-      "eventName": "UFC 312: du Plessis vs. Strickland 2",
-      "url": "https://en.wikipedia.org/wiki/UFC_312"
-    },
-    {
-      "fighters": [
-        {
           "name": "Jared Cannonier",
           "url": "/wiki/Jared_Cannonier"
         },
@@ -240,6 +24,13 @@
         },
         {
           "name": "Dylan Budka"
+        },
+        {
+          "name": "Nazim Sadykhov",
+          "url": "/wiki/Nazim_Sadykhov"
+        },
+        {
+          "name": "Ismael Bonfim"
         },
         {
           "name": "Andre Petroski",
@@ -383,94 +174,323 @@
     {
       "fighters": [
         {
-          "name": "Islam Makhachev (c)",
-          "url": "/wiki/Islam_Makhachev"
+          "name": "Manel Kape",
+          "url": "/wiki/Manel_Kape"
         },
         {
-          "name": "Renato Moicano",
-          "url": "/wiki/Renato_Moicano"
+          "name": "Asu Almabayev",
+          "url": "/wiki/Asu_Almabayev"
         },
         {
-          "name": "Merab Dvalishvili (c)",
-          "url": "/wiki/Merab_Dvalishvili"
+          "name": "Cody Brundage",
+          "url": "/wiki/Cody_Brundage"
         },
         {
-          "name": "Umar Nurmagomedov",
-          "url": "/wiki/Umar_Nurmagomedov"
+          "name": "Julian Marquez",
+          "url": "/wiki/Julian_Marquez"
         },
         {
-          "name": "Jiří Procházka",
-          "url": "/wiki/Ji%C5%99%C3%AD_Proch%C3%A1zka"
+          "name": "Nasrat Haqparast",
+          "url": "/wiki/Nasrat_Haqparast"
         },
         {
-          "name": "Jamahal Hill",
-          "url": "/wiki/Jamahal_Hill"
+          "name": "Esteban Ribovics"
         },
         {
-          "name": "Jailton Almeida",
-          "url": "/wiki/Jailton_Almeida"
+          "name": "Mário Pinto"
         },
         {
-          "name": "Serghei Spivac",
-          "url": "/wiki/Serghei_Spivac"
+          "name": "Austen Lane",
+          "url": "/wiki/Austen_Lane"
         },
         {
-          "name": "Reinier de Ridder",
-          "url": "/wiki/Reinier_de_Ridder"
+          "name": "Chepe Mariscal"
+        },
+        {
+          "name": "Ricardo Ramos",
+          "url": "/wiki/Ricardo_Ramos_(fighter)"
+        },
+        {
+          "name": "JJ Aldrich",
+          "url": "/wiki/JJ_Aldrich"
+        },
+        {
+          "name": "Andrea Lee",
+          "url": "/wiki/Andrea_Lee_(fighter)"
+        },
+        {
+          "name": "Ramazan Temirov"
+        },
+        {
+          "name": "Charles Johnson",
+          "url": "/wiki/Charles_Johnson_(fighter)"
+        }
+      ],
+      "date": "Mar 1, 2025",
+      "eventName": "UFC Fight Night: Kape vs. Almabayev",
+      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Kape_vs._Almabayev"
+    },
+    {
+      "fighters": [
+        {
+          "name": "Roman Dolidze",
+          "url": "/wiki/Roman_Dolidze"
+        },
+        {
+          "name": "Marvin Vettori",
+          "url": "/wiki/Marvin_Vettori"
+        },
+        {
+          "name": "Chidi Njokuani",
+          "url": "/wiki/Chidi_Njokuani"
+        },
+        {
+          "name": "Elizeu Zaleski dos Santos",
+          "url": "/wiki/Elizeu_Zaleski_dos_Santos"
+        },
+        {
+          "name": "Alexander Hernandez",
+          "url": "/wiki/Alexander_Hernandez"
+        },
+        {
+          "name": "Kurt Holobaugh",
+          "url": "/wiki/Kurt_Holobaugh"
+        },
+        {
+          "name": "Da'Mon Blackshear"
+        },
+        {
+          "name": "Cody Gibson",
+          "url": "/wiki/Cody_Gibson"
+        },
+        {
+          "name": "Kevin Vallejos"
+        },
+        {
+          "name": "Choi Seung-woo",
+          "url": "/wiki/Seung_Woo_Choi"
+        },
+        {
+          "name": "Waldo Cortes-Acosta",
+          "url": "/wiki/Waldo_Cortes-Acosta"
+        },
+        {
+          "name": "Ryan Spann",
+          "url": "/wiki/Ryan_Spann"
+        },
+        {
+          "name": "Sam Hughes",
+          "url": "/wiki/Sam_Hughes_(fighter)"
+        },
+        {
+          "name": "Stephanie Luciano"
+        },
+        {
+          "name": "Priscila Cachoeira",
+          "url": "/wiki/Priscila_Cachoeira"
+        },
+        {
+          "name": "Josiane Nunes",
+          "url": "/wiki/Josiane_Nunes"
+        }
+      ],
+      "date": "Mar 15, 2025",
+      "eventName": "UFC Fight Night: Vettori vs. Dolidze 2",
+      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Vettori_vs._Dolidze_2"
+    },
+    {
+      "fighters": [
+        {
+          "name": "Sean Brady",
+          "url": "/wiki/Sean_Brady_(fighter)"
+        },
+        {
+          "name": "Leon Edwards",
+          "url": "/wiki/Leon_Edwards"
+        },
+        {
+          "name": "Carlos Ulberg",
+          "url": "/wiki/Carlos_Ulberg"
+        },
+        {
+          "name": "Jan Błachowicz",
+          "url": "/wiki/Jan_B%C5%82achowicz"
         },
         {
           "name": "Kevin Holland",
           "url": "/wiki/Kevin_Holland"
         },
         {
-          "name": "Raoni Barcelos",
-          "url": "/wiki/Raoni_Barcelos"
+          "name": "Gunnar Nelson",
+          "url": "/wiki/Gunnar_Nelson_(fighter)"
         },
         {
-          "name": "Payton Talbott",
-          "url": "/wiki/Payton_Talbott"
+          "name": "Alexia Thainara"
         },
         {
-          "name": "Bogdan Guskov",
-          "url": "/wiki/Bogdan_Guskov"
+          "name": "Molly McCann",
+          "url": "/wiki/Molly_McCann"
         },
         {
-          "name": "Billy Elekana"
+          "name": "Nathaniel Wood",
+          "url": "/wiki/Nathaniel_Wood_(fighter)"
         },
         {
-          "name": "Grant Dawson",
-          "url": "/wiki/Grant_Dawson"
+          "name": "Morgan Charrière"
         },
         {
-          "name": "Carlos Diego Ferreira",
-          "url": "/wiki/Carlos_Diego_Ferreira"
+          "name": "Chris Padilla"
         },
         {
-          "name": "Ailín Pérez",
-          "url": "/wiki/Ail%C3%ADn_P%C3%A9rez"
+          "name": "Jai Herbert",
+          "url": "/wiki/Jai_Herbert"
         },
         {
-          "name": "Karol Rosa",
-          "url": "/wiki/Karol_Rosa"
+          "name": "Marcin Tybura",
+          "url": "/wiki/Marcin_Tybura"
         },
         {
-          "name": "Muin Gafurov"
-        },
-        {
-          "name": "Rinya Nakamura",
-          "url": "/wiki/Rinya_Nakamura"
-        },
-        {
-          "name": "Tagir Ulanbekov",
-          "url": "/wiki/Tagir_Ulanbekov"
-        },
-        {
-          "name": "Clayton Carpenter"
+          "name": "Mick Parkin",
+          "url": "/wiki/Mick_Parkin"
         }
       ],
-      "date": "Jan 18, 2025",
-      "eventName": "UFC 311: Makhachev vs. Moicano",
-      "url": "https://en.wikipedia.org/wiki/UFC_311",
+      "date": "Mar 22, 2025",
+      "eventName": "UFC Fight Night: Edwards vs. Brady",
+      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Edwards_vs._Brady"
+    },
+    {
+      "fighters": [
+        {
+          "name": "Brandon Moreno",
+          "url": "/wiki/Brandon_Moreno"
+        },
+        {
+          "name": "Steve Erceg",
+          "url": "/wiki/Steve_Erceg"
+        },
+        {
+          "name": "Manuel Torres",
+          "url": "/wiki/Manuel_Torres_(fighter)"
+        },
+        {
+          "name": "Drew Dober",
+          "url": "/wiki/Drew_Dober"
+        },
+        {
+          "name": "Édgar Cháirez"
+        },
+        {
+          "name": "C.J. Vergara",
+          "url": "/wiki/C.J._Vergara"
+        },
+        {
+          "name": "Raul Rosas Jr.",
+          "url": "/wiki/Raul_Rosas_Jr."
+        },
+        {
+          "name": "Vince Morales",
+          "url": "/wiki/Vince_Morales"
+        },
+        {
+          "name": "Loopy Godinez",
+          "url": "/wiki/Loopy_Godinez"
+        },
+        {
+          "name": "Julia Polastri"
+        },
+        {
+          "name": "Rafa García",
+          "url": "/wiki/Rafa_Garc%C3%ADa_(fighter)"
+        },
+        {
+          "name": "Vinc Pichel",
+          "url": "/wiki/Vinc_Pichel"
+        },
+        {
+          "name": "Jamall Emmers",
+          "url": "/wiki/Jamall_Emmers"
+        },
+        {
+          "name": "Gabriel Miranda"
+        },
+        {
+          "name": "MarQuel Mederos"
+        },
+        {
+          "name": "Austin Hubbard",
+          "url": "/wiki/Austin_Hubbard"
+        }
+      ],
+      "date": "Mar 29, 2025",
+      "eventName": "UFC on ESPN: Moreno vs. Erceg",
+      "url": "https://en.wikipedia.org/wiki/UFC_on_ESPN:_Moreno_vs._Erceg"
+    },
+    {
+      "fighters": [
+        {
+          "name": "Magomed Ankalaev",
+          "url": "/wiki/Magomed_Ankalaev"
+        },
+        {
+          "name": "Alex Pereira (c)",
+          "url": "/wiki/Alex_Pereira"
+        },
+        {
+          "name": "Justin Gaethje",
+          "url": "/wiki/Justin_Gaethje"
+        },
+        {
+          "name": "Rafael Fiziev",
+          "url": "/wiki/Rafael_Fiziev"
+        },
+        {
+          "name": "Ignacio Bahamondes",
+          "url": "/wiki/Ignacio_Bahamondes"
+        },
+        {
+          "name": "Jalin Turner",
+          "url": "/wiki/Jalin_Turner"
+        },
+        {
+          "name": "Amanda Lemos",
+          "url": "/wiki/Amanda_Lemos"
+        },
+        {
+          "name": "Iasmin Lucindo"
+        },
+        {
+          "name": "Maurício Ruffy",
+          "url": "/wiki/Maur%C3%ADcio_Ruffy"
+        },
+        {
+          "name": "King Green",
+          "url": "/wiki/King_Green"
+        },
+        {
+          "name": "Joshua Van",
+          "url": "/wiki/Joshua_Van"
+        },
+        {
+          "name": "Rei Tsuruya"
+        },
+        {
+          "name": "Brunno Ferreira"
+        },
+        {
+          "name": "Armen Petrosyan",
+          "url": "/wiki/Armen_Petrosyan_(fighter)"
+        },
+        {
+          "name": "Carlos Leal"
+        },
+        {
+          "name": "Alex Morono",
+          "url": "/wiki/Alex_Morono"
+        }
+      ],
+      "date": "Mar 8, 2025",
+      "eventName": "UFC 313: Pereira vs. Ankalaev",
+      "url": "https://en.wikipedia.org/wiki/UFC_313",
       "isBigEvent": true
     }
   ]
