@@ -1,5 +1,15 @@
 [
     {
+        "date": "Apr 12, 2025",
+        "eventName": "UFC 314: Volkanovski vs. Lopes",
+        "url": "/wiki/UFC_314"
+    },
+    {
+        "date": "Apr 5, 2025",
+        "eventName": "UFC on ESPN: Emmett vs. Murphy",
+        "url": "/wiki/UFC_on_ESPN:_Emmett_vs._Murphy"
+    },
+    {
         "date": "Mar 29, 2025",
         "eventName": "UFC on ESPN: Moreno vs. Erceg",
         "url": "/wiki/UFC_on_ESPN:_Moreno_vs._Erceg"
@@ -23,15 +33,5 @@
         "date": "Mar 1, 2025",
         "eventName": "UFC Fight Night: Kape vs. Almabayev",
         "url": "/wiki/UFC_Fight_Night:_Kape_vs._Almabayev"
-    },
-    {
-        "date": "Feb 22, 2025",
-        "eventName": "UFC Fight Night: Cejudo vs. Song",
-        "url": "/wiki/UFC_Fight_Night:_Cejudo_vs._Song"
-    },
-    {
-        "date": "Feb 15, 2025",
-        "eventName": "UFC Fight Night: Cannonier vs. Rodrigues",
-        "url": "/wiki/UFC_Fight_Night:_Cannonier_vs._Rodrigues"
     }
 ]

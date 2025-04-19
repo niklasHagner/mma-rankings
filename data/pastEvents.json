@@ -3,177 +3,6 @@
     {
       "fighters": [
         {
-          "name": "Jared Cannonier",
-          "url": "/wiki/Jared_Cannonier"
-        },
-        {
-          "name": "Gregory Rodrigues",
-          "url": "/wiki/Gregory_Rodrigues"
-        },
-        {
-          "name": "Youssef Zalal",
-          "url": "/wiki/Youssef_Zalal"
-        },
-        {
-          "name": "Calvin Kattar",
-          "url": "/wiki/Calvin_Kattar"
-        },
-        {
-          "name": "Edmen Shahbazyan",
-          "url": "/wiki/Edmen_Shahbazyan"
-        },
-        {
-          "name": "Dylan Budka"
-        },
-        {
-          "name": "Nazim Sadykhov",
-          "url": "/wiki/Nazim_Sadykhov"
-        },
-        {
-          "name": "Ismael Bonfim"
-        },
-        {
-          "name": "Andre Petroski",
-          "url": "/wiki/Andre_Petroski"
-        },
-        {
-          "name": "Rodolfo Vieira",
-          "url": "/wiki/Rodolfo_Vieira"
-        },
-        {
-          "name": "Angela Hill",
-          "url": "/wiki/Angela_Hill"
-        },
-        {
-          "name": "Ketlen Souza",
-          "url": "/wiki/Ketlen_Souza"
-        },
-        {
-          "name": "Gabriel Bonfim"
-        },
-        {
-          "name": "Khaos Williams",
-          "url": "/wiki/Khaos_Williams"
-        },
-        {
-          "name": "Elijah Smith"
-        },
-        {
-          "name": "Vince Morales",
-          "url": "/wiki/Vince_Morales"
-        },
-        {
-          "name": "Valter Walker"
-        },
-        {
-          "name": "Don'Tale Mayes",
-          "url": "/wiki/Don%27Tale_Mayes"
-        },
-        {
-          "name": "Jacqueline Cavalcanti",
-          "url": "/wiki/Jacqueline_Cavalcanti"
-        },
-        {
-          "name": "Julia Avila",
-          "url": "/wiki/Julia_Avila"
-        }
-      ],
-      "date": "Feb 15, 2025",
-      "eventName": "UFC Fight Night: Cannonier vs. Rodrigues",
-      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Cannonier_vs._Rodrigues"
-    },
-    {
-      "fighters": [
-        {
-          "name": "Song Yadong",
-          "url": "/wiki/Song_Yadong"
-        },
-        {
-          "name": "Henry Cejudo",
-          "url": "/wiki/Henry_Cejudo"
-        },
-        {
-          "name": "Anthony Hernandez",
-          "url": "/wiki/Anthony_Hernandez"
-        },
-        {
-          "name": "Brendan Allen",
-          "url": "/wiki/Brendan_Allen"
-        },
-        {
-          "name": "Rob Font",
-          "url": "/wiki/Rob_Font"
-        },
-        {
-          "name": "Jean Matsumoto"
-        },
-        {
-          "name": "Jean Silva",
-          "url": "/wiki/Jean_Silva"
-        },
-        {
-          "name": "Melsik Baghdasaryan",
-          "url": "/wiki/Melsik_Baghdasaryan"
-        },
-        {
-          "name": "Alonzo Menifield",
-          "url": "/wiki/Alonzo_Menifield"
-        },
-        {
-          "name": "Julius Walker"
-        },
-        {
-          "name": "Ion Cuțelaba",
-          "url": "/wiki/Ion_Cu%C8%9Belaba"
-        },
-        {
-          "name": "İbo Aslan",
-          "url": "/wiki/%C4%B0bo_Aslan"
-        },
-        {
-          "name": "Melquizael Costa"
-        },
-        {
-          "name": "Andre Fili",
-          "url": "/wiki/Andre_Fili"
-        },
-        {
-          "name": "Ricky Simón",
-          "url": "/wiki/Ricky_Sim%C3%B3n"
-        },
-        {
-          "name": "Javid Basharat",
-          "url": "/wiki/Javid_Basharat"
-        },
-        {
-          "name": "Austin Vanderford",
-          "url": "/wiki/Austin_Vanderford"
-        },
-        {
-          "name": "Nikolay Veretennikov"
-        },
-        {
-          "name": "Nursulton Ruziboev",
-          "url": "/wiki/Nursulton_Ruziboev"
-        },
-        {
-          "name": "Eric McConico"
-        },
-        {
-          "name": "Modestas Bukauskas",
-          "url": "/wiki/Modestas_Bukauskas"
-        },
-        {
-          "name": "Raffael Cerqueira"
-        }
-      ],
-      "date": "Feb 22, 2025",
-      "eventName": "UFC Fight Night: Cejudo vs. Song",
-      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Cejudo_vs._Song"
-    },
-    {
-      "fighters": [
-        {
           "name": "Manel Kape",
           "url": "/wiki/Manel_Kape"
         },
@@ -424,6 +253,172 @@
       "date": "Mar 29, 2025",
       "eventName": "UFC on ESPN: Moreno vs. Erceg",
       "url": "https://en.wikipedia.org/wiki/UFC_on_ESPN:_Moreno_vs._Erceg"
+    },
+    {
+      "fighters": [
+        {
+          "name": "Lerone Murphy",
+          "url": "/wiki/Lerone_Murphy"
+        },
+        {
+          "name": "Josh Emmett",
+          "url": "/wiki/Josh_Emmett"
+        },
+        {
+          "name": "Pat Sabatini",
+          "url": "/wiki/Pat_Sabatini"
+        },
+        {
+          "name": "Joanderson Brito"
+        },
+        {
+          "name": "Brad Tavares",
+          "url": "/wiki/Brad_Tavares"
+        },
+        {
+          "name": "Gerald Meerschaert",
+          "url": "/wiki/Gerald_Meerschaert"
+        },
+        {
+          "name": "Ode' Osbourne",
+          "url": "/wiki/Ode%27_Osbourne"
+        },
+        {
+          "name": "Luis Gurule"
+        },
+        {
+          "name": "Dione Barbosa"
+        },
+        {
+          "name": "Diana Belbiţă",
+          "url": "/wiki/Diana_Belbi%C5%A3%C4%83"
+        },
+        {
+          "name": "Loma Lookboonmee",
+          "url": "/wiki/Loma_Lookboonmee"
+        },
+        {
+          "name": "Istela Nunes"
+        },
+        {
+          "name": "Victor Henry",
+          "url": "/wiki/Victor_Henry_(fighter)"
+        },
+        {
+          "name": "Pedro Falcão"
+        },
+        {
+          "name": "Talita Alencar",
+          "url": "/wiki/Talita_Alencar"
+        },
+        {
+          "name": "Vanessa Demopoulos",
+          "url": "/wiki/Vanessa_Demopoulos"
+        }
+      ],
+      "date": "Apr 5, 2025",
+      "eventName": "UFC on ESPN: Emmett vs. Murphy",
+      "url": "https://en.wikipedia.org/wiki/UFC_on_ESPN:_Emmett_vs._Murphy"
+    },
+    {
+      "fighters": [
+        {
+          "name": "Alexander Volkanovski",
+          "url": "/wiki/Alexander_Volkanovski"
+        },
+        {
+          "name": "Diego Lopes",
+          "url": "/wiki/Diego_Lopes_(fighter)"
+        },
+        {
+          "name": "Paddy Pimblett",
+          "url": "/wiki/Paddy_Pimblett"
+        },
+        {
+          "name": "Michael Chandler",
+          "url": "/wiki/Michael_Chandler"
+        },
+        {
+          "name": "Yair Rodríguez",
+          "url": "/wiki/Yair_Rodr%C3%ADguez"
+        },
+        {
+          "name": "Patrício Pitbull",
+          "url": "/wiki/Patr%C3%ADcio_Pitbull"
+        },
+        {
+          "name": "Jean Silva",
+          "url": "/wiki/Jean_Silva"
+        },
+        {
+          "name": "Bryce Mitchell",
+          "url": "/wiki/Bryce_Mitchell"
+        },
+        {
+          "name": "Dominick Reyes",
+          "url": "/wiki/Dominick_Reyes"
+        },
+        {
+          "name": "Nikita Krylov",
+          "url": "/wiki/Nikita_Krylov"
+        },
+        {
+          "name": "Dan Ige",
+          "url": "/wiki/Dan_Ige"
+        },
+        {
+          "name": "Sean Woodson",
+          "url": "/wiki/Sean_Woodson"
+        },
+        {
+          "name": "Virna Jandiroba",
+          "url": "/wiki/Virna_Jandiroba"
+        },
+        {
+          "name": "Yan Xiaonan",
+          "url": "/wiki/Yan_Xiaonan"
+        },
+        {
+          "name": "Chase Hooper",
+          "url": "/wiki/Chase_Hooper"
+        },
+        {
+          "name": "Jim Miller",
+          "url": "/wiki/Jim_Miller_(fighter)"
+        },
+        {
+          "name": "Julian Erosa",
+          "url": "/wiki/Julian_Erosa"
+        },
+        {
+          "name": "Darren Elkins",
+          "url": "/wiki/Darren_Elkins"
+        },
+        {
+          "name": "Michał Oleksiejczuk",
+          "url": "/wiki/Micha%C5%82_Oleksiejczuk"
+        },
+        {
+          "name": "Sedriques Dumas"
+        },
+        {
+          "name": "Su Mudaerji",
+          "url": "/wiki/Su_Mudaerji"
+        },
+        {
+          "name": "Mitch Raposo"
+        },
+        {
+          "name": "Nora Cornolle",
+          "url": "/wiki/Nora_Cornolle"
+        },
+        {
+          "name": "Hailey Cowan"
+        }
+      ],
+      "date": "Apr 12, 2025",
+      "eventName": "UFC 314: Volkanovski vs. Lopes",
+      "url": "https://en.wikipedia.org/wiki/UFC_314"
     },
     {
       "fighters": [
