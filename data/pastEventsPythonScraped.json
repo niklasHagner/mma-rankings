@@ -1,37 +1,27 @@
 [
     {
+        "date": "May 17, 2025",
+        "eventName": "UFC Fight Night: Burns vs. Morales",
+        "url": "/wiki/UFC_Fight_Night:_Burns_vs._Morales"
+    },
+    {
+        "date": "May 10, 2025",
+        "eventName": "UFC 315: Muhammad vs. Della Maddalena",
+        "url": "/wiki/UFC_315"
+    },
+    {
+        "date": "May 3, 2025",
+        "eventName": "UFC on ESPN: Sandhagen vs. Figueiredo",
+        "url": "/wiki/UFC_on_ESPN:_Sandhagen_vs._Figueiredo"
+    },
+    {
+        "date": "Apr 26, 2025",
+        "eventName": "UFC on ESPN: Machado Garry vs. Prates",
+        "url": "/wiki/UFC_on_ESPN:_Machado_Garry_vs._Prates"
+    },
+    {
         "date": "Apr 12, 2025",
         "eventName": "UFC 314: Volkanovski vs. Lopes",
         "url": "/wiki/UFC_314"
-    },
-    {
-        "date": "Apr 5, 2025",
-        "eventName": "UFC on ESPN: Emmett vs. Murphy",
-        "url": "/wiki/UFC_on_ESPN:_Emmett_vs._Murphy"
-    },
-    {
-        "date": "Mar 29, 2025",
-        "eventName": "UFC on ESPN: Moreno vs. Erceg",
-        "url": "/wiki/UFC_on_ESPN:_Moreno_vs._Erceg"
-    },
-    {
-        "date": "Mar 22, 2025",
-        "eventName": "UFC Fight Night: Edwards vs. Brady",
-        "url": "/wiki/UFC_Fight_Night:_Edwards_vs._Brady"
-    },
-    {
-        "date": "Mar 15, 2025",
-        "eventName": "UFC Fight Night: Vettori vs. Dolidze 2",
-        "url": "/wiki/UFC_Fight_Night:_Vettori_vs._Dolidze_2"
-    },
-    {
-        "date": "Mar 8, 2025",
-        "eventName": "UFC 313: Pereira vs. Ankalaev",
-        "url": "/wiki/UFC_313"
-    },
-    {
-        "date": "Mar 1, 2025",
-        "eventName": "UFC Fight Night: Kape vs. Almabayev",
-        "url": "/wiki/UFC_Fight_Night:_Kape_vs._Almabayev"
     }
 ]

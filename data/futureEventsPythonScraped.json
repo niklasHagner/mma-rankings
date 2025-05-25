@@ -5,18 +5,43 @@
         "url": "/wiki/UFC_320"
     },
     {
-        "date": "Jul 26, 2025",
-        "eventName": "UFC on ABC 9",
-        "url": "/wiki/UFC_on_ABC_9"
+        "date": "Aug 23, 2025",
+        "eventName": "UFC Fight Night 259",
+        "url": "/wiki/UFC_Fight_Night_259"
     },
     {
-        "date": "Jul 12, 2025",
+        "date": "Aug 16, 2025",
+        "eventName": "UFC 319: du Plessis vs. Chimaev",
+        "url": "/wiki/UFC_319"
+    },
+    {
+        "date": "Aug 9, 2025",
         "eventName": "UFC Fight Night 258",
         "url": "/wiki/UFC_Fight_Night_258"
     },
     {
+        "date": "Aug 2, 2025",
+        "eventName": "UFC Fight Night 257",
+        "url": "/wiki/UFC_Fight_Night_257"
+    },
+    {
+        "date": "Jul 26, 2025",
+        "eventName": "UFC on ABC: Whittaker vs. de Ridder",
+        "url": "/wiki/UFC_on_ABC:_Whittaker_vs._de_Ridder"
+    },
+    {
+        "date": "Jul 19, 2025",
+        "eventName": "UFC 318: Holloway vs. Poirier 3",
+        "url": "/wiki/UFC_318"
+    },
+    {
+        "date": "Jul 12, 2025",
+        "eventName": "UFC on ESPN: Lewis vs. Teixeira",
+        "url": "/wiki/UFC_on_ESPN:_Lewis_vs._Teixeira"
+    },
+    {
         "date": "Jun 28, 2025",
-        "eventName": "UFC 317",
+        "eventName": "UFC 317: Topuria vs. Oliveira",
         "url": "/wiki/UFC_317"
     },
     {
@@ -26,8 +51,8 @@
     },
     {
         "date": "Jun 14, 2025",
-        "eventName": "UFC Fight Night 257",
-        "url": "/wiki/UFC_Fight_Night_257"
+        "eventName": "UFC on ESPN: Usman vs. Buckley",
+        "url": "/wiki/UFC_on_ESPN:_Usman_vs._Buckley"
     },
     {
         "date": "Jun 7, 2025",
@@ -38,25 +63,5 @@
         "date": "May 31, 2025",
         "eventName": "UFC on ESPN: Blanchfield vs. Barber",
         "url": "/wiki/UFC_on_ESPN:_Blanchfield_vs._Barber"
-    },
-    {
-        "date": "May 17, 2025",
-        "eventName": "UFC Fight Night: Burns vs. Morales",
-        "url": "/wiki/UFC_Fight_Night:_Burns_vs._Morales"
-    },
-    {
-        "date": "May 10, 2025",
-        "eventName": "UFC 315: Muhammad vs. Della Maddalena",
-        "url": "/wiki/UFC_315"
-    },
-    {
-        "date": "May 3, 2025",
-        "eventName": "UFC on ESPN: Sandhagen vs. Figueiredo",
-        "url": "/wiki/UFC_on_ESPN:_Sandhagen_vs._Figueiredo"
-    },
-    {
-        "date": "Apr 26, 2025",
-        "eventName": "UFC on ESPN: Machado Garry vs. Prates",
-        "url": "/wiki/UFC_on_ESPN:_Machado_Garry_vs._Prates"
     }
 ]

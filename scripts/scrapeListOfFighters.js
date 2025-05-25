@@ -56,26 +56,7 @@ async function scrapeListOfFighters(inputFighters) {
 // { "name": "Carlston Harris", "url": "/wiki/Carlston_Harris" },
 
 let inputFighters = [
-
-    { name: 'Marcin Tybura', url: '/wiki/Marcin_Tybura' },
-    { name: 'Marvin Vettori', url: '/wiki/Marvin_Vettori' },
-    { name: 'Maurício Ruffy', url: '/wiki/Maur%C3%ADcio_Ruffy' },
-    { name: 'Michael Chandler', url: '/wiki/Michael_Chandler' },
-    {
-      name: 'Michał Oleksiejczuk',
-      url: '/wiki/Micha%C5%82_Oleksiejczuk'
-    },
-    { name: 'Mick Parkin', url: '/wiki/Mick_Parkin' },
-    { name: 'Molly McCann', url: '/wiki/Molly_McCann' },
-    { name: 'Nasrat Haqparast', url: '/wiki/Nasrat_Haqparast' },
-    { name: 'Nathaniel Wood', url: '/wiki/Nathaniel_Wood_(fighter)' },
-    { name: 'Nikita Krylov', url: '/wiki/Nikita_Krylov' },
-    { name: 'Nora Cornolle', url: '/wiki/Nora_Cornolle' },
-    { name: "Ode' Osbourne", url: '/wiki/Ode%27_Osbourne' },
-    { name: 'Paddy Pimblett', url: '/wiki/Paddy_Pimblett' },
-    { name: 'Pat Sabatini', url: '/wiki/Pat_Sabatini' },
-    { name: 'Patrício Pitbull', url: '/wiki/Patr%C3%ADcio_Pitbull' },
-    { name: 'Priscila Cachoeira', url: '/wiki/Priscila_Cachoeira' },
+    
 ];
 
 function fillArrayWithRankedFightersMissingFiles() {
@@ -85,7 +66,7 @@ function fillArrayWithRankedFightersMissingFiles() {
     const missingRankedFighters = [];
     // Iterate through the fighters array
     latestRankings.divisions.forEach(division => {
-        division.fighters.map(x => ({name: x.name, url: x.link})).forEach(fighter => {
+        division.fighters.map(x => ({ name: x.name, url: x.link })).forEach(fighter => {
             if (!fighter.url) {
                 console.log("This fighter lacks wikipedia url", fighter);
             } else {
@@ -94,7 +75,7 @@ function fillArrayWithRankedFightersMissingFiles() {
                     missingRankedFighters.push(fighter);
                 }
             }
-            
+
         });
     });
 
