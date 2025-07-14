@@ -1,13 +1,38 @@
 [
     {
-        "date": "Sep 13, 2025",
+        "date": "Nov 22, 2025",
+        "eventName": "UFC Fight Night 261",
+        "url": "/wiki/UFC_Fight_Night_261"
+    },
+    {
+        "date": "Oct 25, 2025",
+        "eventName": "UFC 321",
+        "url": "/wiki/UFC_321"
+    },
+    {
+        "date": "Oct 18, 2025",
+        "eventName": "UFC Fight Night 260",
+        "url": "/wiki/UFC_Fight_Night_260"
+    },
+    {
+        "date": "Oct 4, 2025",
         "eventName": "UFC 320",
         "url": "/wiki/UFC_320"
     },
     {
+        "date": "Sep 13, 2025",
+        "eventName": "UFC Fight Night: Lopes vs. Silva",
+        "url": "/wiki/UFC_Fight_Night:_Lopes_vs._Silva"
+    },
+    {
+        "date": "Sep 6, 2025",
+        "eventName": "UFC Fight Night: Imavov vs. Borralho",
+        "url": "/wiki/UFC_Fight_Night:_Imavov_vs._Borralho"
+    },
+    {
         "date": "Aug 23, 2025",
-        "eventName": "UFC Fight Night 259",
-        "url": "/wiki/UFC_Fight_Night_259"
+        "eventName": "UFC Fight Night: Walker vs. Zhang",
+        "url": "/wiki/UFC_Fight_Night:_Walker_vs._Zhang"
     },
     {
         "date": "Aug 16, 2025",
@@ -16,13 +41,13 @@
     },
     {
         "date": "Aug 9, 2025",
-        "eventName": "UFC Fight Night 258",
-        "url": "/wiki/UFC_Fight_Night_258"
+        "eventName": "UFC on ESPN: Dolidze vs. Hernandez",
+        "url": "/wiki/UFC_on_ESPN:_Dolidze_vs._Hernandez"
     },
     {
         "date": "Aug 2, 2025",
-        "eventName": "UFC Fight Night 257",
-        "url": "/wiki/UFC_Fight_Night_257"
+        "eventName": "UFC on ESPN: Albazi vs. Taira",
+        "url": "/wiki/UFC_on_ESPN:_Albazi_vs._Taira"
     },
     {
         "date": "Jul 26, 2025",
@@ -33,35 +58,5 @@
         "date": "Jul 19, 2025",
         "eventName": "UFC 318: Holloway vs. Poirier 3",
         "url": "/wiki/UFC_318"
-    },
-    {
-        "date": "Jul 12, 2025",
-        "eventName": "UFC on ESPN: Lewis vs. Teixeira",
-        "url": "/wiki/UFC_on_ESPN:_Lewis_vs._Teixeira"
-    },
-    {
-        "date": "Jun 28, 2025",
-        "eventName": "UFC 317: Topuria vs. Oliveira",
-        "url": "/wiki/UFC_317"
-    },
-    {
-        "date": "Jun 21, 2025",
-        "eventName": "UFC on ABC: Hill vs. Rountree Jr.",
-        "url": "/wiki/UFC_on_ABC:_Hill_vs._Rountree_Jr."
-    },
-    {
-        "date": "Jun 14, 2025",
-        "eventName": "UFC on ESPN: Usman vs. Buckley",
-        "url": "/wiki/UFC_on_ESPN:_Usman_vs._Buckley"
-    },
-    {
-        "date": "Jun 7, 2025",
-        "eventName": "UFC 316: Dvalishvili vs. O'Malley 2",
-        "url": "/wiki/UFC_316"
-    },
-    {
-        "date": "May 31, 2025",
-        "eventName": "UFC on ESPN: Blanchfield vs. Barber",
-        "url": "/wiki/UFC_on_ESPN:_Blanchfield_vs._Barber"
     }
 ]
