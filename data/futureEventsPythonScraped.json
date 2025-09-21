@@ -1,62 +1,62 @@
 [
     {
+        "date": "June 2026",
+        "eventName": "UFC White House",
+        "url": "/wiki/UFC_White_House"
+    },
+    {
+        "date": "Dec 13, 2025",
+        "eventName": "UFC Fight Night 266",
+        "url": "/wiki/UFC_Fight_Night_266"
+    },
+    {
+        "date": "Dec 6, 2025",
+        "eventName": "UFC 323",
+        "url": "/wiki/UFC_323"
+    },
+    {
         "date": "Nov 22, 2025",
-        "eventName": "UFC Fight Night 261",
-        "url": "/wiki/UFC_Fight_Night_261"
+        "eventName": "UFC Fight Night 265",
+        "url": "/wiki/UFC_Fight_Night_265"
+    },
+    {
+        "date": "Nov 15, 2025",
+        "eventName": "UFC 322: Della Maddalena vs. Makhachev",
+        "url": "/wiki/UFC_322"
+    },
+    {
+        "date": "Nov 8, 2025",
+        "eventName": "UFC Fight Night 264",
+        "url": "/wiki/UFC_Fight_Night_264"
+    },
+    {
+        "date": "Nov 1, 2025",
+        "eventName": "UFC Fight Night 263",
+        "url": "/wiki/UFC_Fight_Night_263"
     },
     {
         "date": "Oct 25, 2025",
-        "eventName": "UFC 321",
+        "eventName": "UFC 321: Aspinall vs. Gane",
         "url": "/wiki/UFC_321"
     },
     {
         "date": "Oct 18, 2025",
-        "eventName": "UFC Fight Night 260",
-        "url": "/wiki/UFC_Fight_Night_260"
+        "eventName": "UFC Fight Night: de Ridder vs. Allen",
+        "url": "/wiki/UFC_Fight_Night:_de_Ridder_vs._Allen"
+    },
+    {
+        "date": "Oct 11, 2025",
+        "eventName": "UFC Fight Night: Oliveira vs. Fiziev",
+        "url": "/wiki/UFC_Fight_Night:_Oliveira_vs._Fiziev"
     },
     {
         "date": "Oct 4, 2025",
-        "eventName": "UFC 320",
+        "eventName": "UFC 320: Ankalaev vs. Pereira 2",
         "url": "/wiki/UFC_320"
     },
     {
-        "date": "Sep 13, 2025",
-        "eventName": "UFC Fight Night: Lopes vs. Silva",
-        "url": "/wiki/UFC_Fight_Night:_Lopes_vs._Silva"
-    },
-    {
-        "date": "Sep 6, 2025",
-        "eventName": "UFC Fight Night: Imavov vs. Borralho",
-        "url": "/wiki/UFC_Fight_Night:_Imavov_vs._Borralho"
-    },
-    {
-        "date": "Aug 23, 2025",
-        "eventName": "UFC Fight Night: Walker vs. Zhang",
-        "url": "/wiki/UFC_Fight_Night:_Walker_vs._Zhang"
-    },
-    {
-        "date": "Aug 16, 2025",
-        "eventName": "UFC 319: du Plessis vs. Chimaev",
-        "url": "/wiki/UFC_319"
-    },
-    {
-        "date": "Aug 9, 2025",
-        "eventName": "UFC on ESPN: Dolidze vs. Hernandez",
-        "url": "/wiki/UFC_on_ESPN:_Dolidze_vs._Hernandez"
-    },
-    {
-        "date": "Aug 2, 2025",
-        "eventName": "UFC on ESPN: Albazi vs. Taira",
-        "url": "/wiki/UFC_on_ESPN:_Albazi_vs._Taira"
-    },
-    {
-        "date": "Jul 26, 2025",
-        "eventName": "UFC on ABC: Whittaker vs. de Ridder",
-        "url": "/wiki/UFC_on_ABC:_Whittaker_vs._de_Ridder"
-    },
-    {
-        "date": "Jul 19, 2025",
-        "eventName": "UFC 318: Holloway vs. Poirier 3",
-        "url": "/wiki/UFC_318"
+        "date": "Sep 28, 2025",
+        "eventName": "UFC Fight Night: Ulberg vs. Reyes",
+        "url": "/wiki/UFC_Fight_Night:_Ulberg_vs._Reyes"
     }
 ]
