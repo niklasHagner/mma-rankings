@@ -43,7 +43,7 @@
 {% block viewBody %}
   <section id="events">
     {% for event in events %}
-      {% set isEventInPast = isDateInPast(event.date) %}
+      {% set isEventInPast = isEventDateRecentEnoughToShow(event.date) %}
       {% if isEventInPast %}
         <details class="past-event">
           <summary></strong>Past event</strong> {{ event.date }} {{ event.eventName }}</summary>

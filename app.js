@@ -64,11 +64,11 @@ nunjucks.configure("views", {
   express: app })
   .addGlobal("getFighterNameOrLinkHtml", viewBuilder.getFighterNameOrLinkHtml)
   .addGlobal("getCurrentRank", getCurrentRank)
-  .addGlobal("isDateInPast", (date) => { 
+  .addGlobal("isEventDateRecentEnoughToShow", (date) => { 
     const now = new Date();
     const inputDate = new Date(date);
-    const isOld = moment(inputDate).isBefore(now, "day");
-    return isOld;
+    const oneMonthAgo = new Date(now.setMonth(now.getMonth() - 1));
+    return inputDate < oneMonthAgo;
   })
   .addFilter("classList", (classList) => classList.filter((x) => x).join(" "))
   .addFilter("dateFormat", (str) => {
@@ -245,3 +245,7 @@ var port = process.env.PORT || 8001;
 console.log('Server listening on:' + port);
 app.listen(port);
 console.info(`Navigate to http://localhost:${port}/`);
+
+module.exports = {
+    getEvents,
+}
