@@ -6,8 +6,14 @@ from datetime import datetime, timedelta
 
 # Fetch the HTML content
 url = "https://en.wikipedia.org/wiki/List_of_UFC_events"
-response = requests.get(url)
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+}
+response = requests.get(url, headers=headers)
 html_content = response.text
+
+print("First 100 chars of HTML content:")
+print(html_content[:100])
 
 # Parse the HTML
 soup = BeautifulSoup(html_content, 'html.parser')
