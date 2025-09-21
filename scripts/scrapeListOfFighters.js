@@ -8,7 +8,6 @@ const viewBuilder = require('../backend/viewBuilder.js');
 global.fightersWithProfileLinks = JSON.parse(fs.readFileSync("data/allFighters.json"));
 global.rankData = JSON.parse(fs.readFileSync("data/mmaStats.json"));
 
-
 async function scrapeListOfFighters(inputFighters) {
     config.SAVE_JSON_TO_FILE = true;
     //Example input: [{ url: "wiki/Leon_Edwards" }, { url: "wiki/Jan_B%C5%82achowicz"} ]
@@ -111,3 +110,7 @@ function wait(ms) {
 }
 
 scrapeInBatchesWithWaits();
+
+module.exports = {
+    scrapeListOfFighters
+}

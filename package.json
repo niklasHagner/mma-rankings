@@ -10,6 +10,7 @@
   },
   "scripts": {
     "start": "node app.js",
+    "updateFightersFromPastEvents": "node scripts/updateFightersFromPastEvents.js",
     "scrapeListOfFighters": "node scripts/scrapeListOfFighters.js",
     "scrapeLatestRankings": "node scripts/scrapeLatestRankingsFromWikipedia.js",
     "points": "node scripts/points.js",

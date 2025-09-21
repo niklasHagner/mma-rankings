@@ -4,13 +4,14 @@ const config = require("exp-config");
 const wikipediaApi = require('../backend/wikipediaApi.js');
 const fileHelper = require('../backend/fileHelper.js');
 const viewBuilder = require('../backend/viewBuilder.js');
+const { getEvents } = require("../app.js");
 const { uniqueBy } = require("../backend/arrHelper");
-
+const { scrapeListOfFighters } = require("./scrapeListOfFighters.js");
 
 global.fightersWithProfileLinks = JSON.parse(fs.readFileSync("data/allFighters.json"));
 global.rankData = JSON.parse(fs.readFileSync("data/mmaStats.json"));
 
-async function scrapeListOfFighters() {
+async function updateFighters() {
   config.SAVE_JSON_TO_FILE = true;
 
 //Example output: 
@@ -39,18 +40,19 @@ async function scrapeListOfFighters() {
   inputFighters = inputFighters.sort((a, b) => a.name.localeCompare(b.name));
   console.log("inputFighters:", inputFighters);
 
-  debugger; //Set a debugger here to grab the list of fighters that need scraping. Example data: [{ name: 'Matt Brown', url: '/wiki/Matt_Brown_(fighter)' } ]
+  scrapeListOfFighters(inputFighters);
+  global.SCRAPE_FUTURE_EVENT_DETAILS=true;
+  getEvents();
 
-  // You probably wanna copy these to scripts/scrapeListOfFighters.js instead of resuming
-
-  const readExistingFromFile = false;
-  const allowFetchingMissingFighters = true;
-  const fetchImages = false;
-  const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, readExistingFromFile, allowFetchingMissingFighters, fetchImages);
-  const fighters = await Promise.all(fighterBasicData.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData)));
-  fileHelper.updateListOfFighterFiles();
-  console.log("done");
-  return;
+//   fs.writeFileSync("data/fightersToScrape.js", JSON.stringify(inputFighters, null, 2));
+//   const readExistingFromFile = false;
+//   const allowFetchingMissingFighters = true;
+//   const fetchImages = false;
+//   const fighterBasicData = await wikipediaApi.fetchArrayOfFighters(inputFighters, readExistingFromFile, allowFetchingMissingFighters, fetchImages);
+//   const fighters = await Promise.all(fighterBasicData.map(fighter => viewBuilder.extendFighterApiDataWithRecordInfo(fighter, global.rankData)));
+//   fileHelper.updateListOfFighterFiles();
+//   console.log("done");
+//   return;
 }
 
-scrapeListOfFighters();
+updateFighters();

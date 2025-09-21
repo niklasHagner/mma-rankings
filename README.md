@@ -72,17 +72,6 @@ This project generates a json-file of the top15 rankings for every UFC division 
 
 * `node ./scripts/scrapeLatestRankingsFromWikipedia.js` updates rankings, saving data to `/data/mmaStats.json`
 
-* `python ./scripts/scrapeEventsToJson.py` ( if necessary install `pip3 install requests bs4` ) - this updates `futureEventsPythonScraped.json` and `pastEventsPythonScraped.json`
+* `python ./scripts/scrapeEventsToJson.py` ( if necessary install `pip3 install requests bs4` ) - this adds a list of links to `futureEventsPythonScraped.json` and `pastEventsPythonScraped.json`
 
-* *In a debugger, run `/scripts/updateFightersFromPastEvents.js`, it will stop on `debugger`. Copy names from the terminal output and add them to `scripts/scrapeListOfFighters.js`, then run that file in a debugger as it may take some time ( and you may have to abort manually )
-
-* Save `events.json` by running the project and removing this
-```
- // --- OFFLINE (enable on server to boost perf) ---
-    const fileExists = fs.existsSync('data/events.json');
-    if (fileExists) {
-        const fileData = await fsPromises.readFile('data/events.json', 'utf8');
-        return JSON.parse(fileData); // Return the parsed JSON
-    }
-```
-
+* `node ./scripts/updateFightersFromPastEvents.js` will add fighter files to `/data` folder and scrape the links in `futureEventsPythonScraped.json`

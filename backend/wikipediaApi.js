@@ -11,11 +11,15 @@ const { stripTagsAndDecode, removeUnwantedTagsFromHtmlNode } = require("./string
 // Online: scrape urls in futureEventsPythonScraped.json
 async function getNamesAndUrlsOfNextEventFighters() {
 
-    // --- OFFLINE (enable on server to boost perf) ---
-    const fileExists = fs.existsSync('data/events.json');
-    if (fileExists) {
-        const fileData = await fsPromises.readFile('data/events.json', 'utf8');
-        return JSON.parse(fileData); // Return the parsed JSON
+    if (global.CRAWL_FUTURE_EVENTS === false) {
+        // --- OFFLINE (enable on server to boost perf) ---
+        const fileExists = fs.existsSync('data/events.json');
+        if (fileExists) {
+            const fileData = await fsPromises.readFile('data/events.json', 'utf8');
+            return JSON.parse(fileData); // Return the parsed JSON
+        }
+    } else if (global.CRAWL_FUTURE_EVENTS) {
+        console.log("Crawling more info about futureEventsPythonScraped 🌊");
     }
 
     // --- ONLINE (enabled locally once to save events.json) ---
