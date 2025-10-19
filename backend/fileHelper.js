@@ -19,7 +19,13 @@ function readFileByFighterObj(fighter) {
     return null;
   }
   let rawdata = fs.readFileSync(fileName);
-  let data = JSON.parse(rawdata);
+  let data;
+  try {
+    data = JSON.parse(rawdata);
+  } catch (err) {
+    console.error(`Error parsing JSON from file ${fileName}:`, err);
+    return null;
+  }
   return data;
 }
 
