@@ -1,5 +1,25 @@
 [
     {
+        "date": "Oct 18, 2025",
+        "eventName": "UFC Fight Night: de Ridder vs. Allen",
+        "url": "/wiki/UFC_Fight_Night:_de_Ridder_vs._Allen"
+    },
+    {
+        "date": "Oct 11, 2025",
+        "eventName": "UFC Fight Night: Oliveira vs. Gamrot",
+        "url": "/wiki/UFC_Fight_Night:_Oliveira_vs._Gamrot"
+    },
+    {
+        "date": "Oct 4, 2025",
+        "eventName": "UFC 320: Ankalaev vs. Pereira 2",
+        "url": "/wiki/UFC_320"
+    },
+    {
+        "date": "Sep 28, 2025",
+        "eventName": "UFC Fight Night: Ulberg vs. Reyes",
+        "url": "/wiki/UFC_Fight_Night:_Ulberg_vs._Reyes"
+    },
+    {
         "date": "Sep 13, 2025",
         "eventName": "UFC Fight Night: Lopes vs. Silva",
         "url": "/wiki/UFC_Fight_Night:_Lopes_vs._Silva"
@@ -8,20 +28,5 @@
         "date": "Sep 6, 2025",
         "eventName": "UFC Fight Night: Imavov vs. Borralho",
         "url": "/wiki/UFC_Fight_Night:_Imavov_vs._Borralho"
-    },
-    {
-        "date": "Aug 23, 2025",
-        "eventName": "UFC Fight Night: Walker vs. Zhang",
-        "url": "/wiki/UFC_Fight_Night:_Walker_vs._Zhang"
-    },
-    {
-        "date": "Aug 16, 2025",
-        "eventName": "UFC 319: du Plessis vs. Chimaev",
-        "url": "/wiki/UFC_319"
-    },
-    {
-        "date": "Aug 9, 2025",
-        "eventName": "UFC on ESPN: Dolidze vs. Hernandez",
-        "url": "/wiki/UFC_on_ESPN:_Dolidze_vs._Hernandez"
     }
 ]
