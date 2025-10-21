@@ -11,14 +11,14 @@ const { stripTagsAndDecode, removeUnwantedTagsFromHtmlNode } = require("./string
 // Online: scrape urls in futureEventsPythonScraped.json
 async function getNamesAndUrlsOfNextEventFighters() {
 
-    if (global.CRAWL_FUTURE_EVENTS === false) {
+    if (config.CRAWL_FUTURE_EVENTS === false) {
         // --- OFFLINE (enable on server to boost perf) ---
         const fileExists = fs.existsSync('data/events.json');
         if (fileExists) {
             const fileData = await fsPromises.readFile('data/events.json', 'utf8');
             return JSON.parse(fileData); // Return the parsed JSON
         }
-    } else if (global.CRAWL_FUTURE_EVENTS) {
+    } else if (config.CRAWL_FUTURE_EVENTS) {
         console.log("Crawling more info about futureEventsPythonScraped 🌊");
     }
 
@@ -87,45 +87,6 @@ async function getNamesAndUrlsOfFightersInPastEvents() {
 
     return returnObj;
 }
-
-// Same as getNamesAndUrlsOfFightersInPastEvent but without fetching 
-// Obsolete as of june 2024 💀
-// async function getNamesAndUrlsOfFightersInPastEvents_LocalFiles(startDateString, endDateString = "2050-01-01") {
-//     const startDateTime = new Date(startDateString).getTime();
-//     const endDateTime = new Date(endDateString).getTime();
-//     let htmlForEvents;
-//     try {
-//         htmlForEvents = await fs.readFileSync("data/upcoming-events.html", "utf8");
-//     } catch (error) {
-//         return;
-//     }
-//     let rows = await parseWikipediaPastEventsToJson(htmlForEvents);
-
-//     rows = rows.filter((row) => {
-//         const dateTime = new Date(row.date).getTime();
-//         return dateTime >= startDateTime && dateTime < endDateTime;
-//     })
-
-//     const allEvents = rows.map((row) => {
-//         const eventInfo = row;
-//         //each row contains: eventName,url,date,venue,location
-//         let htmlForSingleEvent = '';
-//         try {
-//             const eventUrl = eventInfo.url.replace("https://en.wikipedia.org/wiki/", "");
-//             htmlForSingleEvent = fs.readFileSync(`data/past-events/${eventUrl}.html`, "utf8");
-//         } catch (error) {
-//             console.error(`Couldn't read file for ${row.url}`);
-//             return;
-//         }
-
-//         const fightRows = parseSingleEventHtmlToJson(htmlForSingleEvent, eventInfo);
-//         return { fighters: fightRows, ...eventInfo };
-//     });
-
-//     return {
-//         allEvents
-//     };
-// }
 
 async function getInfoAndFightersFromNextEvents() {
     const data = await getNamesAndUrlsOfNextEventFighters();
@@ -244,8 +205,7 @@ async function fetchArrayOfFighters(arrayOfNamesAndUrls, readExistingFromFile = 
 function parseInfoBoxHtml(root, wikiPageUrl) {
     const infoBox = root.querySelector(".infobox.vcard tbody");//can be null
     if (!infoBox) {
-        const msg = `Missing infobox for ${wikiPageUrl}`;
-        console.error(msg);
+        console.error(`Missing infobox for ${wikiPageUrl}`);
         return null;
     }
     infoBox.querySelectorAll("sup").forEach(x => x.remove()); //delete footnote references
@@ -261,10 +221,8 @@ function parseInfoBoxHtml(root, wikiPageUrl) {
             });
         }
     });
-    var fighterInfo = {
-        wikiUrl: wikiPageUrl
-    };
-
+    
+    var fighterInfo = { wikiUrl: wikiPageUrl };
     infoBoxProps.forEach((x) => {
         let propName = x.propName;
         const valueNode = x.valueNode;
