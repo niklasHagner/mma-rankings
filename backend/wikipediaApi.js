@@ -1,7 +1,8 @@
-const fs = require('fs');
-const fsPromises = require('fs').promises;
-const { parseWikipediaFightRecordTableToJson, parseWikipediaPastEventsToJson, parseSingleEventHtmlToJson } = require('./wikipediaTableParser.js');
-const HTMLParser = require('node-html-parser');
+const config = require("exp-config");
+const fs = require("fs");
+const fsPromises = require("fs").promises;
+const { parseWikipediaFightRecordTableToJson, parseWikipediaPastEventsToJson, parseSingleEventHtmlToJson } = require("./wikipediaTableParser.js");
+const HTMLParser = require("node-html-parser");
 const gisImageSearch = require("g-i-s");
 const fileHelper = require("./fileHelper.js");
 const { stripTagsAndDecode, removeUnwantedTagsFromHtmlNode } = require("./stringAndHtmlHelper.js");
@@ -13,9 +14,9 @@ async function getNamesAndUrlsOfNextEventFighters() {
 
     if (config.CRAWL_FUTURE_EVENTS === false) {
         // --- OFFLINE (enable on server to boost perf) ---
-        const fileExists = fs.existsSync('data/events.json');
+        const fileExists = fs.existsSync("data/events.json");
         if (fileExists) {
-            const fileData = await fsPromises.readFile('data/events.json', 'utf8');
+            const fileData = await fsPromises.readFile("data/events.json", "utf8");
             return JSON.parse(fileData); // Return the parsed JSON
         }
     } else if (config.CRAWL_FUTURE_EVENTS) {
