@@ -24,7 +24,10 @@ function getRankForSingleDateItem(timestamp, name) {
 
 function findAllRanksForFighter(data, name) {
   let matches = [];
-  matches = data.dates.map((date) => { return getRankForSingleDateItem(date, name) });
+  if (!data?.dates) {
+    console.error("Missing data for name:", name, "data was:", data, )
+  }
+  matches = data?.dates.map((date) => { return getRankForSingleDateItem(date, name) });
   matches = matches.filter(x => x);
   return matches;
 }
