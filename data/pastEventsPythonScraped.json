@@ -1,32 +1,32 @@
 [
     {
+        "date": "Nov 22, 2025",
+        "eventName": "UFC Fight Night: Tsarukyan vs. Hooker",
+        "url": "/wiki/UFC_Fight_Night:_Tsarukyan_vs._Hooker"
+    },
+    {
+        "date": "Nov 15, 2025",
+        "eventName": "UFC 322: Della Maddalena vs. Makhachev",
+        "url": "/wiki/UFC_322"
+    },
+    {
+        "date": "Nov 8, 2025",
+        "eventName": "UFC Fight Night: Bonfim vs. Brown",
+        "url": "/wiki/UFC_Fight_Night:_Bonfim_vs._Brown"
+    },
+    {
+        "date": "Nov 1, 2025",
+        "eventName": "UFC Fight Night: Garcia vs. Onama",
+        "url": "/wiki/UFC_Fight_Night:_Garcia_vs._Onama"
+    },
+    {
+        "date": "Oct 25, 2025",
+        "eventName": "UFC 321: Aspinall vs. Gane",
+        "url": "/wiki/UFC_321"
+    },
+    {
         "date": "Oct 18, 2025",
         "eventName": "UFC Fight Night: de Ridder vs. Allen",
         "url": "/wiki/UFC_Fight_Night:_de_Ridder_vs._Allen"
-    },
-    {
-        "date": "Oct 11, 2025",
-        "eventName": "UFC Fight Night: Oliveira vs. Gamrot",
-        "url": "/wiki/UFC_Fight_Night:_Oliveira_vs._Gamrot"
-    },
-    {
-        "date": "Oct 4, 2025",
-        "eventName": "UFC 320: Ankalaev vs. Pereira 2",
-        "url": "/wiki/UFC_320"
-    },
-    {
-        "date": "Sep 28, 2025",
-        "eventName": "UFC Fight Night: Ulberg vs. Reyes",
-        "url": "/wiki/UFC_Fight_Night:_Ulberg_vs._Reyes"
-    },
-    {
-        "date": "Sep 13, 2025",
-        "eventName": "UFC Fight Night: Lopes vs. Silva",
-        "url": "/wiki/UFC_Fight_Night:_Lopes_vs._Silva"
-    },
-    {
-        "date": "Sep 6, 2025",
-        "eventName": "UFC Fight Night: Imavov vs. Borralho",
-        "url": "/wiki/UFC_Fight_Night:_Imavov_vs._Borralho"
     }
 ]

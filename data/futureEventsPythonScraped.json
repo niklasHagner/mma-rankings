@@ -5,38 +5,23 @@
         "url": "/wiki/UFC_White_House"
     },
     {
+        "date": "Feb 1, 2026",
+        "eventName": "UFC 325: Volkanovski vs. Lopes 2",
+        "url": "/wiki/UFC_325"
+    },
+    {
+        "date": "Jan 24, 2026",
+        "eventName": "UFC 324: Gaethje vs. Pimblett",
+        "url": "/wiki/UFC_324"
+    },
+    {
         "date": "Dec 13, 2025",
-        "eventName": "UFC Fight Night: Royval vs. Kape",
-        "url": "/wiki/UFC_Fight_Night:_Royval_vs._Kape"
+        "eventName": "UFC on ESPN: Royval vs. Kape",
+        "url": "/wiki/UFC_on_ESPN:_Royval_vs._Kape"
     },
     {
         "date": "Dec 6, 2025",
         "eventName": "UFC 323: Dvalishvili vs. Yan 2",
         "url": "/wiki/UFC_323"
-    },
-    {
-        "date": "Nov 22, 2025",
-        "eventName": "UFC Fight Night: Tsarukyan vs. Hooker",
-        "url": "/wiki/UFC_Fight_Night:_Tsarukyan_vs._Hooker"
-    },
-    {
-        "date": "Nov 15, 2025",
-        "eventName": "UFC 322: Della Maddalena vs. Makhachev",
-        "url": "/wiki/UFC_322"
-    },
-    {
-        "date": "Nov 8, 2025",
-        "eventName": "UFC Fight Night: Bonfim vs. Brown",
-        "url": "/wiki/UFC_Fight_Night:_Bonfim_vs._Brown"
-    },
-    {
-        "date": "Nov 1, 2025",
-        "eventName": "UFC Fight Night: Garcia vs. Onama",
-        "url": "/wiki/UFC_Fight_Night:_Garcia_vs._Onama"
-    },
-    {
-        "date": "Oct 25, 2025",
-        "eventName": "UFC 321: Aspinall vs. Gane",
-        "url": "/wiki/UFC_321"
     }
 ]
