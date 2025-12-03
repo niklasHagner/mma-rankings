@@ -74,4 +74,4 @@ This project generates a json-file of the top15 rankings for every UFC division 
 
 * `python ./scripts/scrapeEventsToJson.py` ( if necessary install `pip3 install requests bs4` ) - this adds a list of links to `futureEventsPythonScraped.json` and `pastEventsPythonScraped.json`
 
-* `node ./scripts/updateFightersFromPastEvents.js` will add fighter files to `/data` folder and scrape the links in `futureEventsPythonScraped.json`
+* `node ./scripts/updateFightersFromPastEvents.js` will add fighter files to `/data` folder and scrape the links in `futureEventsPythonScraped.json`. Then set `CRAWL_FUTURE_EVENTS=true` in development.json and run the project once to save `events.json`
