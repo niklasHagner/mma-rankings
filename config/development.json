@@ -1,4 +1,4 @@
 {
   "SAVE_JSON_TO_FILE": false,
-  "CRAWL_FUTURE_EVENTS": false
+  "CRAWL_FUTURE_EVENTS": true
 } 
