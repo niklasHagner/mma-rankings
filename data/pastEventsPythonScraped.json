@@ -1,22 +1,37 @@
 [
     {
-        "date": "Dec 13, 2025",
-        "eventName": "UFC on ESPN: Royval vs. Kape",
-        "url": "/wiki/UFC_on_ESPN:_Royval_vs._Kape"
+        "date": "Apr 4, 2026",
+        "eventName": "UFC Fight Night: Moicano vs. Duncan",
+        "url": "/wiki/UFC_Fight_Night:_Moicano_vs._Duncan"
     },
     {
-        "date": "Dec 6, 2025",
-        "eventName": "UFC 323: Dvalishvili vs. Yan 2",
-        "url": "/wiki/UFC_323"
+        "date": "Mar 28, 2026",
+        "eventName": "UFC Fight Night: Adesanya vs. Pyfer",
+        "url": "/wiki/UFC_Fight_Night:_Adesanya_vs._Pyfer"
     },
     {
-        "date": "Nov 22, 2025",
-        "eventName": "UFC Fight Night: Tsarukyan vs. Hooker",
-        "url": "/wiki/UFC_Fight_Night:_Tsarukyan_vs._Hooker"
+        "date": "Mar 21, 2026",
+        "eventName": "UFC Fight Night: Evloev vs. Murphy",
+        "url": "/wiki/UFC_Fight_Night:_Evloev_vs._Murphy"
     },
     {
-        "date": "Nov 15, 2025",
-        "eventName": "UFC 322: Della Maddalena vs. Makhachev",
-        "url": "/wiki/UFC_322"
+        "date": "Mar 14, 2026",
+        "eventName": "UFC Fight Night: Emmett vs. Vallejos",
+        "url": "/wiki/UFC_Fight_Night:_Emmett_vs._Vallejos"
+    },
+    {
+        "date": "Mar 7, 2026",
+        "eventName": "UFC 326: Holloway vs. Oliveira 2",
+        "url": "/wiki/UFC_326"
+    },
+    {
+        "date": "Feb 28, 2026",
+        "eventName": "UFC Fight Night: Moreno vs. Kavanagh",
+        "url": "/wiki/UFC_Fight_Night:_Moreno_vs._Kavanagh"
+    },
+    {
+        "date": "Feb 21, 2026",
+        "eventName": "UFC Fight Night: Strickland vs. Hernandez",
+        "url": "/wiki/UFC_Fight_Night:_Strickland_vs._Hernandez"
     }
 ]
