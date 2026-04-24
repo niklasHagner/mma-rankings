@@ -1,5 +1,15 @@
 [
     {
+        "date": "Aug 15, 2026",
+        "eventName": "UFC 330",
+        "url": "/wiki/UFC_330"
+    },
+    {
+        "date": "Jul 18, 2026",
+        "eventName": "UFC Fight Night 281",
+        "url": "/wiki/UFC_Fight_Night_281"
+    },
+    {
         "date": "Jul 11, 2026",
         "eventName": "UFC 329",
         "url": "/wiki/UFC_329"
@@ -48,15 +58,5 @@
         "date": "Apr 25, 2026",
         "eventName": "UFC Fight Night: Sterling vs. Zalal",
         "url": "/wiki/UFC_Fight_Night:_Sterling_vs._Zalal"
-    },
-    {
-        "date": "Apr 18, 2026",
-        "eventName": "UFC Fight Night: Burns vs. Malott",
-        "url": "/wiki/UFC_Fight_Night:_Burns_vs._Malott"
-    },
-    {
-        "date": "Apr 11, 2026",
-        "eventName": "UFC 327: Proch\u00e1zka vs. Ulberg",
-        "url": "/wiki/UFC_327"
     }
 ]

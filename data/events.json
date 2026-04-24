@@ -1,226 +1,331 @@
 {
   "allEvents": [
     {
-      "fighters": [
-        {
-          "name": "Gilbert Burns",
-          "url": "/wiki/Gilbert_Burns"
-        },
-        {
-          "name": "Mike Malott",
-          "url": "/wiki/Mike_Malott"
-        },
-        {
-          "name": "Kyler Phillips",
-          "url": "/wiki/Kyler_Phillips"
-        },
-        {
-          "name": "Charles Jourdain",
-          "url": "/wiki/Charles_Jourdain"
-        },
-        {
-          "name": "Mandel Nallo"
-        },
-        {
-          "name": "Jai Herbert",
-          "url": "/wiki/Jai_Herbert"
-        },
-        {
-          "name": "Jasmine Jasudavicius",
-          "url": "/wiki/Jasmine_Jasudavicius"
-        },
-        {
-          "name": "Karine Silva",
-          "url": "/wiki/Karine_Silva"
-        },
-        {
-          "name": "Thiago Moisés",
-          "url": "/wiki/Thiago_Mois%C3%A9s"
-        },
-        {
-          "name": "Gauge Young"
-        },
-        {
-          "name": "Tanner Boser",
-          "url": "/wiki/Tanner_Boser"
-        },
-        {
-          "name": "Gökhan Saricam"
-        },
-        {
-          "name": "JJ Aldrich",
-          "url": "/wiki/JJ_Aldrich"
-        },
-        {
-          "name": "Jamey-Lyn Horth"
-        },
-        {
-          "name": "John Castañeda",
-          "url": "/wiki/John_Casta%C3%B1eda"
-        },
-        {
-          "name": "Mark Vologdin"
-        }
-      ],
-      "date": "Apr 18, 2026",
-      "eventName": "UFC Fight Night: Burns vs. Malott",
-      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Burns_vs._Malott"
+      "fighters": [],
+      "date": "Aug 15, 2026",
+      "eventName": "UFC 330",
+      "url": "https://en.wikipedia.org/wiki/UFC_330"
+    },
+    {
+      "fighters": [],
+      "date": "Jul 18, 2026",
+      "eventName": "UFC Fight Night 281",
+      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night_281"
+    },
+    {
+      "fighters": [],
+      "date": "Jul 11, 2026",
+      "eventName": "UFC 329",
+      "url": "https://en.wikipedia.org/wiki/UFC_329"
+    },
+    {
+      "fighters": [],
+      "date": "Jun 27, 2026",
+      "eventName": "UFC Fight Night 280",
+      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night_280"
+    },
+    {
+      "fighters": [],
+      "date": "Jun 20, 2026",
+      "eventName": "UFC Fight Night 279",
+      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night_279"
     },
     {
       "fighters": [
         {
-          "name": "Aljamain Sterling",
-          "url": "/wiki/Aljamain_Sterling"
+          "name": "Ilia Topuria (c)",
+          "url": "/wiki/Ilia_Topuria"
         },
         {
-          "name": "Youssef Zalal",
-          "url": "/wiki/Youssef_Zalal"
+          "name": "Justin Gaethje (ic)",
+          "url": "/wiki/Justin_Gaethje"
         },
         {
-          "name": "Rafa García",
-          "url": "/wiki/Rafa_Garc%C3%ADa_(fighter)"
+          "name": "Alex Pereira",
+          "url": "/wiki/Alex_Pereira"
         },
         {
-          "name": "Alexander Hernandez",
-          "url": "/wiki/Alexander_Hernandez"
+          "name": "Ciryl Gane",
+          "url": "/wiki/Ciryl_Gane"
         },
         {
-          "name": "Davey Grant",
-          "url": "/wiki/Davey_Grant"
+          "name": "Sean O'Malley",
+          "url": "/wiki/Sean_O%27Malley_(fighter)"
         },
         {
-          "name": "Juan Adrián Luna Martinetti"
+          "name": "Aiemann Zahabi",
+          "url": "/wiki/Aiemann_Zahabi"
         },
         {
-          "name": "Montel Jackson",
-          "url": "/wiki/Montel_Jackson"
+          "name": "Josh Hokit",
+          "url": "/wiki/Josh_Hokit"
         },
         {
-          "name": "Raoni Barcelos",
-          "url": "/wiki/Raoni_Barcelos"
+          "name": "Derrick Lewis",
+          "url": "/wiki/Derrick_Lewis"
         },
         {
-          "name": "Norma Dumont",
-          "url": "/wiki/Norma_Dumont"
+          "name": "Maurício Ruffy",
+          "url": "/wiki/Maur%C3%ADcio_Ruffy"
         },
         {
-          "name": "Joselyne Edwards",
-          "url": "/wiki/Joselyne_Edwards"
+          "name": "Michael Chandler",
+          "url": "/wiki/Michael_Chandler"
         },
         {
-          "name": "Talita Alencar",
-          "url": "/wiki/Talita_Alencar"
+          "name": "Bo Nickal",
+          "url": "/wiki/Bo_Nickal"
         },
         {
-          "name": "Julia Polastri"
+          "name": "Kyle Daukaus",
+          "url": "/wiki/Kyle_Daukaus"
         },
         {
-          "name": "Rodolfo Vieira",
-          "url": "/wiki/Rodolfo_Vieira"
+          "name": "Diego Lopes",
+          "url": "/wiki/Diego_Lopes_(fighter)"
         },
         {
-          "name": "Eric McConico"
-        },
-        {
-          "name": "Marcus Buchecha",
-          "url": "/wiki/Marcus_Buchecha"
-        },
-        {
-          "name": "Ryan Spann",
-          "url": "/wiki/Ryan_Spann"
-        },
-        {
-          "name": "Mayra Bueno Silva",
-          "url": "/wiki/Mayra_Bueno_Silva"
-        },
-        {
-          "name": "Michelle Montague"
+          "name": "Steve Garcia",
+          "url": "/wiki/Steve_Garcia"
         }
       ],
-      "date": "Apr 25, 2026",
-      "eventName": "UFC Fight Night: Sterling vs. Zalal",
-      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Sterling_vs._Zalal"
+      "date": "Jun 14, 2026",
+      "eventName": "UFC Freedom 250",
+      "url": "https://en.wikipedia.org/wiki/UFC_Freedom_250"
     },
     {
       "fighters": [
         {
-          "name": "Jack Della Maddalena",
-          "url": "/wiki/Jack_Della_Maddalena"
+          "name": "Belal Muhammad",
+          "url": "/wiki/Belal_Muhammad"
         },
         {
-          "name": "Carlos Prates",
-          "url": "/wiki/Carlos_Prates"
+          "name": "Gabriel Bonfim",
+          "url": "/wiki/Gabriel_Bonfim"
         },
         {
-          "name": "Beneil Dariush",
-          "url": "/wiki/Beneil_Dariush"
+          "name": "Brendan Allen",
+          "url": "/wiki/Brendan_Allen"
         },
         {
-          "name": "Quillan Salkilld",
-          "url": "/wiki/Quillan_Salkilld"
+          "name": "Edmen Shahbazyan",
+          "url": "/wiki/Edmen_Shahbazyan"
         },
         {
-          "name": "Tai Tuivasa",
-          "url": "/wiki/Tai_Tuivasa"
+          "name": "Bryce Mitchell",
+          "url": "/wiki/Bryce_Mitchell"
         },
         {
-          "name": "Sean Sharaf"
+          "name": "Victor Henry",
+          "url": "/wiki/Victor_Henry_(fighter)"
         },
         {
-          "name": "Shamil Gaziev",
-          "url": "/wiki/Shamil_Gaziev"
+          "name": "Iwo Baraniewski",
+          "url": "/wiki/Iwo_Baraniewski"
         },
         {
-          "name": "Brando Peričić"
+          "name": "Billy Elekana",
+          "url": "/wiki/Billy_Elekana"
         },
         {
-          "name": "Steve Erceg",
-          "url": "/wiki/Steve_Erceg"
+          "name": "Imanol Rodríguez"
         },
         {
-          "name": "Tim Elliott",
-          "url": "/wiki/Tim_Elliott"
+          "name": "Matt Schnell",
+          "url": "/wiki/Matt_Schnell"
         },
         {
-          "name": "Jonathan Micallef"
+          "name": "Marcus McGhee",
+          "url": "/wiki/Marcus_McGhee"
         },
         {
-          "name": "Themba Gorimbo",
-          "url": "/wiki/Themba_Gorimbo"
+          "name": "Jakub Wikłacz"
         },
         {
-          "name": "Colby Thicknesse"
+          "name": "Bruno Gustavo da Silva",
+          "url": "/wiki/Bruno_Gustavo_da_Silva"
         },
         {
-          "name": "Vince Morales",
-          "url": "/wiki/Vince_Morales"
+          "name": "Édgar Cháirez",
+          "url": "/wiki/%C3%89dgar_Ch%C3%A1irez"
         },
         {
-          "name": "Junior Tafa",
-          "url": "/wiki/Junior_Tafa"
+          "name": "Jordan Leavitt",
+          "url": "/wiki/Jordan_Leavitt"
         },
         {
-          "name": "Kevin Christian"
+          "name": "Joanderson Brito"
         },
         {
-          "name": "Cameron Rowston"
+          "name": "Farès Ziam",
+          "url": "/wiki/Far%C3%A8s_Ziam"
         },
         {
-          "name": "Robert Bryczek",
-          "url": "/wiki/Robert_Bryczek"
+          "name": "Tom Nolan"
         },
         {
-          "name": "Jacob Malkoun",
-          "url": "/wiki/Jacob_Malkoun"
+          "name": "Ketlen Souza",
+          "url": "/wiki/Ketlen_Souza"
         },
         {
-          "name": "Gerald Meerschaert",
-          "url": "/wiki/Gerald_Meerschaert"
+          "name": "Ariane Carnelossi",
+          "url": "/wiki/Ariane_Carnelossi"
+        },
+        {
+          "name": "Priscila Cachoeira",
+          "url": "/wiki/Priscila_Cachoeira"
+        },
+        {
+          "name": "Chelsea Chandler",
+          "url": "/wiki/Chelsea_Chandler"
         }
       ],
-      "date": "May 2, 2026",
-      "eventName": "UFC Fight Night: Della Maddalena vs. Prates",
-      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Della_Maddalena_vs._Prates"
+      "date": "Jun 6, 2026",
+      "eventName": "UFC Fight Night: Muhammad vs. Bonfim",
+      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Muhammad_vs._Bonfim"
+    },
+    {
+      "fighters": [
+        {
+          "name": "Song Yadong",
+          "url": "/wiki/Song_Yadong"
+        },
+        {
+          "name": "Deiveson Figueiredo",
+          "url": "/wiki/Deiveson_Figueiredo"
+        },
+        {
+          "name": "Zhang Mingyang",
+          "url": "/wiki/Zhang_Mingyang"
+        },
+        {
+          "name": "Alonzo Menifield",
+          "url": "/wiki/Alonzo_Menifield"
+        },
+        {
+          "name": "Sergei Pavlovich",
+          "url": "/wiki/Sergei_Pavlovich"
+        },
+        {
+          "name": "Tallison Teixeira",
+          "url": "/wiki/Tallison_Teixeira"
+        },
+        {
+          "name": "Kai Asakura",
+          "url": "/wiki/Kai_Asakura"
+        },
+        {
+          "name": "Cameron Smotherman"
+        },
+        {
+          "name": "Muslim Salikhov",
+          "url": "/wiki/Muslim_Salikhov"
+        },
+        {
+          "name": "Jake Matthews",
+          "url": "/wiki/Jake_Matthews_(fighter)"
+        },
+        {
+          "name": "Angela Hill",
+          "url": "/wiki/Angela_Hill"
+        },
+        {
+          "name": "Xiong Jingnan",
+          "url": "/wiki/Xiong_Jingnan"
+        },
+        {
+          "name": "Alex Perez",
+          "url": "/wiki/Alex_Perez_(fighter)"
+        },
+        {
+          "name": "Su Mudaerji",
+          "url": "/wiki/Su_Mudaerji"
+        },
+        {
+          "name": "Loma Lookboonmee",
+          "url": "/wiki/Loma_Lookboonmee"
+        },
+        {
+          "name": "Jaqueline Amorim"
+        },
+        {
+          "name": "Aori Qileng",
+          "url": "/wiki/Aori_Qileng"
+        },
+        {
+          "name": "Cody Haddon"
+        }
+      ],
+      "date": "May 30, 2026",
+      "eventName": "UFC Fight Night: Song vs. Figueiredo",
+      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Song_vs._Figueiredo"
+    },
+    {
+      "fighters": [
+        {
+          "name": "Arnold Allen",
+          "url": "/wiki/Arnold_Allen"
+        },
+        {
+          "name": "Melquizael Costa"
+        },
+        {
+          "name": "Jeremiah Wells",
+          "url": "/wiki/Jeremiah_Wells"
+        },
+        {
+          "name": "Nicolas Dalby",
+          "url": "/wiki/Nicolas_Dalby"
+        },
+        {
+          "name": "Choi Doo-ho",
+          "url": "/wiki/Choi_Doo-ho"
+        },
+        {
+          "name": "Daniel Santos",
+          "url": "/wiki/Daniel_Santos_(fighter)"
+        },
+        {
+          "name": "Ketlen Vieira",
+          "url": "/wiki/Ketlen_Vieira"
+        },
+        {
+          "name": "Jacqueline Cavalcanti",
+          "url": "/wiki/Jacqueline_Cavalcanti"
+        },
+        {
+          "name": "Cody Brundage",
+          "url": "/wiki/Cody_Brundage"
+        },
+        {
+          "name": "Andre Petroski",
+          "url": "/wiki/Andre_Petroski"
+        },
+        {
+          "name": "Tuco Tokkos",
+          "url": "/wiki/Tuco_Tokkos"
+        },
+        {
+          "name": "Ivan Erslan"
+        },
+        {
+          "name": "Modestas Bukauskas",
+          "url": "/wiki/Modestas_Bukauskas"
+        },
+        {
+          "name": "Rodolfo Bellato"
+        },
+        {
+          "name": "Alice Ardelean"
+        },
+        {
+          "name": "Polyana Viana",
+          "url": "/wiki/Polyana_Viana"
+        }
+      ],
+      "date": "May 16, 2026",
+      "eventName": "UFC Fight Night: Allen vs. Costa",
+      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Allen_vs._Costa"
     },
     {
       "fighters": [
@@ -265,12 +370,19 @@
           "url": "/wiki/Jeremy_Stephens"
         },
         {
-          "name": "Jan Blachowicz",
-          "url": "/wiki/Jan_Blachowicz"
+          "name": "Ateba Gautier",
+          "url": "/wiki/Ateba_Gautier"
         },
         {
-          "name": "Bogdan Guskov",
-          "url": "/wiki/Bogdan_Guskov"
+          "name": "Osman Diaz"
+        },
+        {
+          "name": "Grant Dawson",
+          "url": "/wiki/Grant_Dawson"
+        },
+        {
+          "name": "Mateusz Rębecki",
+          "url": "/wiki/Mateusz_R%C4%99becki"
         },
         {
           "name": "Joel Álvarez",
@@ -286,313 +398,189 @@
         },
         {
           "name": "Marco Tulio"
+        },
+        {
+          "name": "Pat Sabatini",
+          "url": "/wiki/Pat_Sabatini"
+        },
+        {
+          "name": "William Gomis"
         }
       ],
       "date": "May 9, 2026",
       "eventName": "UFC 328: Chimaev vs. Strickland",
-      "url": "https://en.wikipedia.org/wiki/UFC_328"
-    },
-    {
-      "fighters": [
-        {
-          "name": "Arnold Allen",
-          "url": "/wiki/Arnold_Allen"
-        },
-        {
-          "name": "Melquizael Costa"
-        },
-        {
-          "name": "Ketlen Vieira",
-          "url": "/wiki/Ketlen_Vieira"
-        },
-        {
-          "name": "Jacqueline Cavalcanti",
-          "url": "/wiki/Jacqueline_Cavalcanti"
-        },
-        {
-          "name": "Tuco Tokkos",
-          "url": "/wiki/Tuco_Tokkos"
-        },
-        {
-          "name": "Ivan Erslan"
-        },
-        {
-          "name": "Modestas Bukauskas",
-          "url": "/wiki/Modestas_Bukauskas"
-        },
-        {
-          "name": "Rodolfo Bellato"
-        },
-        {
-          "name": "Alice Ardelean"
-        },
-        {
-          "name": "Polyana Viana",
-          "url": "/wiki/Polyana_Viana"
-        }
-      ],
-      "date": "May 16, 2026",
-      "eventName": "UFC Fight Night: Allen vs. Costa",
-      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Allen_vs._Costa"
-    },
-    {
-      "fighters": [
-        {
-          "name": "Song Yadong",
-          "url": "/wiki/Song_Yadong"
-        },
-        {
-          "name": "Deiveson Figueiredo",
-          "url": "/wiki/Deiveson_Figueiredo"
-        },
-        {
-          "name": "Zhang Mingyang",
-          "url": "/wiki/Zhang_Mingyang"
-        },
-        {
-          "name": "Alonzo Menifield",
-          "url": "/wiki/Alonzo_Menifield"
-        },
-        {
-          "name": "Sergei Pavlovich",
-          "url": "/wiki/Sergei_Pavlovich"
-        },
-        {
-          "name": "Tallison Teixeira",
-          "url": "/wiki/Tallison_Teixeira"
-        },
-        {
-          "name": "Kai Asakura",
-          "url": "/wiki/Kai_Asakura"
-        },
-        {
-          "name": "Cameron Smotherman"
-        },
-        {
-          "name": "Alex Perez",
-          "url": "/wiki/Alex_Perez_(fighter)"
-        },
-        {
-          "name": "Su Mudaerji",
-          "url": "/wiki/Su_Mudaerji"
-        },
-        {
-          "name": "Loma Lookboonmee",
-          "url": "/wiki/Loma_Lookboonmee"
-        },
-        {
-          "name": "Jaqueline Amorim"
-        },
-        {
-          "name": "Aori Qileng",
-          "url": "/wiki/Aori_Qileng"
-        },
-        {
-          "name": "Cody Haddon"
-        }
-      ],
-      "date": "May 30, 2026",
-      "eventName": "UFC Fight Night: Song vs. Figueiredo",
-      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Song_vs._Figueiredo"
-    },
-    {
-      "fighters": [
-        {
-          "name": "Belal Muhammad",
-          "url": "/wiki/Belal_Muhammad"
-        },
-        {
-          "name": "Gabriel Bonfim",
-          "url": "/wiki/Gabriel_Bonfim"
-        },
-        {
-          "name": "Iwo Baraniewski",
-          "url": "/wiki/Iwo_Baraniewski"
-        },
-        {
-          "name": "Billy Elekana",
-          "url": "/wiki/Billy_Elekana"
-        },
-        {
-          "name": "Imanol Rodríguez"
-        },
-        {
-          "name": "Matt Schnell",
-          "url": "/wiki/Matt_Schnell"
-        },
-        {
-          "name": "Bruno Gustavo da Silva",
-          "url": "/wiki/Bruno_Gustavo_da_Silva"
-        },
-        {
-          "name": "Édgar Cháirez",
-          "url": "/wiki/%C3%89dgar_Ch%C3%A1irez"
-        }
-      ],
-      "date": "Jun 6, 2026",
-      "eventName": "UFC Fight Night: Muhammad vs. Bonfim",
-      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Muhammad_vs._Bonfim"
-    },
-    {
-      "fighters": [
-        {
-          "name": "Ilia Topuria (c)",
-          "url": "/wiki/Ilia_Topuria"
-        },
-        {
-          "name": "Justin Gaethje (ic)",
-          "url": "/wiki/Justin_Gaethje"
-        },
-        {
-          "name": "Alex Pereira",
-          "url": "/wiki/Alex_Pereira"
-        },
-        {
-          "name": "Ciryl Gane",
-          "url": "/wiki/Ciryl_Gane"
-        },
-        {
-          "name": "Sean O'Malley",
-          "url": "/wiki/Sean_O%27Malley_(fighter)"
-        },
-        {
-          "name": "Aiemann Zahabi",
-          "url": "/wiki/Aiemann_Zahabi"
-        },
-        {
-          "name": "Maurício Ruffy",
-          "url": "/wiki/Maur%C3%ADcio_Ruffy"
-        },
-        {
-          "name": "Michael Chandler",
-          "url": "/wiki/Michael_Chandler"
-        },
-        {
-          "name": "Bo Nickal",
-          "url": "/wiki/Bo_Nickal"
-        },
-        {
-          "name": "Kyle Daukaus",
-          "url": "/wiki/Kyle_Daukaus"
-        },
-        {
-          "name": "Diego Lopes",
-          "url": "/wiki/Diego_Lopes_(fighter)"
-        },
-        {
-          "name": "Steve Garcia",
-          "url": "/wiki/Steve_Garcia"
-        }
-      ],
-      "date": "Jun 14, 2026",
-      "eventName": "UFC Freedom 250",
-      "url": "https://en.wikipedia.org/wiki/UFC_Freedom_250"
-    },
-    {
-      "fighters": [],
-      "date": "Jun 20, 2026",
-      "eventName": "UFC Fight Night 279",
-      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night_279"
-    },
-    {
-      "fighters": [],
-      "date": "Jun 27, 2026",
-      "eventName": "UFC Fight Night 280",
-      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night_280"
-    },
-    {
-      "fighters": [],
-      "date": "Jul 11, 2026",
-      "eventName": "UFC 329",
-      "url": "https://en.wikipedia.org/wiki/UFC_329"
-    },
-    {
-      "fighters": [
-        {
-          "name": "Jiří Procházka",
-          "url": "/wiki/Ji%C5%99%C3%AD_Proch%C3%A1zka"
-        },
-        {
-          "name": "Carlos Ulberg",
-          "url": "/wiki/Carlos_Ulberg"
-        },
-        {
-          "name": "Azamat Murzakanov",
-          "url": "/wiki/Azamat_Murzakanov"
-        },
-        {
-          "name": "Paulo Costa",
-          "url": "/wiki/Paulo_Costa"
-        },
-        {
-          "name": "Curtis Blaydes",
-          "url": "/wiki/Curtis_Blaydes"
-        },
-        {
-          "name": "Josh Hokit",
-          "url": "/wiki/Josh_Hokit"
-        },
-        {
-          "name": "Dominick Reyes",
-          "url": "/wiki/Dominick_Reyes"
-        },
-        {
-          "name": "Johnny Walker",
-          "url": "/wiki/Johnny_Walker_(fighter)"
-        },
-        {
-          "name": "Cub Swanson",
-          "url": "/wiki/Cub_Swanson"
-        },
-        {
-          "name": "Nate Landwehr",
-          "url": "/wiki/Nate_Landwehr"
-        },
-        {
-          "name": "Patrício Pitbull",
-          "url": "/wiki/Patr%C3%ADcio_Pitbull"
-        },
-        {
-          "name": "Aaron Pico",
-          "url": "/wiki/Aaron_Pico"
-        },
-        {
-          "name": "Mateusz Gamrot",
-          "url": "/wiki/Mateusz_Gamrot"
-        },
-        {
-          "name": "Esteban Ribovics",
-          "url": "/wiki/Esteban_Ribovics"
-        },
-        {
-          "name": "Kevin Holland",
-          "url": "/wiki/Kevin_Holland"
-        },
-        {
-          "name": "Randy Brown",
-          "url": "/wiki/Randy_Brown_(fighter)"
-        },
-        {
-          "name": "Tatiana Suarez",
-          "url": "/wiki/Tatiana_Suarez"
-        },
-        {
-          "name": "Loopy Godínez",
-          "url": "/wiki/Loopy_Godinez"
-        },
-        {
-          "name": "Kelvin Gastelum",
-          "url": "/wiki/Kelvin_Gastelum"
-        },
-        {
-          "name": "Vicente Luque",
-          "url": "/wiki/Vicente_Luque"
-        }
-      ],
-      "date": "Apr 11, 2026",
-      "eventName": "UFC 327: Procházka vs. Ulberg",
-      "url": "https://en.wikipedia.org/wiki/UFC_327",
+      "url": "https://en.wikipedia.org/wiki/UFC_328",
       "isBigEvent": true
+    },
+    {
+      "fighters": [
+        {
+          "name": "Jack Della Maddalena",
+          "url": "/wiki/Jack_Della_Maddalena"
+        },
+        {
+          "name": "Carlos Prates",
+          "url": "/wiki/Carlos_Prates"
+        },
+        {
+          "name": "Beneil Dariush",
+          "url": "/wiki/Beneil_Dariush"
+        },
+        {
+          "name": "Quillan Salkilld",
+          "url": "/wiki/Quillan_Salkilld"
+        },
+        {
+          "name": "Shamil Gaziev",
+          "url": "/wiki/Shamil_Gaziev"
+        },
+        {
+          "name": "Brando Peričić"
+        },
+        {
+          "name": "Jonathan Micallef"
+        },
+        {
+          "name": "Themba Gorimbo",
+          "url": "/wiki/Themba_Gorimbo"
+        },
+        {
+          "name": "Colby Thicknesse"
+        },
+        {
+          "name": "Vince Morales",
+          "url": "/wiki/Vince_Morales"
+        },
+        {
+          "name": "Junior Tafa",
+          "url": "/wiki/Junior_Tafa"
+        },
+        {
+          "name": "Kevin Christian"
+        },
+        {
+          "name": "Cameron Rowston"
+        },
+        {
+          "name": "Robert Bryczek",
+          "url": "/wiki/Robert_Bryczek"
+        },
+        {
+          "name": "Jacob Malkoun",
+          "url": "/wiki/Jacob_Malkoun"
+        },
+        {
+          "name": "Gerald Meerschaert",
+          "url": "/wiki/Gerald_Meerschaert"
+        },
+        {
+          "name": "Tim Elliott",
+          "url": "/wiki/Tim_Elliott"
+        },
+        {
+          "name": "Steve Erceg",
+          "url": "/wiki/Steve_Erceg"
+        }
+      ],
+      "date": "May 2, 2026",
+      "eventName": "UFC Fight Night: Della Maddalena vs. Prates",
+      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Della_Maddalena_vs._Prates"
+    },
+    {
+      "fighters": [
+        {
+          "name": "Aljamain Sterling",
+          "url": "/wiki/Aljamain_Sterling"
+        },
+        {
+          "name": "Youssef Zalal",
+          "url": "/wiki/Youssef_Zalal"
+        },
+        {
+          "name": "Norma Dumont",
+          "url": "/wiki/Norma_Dumont"
+        },
+        {
+          "name": "Joselyne Edwards",
+          "url": "/wiki/Joselyne_Edwards"
+        },
+        {
+          "name": "Rafa García",
+          "url": "/wiki/Rafa_Garc%C3%ADa_(fighter)"
+        },
+        {
+          "name": "Alexander Hernandez",
+          "url": "/wiki/Alexander_Hernandez"
+        },
+        {
+          "name": "Davey Grant",
+          "url": "/wiki/Davey_Grant"
+        },
+        {
+          "name": "Adrián Luna Martinetti"
+        },
+        {
+          "name": "Montel Jackson",
+          "url": "/wiki/Montel_Jackson"
+        },
+        {
+          "name": "Raoni Barcelos",
+          "url": "/wiki/Raoni_Barcelos"
+        },
+        {
+          "name": "Marcus Buchecha",
+          "url": "/wiki/Marcus_Buchecha"
+        },
+        {
+          "name": "Ryan Spann",
+          "url": "/wiki/Ryan_Spann"
+        },
+        {
+          "name": "Rodolfo Vieira",
+          "url": "/wiki/Rodolfo_Vieira"
+        },
+        {
+          "name": "Eric McConico"
+        },
+        {
+          "name": "Mayra Bueno Silva",
+          "url": "/wiki/Mayra_Bueno_Silva"
+        },
+        {
+          "name": "Michelle Montague"
+        },
+        {
+          "name": "Jafel Filho"
+        },
+        {
+          "name": "Cody Durden",
+          "url": "/wiki/Cody_Durden"
+        },
+        {
+          "name": "Francis Marshall"
+        },
+        {
+          "name": "Lucas Brennan",
+          "url": "/wiki/Lucas_Brennan"
+        },
+        {
+          "name": "Max Griffin",
+          "url": "/wiki/Max_Griffin"
+        },
+        {
+          "name": "Victor Valenzuela"
+        },
+        {
+          "name": "Talita Alencar",
+          "url": "/wiki/Talita_Alencar"
+        },
+        {
+          "name": "Julia Polastri"
+        }
+      ],
+      "date": "Apr 25, 2026",
+      "eventName": "UFC Fight Night: Sterling vs. Zalal",
+      "url": "https://en.wikipedia.org/wiki/UFC_Fight_Night:_Sterling_vs._Zalal"
     }
   ]
 }
