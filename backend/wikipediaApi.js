@@ -7,6 +7,41 @@ const gisImageSearch = require("g-i-s");
 const fileHelper = require("./fileHelper.js");
 const { stripTagsAndDecode, removeUnwantedTagsFromHtmlNode } = require("./stringAndHtmlHelper.js");
 
+function isNumberedUfcEvent(row) {
+    return /^https:\/\/en\.wikipedia\.org\/wiki\/UFC_\d+(?:$|[:_])/.test(row.url);
+}
+
+function isFutureOrToday(dateStr) {
+    const date = new Date(dateStr);
+    if (Number.isNaN(date.getTime())) {
+        return false;
+    }
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+    return date >= today;
+}
+
+function findNextFutureBigEvent(rows) {
+    return rows
+        .filter((row) => isFutureOrToday(row.date))
+        .filter((row) => isNumberedUfcEvent(row))
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())[0];
+}
+
+function markNextFutureBigEvent(rows) {
+    rows.forEach((row) => {
+        delete row.isBigEvent;
+    });
+
+    const nextBigEvent = findNextFutureBigEvent(rows);
+    if (nextBigEvent) {
+        nextBigEvent.isBigEvent = true;
+    }
+
+    return rows;
+}
+
 // This function has two variants
 // Offline: reads events.json with pre-fetched data from all future events in futureEventsPythonScraped.json
 // Online: scrape urls in futureEventsPythonScraped.json
@@ -17,7 +52,11 @@ async function getNamesAndUrlsOfNextEventFighters() {
         const fileExists = fs.existsSync("data/events.json");
         if (fileExists) {
             const fileData = await fsPromises.readFile("data/events.json", "utf8");
-            return JSON.parse(fileData); // Return the parsed JSON
+            const parsedData = JSON.parse(fileData);
+            if (parsedData?.allEvents) {
+                parsedData.allEvents = markNextFutureBigEvent(parsedData.allEvents);
+            }
+            return parsedData;
         }
     } else if (config.CRAWL_FUTURE_EVENTS) {
         console.log("Crawling more info about futureEventsPythonScraped 🌊");
@@ -28,16 +67,9 @@ async function getNamesAndUrlsOfNextEventFighters() {
     const fileData = await fsPromises.readFile('data/futureEventsPythonScraped.json', 'utf8');
     const rows = JSON.parse(fileData);
     rows.forEach(row => row.url = `https://en.wikipedia.org${row.url}`);
+    markNextFutureBigEvent(rows);
 
-    //A big event is named 'UFC 250' so just look for the first numbered event
-    const nextBigEvent = rows.reverse().find((row) => {
-        const firstThreeChars = row.url.replace("https://en.wikipedia.org/wiki/UFC_", "").substring(0, 3);
-        return !isNaN(+firstThreeChars); // Notice the unary plus operator to convet string to number
-    });
-    if  (nextBigEvent) {
-        nextBigEvent.isBigEvent = true;
-    }
-    const allEventObjs = rows.filter(x => x.url !== nextBigEvent.url).concat(nextBigEvent); //.slice(0, 2);
+    const allEventObjs = rows;
     const promises = allEventObjs.map(event => fetch(event.url, { headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' } }).then(response => response.text()));
     const promiseResponses = await Promise.all(promises);
     const all = promiseResponses.map((htmlForSingleEvent, ix) => {
@@ -61,16 +93,8 @@ async function getNamesAndUrlsOfFightersInPastEvents() {
     const fileData = await fsPromises.readFile('data/pastEventsPythonScraped.json', 'utf8');
     const rows = JSON.parse(fileData);
     rows.forEach(row => row.url = `https://en.wikipedia.org${row.url}`);
-
-    //A big event is named 'UFC 250' so just look for the first numbered event
-    const nextBigEvent = rows.reverse().find((row) => {
-        const firstThreeChars = row.url.replace("https://en.wikipedia.org/wiki/UFC_", "").substring(0, 3);
-        return !isNaN(+firstThreeChars); // Notice the unary plus operator to convet string to number
-    });
-    if  (nextBigEvent) {
-        nextBigEvent.isBigEvent = true;
-    }
-    const allEventObjs = rows.filter(x => x.url !== nextBigEvent.url).concat(nextBigEvent); //.slice(0, 2);
+    markNextFutureBigEvent(rows);
+    const allEventObjs = rows;
     const promises = allEventObjs.map(event => fetch(event.url, { headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' } }).then(response => response.text()));
     const promiseResponses = await Promise.all(promises);
     const all = promiseResponses.map((htmlForSingleEvent, ix) => {
