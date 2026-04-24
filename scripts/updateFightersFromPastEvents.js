@@ -40,9 +40,9 @@ async function updateFighters() {
   inputFighters = inputFighters.sort((a, b) => a.name.localeCompare(b.name));
   console.log("inputFighters:", inputFighters);
 
-  scrapeListOfFighters(inputFighters);
+  await scrapeInBatchesWithWaits(inputFighters);
   global.SCRAPE_FUTURE_EVENT_DETAILS=true;
-  getEvents();
+  await getEvents(global.rankData);
 
 //   fs.writeFileSync("data/fightersToScrape.js", JSON.stringify(inputFighters, null, 2));
 //   const readExistingFromFile = false;
@@ -55,4 +55,31 @@ async function updateFighters() {
 //   return;
 }
 
-updateFighters();
+async function scrapeInBatchesWithWaits(inputFighters) {
+  let minutes = 1;
+  const fightersToScrape = [...inputFighters];
+
+  while (fightersToScrape.length > 0) {
+    const inputFighterBatch = fightersToScrape.splice(0, 6);
+    await scrapeListOfFighters(inputFighterBatch);
+    minutes = Math.min(minutes * 1.5, 6);
+
+    if (fightersToScrape.length > 0) {
+      console.log(`Iteration complete, waiting for ${minutes} minutes`);
+      await wait(1 * 1000 * 60 * minutes);
+    }
+  }
+
+  console.log("scrapeInBatchesWithWaits done");
+}
+
+function wait(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+updateFighters().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});
